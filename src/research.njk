@@ -5,52 +5,54 @@ description: Research themes in viral entry, antibody neutralization, and viral 
 permalink: /research/index.html
 ---
 <section class="page-hero page-hero--light">
-  <div class="container page-hero__content reveal">
-    <p class="eyebrow">Research</p>
-    <h1>Three connected scientific programs in viral infection biology.</h1>
-    <p>
-      The lab's work is organized around entry, neutralization, and replication. In each area, structural and
-      mechanistic detail is used to identify leverage points for antiviral intervention.
-    </p>
-  </div>
-  <div class="container page-hero__meta reveal">
-    <div>
-      <span>Core systems</span>
-      <p>alphaviruses, arenaviruses, herpesviruses, and other medically significant viral families</p>
+  <div class="container page-hero__shell">
+    <div class="page-hero__content reveal">
+      <p class="eyebrow">Research</p>
+      <h1>Three connected scientific programs in viral infection biology.</h1>
+      <p>
+        The lab's work is organized around entry, neutralization, and replication. In each area, structural and
+        mechanistic detail is used to identify leverage points for antiviral intervention.
+      </p>
     </div>
-    <div>
-      <span>Core methods</span>
-      <p>cryo-EM, crystallography, protein biochemistry, genetics, and infection-focused functional assays</p>
-    </div>
-    <div>
-      <span>Program aim</span>
-      <p>mechanistic resolution of therapeutic vulnerability in human viral disease</p>
+    <div class="page-hero__meta reveal">
+      <div>
+        <span>Core systems</span>
+        <p>alphaviruses, arenaviruses, herpesviruses, and other medically significant viral families</p>
+      </div>
+      <div>
+        <span>Core methods</span>
+        <p>cryo-EM, crystallography, protein biochemistry, genetics, and infection-focused functional assays</p>
+      </div>
+      <div>
+        <span>Program aim</span>
+        <p>mechanistic resolution of therapeutic vulnerability in human viral disease</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section section--bordered">
+<section class="section section--flagship section--bordered">
   <div class="container program-list">
     {% for item in research %}
-      <article class="program-block reveal">
-        <div class="program-block__visual">
+      <article class="mission-chapter mission-chapter--research reveal">
+        <p class="mission-chapter__index">{{ ("0" + loop.index) if loop.index < 10 else loop.index }}</p>
+        <div class="mission-chapter__visual">
           <img src="{{ item.image | withBase }}" alt="{{ item.imageAlt }}" loading="lazy" />
         </div>
-        <div class="program-block__content">
-          <p class="eyebrow">{{ ("0" + loop.index) if loop.index < 10 else loop.index }}</p>
+        <div class="mission-chapter__body">
           <h2>{{ item.title }}</h2>
-          <p class="program-block__importance">{{ item.importance }}</p>
-          <p class="program-block__summary">{{ item.summary }}</p>
+          <p class="mission-chapter__lead">{{ item.importance }}</p>
+          <p class="mission-chapter__summary">{{ item.summary }}</p>
           {% for paragraph in item.paragraphs %}
             <p>{{ paragraph }}</p>
           {% endfor %}
         </div>
-        <aside class="program-block__meta">
-          <div class="meta-block">
+        <aside class="mission-chapter__meta">
+          <div class="mission-chapter__meta-block">
             <span>Program focus</span>
             <p>{{ item.lead }}</p>
           </div>
-          <div class="meta-block">
+          <div class="mission-chapter__meta-block">
             <span>Representative systems</span>
             <ul class="clean-list">
               {% for system in item.systems %}
@@ -58,7 +60,7 @@ permalink: /research/index.html
               {% endfor %}
             </ul>
           </div>
-          <div class="meta-block">
+          <div class="mission-chapter__meta-block">
             <span>Representative methods</span>
             <ul class="clean-list">
               {% for method in item.methods %}
@@ -66,7 +68,7 @@ permalink: /research/index.html
               {% endfor %}
             </ul>
           </div>
-          <div class="meta-block">
+          <div class="mission-chapter__meta-block">
             <span>Representative paper</span>
             <p><a href="{{ item.relatedLink }}" target="_blank" rel="noreferrer">{{ item.relatedPublication }}</a></p>
           </div>
@@ -76,7 +78,7 @@ permalink: /research/index.html
   </div>
 </section>
 
-<section class="section section--offwhite">
+<section class="section section--soft section--utility">
   <div class="container methodology-band reveal">
     <div>
       <p class="eyebrow">Approach</p>

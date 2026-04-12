@@ -7,14 +7,16 @@ permalink: /jonathan-abraham/index.html
 {% set selectedPubs = publications | featuredOnly | limit(4) %}
 
 <section class="page-hero page-hero--light">
-  <div class="container page-hero__content reveal">
-    <p class="eyebrow">Jonathan Abraham</p>
-    <h1>{{ jonathan.name }}</h1>
-    <p>{{ jonathan.title }}<br />{{ jonathan.secondaryTitle }}</p>
+  <div class="container page-hero__shell">
+    <div class="page-hero__content reveal">
+      <p class="eyebrow">Jonathan Abraham</p>
+      <h1>{{ jonathan.name }}</h1>
+      <p>{{ jonathan.title }}<br />{{ jonathan.secondaryTitle }}</p>
+    </div>
   </div>
 </section>
 
-<section class="section section--bordered">
+<section class="section section--flagship section--bordered">
   <div class="container profile-frame">
     <div class="profile-frame__portrait reveal">
       <img src="{{ jonathan.portrait | withBase }}" alt="{{ jonathan.portraitAlt }}" loading="lazy" />
@@ -29,7 +31,7 @@ permalink: /jonathan-abraham/index.html
   </div>
 </section>
 
-<section class="section section--offwhite">
+<section class="section section--soft section--utility">
   <div class="container profile-facts">
     <article class="fact-column reveal">
       <p class="eyebrow">Appointments</p>
@@ -60,7 +62,7 @@ permalink: /jonathan-abraham/index.html
   </div>
 </section>
 
-<section class="section">
+<section class="section section--utility">
   <div class="container section-heading reveal">
     <p class="eyebrow">Representative work</p>
     <h2>Selected publications aligned with the laboratory program.</h2>

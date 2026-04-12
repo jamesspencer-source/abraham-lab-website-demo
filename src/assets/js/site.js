@@ -21,6 +21,23 @@ if (navToggle && nav) {
       closeNav();
     }
   });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Node)) {
+      return;
+    }
+
+    if (!nav.contains(target) && !navToggle.contains(target)) {
+      closeNav();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1024) {
+      closeNav();
+    }
+  });
 }
 
 const revealNodes = document.querySelectorAll(".reveal");

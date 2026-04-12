@@ -7,14 +7,16 @@ permalink: /people/index.html
 {% set groupedPeople = people.currentMembers | groupPeople %}
 
 <section class="page-hero page-hero--light">
-  <div class="container page-hero__content reveal">
-    <p class="eyebrow">People</p>
-    <h1>People of the Abraham Lab.</h1>
-    <p>Faculty, fellows, students, and operations leadership of the Abraham Lab.</p>
+  <div class="container page-hero__shell">
+    <div class="page-hero__content reveal">
+      <p class="eyebrow">People</p>
+      <h1>People of the Abraham Lab.</h1>
+      <p>Faculty, fellows, students, and operations leadership of the Abraham Lab.</p>
+    </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section section--flagship">
   <div class="container people-shell">
     <div class="section-heading reveal">
       <p class="eyebrow">Current members</p>
@@ -47,7 +49,7 @@ permalink: /people/index.html
   </div>
 </section>
 
-<section class="section section--bordered">
+<section class="section section--utility section--bordered">
   <div class="container">
     <div class="section-heading reveal">
       <p class="eyebrow">Alumni</p>

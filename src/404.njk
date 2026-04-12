@@ -5,10 +5,12 @@ permalink: /404.html
 eleventyExcludeFromCollections: true
 ---
 <section class="page-hero page-hero--light">
-  <div class="container page-hero__content">
-    <p class="eyebrow">404</p>
-    <h1>Page not found.</h1>
-    <p>The requested page could not be found.</p>
-    <p><a class="button button--primary" href="{{ '/' | withBase }}">Return home</a></p>
+  <div class="container page-hero__shell">
+    <div class="page-hero__content">
+      <p class="eyebrow">404</p>
+      <h1>Page not found.</h1>
+      <p>The requested page could not be found.</p>
+      <p><a class="button button--primary" href="{{ '/' | withBase }}">Return home</a></p>
+    </div>
   </div>
 </section>

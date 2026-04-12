@@ -16,28 +16,30 @@ bodyClass: page-home
     />
   </div>
   <div class="hero__scrim"></div>
-  <div class="container hero__grid">
-    <div class="hero__copy">
-      <p class="eyebrow reveal">Structural virology | molecular virology | biophysics</p>
-      <h1 class="reveal">{{ site.heroTitle }}</h1>
-      <p class="hero__deck reveal">{{ site.heroDeck }}</p>
-      <div class="hero__actions reveal">
-        <a class="button button--primary" href="{{ '/research/' | withBase }}">Research</a>
-        <a class="button button--secondary" href="{{ '/publications/' | withBase }}">Publications</a>
+  <div class="container hero__shell">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow reveal">Structural virology | molecular virology | biophysics</p>
+        <h1 class="reveal">{{ site.heroTitle }}</h1>
+        <p class="hero__deck reveal">{{ site.heroDeck }}</p>
+        <div class="hero__actions reveal">
+          <a class="button button--primary" href="{{ '/research/' | withBase }}">Research</a>
+          <a class="button button--secondary" href="{{ '/publications/' | withBase }}">Publications</a>
+        </div>
       </div>
+      <aside class="hero__dossier reveal">
+        <p class="eyebrow">Laboratory profile</p>
+        <div class="hero__dossier-list">
+          {% for item in site.heroDossier %}
+            <div class="hero__dossier-item">
+              <span>{{ item.label }}</span>
+              <p>{{ item.value }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </aside>
     </div>
-    <aside class="hero__dossier reveal">
-      <p class="eyebrow">Laboratory profile</p>
-      <div class="hero__dossier-list">
-        {% for item in site.heroDossier %}
-          <div class="hero__dossier-item">
-            <span>{{ item.label }}</span>
-            <p>{{ item.value }}</p>
-          </div>
-        {% endfor %}
-      </div>
-    </aside>
-  </div>
+</div>
 </section>
 
 <section class="affiliation-band">
@@ -47,22 +49,22 @@ bodyClass: page-home
       <h2>{{ site.institutionTitle }}</h2>
       <p>{{ site.institutionSummary }}</p>
     </div>
-    <div class="affiliation-band__cards">
+    <div class="affiliation-band__list">
       {% for affiliation in site.affiliations %}
         <a
-          class="affiliation-card reveal"
+          class="affiliation-band__item reveal"
           href="{{ affiliation.href }}"
           target="_blank"
           rel="noreferrer"
           aria-label="{{ affiliation.name }}"
         >
-          <div class="affiliation-card__logo">
+          <div class="affiliation-band__logo">
             <img src="{{ affiliation.logo | withBase }}" alt="{{ affiliation.alt }}" loading="lazy" />
           </div>
-          <div class="affiliation-card__body">
-            <p class="affiliation-card__name">{{ affiliation.shortName or affiliation.name }}</p>
+          <div class="affiliation-band__item-copy">
+            <p class="affiliation-band__name">{{ affiliation.shortName or affiliation.name }}</p>
             {% if affiliation.note %}
-              <p class="affiliation-card__note">{{ affiliation.note }}</p>
+              <p class="affiliation-band__note">{{ affiliation.note }}</p>
             {% endif %}
           </div>
         </a>
@@ -71,7 +73,7 @@ bodyClass: page-home
   </div>
 </section>
 
-<section class="section section--bordered">
+<section class="section section--flagship section--bordered">
   <div class="container program-showcase__intro">
     <div class="section-heading reveal">
       <p class="eyebrow">Scientific program</p>
@@ -94,26 +96,26 @@ bodyClass: page-home
 
   <div class="container program-showcase">
     {% for item in research %}
-      <article class="program-feature reveal">
-        <div class="program-feature__visual">
+      <article class="mission-chapter mission-chapter--home reveal">
+        <p class="mission-chapter__index">{{ ("0" + loop.index) if loop.index < 10 else loop.index }}</p>
+        <div class="mission-chapter__visual">
           <img src="{{ item.image | withBase }}" alt="{{ item.imageAlt }}" loading="lazy" />
         </div>
-        <div class="program-feature__body">
-          <p class="eyebrow">{{ ("0" + loop.index) if loop.index < 10 else loop.index }}</p>
+        <div class="mission-chapter__body">
           <h3>{{ item.title }}</h3>
-          <p class="program-feature__importance">{{ item.importance }}</p>
+          <p class="mission-chapter__lead">{{ item.importance }}</p>
           <p>{{ item.summary }}</p>
         </div>
-        <aside class="program-feature__meta">
-          <div class="program-feature__meta-block">
+        <aside class="mission-chapter__meta">
+          <div class="mission-chapter__meta-block">
             <span>Representative systems</span>
             <p>{{ item.systems | join(", ") }}</p>
           </div>
-          <div class="program-feature__meta-block">
+          <div class="mission-chapter__meta-block">
             <span>Representative paper</span>
             <p><a href="{{ item.relatedLink }}" target="_blank" rel="noreferrer">{{ item.relatedPublication }}</a></p>
           </div>
-          <div class="program-feature__meta-block">
+          <div class="mission-chapter__meta-block">
             <span>Research</span>
             <p><a class="text-link" href="{{ '/research/' | withBase }}">View the research program</a></p>
           </div>
@@ -123,7 +125,7 @@ bodyClass: page-home
   </div>
 </section>
 
-<section class="section section--offwhite">
+<section class="section section--soft section--flagship">
   <div class="container section-heading reveal">
     <p class="eyebrow">Selected publication</p>
     <h2>One representative paper from the current research program.</h2>
@@ -155,7 +157,7 @@ bodyClass: page-home
   {% endif %}
 </section>
 
-<section class="section section--bordered">
+<section class="section section--utility section--bordered">
   <div class="container updates-overview">
     <div class="updates-overview__copy reveal">
       <p class="eyebrow">Updates</p>
@@ -200,7 +202,7 @@ bodyClass: page-home
   </div>
 </section>
 
-<section class="section section--offwhite">
+<section class="section section--soft section--utility">
   <div class="container location-feature">
     <div class="location-feature__copy reveal">
       <p class="eyebrow">Location</p>

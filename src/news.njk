@@ -5,14 +5,16 @@ description: Selected updates from the Abraham Lab.
 permalink: /news/index.html
 ---
 <section class="page-hero page-hero--light">
-  <div class="container page-hero__content reveal">
-    <p class="eyebrow">News</p>
-    <h1>Science updates.</h1>
-    <p>Selected updates on publications, awards, invited talks, and institutional coverage from the Abraham Lab.</p>
+  <div class="container page-hero__shell">
+    <div class="page-hero__content reveal">
+      <p class="eyebrow">News</p>
+      <h1>Science updates.</h1>
+      <p>Selected updates on publications, awards, invited talks, and institutional coverage from the Abraham Lab.</p>
+    </div>
   </div>
 </section>
 
-<section class="section section--bordered">
+<section class="section section--utility section--bordered">
   <div class="container news-overview">
     <div class="news-overview__copy reveal">
       <p class="eyebrow">Follow</p>
@@ -38,7 +40,7 @@ permalink: /news/index.html
   </div>
 </section>
 
-<section class="section">
+<section class="section section--utility">
   <div class="container update-list">
     {% for item in news %}
       <article class="update-row {% if loop.first %}update-row--latest{% endif %} reveal">

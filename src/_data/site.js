@@ -80,15 +80,9 @@ module.exports = {
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Harvard+Medical+School%2C+77+Avenue+Louis+Pasteur%2C+Boston%2C+MA+02115",
     mapEmbedUrl:
-      "https://www.google.com/maps?q=Harvard+Medical+School,+77+Avenue+Louis+Pasteur,+Boston,+MA+02115&z=16&output=embed",
-    mapPreviewTiles: [
-      "/assets/images/location/hms-map-tile-1.png",
-      "/assets/images/location/hms-map-tile-2.png",
-      "/assets/images/location/hms-map-tile-3.png",
-      "/assets/images/location/hms-map-tile-4.png"
-    ],
-    mapPreviewAlt:
-      "Map preview centered on Harvard Medical School in the Longwood Medical Area of Boston."
+      "https://www.openstreetmap.org/export/embed.html?bbox=-71.1085%2C42.3369%2C-71.0968%2C42.3413&layer=mapnik&marker=42.3387705%2C-71.1027833",
+    mapContext: "Longwood Medical Area, Boston",
+    mapBuilding: "New Research Building"
   },
   social: {
     x: "https://twitter.com/abrahamlabhms",

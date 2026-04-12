@@ -54,7 +54,7 @@ permalink: /contact/index.html
     </div>
 
     {% set mapEyebrow = "Campus location" %}
-    {% set mapDescription = site.contact.addressLines | join(", ") %}
+    {% set mapDescription = site.contact.mapBuilding + ", " + site.contact.mapContext %}
     {% set mapCardClass = "map-card--contact" %}
     {% include "partials/map-card.njk" %}
   </div>

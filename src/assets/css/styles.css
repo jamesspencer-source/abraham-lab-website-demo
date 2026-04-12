@@ -1090,79 +1090,72 @@ li {
 
 .map-card__header {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   padding: 20px 20px 0;
 }
 
 .map-card__frame {
   position: relative;
-  display: block;
+  display: grid;
   margin: 18px 20px 0;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: #d4dde6;
-  text-decoration: none;
+  border: 1px solid rgba(21, 27, 34, 0.1);
 }
 
-.map-card__tiles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+.map-card__embed {
   width: 100%;
   height: 100%;
-}
-
-.map-card__tile {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.92) contrast(1.04);
+  border: 0;
 }
 
 .map-card__frame::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(8, 11, 16, 0.04), rgba(8, 11, 16, 0.22));
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(8, 11, 16, 0.02), rgba(8, 11, 16, 0.16)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
 }
 
-.map-card__marker {
-  position: absolute;
-  left: 56.5%;
-  top: 43.5%;
-  z-index: 1;
-  display: inline-grid;
-  gap: 8px;
-  transform: translate(-50%, -100%);
-  justify-items: center;
+.map-card__meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 16px 20px 0;
 }
 
-.map-card__marker-dot {
-  width: 18px;
-  height: 18px;
-  border: 4px solid rgba(255, 255, 255, 0.9);
-  border-radius: 999px;
-  background: var(--color-oxblood);
+.map-card__meta-item {
+  display: grid;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
 }
 
-.map-card__marker-label {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 30px;
-  padding: 0 10px;
-  background: rgba(10, 16, 23, 0.92);
-  color: var(--color-text-inverse);
-  font-size: 0.78rem;
+.map-card__meta-item span {
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 
 .map-card__footer {
   margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 18px;
   padding: 12px 20px 18px;
   border-top: 1px solid var(--color-border);
+}
+
+.map-card__footer p {
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
 }
 
 .site-footer {
@@ -1450,6 +1443,12 @@ button:focus-visible {
     margin-left: 16px;
     margin-right: 16px;
     aspect-ratio: 1 / 1;
+  }
+
+  .map-card__meta {
+    grid-template-columns: 1fr;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .map-card__footer {

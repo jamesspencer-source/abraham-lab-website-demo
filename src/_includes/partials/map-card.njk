@@ -7,25 +7,29 @@
     {% endif %}
   </div>
 
-  <a
-    class="map-card__frame"
-    href="{{ site.contact.mapUrl }}"
-    target="_blank"
-    rel="noreferrer"
-    aria-label="Open the Abraham Lab location in Google Maps"
-  >
-    <div class="map-card__tiles" aria-hidden="true">
-      {% for tile in site.contact.mapPreviewTiles %}
-        <img class="map-card__tile" src="{{ tile | withBase }}" alt="" loading="lazy" />
-      {% endfor %}
+  <div class="map-card__frame">
+    <iframe
+      class="map-card__embed"
+      src="{{ site.contact.mapEmbedUrl }}"
+      title="Map showing {{ site.contact.mapDisplayName }}"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+
+  <div class="map-card__meta">
+    <div class="map-card__meta-item">
+      <span>Campus</span>
+      <p>{{ site.contact.homeLocationLabel }}</p>
     </div>
-    <div class="map-card__marker">
-      <span class="map-card__marker-dot"></span>
-      <span class="map-card__marker-label">{{ site.contact.homeLocationLabel }}</span>
+    <div class="map-card__meta-item">
+      <span>Building</span>
+      <p>{{ site.contact.mapBuilding }}</p>
     </div>
-  </a>
+  </div>
 
   <div class="map-card__footer">
     <a class="text-link" href="{{ site.contact.mapUrl }}" target="_blank" rel="noreferrer">Open in Google Maps</a>
+    <p>Map data from OpenStreetMap.</p>
   </div>
 </aside>

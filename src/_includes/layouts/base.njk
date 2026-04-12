@@ -11,7 +11,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ site.url }}{{ page.url | withBase }}" />
     <meta property="og:site_name" content="{{ site.fullName }}" />
-    <meta property="og:image" content="{{ site.url }}{{ '/assets/images/research/hero-emergingvirus.jpg' | withBase }}" />
+    <meta property="og:image" content="{{ site.url }}{{ (site.heroImage or '/assets/images/research/hero-emergingvirus.jpg') | withBase }}" />
     <link rel="canonical" href="{{ site.url }}{{ page.url | withBase }}" />
     <link rel="icon" href="{{ '/assets/images/brands/favicon.svg' | withBase }}" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

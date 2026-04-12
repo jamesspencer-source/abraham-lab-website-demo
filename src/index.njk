@@ -11,8 +11,9 @@ bodyClass: page-home
 <section class="hero hero--mission">
   <div class="hero__media">
     <img
-      src="{{ '/assets/images/research/hero-emergingvirus.jpg' | withBase }}"
-      alt="Illustrated structural virology composition highlighting viral surface proteins and host receptor engagement."
+      src="{{ site.heroImage | withBase }}"
+      alt="{{ site.heroImageAlt }}"
+      style="object-position: {{ site.heroImagePosition }};"
     />
   </div>
   <div class="hero__scrim"></div>
@@ -98,7 +99,7 @@ bodyClass: page-home
     {% for item in research %}
       <article class="mission-chapter mission-chapter--home reveal">
         <p class="mission-chapter__index">{{ ("0" + loop.index) if loop.index < 10 else loop.index }}</p>
-        <div class="mission-chapter__visual">
+        <div class="mission-chapter__visual"{% if item.imagePosition %} style="--media-position: {{ item.imagePosition }};"{% endif %}>
           <img src="{{ item.image | withBase }}" alt="{{ item.imageAlt }}" loading="lazy" />
         </div>
         <div class="mission-chapter__body">
@@ -133,7 +134,7 @@ bodyClass: page-home
 
   {% if leadPublication %}
     <div class="container editorial-feature publication-focus reveal">
-      <div class="editorial-feature__visual">
+      <div class="editorial-feature__visual"{% if leadPublication.imagePosition %} style="--media-position: {{ leadPublication.imagePosition }};"{% endif %}>
         <img src="{{ leadPublication.image | withBase }}" alt="{{ leadPublication.imageAlt }}" loading="lazy" />
       </div>
       <div class="editorial-feature__body">

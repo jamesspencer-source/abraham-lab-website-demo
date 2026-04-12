@@ -1,0 +1,41 @@
+name: Visual review
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: .cache/ms-playwright
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build and capture screenshots
+        run: npm run visual:review
+
+      - name: Upload visual review artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-review
+          path: output/visual-review

@@ -4,6 +4,7 @@ module.exports = {
   secondaryTitle: "Investigator, Howard Hughes Medical Institute",
   portrait: "/assets/images/people/jonathan-abraham.jpeg",
   portraitAlt: "Jonathan Abraham",
+  portraitPosition: "center 22%",
   overview:
     "Jonathan Abraham leads a structural virology research program focused on how medically significant viruses enter cells, evade antibodies, and replicate.",
   biography: [

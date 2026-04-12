@@ -10,6 +10,7 @@ module.exports = [
     summary:
       "A mechanistic and structural analysis of HSV-1 helicase-primase inhibition and replication fork assembly.",
     image: "/assets/images/publications/hsv-helicase-primase.jpg",
+    imagePosition: "center 34%",
     imageAlt:
       "Publication figure showing the HSV helicase-primase complex and replication fork assembly."
   },
@@ -24,6 +25,7 @@ module.exports = [
     summary:
       "High-resolution definition of arenavirus spike architecture and the molecular organization of the glycoprotein complex.",
     image: "/assets/images/publications/arenavirus-gpc.jpeg",
+    imagePosition: "center 42%",
     imageAlt:
       "Structural figure illustrating the organization of the New World arenavirus spike glycoprotein complex."
   },
@@ -38,6 +40,7 @@ module.exports = [
     summary:
       "Structural dissection of receptor switching in an encephalitic arbovirus and its implications for tissue tropism.",
     image: "/assets/images/publications/weev-structures.jpeg",
+    imagePosition: "center 38%",
     imageAlt:
       "Structural figure showing comparative receptor recognition in an encephalitic arbovirus."
   },
@@ -52,6 +55,7 @@ module.exports = [
     summary:
       "Structural analysis of viral DNA polymerases clarifying resistance pathways against clinically relevant antiviral compounds.",
     image: "/assets/images/research/polymerase-complex.jpg",
+    imagePosition: "center 42%",
     imageAlt:
       "Structural figure showing a viral polymerase complex and resistance-associated conformational features."
   },
@@ -66,6 +70,7 @@ module.exports = [
     summary:
       "Definition of receptor recognition by eastern equine encephalitis virus and the structural determinants of host engagement.",
     image: "/assets/images/publications/vldlr-recognition.jpeg",
+    imagePosition: "center 44%",
     imageAlt:
       "Publication figure summarizing VLDLR recognition by eastern equine encephalitis virus."
   },

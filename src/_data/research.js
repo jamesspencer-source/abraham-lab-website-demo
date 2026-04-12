@@ -20,6 +20,7 @@ module.exports = [
       "cell-based infection assays"
     ],
     image: "/assets/images/research/viral-entry-comparison.png",
+    imagePosition: "center 44%",
     imageAlt:
       "Structural comparison figure showing receptor recognition features across encephalitic alphaviruses.",
     relatedPublication: "Structural basis for VLDLR recognition by eastern equine encephalitis virus",
@@ -46,6 +47,7 @@ module.exports = [
       "neutralization assays"
     ],
     image: "/assets/images/research/antibody-evasion.jpg",
+    imagePosition: "center 38%",
     imageAlt:
       "Structural antibody footprint figure illustrating receptor-binding domain antibody evasion.",
     relatedPublication: "Structural basis for continued antibody evasion by the SARS-CoV-2 receptor-binding domain",
@@ -72,6 +74,7 @@ module.exports = [
       "drug-resistance analysis"
     ],
     image: "/assets/images/research/polymerase-complex.jpg",
+    imagePosition: "center 42%",
     imageAlt:
       "Structural figure of a viral polymerase complex highlighting replication machinery architecture.",
     relatedPublication: "Viral DNA polymerase structures reveal mechanisms of antiviral drug resistance",

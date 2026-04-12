@@ -10,6 +10,10 @@ module.exports = {
     "Understanding how viruses enter cells, evade antibodies, and replicate.",
   heroDeck:
     "The Abraham Lab uses molecular virology and structural biology to define receptor recognition, antibody escape, and replication mechanisms in medically important viruses, with an emphasis on emerging pathogens and human disease.",
+  heroImage: "/assets/images/research/hero-emergingvirus.jpg",
+  heroImageAlt:
+    "Illustrated structural virology composition highlighting viral surface proteins and host receptor engagement.",
+  heroImagePosition: "center 34%",
   heroDetails: [
     "Viral entry and receptor usage",
     "Antibody-mediated neutralization and escape",

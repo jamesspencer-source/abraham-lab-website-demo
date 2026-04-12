@@ -29,7 +29,7 @@ permalink: /publications/index.html
 
   {% if leadPublication %}
     <div class="container editorial-feature reveal">
-      <div class="editorial-feature__visual">
+      <div class="editorial-feature__visual"{% if leadPublication.imagePosition %} style="--media-position: {{ leadPublication.imagePosition }};"{% endif %}>
         <img src="{{ leadPublication.image | withBase }}" alt="{{ leadPublication.imageAlt }}" loading="lazy" />
       </div>
       <div class="editorial-feature__body">

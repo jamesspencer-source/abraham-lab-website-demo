@@ -5,9 +5,12 @@
   "description": "Static Eleventy site for the Abraham Lab at Harvard Medical School.",
   "scripts": {
     "dev": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "visual:setup": "PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium",
+    "visual:review": "npm run build && node scripts/visual-review.mjs"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.5"
+    "@11ty/eleventy": "^3.1.5",
+    "playwright": "^1.54.2"
   }
 }

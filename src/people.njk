@@ -32,7 +32,12 @@ permalink: /people/index.html
           {% for person in group.entries %}
             <article class="directory-row directory-row--portrait {% if group.label == 'Leadership' %}directory-row--lead{% endif %}">
               <div class="directory-row__media">
-                <img src="{{ person.image | withBase }}" alt="{{ person.imageAlt }}" loading="lazy" />
+                <img
+                  src="{{ person.image | withBase }}"
+                  alt="{{ person.imageAlt }}"
+                  loading="lazy"
+                  {% if person.imagePosition %}style="object-position: {{ person.imagePosition }};"{% endif %}
+                />
               </div>
               <div class="directory-row__body">
                 <h3>{{ person.name }}</h3>

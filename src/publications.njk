@@ -1,0 +1,86 @@
+---
+layout: layouts/base.njk
+title: Publications
+description: Selected and archived Abraham Lab publications.
+permalink: /publications/index.html
+---
+{% set groupedPublications = publications | groupPublicationsByYear %}
+{% set featuredPublications = publications | featuredOnly %}
+{% set leadPublication = featuredPublications[0] %}
+
+<section class="page-hero page-hero--light">
+  <div class="container page-hero__content reveal">
+    <p class="eyebrow">Publications</p>
+    <h1>Selected work from the Abraham Lab.</h1>
+    <p>
+      Recent and representative papers spanning receptor recognition, antibody action, and viral replication
+      mechanisms.
+    </p>
+  </div>
+</section>
+
+<section class="section section--bordered">
+  <div class="container section-heading reveal">
+    <p class="eyebrow">Featured papers</p>
+    <h2>High-impact structural and mechanistic studies.</h2>
+  </div>
+
+  {% if leadPublication %}
+    <div class="container editorial-feature reveal">
+      <div class="editorial-feature__visual">
+        <img src="{{ leadPublication.image }}" alt="{{ leadPublication.imageAlt }}" loading="lazy" />
+      </div>
+      <div class="editorial-feature__body">
+        <p class="eyebrow">Lead paper</p>
+        <h3>{{ leadPublication.title }}</h3>
+        <p class="editorial-feature__summary">{{ leadPublication.summary }}</p>
+        <p class="publication-meta">
+          {{ leadPublication.year }}{% if leadPublication.doi %} | {{ leadPublication.doi }}{% endif %}
+        </p>
+        <p class="citation-text">{{ leadPublication.citation }}</p>
+        <a class="button button--primary" href="{{ leadPublication.link }}" target="_blank" rel="noreferrer">Read paper</a>
+      </div>
+      <aside class="editorial-feature__rail">
+        <p class="eyebrow">Selected papers</p>
+        <ol class="citation-rail">
+          {% for item in featuredPublications %}
+            {% if not loop.first %}
+              <li class="citation-rail__item">
+                <p class="citation-rail__meta">{{ item.year }}</p>
+                <div>
+                  <a href="{{ item.link }}" target="_blank" rel="noreferrer">{{ item.title }}</a>
+                  <p>{{ item.citation }}</p>
+                </div>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ol>
+      </aside>
+    </div>
+  {% endif %}
+</section>
+
+<section class="section">
+  <div class="container section-heading reveal">
+    <p class="eyebrow">Archive</p>
+    <h2>Year-grouped publication record.</h2>
+  </div>
+
+  <div class="container archive-list">
+    {% for yearGroup in groupedPublications %}
+      <section class="archive-year reveal">
+        <div class="archive-year__label">
+          <h3>{{ yearGroup.year }}</h3>
+        </div>
+        <ol class="archive-year__entries">
+          {% for item in yearGroup.entries %}
+            <li>
+              <a href="{{ item.link }}" target="_blank" rel="noreferrer">{{ item.title }}</a>
+              <p>{{ item.citation }}</p>
+            </li>
+          {% endfor %}
+        </ol>
+      </section>
+    {% endfor %}
+  </div>
+</section>

@@ -1,0 +1,72 @@
+---
+layout: layouts/base.njk
+title: People
+description: Current members and alumni of the Abraham Lab.
+permalink: /people/index.html
+---
+{% set groupedPeople = people.currentMembers | groupPeople %}
+
+<section class="page-hero page-hero--light">
+  <div class="container page-hero__content reveal">
+    <p class="eyebrow">People</p>
+    <h1>Current lab members.</h1>
+    <p>
+      A concise directory of the Abraham Lab's current personnel and alumni. Public-facing entries remain
+      intentionally brief and formal.
+    </p>
+  </div>
+</section>
+
+{% for group in groupedPeople %}
+  <section class="section {% if loop.index == 1 %}section--bordered{% else %}section--offwhite{% endif %}">
+    <div class="container section-heading section-heading--compact reveal">
+      <p class="eyebrow">Current members</p>
+      <h2>{{ group.label }}</h2>
+    </div>
+
+    <div class="container directory-list">
+      {% for person in group.entries %}
+        <article class="directory-row {% if person.renderMode == 'portrait' %}directory-row--portrait{% else %}directory-row--text{% endif %} reveal">
+          {% if person.renderMode == 'portrait' %}
+            <div class="directory-row__media">
+              {% if person.image %}
+                <img src="{{ person.image }}" alt="{{ person.imageAlt }}" loading="lazy" />
+              {% else %}
+                <div class="directory-row__placeholder" aria-hidden="true">
+                  {{ person.name[0] }}{% set tokens = person.name.split(" ") %}{% if tokens.length > 1 %}{{ tokens[tokens.length - 1][0] }}{% endif %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+          <div class="directory-row__body">
+            <h3>{{ person.name }}</h3>
+            <p class="directory-row__title">{{ person.title }}</p>
+            {% if person.note %}
+              <p class="directory-row__note">{{ person.note }}</p>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endfor %}
+
+<section class="section">
+  <div class="container section-heading reveal">
+    <p class="eyebrow">Alumni</p>
+    <h2>Past lab members.</h2>
+  </div>
+
+  <div class="container alumni-columns">
+    {% for label, entries in people.alumni %}
+      <article class="alumni-column reveal">
+        <h3>{{ label }}</h3>
+        <ul class="clean-list">
+          {% for entry in entries %}
+            <li>{{ entry }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% endfor %}
+  </div>
+</section>

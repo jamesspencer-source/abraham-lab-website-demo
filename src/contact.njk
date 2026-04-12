@@ -1,0 +1,43 @@
+---
+layout: layouts/base.njk
+title: Contact
+description: Contact information for the Abraham Lab.
+permalink: /contact/index.html
+---
+<section class="page-hero page-hero--light">
+  <div class="container page-hero__content reveal">
+    <p class="eyebrow">Contact</p>
+    <h1>Abraham Lab</h1>
+    <p>{{ site.contact.department }}</p>
+  </div>
+</section>
+
+<section class="section section--bordered">
+  <div class="container contact-layout">
+    <article class="contact-block reveal">
+      <p class="eyebrow">Address</p>
+      <h2>Laboratory location</h2>
+      {% for line in site.contact.addressLines %}
+        <p>{{ line }}</p>
+      {% endfor %}
+      <p><a class="text-link" href="{{ site.contact.mapUrl }}" target="_blank" rel="noreferrer">Open in Google Maps</a></p>
+    </article>
+
+    <article class="contact-block reveal">
+      <p class="eyebrow">Email</p>
+      <h2>Scientific and administrative contact</h2>
+      <p><strong>Jonathan Abraham</strong><br /><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
+      <p><strong>James Spencer</strong><br /><a href="mailto:{{ site.contact.managerEmail }}">{{ site.contact.managerEmail }}</a></p>
+    </article>
+
+    <article class="contact-block reveal">
+      <p class="eyebrow">Affiliations</p>
+      <h2>Institutional home</h2>
+      <ul class="clean-list">
+        {% for affiliation in site.affiliations %}
+          <li><a href="{{ affiliation.href }}" target="_blank" rel="noreferrer">{{ affiliation.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </article>
+  </div>
+</section>

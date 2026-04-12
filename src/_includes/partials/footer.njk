@@ -1,0 +1,37 @@
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <section>
+      <p class="footer-label">Abraham Lab</p>
+      <p>{{ site.contact.department }}</p>
+      {% for line in site.contact.addressLines %}
+        <p>{{ line }}</p>
+      {% endfor %}
+    </section>
+
+    <section>
+      <p class="footer-label">Navigate</p>
+      <ul class="footer-links">
+        {% for item in site.nav %}
+          <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section>
+      <p class="footer-label">Contact</p>
+      <p><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
+      <p><a href="mailto:{{ site.contact.managerEmail }}">{{ site.contact.managerEmail }}</a></p>
+      <p><a href="{{ site.contact.mapUrl }}" target="_blank" rel="noreferrer">View map</a></p>
+    </section>
+
+    <section>
+      <p class="footer-label">Affiliations</p>
+      <ul class="footer-links">
+        {% for affiliation in site.affiliations %}
+          <li><a href="{{ affiliation.href }}" target="_blank" rel="noreferrer">{{ affiliation.name }}</a></li>
+        {% endfor %}
+        <li><a href="{{ site.social.x }}" target="_blank" rel="noreferrer">Follow on X</a></li>
+      </ul>
+    </section>
+  </div>
+</footer>

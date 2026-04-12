@@ -1,0 +1,13 @@
+{
+  "name": "abraham-lab-website-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Static Eleventy site for the Abraham Lab at Harvard Medical School.",
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.5"
+  }
+}

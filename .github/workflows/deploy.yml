@@ -18,6 +18,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://jamesspencer-source.github.io
+      SITE_BASE_PATH: /abraham-lab-website-demo
 
     steps:
       - name: Check out repository

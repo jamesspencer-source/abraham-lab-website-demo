@@ -30,7 +30,7 @@ permalink: /people/index.html
           {% if person.renderMode == 'portrait' %}
             <div class="directory-row__media">
               {% if person.image %}
-                <img src="{{ person.image }}" alt="{{ person.imageAlt }}" loading="lazy" />
+                <img src="{{ person.image | withBase }}" alt="{{ person.imageAlt }}" loading="lazy" />
               {% else %}
                 <div class="directory-row__placeholder" aria-hidden="true">
                   {{ person.name[0] }}{% set tokens = person.name.split(" ") %}{% if tokens.length > 1 %}{{ tokens[tokens.length - 1][0] }}{% endif %}

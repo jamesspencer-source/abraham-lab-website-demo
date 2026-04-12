@@ -12,7 +12,7 @@
       <p class="footer-label">Navigate</p>
       <ul class="footer-links">
         {% for item in site.nav %}
-          <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+          <li><a href="{{ item.href | withBase }}">{{ item.label }}</a></li>
         {% endfor %}
       </ul>
     </section>

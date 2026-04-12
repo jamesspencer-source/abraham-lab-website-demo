@@ -8,10 +8,25 @@ function formatDisplayDate(value) {
   }).format(date);
 }
 
+function withBase(path = "/") {
+  const basePath = (process.env.SITE_BASE_PATH || "").trim();
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+
+  if (!basePath) {
+    return normalizedPath;
+  }
+
+  const normalizedBase = `/${basePath.replace(/^\/+|\/+$/g, "")}`;
+  return normalizedPath === "/"
+    ? `${normalizedBase}/`
+    : `${normalizedBase}${normalizedPath}`;
+}
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
   eleventyConfig.addFilter("displayDate", formatDisplayDate);
+  eleventyConfig.addFilter("withBase", withBase);
 
   eleventyConfig.addFilter("groupPublicationsByYear", (items = []) => {
     const grouped = new Map();

@@ -7,7 +7,7 @@ eleventyExcludeFromCollections: true
 {% for entry in collections.all %}
   {% if entry.url and not entry.data.eleventyExcludeFromCollections %}
   <url>
-    <loc>{{ site.url }}{{ entry.url }}</loc>
+    <loc>{{ site.url }}{{ entry.url | withBase }}</loc>
   </url>
   {% endif %}
 {% endfor %}

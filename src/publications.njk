@@ -28,7 +28,7 @@ permalink: /publications/index.html
   {% if leadPublication %}
     <div class="container editorial-feature reveal">
       <div class="editorial-feature__visual">
-        <img src="{{ leadPublication.image }}" alt="{{ leadPublication.imageAlt }}" loading="lazy" />
+        <img src="{{ leadPublication.image | withBase }}" alt="{{ leadPublication.imageAlt }}" loading="lazy" />
       </div>
       <div class="editorial-feature__body">
         <p class="eyebrow">Lead paper</p>

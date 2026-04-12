@@ -2,9 +2,10 @@ module.exports = {
   name: "Abraham Lab",
   fullName: "Jonathan Abraham Lab",
   shortInstitution: "Harvard Medical School",
+  basePath: process.env.SITE_BASE_PATH || "",
   description:
     "The Abraham Lab at Harvard Medical School investigates viral entry, antibody neutralization, and polymerase function through structural biology, molecular virology, and biophysics.",
-  url: "https://abrahamlab.med.harvard.edu",
+  url: process.env.SITE_URL || "https://abrahamlab.med.harvard.edu",
   heroTitle:
     "Resolving the molecular determinants of viral entry, immune escape, and genome replication.",
   heroDeck:

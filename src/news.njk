@@ -18,7 +18,7 @@ permalink: /news/index.html
   <section class="section section--bordered">
     <div class="container editorial-feature editorial-feature--news reveal">
       <div class="editorial-feature__visual">
-        <img src="{{ leadNews.image }}" alt="{{ leadNews.imageAlt }}" loading="lazy" />
+        <img src="{{ leadNews.image | withBase }}" alt="{{ leadNews.imageAlt }}" loading="lazy" />
       </div>
       <div class="editorial-feature__body">
         <p class="eyebrow">{{ leadNews.category }}</p>

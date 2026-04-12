@@ -5,7 +5,7 @@ module.exports = {
   portrait: "/assets/images/people/jonathan-abraham.jpeg",
   portraitAlt: "Jonathan Abraham",
   overview:
-    "Jonathan Abraham leads a structural virology research program focused on host receptor recognition, antiviral antibodies, and polymerase-driven replication in viruses with limited therapeutic options.",
+    "Jonathan Abraham leads a structural virology research program focused on how medically significant viruses enter cells, evade antibodies, and replicate.",
   biography: [
     "Jonathan Abraham received a bachelor's degree in biochemical sciences from Harvard College, a Ph.D. in biophysics from Harvard University, and an M.D. from Harvard Medical School through the Harvard-MIT M.D.-Ph.D. Program.",
     "He completed residency training in Internal Medicine at Brigham and Women's Hospital and fellowship training in Infectious Diseases through the Brigham and Women's Hospital and Massachusetts General Hospital combined program.",

@@ -13,9 +13,9 @@ module.exports = {
     {
       name: "Pan Yang, Ph.D.",
       title: "Instructor of Microbiology",
-      note: "Structural and mechanistic studies in virology.",
-      group: "Scientific Staff",
-      renderMode: "text",
+      note: "Instructor; structural and mechanistic studies in virology.",
+      group: "Postdoctoral Fellows",
+      renderMode: "portrait",
       image: "/assets/images/people/pan-yang.jpg",
       imageAlt: "Pan Yang",
       order: 2
@@ -24,7 +24,7 @@ module.exports = {
       name: "Wanyu Li, Ph.D.",
       title: "Postdoctoral Fellow",
       group: "Postdoctoral Fellows",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/wanyu-li.jpeg",
       imageAlt: "Wanyu Li",
       order: 3
@@ -33,7 +33,7 @@ module.exports = {
       name: "Side Hu, Ph.D.",
       title: "Postdoctoral Fellow",
       group: "Postdoctoral Fellows",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/side-hu.jpg",
       imageAlt: "Side Hu",
       order: 4
@@ -42,7 +42,7 @@ module.exports = {
       name: "Chenggong Ji, Ph.D.",
       title: "Postdoctoral Fellow",
       group: "Postdoctoral Fellows",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/chenggong-ji.png",
       imageAlt: "Chenggong Ji",
       order: 5
@@ -51,7 +51,7 @@ module.exports = {
       name: "Zishuo Yu, Ph.D.",
       title: "Postdoctoral Fellow",
       group: "Postdoctoral Fellows",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/zishuo-yu.jpg",
       imageAlt: "Zishuo Yu",
       order: 6
@@ -60,7 +60,7 @@ module.exports = {
       name: "Xiaoyi Fan, Ph.D.",
       title: "Postdoctoral Fellow",
       group: "Postdoctoral Fellows",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/xiaoyi-fan.jpg",
       imageAlt: "Xiaoyi Fan",
       order: 7
@@ -69,7 +69,7 @@ module.exports = {
       name: "Cristina Gutierrez-Vargas, Ph.D.",
       title: "Postdoctoral Fellow",
       group: "Postdoctoral Fellows",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/cristina-gutierrez-vargas.jpg",
       imageAlt: "Cristina Gutierrez-Vargas",
       order: 8
@@ -78,7 +78,7 @@ module.exports = {
       name: "Biswajit Das, Ph.D.",
       title: "Postdoctoral Fellow",
       group: "Postdoctoral Fellows",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/biswajit-das.jpeg",
       imageAlt: "Biswajit Das",
       order: 9
@@ -87,7 +87,7 @@ module.exports = {
       name: "Judy Huang, Ph.D.",
       title: "Postdoctoral Fellow",
       group: "Postdoctoral Fellows",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/judy-huang.jpeg",
       imageAlt: "Judy Huang",
       order: 10
@@ -96,16 +96,16 @@ module.exports = {
       name: "Haley Varnum",
       title: "Graduate Student (MD-PhD, Biophysics)",
       group: "Graduate Students",
-      renderMode: "text",
-      image: null,
-      imageAlt: "",
+      renderMode: "portrait",
+      image: "/assets/images/people/haley-varnum.jpg",
+      imageAlt: "Haley Varnum",
       order: 11
     },
     {
       name: "Jesse Plung",
       title: "Graduate Student (Virology)",
       group: "Graduate Students",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/jesse-plung.jpeg",
       imageAlt: "Jesse Plung",
       order: 12
@@ -114,7 +114,7 @@ module.exports = {
       name: "Jessica Oros",
       title: "Graduate Student (Virology)",
       group: "Graduate Students",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/jessica-oros.jpg",
       imageAlt: "Jessica Oros",
       order: 13
@@ -123,7 +123,7 @@ module.exports = {
       name: "Rick Li",
       title: "Graduate Student (MD-PhD, BBS)",
       group: "Graduate Students",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/rick-li.jpeg",
       imageAlt: "Rick Li",
       order: 14
@@ -132,7 +132,7 @@ module.exports = {
       name: "Colin Mann",
       title: "Graduate Student (Virology)",
       group: "Graduate Students",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/colin-mann.jpg",
       imageAlt: "Colin Mann",
       order: 15
@@ -141,7 +141,7 @@ module.exports = {
       name: "Laurentia Vianney Tjang",
       title: "Graduate Student (Virology)",
       group: "Graduate Students",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/laurentia-tjang.jpg",
       imageAlt: "Laurentia Vianney Tjang",
       order: 16
@@ -150,7 +150,7 @@ module.exports = {
       name: "Corazón Núñez",
       title: "Graduate Student (Virology)",
       group: "Graduate Students",
-      renderMode: "text",
+      renderMode: "portrait",
       image: "/assets/images/people/corazon-nunez.jpeg",
       imageAlt: "Corazón Núñez",
       order: 17
@@ -158,37 +158,65 @@ module.exports = {
     {
       name: "James Spencer",
       title: "Lab Manager",
-      note: "Laboratory operations, administration, and research support.",
-      group: "Operations",
-      renderMode: "text",
+      note: "Laboratory operations, administration, and research coordination.",
+      group: "Operations & Strategy",
+      renderMode: "portrait",
       image: "/assets/images/people/james-spencer.png",
       imageAlt: "James Spencer",
       order: 18
     }
   ],
-  alumni: {
-    "Postdoctoral and Research Fellows": [
-      "Dan Olal, Ph.D.",
-      "Poorna Goswami, Ph.D. — Lasell University",
-      "Gabor Oroszlan, Ph.D. — VRG Therapeutics",
-      "Chieyu Lin, Ph.D. — Beam Therapeutics",
-      "Sundaresh Shankar, Ph.D. — Broad Institute of MIT and Harvard",
-      "Keshalini Sabaratnam, Ph.D. — Kinapse"
-    ],
-    "Graduate Students": [
-      "Sarah Clark-Drake — Arcellx",
-      "Lars Clark — Vertex Pharmaceuticals",
-      "Katherine Nabel Smith — MGH/Brigham and University of Pennsylvania"
-    ],
-    "Research Assistant and Lab Manager": ["Vesna Brusic"],
-    "Research Technicians": [
-      "Adrian Coscia — HST M.D.-Ph.D. Program; thesis labs of Stephen Harrison and Tomas Kirchhausen",
-      "Taleen Dilanyan — Caltech Chemistry Ph.D. Program; thesis lab of Lior Pachter"
-    ],
-    "Summer Students": [
-      "Cecilia Bradley — Harvard SHURP, Amherst College",
-      "Arya Akbarshahi — HHMI SURP, Emory University",
-      "Linzy Malcolm — Harvard SHURP, Ohio State University"
-    ]
-  }
+  alumni: [
+    {
+      label: "Postdoctoral and Research Fellows",
+      entries: [
+        { name: "Dan Olal, Ph.D." },
+        { name: "Poorna Goswami, Ph.D.", destination: "Lasell University" },
+        { name: "Gabor Oroszlan, Ph.D.", destination: "VRG Therapeutics" },
+        { name: "Chieyu Lin, Ph.D.", destination: "Beam Therapeutics" },
+        {
+          name: "Sundaresh Shankar, Ph.D.",
+          destination: "Broad Institute of MIT and Harvard"
+        },
+        { name: "Keshalini Sabaratnam, Ph.D.", destination: "Kinapse" }
+      ]
+    },
+    {
+      label: "Graduate Students",
+      entries: [
+        { name: "Sarah Clark-Drake", destination: "Arcellx" },
+        { name: "Lars Clark", destination: "Vertex Pharmaceuticals" },
+        {
+          name: "Katherine Nabel Smith",
+          destination: "MGH/Brigham and University of Pennsylvania"
+        }
+      ]
+    },
+    {
+      label: "Research Assistant and Lab Manager",
+      entries: [{ name: "Vesna Brusic" }]
+    },
+    {
+      label: "Research Technicians",
+      entries: [
+        {
+          name: "Adrian Coscia",
+          destination:
+            "HST M.D.-Ph.D. Program; thesis labs of Stephen Harrison and Tomas Kirchhausen"
+        },
+        {
+          name: "Taleen Dilanyan",
+          destination: "Caltech Chemistry Ph.D. Program; thesis lab of Lior Pachter"
+        }
+      ]
+    },
+    {
+      label: "Summer Students",
+      entries: [
+        { name: "Cecilia Bradley", destination: "Harvard SHURP, Amherst College" },
+        { name: "Arya Akbarshahi", destination: "HHMI SURP, Emory University" },
+        { name: "Linzy Malcolm", destination: "Harvard SHURP, Ohio State University" }
+      ]
+    }
+  ]
 };

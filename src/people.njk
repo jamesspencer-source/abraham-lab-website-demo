@@ -26,18 +26,10 @@ permalink: /people/index.html
 
     <div class="container directory-list">
       {% for person in group.entries %}
-        <article class="directory-row {% if person.renderMode == 'portrait' %}directory-row--portrait{% else %}directory-row--text{% endif %} reveal">
-          {% if person.renderMode == 'portrait' %}
-            <div class="directory-row__media">
-              {% if person.image %}
-                <img src="{{ person.image | withBase }}" alt="{{ person.imageAlt }}" loading="lazy" />
-              {% else %}
-                <div class="directory-row__placeholder" aria-hidden="true">
-                  {{ person.name[0] }}{% set tokens = person.name.split(" ") %}{% if tokens.length > 1 %}{{ tokens[tokens.length - 1][0] }}{% endif %}
-                </div>
-              {% endif %}
-            </div>
-          {% endif %}
+        <article class="directory-row directory-row--portrait {% if group.label == 'Leadership' %}directory-row--lead{% endif %} reveal">
+          <div class="directory-row__media">
+            <img src="{{ person.image | withBase }}" alt="{{ person.imageAlt }}" loading="lazy" />
+          </div>
           <div class="directory-row__body">
             <h3>{{ person.name }}</h3>
             <p class="directory-row__title">{{ person.title }}</p>
@@ -57,15 +49,20 @@ permalink: /people/index.html
     <h2>Past lab members.</h2>
   </div>
 
-  <div class="container alumni-columns">
-    {% for label, entries in people.alumni %}
-      <article class="alumni-column reveal">
-        <h3>{{ label }}</h3>
-        <ul class="clean-list">
-          {% for entry in entries %}
-            <li>{{ entry }}</li>
+  <div class="container alumni-register">
+    {% for group in people.alumni %}
+      <article class="alumni-group reveal">
+        <h3>{{ group.label }}</h3>
+        <div class="alumni-group__list">
+          {% for entry in group.entries %}
+            <div class="alumni-record">
+              <p class="alumni-record__name">{{ entry.name }}</p>
+              {% if entry.destination %}
+                <p class="alumni-record__destination">{{ entry.destination }}</p>
+              {% endif %}
+            </div>
           {% endfor %}
-        </ul>
+        </div>
       </article>
     {% endfor %}
   </div>

@@ -6,7 +6,7 @@ bodyClass: page-home
 ---
 {% set featuredPublications = publications | featuredOnly %}
 {% set leadPublication = featuredPublications[0] %}
-{% set recentNews = news | limit(4) %}
+{% set recentNews = news | limit(3) %}
 
 <section class="hero hero--mission">
   <div class="hero__media">
@@ -43,21 +43,31 @@ bodyClass: page-home
   </div>
 </section>
 
-<section class="institution-strip">
-  <div class="container institution-strip__grid reveal">
-    <div class="institution-strip__copy">
-      <p class="eyebrow">Institutional base</p>
-      <h2>Harvard Medical School and Howard Hughes Medical Institute.</h2>
-      <p>
-        The laboratory is based in the Department of Microbiology at Harvard Medical School and
-        operates within a research environment oriented around mechanistic science with direct
-        biomedical consequence.
-      </p>
+<section class="affiliation-band">
+  <div class="container affiliation-band__grid">
+    <div class="affiliation-band__copy reveal">
+      <p class="eyebrow">{{ site.institutionLabel }}</p>
+      <h2>{{ site.institutionTitle }}</h2>
+      <p>{{ site.institutionSummary }}</p>
     </div>
-    <div class="institution-strip__logos">
+    <div class="affiliation-band__cards">
       {% for affiliation in site.affiliations %}
-        <a href="{{ affiliation.href }}" target="_blank" rel="noreferrer" aria-label="{{ affiliation.name }}">
-          <img src="{{ affiliation.logo | withBase }}" alt="{{ affiliation.alt }}" loading="lazy" />
+        <a
+          class="affiliation-card reveal"
+          href="{{ affiliation.href }}"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="{{ affiliation.name }}"
+        >
+          <div class="affiliation-card__logo">
+            <img src="{{ affiliation.logo | withBase }}" alt="{{ affiliation.alt }}" loading="lazy" />
+          </div>
+          <div class="affiliation-card__body">
+            <p class="affiliation-card__name">{{ affiliation.shortName or affiliation.name }}</p>
+            {% if affiliation.note %}
+              <p class="affiliation-card__note">{{ affiliation.note }}</p>
+            {% endif %}
+          </div>
         </a>
       {% endfor %}
     </div>
@@ -65,32 +75,52 @@ bodyClass: page-home
 </section>
 
 <section class="section section--bordered">
-  <div class="container section-heading reveal">
-    <p class="eyebrow">Scientific program</p>
-    <h2>Mechanistic work anchored in problems with direct therapeutic relevance.</h2>
-    <p>
-      The lab studies how viruses recognize host cells, how antibodies block infection, and how viral
-      polymerases execute genome replication. Across these areas, the unifying aim is to resolve the
-      molecular determinants that govern vulnerability to intervention.
-    </p>
+  <div class="container program-showcase__intro">
+    <div class="section-heading reveal">
+      <p class="eyebrow">Scientific program</p>
+      <h2>Mechanistic virology aimed at the points where intervention becomes possible.</h2>
+      <p>
+        The Abraham Lab uses molecular virology and structural biology to understand how viruses enter
+        cells, evade neutralizing antibodies, and replicate, with a focus on emerging pathogens and
+        human disease.
+      </p>
+    </div>
+    <aside class="program-showcase__aside reveal">
+      <p class="eyebrow">Why it matters</p>
+      <p>
+        By defining receptor usage, immune escape, and replication machinery at high resolution, the lab
+        maps vulnerabilities relevant to countermeasure design, outbreak preparedness, and therapeutic
+        strategy.
+      </p>
+    </aside>
   </div>
 
-  <div class="container mission-list">
+  <div class="container program-showcase">
     {% for item in research %}
-      <article class="mission-module reveal">
-        <div class="mission-module__index">{{ ("0" + loop.index) if loop.index < 10 else loop.index }}</div>
-        <div class="mission-module__body">
-          <p class="mission-module__lead">{{ item.lead }}</p>
+      <article class="program-feature reveal">
+        <div class="program-feature__visual">
+          <img src="{{ item.image | withBase }}" alt="{{ item.imageAlt }}" loading="lazy" />
+        </div>
+        <div class="program-feature__body">
+          <p class="eyebrow">{{ ("0" + loop.index) if loop.index < 10 else loop.index }}</p>
           <h3>{{ item.title }}</h3>
+          <p class="program-feature__importance">{{ item.importance }}</p>
           <p>{{ item.summary }}</p>
         </div>
-        <div class="mission-module__meta">
-          <p><span>Systems</span>{{ item.systems | join(", ") }}</p>
-          <p><span>Methods</span>{{ item.methods | join(", ") }}</p>
-        </div>
-        <div class="mission-module__link">
-          <a class="text-link" href="{{ '/research/' | withBase }}">Explore the program</a>
-        </div>
+        <aside class="program-feature__meta">
+          <div class="program-feature__meta-block">
+            <span>Representative systems</span>
+            <p>{{ item.systems | join(", ") }}</p>
+          </div>
+          <div class="program-feature__meta-block">
+            <span>Representative paper</span>
+            <p><a href="{{ item.relatedLink }}" target="_blank" rel="noreferrer">{{ item.relatedPublication }}</a></p>
+          </div>
+          <div class="program-feature__meta-block">
+            <span>Depth page</span>
+            <p><a class="text-link" href="{{ '/research/' | withBase }}">Explore the full research page</a></p>
+          </div>
+        </aside>
       </article>
     {% endfor %}
   </div>
@@ -98,12 +128,12 @@ bodyClass: page-home
 
 <section class="section section--offwhite">
   <div class="container section-heading reveal">
-    <p class="eyebrow">Selected publications</p>
-    <h2>Recent papers across receptor biology, antibody action, and viral replication.</h2>
+    <p class="eyebrow">Selected publication</p>
+    <h2>One representative paper from the current research program.</h2>
   </div>
 
   {% if leadPublication %}
-    <div class="container editorial-feature reveal">
+    <div class="container editorial-feature publication-focus reveal">
       <div class="editorial-feature__visual">
         <img src="{{ leadPublication.image | withBase }}" alt="{{ leadPublication.imageAlt }}" loading="lazy" />
       </div>
@@ -117,58 +147,72 @@ bodyClass: page-home
         <p class="citation-text">{{ leadPublication.citation }}</p>
         <a class="button button--primary" href="{{ leadPublication.link }}" target="_blank" rel="noreferrer">Read publication</a>
       </div>
-      <aside class="editorial-feature__rail">
-        <p class="eyebrow">Selected papers</p>
-        <ol class="citation-rail">
-          {% for item in featuredPublications %}
-            {% if not loop.first %}
-              <li class="citation-rail__item">
-                <p class="citation-rail__meta">{{ item.year }}</p>
-                <div>
-                  <a href="{{ item.link }}" target="_blank" rel="noreferrer">{{ item.title }}</a>
-                  <p>{{ item.citation }}</p>
-                </div>
-              </li>
-            {% endif %}
-          {% endfor %}
-        </ol>
+      <aside class="publication-focus__rail">
+        <p class="eyebrow">Archive</p>
+        <p>
+          The full publications page preserves the broader record across viral entry, antibody biology, and
+          replication mechanisms.
+        </p>
+        <a class="text-link" href="{{ '/publications/' | withBase }}">View full publication archive</a>
       </aside>
     </div>
   {% endif %}
 </section>
 
 <section class="section section--bordered">
-  <div class="container section-heading reveal">
-    <p class="eyebrow">News</p>
-    <h2>Science updates from the lab.</h2>
-  </div>
+  <div class="container updates-overview">
+    <div class="updates-overview__copy reveal">
+      <p class="eyebrow">Updates</p>
+      <h2>Curated public updates.</h2>
+      <p>
+        Site updates are limited to papers, awards, invited talks, grants, major milestones, and public
+        institutional coverage already in the public domain.
+      </p>
+      <div class="public-updates">
+        <a class="public-updates__item" href="{{ site.social.x }}" target="_blank" rel="noreferrer">
+          <span class="public-updates__label">X</span>
+          <span class="public-updates__text">Follow lab updates on X</span>
+        </a>
+        <a class="public-updates__item" href="{{ site.social.bluesky }}" target="_blank" rel="noreferrer">
+          <span class="public-updates__label">Bluesky</span>
+          <span class="public-updates__text">Follow lab updates on Bluesky</span>
+        </a>
+      </div>
+    </div>
 
-  <div class="container update-list">
-    {% for item in recentNews %}
-      <article class="update-row reveal">
-        <div class="update-row__meta">
-          <p class="eyebrow">{{ item.category }}</p>
-          <p>{{ item.dateLabel }}</p>
-        </div>
-        <div class="update-row__body">
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.summary }}</p>
-        </div>
-        <div class="update-row__action">
-          <a class="text-link" href="{{ item.link }}" target="_blank" rel="noreferrer">Open source</a>
-        </div>
-      </article>
-    {% endfor %}
+    <div class="updates-overview__list">
+      {% for item in recentNews %}
+        <article class="update-row reveal">
+          <div class="update-row__meta">
+            <p class="eyebrow">{{ item.category }}</p>
+            <p>{{ item.dateLabel }}</p>
+          </div>
+          <div class="update-row__body">
+            <p class="update-row__source">{{ item.sourceType }}</p>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.summary }}</p>
+          </div>
+          <div class="update-row__action">
+            <a class="text-link" href="{{ item.link }}" target="_blank" rel="noreferrer">{{ item.linkLabel or "Open source" }}</a>
+          </div>
+        </article>
+      {% endfor %}
+      <div class="updates-overview__footer reveal">
+        <a class="button button--secondary" href="{{ '/news/' | withBase }}">View all updates</a>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="section section--offwhite">
-  <div class="container action-band reveal">
+  <div class="container action-band action-band--cta reveal">
     <div>
       <p class="eyebrow">Contact</p>
       <h2>Scientific inquiries, collaborations, and speaking requests.</h2>
-      <p>{{ site.contact.department }}</p>
-      <p>{{ site.contact.addressLines | join(", ") }}</p>
+      <p>
+        The contact page includes direct email contacts, the laboratory location, institutional affiliation,
+        and map access.
+      </p>
     </div>
     <div class="action-band__actions">
       <a class="button button--primary" href="mailto:{{ site.contact.email }}">Email Jonathan Abraham</a>

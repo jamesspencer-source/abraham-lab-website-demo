@@ -39,18 +39,19 @@ permalink: /research/index.html
         <div class="program-block__content">
           <p class="eyebrow">{{ ("0" + loop.index) if loop.index < 10 else loop.index }}</p>
           <h2>{{ item.title }}</h2>
-          <p class="program-block__summary">{{ item.intro }}</p>
+          <p class="program-block__importance">{{ item.importance }}</p>
+          <p class="program-block__summary">{{ item.summary }}</p>
           {% for paragraph in item.paragraphs %}
             <p>{{ paragraph }}</p>
           {% endfor %}
         </div>
         <aside class="program-block__meta">
           <div class="meta-block">
-            <span>Lead question</span>
+            <span>Program focus</span>
             <p>{{ item.lead }}</p>
           </div>
           <div class="meta-block">
-            <span>Systems</span>
+            <span>Representative systems</span>
             <ul class="clean-list">
               {% for system in item.systems %}
                 <li>{{ system }}</li>
@@ -58,7 +59,7 @@ permalink: /research/index.html
             </ul>
           </div>
           <div class="meta-block">
-            <span>Methods</span>
+            <span>Representative methods</span>
             <ul class="clean-list">
               {% for method in item.methods %}
                 <li>{{ method }}</li>
@@ -67,7 +68,7 @@ permalink: /research/index.html
           </div>
           <div class="meta-block">
             <span>Representative paper</span>
-            <p>{{ item.relatedPublication }}</p>
+            <p><a href="{{ item.relatedLink }}" target="_blank" rel="noreferrer">{{ item.relatedPublication }}</a></p>
           </div>
         </aside>
       </article>

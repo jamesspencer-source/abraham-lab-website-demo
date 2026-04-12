@@ -4,58 +4,64 @@ title: News
 description: Science-facing updates from the Abraham Lab.
 permalink: /news/index.html
 ---
-{% set leadNews = news[0] %}
-
 <section class="page-hero page-hero--light">
   <div class="container page-hero__content reveal">
     <p class="eyebrow">News</p>
     <h1>Science updates.</h1>
-    <p>Public-facing updates on papers, grants, awards, and major milestones in the Abraham Lab research program.</p>
+    <p>
+      Public-facing updates on papers, grants, awards, invited talks, and major milestones already in the
+      public domain.
+    </p>
   </div>
 </section>
 
-{% if leadNews %}
-  <section class="section section--bordered">
-    <div class="container editorial-feature editorial-feature--news reveal">
-      <div class="editorial-feature__visual">
-        <img src="{{ leadNews.image | withBase }}" alt="{{ leadNews.imageAlt }}" loading="lazy" />
-      </div>
-      <div class="editorial-feature__body">
-        <p class="eyebrow">{{ leadNews.category }}</p>
-        <h2>{{ leadNews.title }}</h2>
-        <p class="editorial-feature__summary">{{ leadNews.summary }}</p>
-        <p class="publication-meta">{{ leadNews.dateLabel }}</p>
-        <a class="button button--primary" href="{{ leadNews.link }}" target="_blank" rel="noreferrer">Open source</a>
-      </div>
-      <aside class="editorial-feature__rail">
-        <p class="eyebrow">Editorial standard</p>
-        <p>
-          This feed is limited to research-facing items, including publications, grants, invited talks,
-          awards, and major scientific milestones.
-        </p>
-      </aside>
+<section class="section section--bordered">
+  <div class="container news-overview">
+    <div class="news-overview__copy reveal">
+      <p class="eyebrow">Editorial scope</p>
+      <h2>Curated, science-facing updates only.</h2>
+      <p>
+        The site maintains a hand-curated record of publications, institutional coverage, awards, and other
+        public milestones. Live social embeds are intentionally excluded from the first release.
+      </p>
     </div>
-  </section>
-{% endif %}
+    <aside class="news-overview__rail reveal">
+      <p class="eyebrow">Public updates</p>
+      <div class="public-updates">
+        <a class="public-updates__item" href="{{ site.social.x }}" target="_blank" rel="noreferrer">
+          <span class="public-updates__label">X</span>
+          <span class="public-updates__text">Follow the Abraham Lab on X</span>
+        </a>
+        <a class="public-updates__item" href="{{ site.social.bluesky }}" target="_blank" rel="noreferrer">
+          <span class="public-updates__label">Bluesky</span>
+          <span class="public-updates__text">Follow the Abraham Lab on Bluesky</span>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
 
 <section class="section">
   <div class="container update-list">
     {% for item in news %}
-      {% if not loop.first %}
-        <article class="update-row reveal">
-          <div class="update-row__meta">
+      <article class="update-row {% if loop.first %}update-row--latest{% endif %} reveal">
+        <div class="update-row__meta">
+          {% if loop.first %}
+            <p class="eyebrow">Latest</p>
+          {% else %}
             <p class="eyebrow">{{ item.category }}</p>
-            <p>{{ item.dateLabel }}</p>
-          </div>
-          <div class="update-row__body">
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.summary }}</p>
-          </div>
-          <div class="update-row__action">
-            <a class="text-link" href="{{ item.link }}" target="_blank" rel="noreferrer">Open source</a>
-          </div>
-        </article>
-      {% endif %}
+          {% endif %}
+          <p>{{ item.dateLabel }}</p>
+        </div>
+        <div class="update-row__body">
+          <p class="update-row__source">{{ item.sourceType }}</p>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.summary }}</p>
+        </div>
+        <div class="update-row__action">
+          <a class="text-link" href="{{ item.link }}" target="_blank" rel="noreferrer">{{ item.linkLabel or "Open source" }}</a>
+        </div>
+      </article>
     {% endfor %}
   </div>
 </section>

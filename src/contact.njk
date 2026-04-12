@@ -8,7 +8,7 @@ permalink: /contact/index.html
   <div class="container page-hero__content reveal">
     <p class="eyebrow">Contact</p>
     <h1>Abraham Lab</h1>
-    <p>{{ site.contact.department }}</p>
+    <p>For collaborations, speaking requests, and administrative inquiries.</p>
   </div>
 </section>
 
@@ -18,10 +18,7 @@ permalink: /contact/index.html
       <div class="section-heading section-heading--compact reveal">
         <p class="eyebrow">Visit</p>
         <h2>Laboratory location and direct contacts.</h2>
-        <p>
-          Use the information below for scientific correspondence, operations questions, and directions to
-          the laboratory.
-        </p>
+        <p>{{ site.contact.department }}</p>
       </div>
 
       <div class="contact-detail-grid">
@@ -54,16 +51,9 @@ permalink: /contact/index.html
       </div>
     </div>
 
-    <aside class="map-panel reveal">
-      <iframe
-        src="{{ site.contact.mapEmbedUrl }}"
-        title="Map showing the Abraham Lab at 77 Avenue Louis Pasteur in Boston"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
-      <div class="map-panel__actions">
-        <a class="button button--secondary" href="{{ site.contact.mapUrl }}" target="_blank" rel="noreferrer">Open external map</a>
-      </div>
-    </aside>
+    {% set mapEyebrow = "Campus location" %}
+    {% set mapDescription = site.contact.addressLines | join(", ") %}
+    {% set mapCardClass = "map-card--contact" %}
+    {% include "partials/map-card.njk" %}
   </div>
 </section>

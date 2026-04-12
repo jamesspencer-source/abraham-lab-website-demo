@@ -26,20 +26,17 @@ bodyClass: page-home
         <a class="button button--secondary" href="{{ '/publications/' | withBase }}">Publications</a>
       </div>
     </div>
-    <div class="hero__rail">
-      <section class="hero__panel reveal">
-        <p class="eyebrow">Mission areas</p>
-        <ul class="clean-list hero__list">
-          {% for item in site.heroDetails %}
-            <li>{{ item }}</li>
-          {% endfor %}
-        </ul>
-      </section>
-      <section class="hero__panel reveal">
-        <p class="eyebrow">Approach</p>
-        <p>{{ site.heroApproach }}</p>
-      </section>
-    </div>
+    <aside class="hero__dossier reveal">
+      <p class="eyebrow">Laboratory profile</p>
+      <div class="hero__dossier-list">
+        {% for item in site.heroDossier %}
+          <div class="hero__dossier-item">
+            <span>{{ item.label }}</span>
+            <p>{{ item.value }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </aside>
   </div>
 </section>
 
@@ -117,8 +114,8 @@ bodyClass: page-home
             <p><a href="{{ item.relatedLink }}" target="_blank" rel="noreferrer">{{ item.relatedPublication }}</a></p>
           </div>
           <div class="program-feature__meta-block">
-            <span>Depth page</span>
-            <p><a class="text-link" href="{{ '/research/' | withBase }}">Explore the full research page</a></p>
+            <span>Research</span>
+            <p><a class="text-link" href="{{ '/research/' | withBase }}">View the research program</a></p>
           </div>
         </aside>
       </article>
@@ -148,10 +145,9 @@ bodyClass: page-home
         <a class="button button--primary" href="{{ leadPublication.link }}" target="_blank" rel="noreferrer">Read publication</a>
       </div>
       <aside class="publication-focus__rail">
-        <p class="eyebrow">Archive</p>
+        <p class="eyebrow">Publications</p>
         <p>
-          The full publications page preserves the broader record across viral entry, antibody biology, and
-          replication mechanisms.
+          Additional publications span viral entry, antibody biology, and replication mechanisms.
         </p>
         <a class="text-link" href="{{ '/publications/' | withBase }}">View full publication archive</a>
       </aside>
@@ -163,10 +159,10 @@ bodyClass: page-home
   <div class="container updates-overview">
     <div class="updates-overview__copy reveal">
       <p class="eyebrow">Updates</p>
-      <h2>Curated public updates.</h2>
+      <h2>Recent news and coverage.</h2>
       <p>
-        Site updates are limited to papers, awards, invited talks, grants, major milestones, and public
-        institutional coverage already in the public domain.
+        Selected updates on publications, awards, invited talks, grants, and institutional coverage from
+        the Abraham Lab.
       </p>
       <div class="public-updates">
         <a class="public-updates__item" href="{{ site.social.x }}" target="_blank" rel="noreferrer">
@@ -205,18 +201,25 @@ bodyClass: page-home
 </section>
 
 <section class="section section--offwhite">
-  <div class="container action-band action-band--cta reveal">
-    <div>
-      <p class="eyebrow">Contact</p>
-      <h2>Scientific inquiries, collaborations, and speaking requests.</h2>
-      <p>
-        The contact page includes direct email contacts, the laboratory location, institutional affiliation,
-        and map access.
-      </p>
+  <div class="container location-feature">
+    <div class="location-feature__copy reveal">
+      <p class="eyebrow">Location</p>
+      <h2>{{ site.contact.homeLocationLabel }}</h2>
+      <p>For collaborations, speaking requests, and administrative inquiries.</p>
+      <div class="location-feature__address">
+        {% for line in site.contact.addressLines %}
+          <p>{{ line }}</p>
+        {% endfor %}
+      </div>
+      <div class="location-feature__actions">
+        <a class="button button--primary" href="mailto:{{ site.contact.email }}">Email Jonathan Abraham</a>
+        <a class="button button--secondary" href="{{ '/contact/' | withBase }}">Contact details</a>
+      </div>
     </div>
-    <div class="action-band__actions">
-      <a class="button button--primary" href="mailto:{{ site.contact.email }}">Email Jonathan Abraham</a>
-      <a class="button button--secondary" href="{{ '/contact/' | withBase }}">Contact details</a>
-    </div>
+
+    {% set mapEyebrow = "Campus location" %}
+    {% set mapDescription = "Longwood Medical Area, Boston" %}
+    {% set mapCardClass = "map-card--home" %}
+    {% include "partials/map-card.njk" %}
   </div>
 </section>

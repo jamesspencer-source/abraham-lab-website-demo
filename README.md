@@ -1,6 +1,6 @@
 # Abraham Lab Website
 
-Static Eleventy site for the Abraham Lab at Harvard Medical School.
+Static Astro site for the Abraham Lab at Harvard Medical School.
 
 ## Local development
 
@@ -15,7 +15,7 @@ npm run dev
 npm run build
 ```
 
-The GitHub Actions workflow in `.github/workflows/deploy.yml` builds the site and publishes `_site` to GitHub Pages.
+The GitHub Actions workflow in `.github/workflows/deploy.yml` builds the Astro site and publishes `_site` to GitHub Pages.
 
 ## Visual review
 

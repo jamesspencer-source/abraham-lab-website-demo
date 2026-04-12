@@ -2,15 +2,21 @@
   "name": "abraham-lab-website-demo",
   "version": "0.1.0",
   "private": true,
-  "description": "Static Eleventy site for the Abraham Lab at Harvard Medical School.",
+  "description": "Static Astro site for the Abraham Lab at Harvard Medical School.",
   "scripts": {
-    "dev": "eleventy --serve",
-    "build": "eleventy",
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
     "visual:setup": "PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium",
     "visual:review": "npm run build && node scripts/visual-review.mjs"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.5",
+    "@astrojs/check": "^0.9.8",
+    "@types/node": "^25.6.0",
     "playwright": "^1.54.2"
+  },
+  "dependencies": {
+    "astro": "^6.1.5",
+    "typescript": "^5.9.3"
   }
 }

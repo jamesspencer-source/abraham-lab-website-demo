@@ -13,6 +13,7 @@ jobs:
   screenshots:
     runs-on: ubuntu-latest
     env:
+      ASTRO_TELEMETRY_DISABLED: "1"
       PLAYWRIGHT_BROWSERS_PATH: .cache/ms-playwright
 
     steps:
@@ -31,7 +32,7 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Build and capture screenshots
+      - name: Build Astro site and capture screenshots
         run: npm run visual:review
 
       - name: Upload visual review artifacts

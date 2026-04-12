@@ -1,0 +1,41 @@
+---
+import { siteData } from "../data/site";
+import { withBase } from "../lib/content";
+---
+
+<footer class="site-footer">
+  <div class="shell site-footer__grid">
+    <section>
+      <p class="footer-label">Abraham Lab</p>
+      <p>{siteData.institutionTitle}</p>
+      <p>Boston, Massachusetts</p>
+    </section>
+
+    <section>
+      <p class="footer-label">Navigate</p>
+      <ul class="footer-links">
+        {siteData.nav.map((item) => (
+          <li><a href={withBase(item.href)}>{item.label}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <p class="footer-label">Contact</p>
+      <p><a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
+      <p><a href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
+      <p><a href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open map</a></p>
+    </section>
+
+    <section>
+      <p class="footer-label">Affiliations</p>
+      <ul class="footer-links">
+        {siteData.affiliations.map((affiliation) => (
+          <li><a href={affiliation.href} target="_blank" rel="noreferrer">{affiliation.shortName ?? affiliation.name}</a></li>
+        ))}
+        <li><a href={siteData.social.x} target="_blank" rel="noreferrer">Follow on X</a></li>
+        <li><a href={siteData.social.bluesky} target="_blank" rel="noreferrer">Follow on Bluesky</a></li>
+      </ul>
+    </section>
+  </div>
+</footer>

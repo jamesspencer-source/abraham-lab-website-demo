@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { withBase } from "../lib/content";
+---
+
+<BaseLayout title="Page Not Found" description="The requested page could not be found.">
+  <PageHero eyebrow="404" title="Page not found." description="The requested page could not be found." />
+
+  <section class="section section--utility">
+    <div class="shell narrow-shell reveal">
+      <a class="button button--primary" href={withBase("/")}>Return home</a>
+    </div>
+  </section>
+</BaseLayout>

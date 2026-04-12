@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import MapWidget from "../../components/MapWidget.astro";
+import { siteData } from "../../data/site";
+---
+
+<BaseLayout title="Contact" description="Contact information for the Abraham Lab.">
+  <PageHero
+    eyebrow="Contact"
+    title="Abraham Lab"
+    description="For collaborations, speaking requests, and administrative inquiries."
+  />
+
+  <section class="section section--utility">
+    <div class="shell contact-layout">
+      <div class="contact-layout__content">
+        <div class="section-heading section-heading--compact reveal">
+          <p class="eyebrow">Visit</p>
+          <h2>Laboratory location and direct contacts.</h2>
+          <p>{siteData.contact.department}</p>
+        </div>
+
+        <div class="contact-grid">
+          <article class="utility-panel reveal">
+            <div class="utility-panel__header">
+              <p class="eyebrow">Address</p>
+              <h3>Laboratory location</h3>
+            </div>
+            <div class="utility-panel__body">
+              {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
+            </div>
+            <div class="utility-panel__footer">
+              <a class="text-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open in Google Maps</a>
+            </div>
+          </article>
+
+          <article class="utility-panel reveal">
+            <div class="utility-panel__header">
+              <p class="eyebrow">Email</p>
+              <h3>Scientific and administrative contact</h3>
+            </div>
+            <div class="utility-panel__body">
+              <p><strong>Jonathan Abraham</strong><br /><a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
+              <p><strong>James Spencer</strong><br /><a href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
+            </div>
+          </article>
+
+          <article class="utility-panel reveal">
+            <div class="utility-panel__header">
+              <p class="eyebrow">Affiliation</p>
+              <h3>Institutional affiliation</h3>
+            </div>
+            <div class="utility-panel__body">
+              <p>{siteData.institutionTitle}</p>
+              <ul class="clean-list fact-list">
+                {siteData.affiliations.map((affiliation) => (
+                  <li><a href={affiliation.href} target="_blank" rel="noreferrer">{affiliation.shortName ?? affiliation.name}</a></li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <MapWidget
+        mode="contact"
+        eyebrow="Campus map"
+        description={`${siteData.contact.mapBuilding} · ${siteData.contact.mapContext}`}
+      />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,223 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import MissionChapter from "../components/MissionChapter.astro";
+import MapWidget from "../components/MapWidget.astro";
+import { siteData } from "../data/site";
+import { researchPrograms } from "../data/research";
+import { publications } from "../data/publications";
+import { newsItems } from "../data/news";
+import { featuredOnly, limitItems, withBase } from "../lib/content";
+
+const featuredPublications = featuredOnly(publications);
+const leadPublication = featuredPublications[0];
+const publicationRail = featuredPublications.slice(1, 4);
+const recentNews = limitItems(newsItems, 3);
+---
+
+<BaseLayout pageClass="page-home">
+  <section class="marquee">
+    <div class="marquee__media">
+      <img
+        src={withBase(siteData.heroImage)}
+        alt={siteData.heroImageAlt}
+        style={siteData.heroImagePosition ? `object-position: ${siteData.heroImagePosition};` : undefined}
+      />
+    </div>
+    <div class="marquee__scrim"></div>
+
+    <div class="shell marquee__shell">
+      <div class="marquee__grid">
+        <div class="marquee__copy">
+          <p class="eyebrow reveal">Structural virology | molecular virology | biophysics</p>
+          <h1 class="reveal">{siteData.heroTitle}</h1>
+          <p class="marquee__deck reveal">{siteData.heroDeck}</p>
+          <div class="button-row reveal">
+            <a class="button button--primary" href={withBase("/research/")}>Research</a>
+            <a class="button button--ghost" href={withBase("/publications/")}>Publications</a>
+          </div>
+        </div>
+
+        <aside class="utility-panel utility-panel--dark marquee__dossier reveal">
+          <div class="utility-panel__header">
+            <p class="eyebrow">Laboratory profile</p>
+          </div>
+          <div class="dossier-list">
+            {siteData.heroDossier.map((item) => (
+              <div class="dossier-list__item">
+                <span>{item.label}</span>
+                <p>{item.value}</p>
+              </div>
+            ))}
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="institutional-strip">
+    <div class="shell institutional-strip__grid">
+      <div class="institutional-strip__copy reveal">
+        <p class="eyebrow">{siteData.institutionLabel}</p>
+        <h2>{siteData.institutionTitle}</h2>
+        <p>{siteData.institutionSummary}</p>
+      </div>
+      <div class="endorsement-rail">
+        {siteData.affiliations.map((affiliation) => (
+          <a class="endorsement-rail__item reveal" href={affiliation.href} target="_blank" rel="noreferrer">
+            <div class="endorsement-rail__logo">
+              <img src={withBase(affiliation.logo)} alt={affiliation.alt} loading="lazy" />
+            </div>
+            <div>
+              <p class="endorsement-rail__name">{affiliation.shortName ?? affiliation.name}</p>
+              {affiliation.note && <p class="endorsement-rail__note">{affiliation.note}</p>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--flagship">
+    <div class="shell editorial-intro editorial-intro--split">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Scientific program</p>
+        <h2>Mechanistic virology at the points where intervention becomes possible.</h2>
+        <p>
+          The Abraham Lab uses molecular virology and structural biology to explain how viruses enter cells,
+          evade neutralizing antibodies, and replicate, with a focus on emerging pathogens and human disease.
+        </p>
+      </div>
+      <div class="editorial-intro__aside reveal">
+        <p class="eyebrow">Why it matters</p>
+        <p>
+          By defining receptor usage, immune escape, and replication machinery at high resolution, the lab
+          maps vulnerabilities relevant to countermeasure design, outbreak preparedness, and antiviral strategy.
+        </p>
+      </div>
+    </div>
+
+    <div class="shell mission-list">
+      {researchPrograms.map((item, index) => (
+        <MissionChapter
+          index={index + 1}
+          title={item.title}
+          lead={item.importance}
+          body={[item.summary]}
+          image={item.image}
+          imageAlt={item.imageAlt}
+          imagePosition={item.imagePosition}
+          meta={[
+            { label: "Mechanistic focus", text: item.lead },
+            { label: "Representative systems", items: item.systems },
+            {
+              label: "Representative paper",
+              href: item.relatedLink,
+              hrefLabel: item.relatedPublication
+            }
+          ]}
+        />
+      ))}
+    </div>
+  </section>
+
+  {leadPublication && (
+    <section class="section section--soft section--flagship">
+      <div class="shell editorial-feature reveal">
+        <div class="editorial-feature__visual frame" style={leadPublication.imagePosition ? `--media-position: ${leadPublication.imagePosition};` : undefined}>
+          <img src={withBase(leadPublication.image!)} alt={leadPublication.imageAlt!} loading="lazy" />
+        </div>
+
+        <div class="editorial-feature__body">
+          <p class="eyebrow">Selected publication</p>
+          <h2>{leadPublication.title}</h2>
+          <p class="feature-lead">{leadPublication.summary}</p>
+          <p class="meta-line">
+            {leadPublication.year}{leadPublication.doi ? ` | ${leadPublication.doi}` : ""}
+          </p>
+          <p class="citation-text">{leadPublication.citation}</p>
+          <div class="button-row">
+            <a class="button button--primary" href={leadPublication.link} target="_blank" rel="noreferrer">Read publication</a>
+          </div>
+        </div>
+
+        <aside class="editorial-feature__rail">
+          <p class="eyebrow">Further reading</p>
+          <ol class="clean-list citation-rail">
+            {publicationRail.map((item) => (
+              <li class="citation-rail__item">
+                <span>{item.year}</span>
+                <div>
+                  <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
+                  <p>{item.citation}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <a class="text-link" href={withBase("/publications/")}>View full publication archive</a>
+        </aside>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--utility">
+    <div class="shell utility-ledger">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Recent updates</p>
+        <h2>Public updates and institutional coverage.</h2>
+        <p>
+          Selected updates on publications, awards, invited talks, grants, and institutional coverage from the
+          Abraham Lab.
+        </p>
+        <div class="social-inline">
+          <a href={siteData.social.x} target="_blank" rel="noreferrer">X</a>
+          <a href={siteData.social.bluesky} target="_blank" rel="noreferrer">Bluesky</a>
+        </div>
+      </div>
+
+      <div class="ledger">
+        {recentNews.map((item) => (
+          <article class="ledger-row reveal">
+            <div class="ledger-row__meta">
+              <p class="eyebrow">{item.category}</p>
+              <p>{item.dateLabel}</p>
+            </div>
+            <div class="ledger-row__body">
+              <p class="ledger-source">{item.sourceType}</p>
+              <h3>{item.title}</h3>
+              <p>{item.summary}</p>
+            </div>
+            <div class="ledger-row__action">
+              <a class="text-link" href={item.link} target="_blank" rel="noreferrer">{item.linkLabel ?? "Open source"}</a>
+            </div>
+          </article>
+        ))}
+        <div class="ledger__footer reveal">
+          <a class="button button--ghost" href={withBase("/news/")}>View all updates</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--utility section--bordered">
+    <div class="shell location-utility">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Location</p>
+        <h2>Harvard Medical School.</h2>
+        <p>For collaborations, speaking requests, and administrative inquiries.</p>
+        <div class="location-list">
+          {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
+        </div>
+        <div class="button-row">
+          <a class="button button--primary" href={withBase("/contact/")}>Contact details</a>
+          <a class="button button--ghost" href={`mailto:${siteData.contact.email}`}>Email Jonathan Abraham</a>
+        </div>
+      </div>
+
+      <MapWidget
+        mode="home"
+        eyebrow="Campus map"
+        description={`${siteData.contact.addressLines[0]}, ${siteData.contact.addressLines[1]}`}
+      />
+    </div>
+  </section>
+</BaseLayout>

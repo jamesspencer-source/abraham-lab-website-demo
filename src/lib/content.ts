@@ -1,0 +1,57 @@
+import type { Person, Publication } from "../data/types";
+
+const PEOPLE_GROUP_ORDER = [
+  "Leadership",
+  "Postdoctoral Fellows",
+  "Graduate Students",
+  "Operations & Strategy"
+] as const;
+
+export function withBase(path = "/") {
+  if (/^(https?:|mailto:|tel:)/.test(path)) {
+    return path;
+  }
+
+  const base = import.meta.env.BASE_URL || "/";
+  const normalized = path === "/" ? "" : path.replace(/^\/+/, "");
+  return `${base}${normalized}`;
+}
+
+export function featuredOnly(items: Publication[]) {
+  return items.filter((item) => Boolean(item.featured));
+}
+
+export function limitItems<T>(items: T[], count: number) {
+  return items.slice(0, count);
+}
+
+export function groupPublicationsByYear(items: Publication[]) {
+  const grouped = new Map<number, Publication[]>();
+
+  for (const item of items) {
+    if (!grouped.has(item.year)) {
+      grouped.set(item.year, []);
+    }
+    grouped.get(item.year)?.push(item);
+  }
+
+  return [...grouped.entries()]
+    .sort((a, b) => b[0] - a[0])
+    .map(([year, entries]) => ({ year, entries }));
+}
+
+export function groupPeople(items: Person[]) {
+  const grouped = new Map<Person["group"], Person[]>();
+
+  for (const item of [...items].sort((a, b) => a.order - b.order)) {
+    if (!grouped.has(item.group)) {
+      grouped.set(item.group, []);
+    }
+    grouped.get(item.group)?.push(item);
+  }
+
+  return PEOPLE_GROUP_ORDER.map((label) => ({
+    label,
+    entries: grouped.get(label) ?? []
+  })).filter((group) => group.entries.length > 0);
+}

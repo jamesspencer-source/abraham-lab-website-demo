@@ -19,6 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      ASTRO_TELEMETRY_DISABLED: "1"
       SITE_URL: https://jamesspencer-source.github.io
       SITE_BASE_PATH: /abraham-lab-website-demo
 
@@ -35,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build site
+      - name: Build Astro site
         run: npm run build
 
       - name: Configure Pages

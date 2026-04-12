@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import { publications } from "../../data/publications";
+import { featuredOnly, groupPublicationsByYear, withBase } from "../../lib/content";
+
+const featuredPublications = featuredOnly(publications);
+const leadPublication = featuredPublications[0];
+const groupedPublications = groupPublicationsByYear(publications);
+---
+
+<BaseLayout title="Publications" description="Selected and archived Abraham Lab publications.">
+  <PageHero
+    eyebrow="Publications"
+    title="Selected work from the Abraham Lab."
+    description="Recent and representative papers spanning receptor recognition, antibody action, and viral replication mechanisms."
+  />
+
+  {leadPublication && (
+    <section class="section section--flagship">
+      <div class="shell editorial-feature reveal">
+        <div class="editorial-feature__visual frame" style={leadPublication.imagePosition ? `--media-position: ${leadPublication.imagePosition};` : undefined}>
+          <img src={withBase(leadPublication.image!)} alt={leadPublication.imageAlt!} loading="lazy" />
+        </div>
+        <div class="editorial-feature__body">
+          <p class="eyebrow">Lead paper</p>
+          <h2>{leadPublication.title}</h2>
+          <p class="feature-lead">{leadPublication.summary}</p>
+          <p class="meta-line">
+            {leadPublication.year}{leadPublication.doi ? ` | ${leadPublication.doi}` : ""}
+          </p>
+          <p class="citation-text">{leadPublication.citation}</p>
+          <a class="button button--primary" href={leadPublication.link} target="_blank" rel="noreferrer">Read paper</a>
+        </div>
+        <aside class="editorial-feature__rail">
+          <p class="eyebrow">Selected papers</p>
+          <ol class="clean-list citation-rail">
+            {featuredPublications.slice(1).map((item) => (
+              <li class="citation-rail__item">
+                <span>{item.year}</span>
+                <div>
+                  <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
+                  <p>{item.citation}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </aside>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--utility section--bordered">
+    <div class="shell section-heading reveal">
+      <p class="eyebrow">Archive</p>
+      <h2>Year-grouped publication record.</h2>
+    </div>
+
+    <div class="shell archive-list">
+      {groupedPublications.map((yearGroup) => (
+        <section class="archive-group reveal">
+          <div class="archive-group__year">
+            <h3>{yearGroup.year}</h3>
+          </div>
+          <ol class="clean-list archive-group__entries">
+            {yearGroup.entries.map((item) => (
+              <li>
+                <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
+                <p>{item.citation}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

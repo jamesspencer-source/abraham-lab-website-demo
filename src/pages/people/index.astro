@@ -1,0 +1,71 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import { peopleData } from "../../data/people";
+import { groupPeople, withBase } from "../../lib/content";
+
+const groupedPeople = groupPeople(peopleData.currentMembers);
+---
+
+<BaseLayout title="People" description="Current members and alumni of the Abraham Lab.">
+  <PageHero
+    eyebrow="People"
+    title="People of the Abraham Lab."
+    description="Faculty, fellows, students, and operations leadership of the Abraham Lab."
+  />
+
+  <section class="section section--flagship">
+    <div class="shell section-heading reveal">
+      <p class="eyebrow">Current members</p>
+      <h2>Laboratory directory.</h2>
+    </div>
+
+    <div class="shell directory-shell">
+      {groupedPeople.map((group) => (
+        <section class="directory-group reveal">
+          <div class="directory-group__header">
+            <h2>{group.label}</h2>
+          </div>
+
+          <div class="directory-list">
+            {group.entries.map((person) => (
+              <article class:list={["directory-row", group.label === "Leadership" && "directory-row--lead"]}>
+                <div class="directory-row__media frame" style={person.imagePosition ? `--media-position: ${person.imagePosition};` : undefined}>
+                  <img src={withBase(person.image)} alt={person.imageAlt} loading="lazy" />
+                </div>
+                <div class="directory-row__body">
+                  <h3>{person.name}</h3>
+                  <p class="directory-row__title">{person.title}</p>
+                  {person.note && <p>{person.note}</p>}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--utility section--bordered">
+    <div class="shell section-heading reveal">
+      <p class="eyebrow">Alumni</p>
+      <h2>Past lab members.</h2>
+    </div>
+
+    <div class="shell alumni-shell">
+      {peopleData.alumni.map((group) => (
+        <section class="alumni-group reveal">
+          <h3>{group.label}</h3>
+          <div class="alumni-list">
+            {group.entries.map((entry) => (
+              <div class="alumni-row">
+                <p class="alumni-row__name">{entry.name}</p>
+                {entry.destination ? <p class="alumni-row__destination">{entry.destination}</p> : <p class="alumni-row__destination"></p>}
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

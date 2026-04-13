@@ -5,35 +5,46 @@ import { siteData } from "../../data/site";
 ---
 
 <BaseLayout title="Contact" description="Contact information for the Abraham Lab.">
-  <section class="interior-hero interior-hero--contact">
-    <div class="shell interior-hero__grid">
-      <div class="interior-hero__copy reveal">
+  <section class="page-hero page-hero--contact">
+    <div class="shell page-hero__grid">
+      <div class="page-hero__copy reveal">
         <p class="eyebrow">Contact</p>
         <h1>For collaborations, speaking requests, and administrative inquiries.</h1>
         <p>
           The Abraham Lab is based in the Department of Microbiology at Harvard Medical School, within the
-          Blavatnik Institute and the Longwood Medical Area.
+          Blavatnik Institute and the Veritas Science Center.
         </p>
+      </div>
+      <div class="page-hero__rail reveal">
+        <div class="metadata-stack">
+          <p class="metadata-label">Location</p>
+          <p>{siteData.contact.addressLines[0]}</p>
+          <p>{siteData.contact.addressLines[1]}</p>
+        </div>
+        <div class="metadata-stack">
+          <p class="metadata-label">Primary email</p>
+          <p><a class="u-nowrap email-link" href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section section--utility contact-band">
     <div class="shell contact-band__grid">
-      <div class="contact-band__content">
+      <div class="contact-band__content reveal">
         <div class="contact-cards">
-          <article class="metadata-panel reveal">
+          <article class="metadata-panel">
             <p class="metadata-label">Address</p>
             {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
           </article>
 
-          <article class="metadata-panel reveal">
+          <article class="metadata-panel">
             <p class="metadata-label">Contact</p>
             <p><strong>Jonathan Abraham</strong><br /><a class="u-nowrap email-link" href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
             <p><strong>James Spencer</strong><br /><a class="u-nowrap email-link" href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
           </article>
 
-          <article class="metadata-panel reveal">
+          <article class="metadata-panel">
             <p class="metadata-label">Affiliation</p>
             {siteData.contact.institutionDisplayLines?.map((line) => (
               <p class={line.includes("Blavatnik Institute") ? "u-nowrap" : undefined}>{line}</p>

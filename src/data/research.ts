@@ -2,15 +2,15 @@ import type { ResearchProgram } from "./types";
 
 export const researchPrograms = [
   {
-    title: "Viral entry",
-    keyQuestion: "Which receptor interactions and fusion steps define cellular entry?",
+    title: "Host receptor usage and entry biology",
+    keyQuestion: "Which receptor interfaces determine tropism, entry efficiency, and cross-species risk?",
     importance:
-      "Receptor engagement and membrane fusion define tropism and establish the first committed step in infection.",
+      "Entry defines the first committed step in infection and constrains both tissue tropism and emergence potential.",
     summary:
-      "The lab resolves how viral attachment and fusion proteins engage host receptors and how those interfaces vary across strains, tissues, and host species.",
+      "The lab resolves how viral attachment and fusion proteins engage host receptors and how those interfaces differ across strains, tissues, and host species.",
     paragraphs: [
-      "Entry is the first irreversible commitment to infection, making receptor recognition and fusion machinery central determinants of viral tropism and pathogenesis.",
-      "Using structural biology, receptor-focused experiments, and functional virology, the group defines how viral surface proteins engage host factors and how those interactions shift across related viruses."
+      "Entry is the first irreversible commitment to infection, making receptor recognition and membrane-fusion machinery central determinants of viral tropism and pathogenesis.",
+      "Using structural biology, receptor-focused experiments, and functional virology, the laboratory defines how viral surface proteins engage host factors and how those interfaces shift across related viruses."
     ],
     systems: ["alphaviruses", "arenaviruses", "arthropod-borne viruses"],
     methods: [
@@ -41,15 +41,15 @@ export const researchPrograms = [
     ]
   },
   {
-    title: "Antiviral antibodies and glycoprotein vulnerability",
-    keyQuestion: "Which glycoprotein surfaces remain accessible to neutralizing antibodies?",
+    title: "Glycoprotein architecture and antibody vulnerability",
+    keyQuestion: "Which glycoprotein surfaces support durable neutralization, and which are structurally poised for escape?",
     importance:
-      "Neutralization depends on defined structural epitopes, conformational states, and routes of escape.",
+      "Neutralization depends on structurally defined epitopes, conformational control, and routes of escape that can be measured directly.",
     summary:
-      "The group maps glycoprotein architecture and antibody interfaces to distinguish durable neutralizing sites from strain-specific recognition.",
+      "The group maps glycoprotein architecture and antibody interfaces to distinguish conserved neutralization targets from strain-specific or escape-prone surfaces.",
     paragraphs: [
       "Neutralizing antibodies can act by blocking receptor engagement or by constraining the structural transitions required for membrane fusion.",
-      "The lab combines glycoprotein structure determination, monoclonal antibody analysis, and mechanistic neutralization experiments to define which viral surfaces support broad recognition and which readily escape."
+      "The laboratory combines glycoprotein structure determination, monoclonal antibody analysis, and mechanistic neutralization experiments to define which viral surfaces support broad recognition and which readily escape."
     ],
     systems: ["SARS-CoV-2", "alphaviruses", "mammarenaviruses"],
     methods: [
@@ -80,12 +80,12 @@ export const researchPrograms = [
     ]
   },
   {
-    title: "Viral polymerases",
+    title: "Replication machines and antiviral mechanism",
     keyQuestion: "How do viral polymerase assemblies govern replication, inhibition, and resistance?",
     importance:
       "Replication complexes contain essential enzymology and many clinically relevant antiviral targets.",
     summary:
-      "The lab analyzes polymerase assemblies, inhibitor engagement, and resistance mutations in DNA and RNA virus systems.",
+      "The laboratory analyzes polymerase assemblies, inhibitor engagement, and resistance mutations across DNA and RNA virus systems.",
     paragraphs: [
       "After entry, genome replication and transcription depend on specialized polymerase complexes with distinctive structural organization and catalytic logic.",
       "By resolving polymerase assemblies, inhibitor interactions, and resistance mechanisms, the group connects structural observations to drug action and antiviral failure."

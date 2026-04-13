@@ -8,15 +8,19 @@ const selectedPublications = limitItems(featuredOnly(publications), 5);
 ---
 
 <BaseLayout title="Jonathan Abraham" description="Profile of Jonathan Abraham, M.D., Ph.D.">
-  <section class="interior-hero interior-hero--profile">
-    <div class="shell interior-hero__grid">
-      <div class="interior-hero__copy reveal">
+  <section class="profile-hero">
+    <div class="shell profile-hero__grid">
+      <div class="profile-hero__copy reveal">
         <p class="eyebrow">Jonathan Abraham</p>
         <h1>{jonathanProfile.name}</h1>
-        <p>{jonathanProfile.title}</p>
-        <p>{jonathanProfile.secondaryTitle}</p>
+        <p class="profile-hero__title">{jonathanProfile.title}</p>
+        <p class="profile-hero__title">{jonathanProfile.secondaryTitle}</p>
+        <p class="profile-hero__overview">{jonathanProfile.overview}</p>
       </div>
-      <div class="interior-hero__rail reveal">
+      <div class="profile-hero__portrait frame reveal" style={jonathanProfile.portraitPosition ? `--media-position: ${jonathanProfile.portraitPosition};` : undefined}>
+        <img src={withBase(jonathanProfile.portrait)} alt={jonathanProfile.portraitAlt} loading="lazy" />
+      </div>
+      <div class="profile-hero__rail reveal">
         <div class="metadata-stack">
           <p class="metadata-label">Appointments</p>
           <ul class="clean-list metadata-list">
@@ -29,43 +33,36 @@ const selectedPublications = limitItems(featuredOnly(publications), 5);
 
   <section class="section section--flagship profile-band">
     <div class="shell profile-band__grid">
-      <div class="profile-band__portrait frame reveal" style={jonathanProfile.portraitPosition ? `--media-position: ${jonathanProfile.portraitPosition};` : undefined}>
-        <img src={withBase(jonathanProfile.portrait)} alt={jonathanProfile.portraitAlt} loading="lazy" />
-      </div>
-
       <div class="profile-band__body reveal">
         <p class="eyebrow">Scientific biography</p>
-        <p class="profile-band__overview">{jonathanProfile.overview}</p>
         {jonathanProfile.biography.map((paragraph) => <p>{paragraph}</p>)}
       </div>
-    </div>
-  </section>
 
-  <section class="section section--utility facts-band">
-    <div class="shell facts-band__grid">
-      <article class="metadata-panel reveal">
-        <p class="metadata-label">Distinctions</p>
-        <ul class="clean-list metadata-list">
-          {jonathanProfile.distinctions.map((item) => <li>{item}</li>)}
-        </ul>
-      </article>
-      <article class="metadata-panel reveal">
-        <p class="metadata-label">Research focus</p>
-        <ul class="clean-list metadata-list">
-          {jonathanProfile.focusAreas.map((item) => <li>{item}</li>)}
-        </ul>
-      </article>
-      <article class="metadata-panel reveal">
-        <p class="metadata-label">Representative work</p>
-        <ul class="clean-list metadata-list">
-          {jonathanProfile.representativeWork.map((item) => <li>{item}</li>)}
-        </ul>
-      </article>
+      <div class="profile-band__rail reveal">
+        <article class="metadata-panel">
+          <p class="metadata-label">Distinctions</p>
+          <ul class="clean-list metadata-list">
+            {jonathanProfile.distinctions.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+        <article class="metadata-panel">
+          <p class="metadata-label">Research focus</p>
+          <ul class="clean-list metadata-list">
+            {jonathanProfile.focusAreas.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+        <article class="metadata-panel">
+          <p class="metadata-label">Representative work</p>
+          <ul class="clean-list metadata-list">
+            {jonathanProfile.representativeWork.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      </div>
     </div>
   </section>
 
   <section class="section section--utility updates-band">
-    <div class="shell page-section__header page-section__header--compact">
+    <div class="shell section-heading section-heading--compact">
       <div class="reveal">
         <p class="eyebrow">Selected publications</p>
         <h2>Representative papers aligned with the laboratory program.</h2>

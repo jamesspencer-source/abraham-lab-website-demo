@@ -23,6 +23,18 @@ export function featuredOnly(items: Publication[]) {
     .sort(comparePublicationDates);
 }
 
+export function leadPublication(items: Publication[]) {
+  return [...items]
+    .filter((item) => Boolean(item.leadFeature))
+    .sort(comparePublicationDates)[0];
+}
+
+export function homepageProofOnly(items: Publication[]) {
+  return [...items]
+    .filter((item) => Boolean(item.homepageProof))
+    .sort(comparePublicationDates);
+}
+
 export function limitItems<T>(items: T[], count: number) {
   return items.slice(0, count);
 }

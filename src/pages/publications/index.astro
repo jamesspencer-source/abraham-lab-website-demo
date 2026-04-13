@@ -1,26 +1,26 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { publications } from "../../data/publications";
-import { featuredOnly, formatMonthYear, groupPublicationsByYear, withBase } from "../../lib/content";
+import { featuredOnly, formatMonthYear, groupPublicationsByYear, leadPublication, withBase } from "../../lib/content";
 
 const featuredPublications = featuredOnly(publications);
-const leadPublication = featuredPublications[0];
+const leadPaper = leadPublication(publications) ?? featuredPublications[0];
 const groupedPublications = groupPublicationsByYear(publications);
 ---
 
 <BaseLayout title="Publications" description="Selected and archived Abraham Lab publications.">
-  <section class="interior-hero interior-hero--publications">
-    <div class="shell interior-hero__grid">
-      <div class="interior-hero__copy reveal">
+  <section class="page-hero page-hero--publications">
+    <div class="shell page-hero__grid">
+      <div class="page-hero__copy reveal">
         <p class="eyebrow">Publications</p>
-        <h1>Selected work in entry biology, antiviral antibodies, and viral replication.</h1>
+        <h1>Publication record in entry biology, glycoprotein structure, and viral replication.</h1>
         <p>
           The publication record spans receptor recognition, glycoprotein architecture, antibody-mediated
-          neutralization, and replication machinery, with an emphasis on mechanistic questions that matter for
+          neutralization, and replication machinery, with an emphasis on mechanistic questions relevant to
           antiviral design and emerging infectious disease.
         </p>
       </div>
-      <div class="interior-hero__rail reveal">
+      <div class="page-hero__rail reveal">
         <div class="metadata-stack">
           <p class="metadata-label">Recent venues</p>
           <ul class="clean-list metadata-list">
@@ -34,36 +34,36 @@ const groupedPublications = groupPublicationsByYear(publications);
     </div>
   </section>
 
-  {leadPublication && (
-    <section class="section section--flagship publication-band publication-band--interior">
-      <div class="shell publication-band__grid">
-        <div class="publication-band__body reveal">
+  {leadPaper && (
+    <section class="section section--flagship proof-feature proof-feature--interior">
+      <div class="shell editorial-feature editorial-feature--interior">
+        <div class="editorial-feature__copy reveal">
           <p class="eyebrow">Lead paper</p>
-          <h2>{leadPublication.title}</h2>
-          <p class="publication-band__meta">
-            {[leadPublication.journal, leadPublication.publishedAt ? formatMonthYear(leadPublication.publishedAt) : undefined, leadPublication.pmid ? `PMID ${leadPublication.pmid}` : undefined].filter(Boolean).join(" | ")}
+          <h2>{leadPaper.title}</h2>
+          <p class="editorial-feature__meta">
+            {[leadPaper.journal, leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : undefined, leadPaper.pmid ? `PMID ${leadPaper.pmid}` : undefined].filter(Boolean).join(" / ")}
           </p>
-          <p class="publication-band__summary">{leadPublication.summary}</p>
-          <p class="citation-text">{leadPublication.citation}</p>
+          <p class="editorial-feature__summary">{leadPaper.summary}</p>
+          <p class="citation-text">{leadPaper.citation}</p>
           <div class="button-row">
-            <a class="button button--primary" href={leadPublication.link} target="_blank" rel="noreferrer">Read paper</a>
-            {leadPublication.doi && <a class="button button--ghost" href={`https://doi.org/${leadPublication.doi}`} target="_blank" rel="noreferrer">DOI</a>}
+            <a class="button button--primary" href={leadPaper.link} target="_blank" rel="noreferrer">Read paper</a>
+            {leadPaper.doi && <a class="button button--ghost" href={`https://doi.org/${leadPaper.doi}`} target="_blank" rel="noreferrer">DOI</a>}
           </div>
         </div>
 
-        <div class="publication-band__visual reveal">
-          <div class="publication-band__image frame" style={leadPublication.imagePosition ? `--media-position: ${leadPublication.imagePosition};` : undefined}>
-            <img src={withBase(leadPublication.image!)} alt={leadPublication.imageAlt!} loading="lazy" />
+        <div class="editorial-feature__visual reveal">
+          <div class="frame editorial-feature__frame" style={leadPaper.imagePosition ? `--media-position: ${leadPaper.imagePosition};` : undefined}>
+            <img src={withBase(leadPaper.image!)} alt={leadPaper.imageAlt!} loading="lazy" />
           </div>
         </div>
 
-        <aside class="publication-band__rail reveal">
+        <aside class="editorial-feature__rail reveal">
           <p class="metadata-label">Selected papers</p>
           <div class="reference-list">
-            {featuredPublications.slice(1).map((item) => (
+            {featuredPublications.filter((item) => item.title !== leadPaper.title).slice(0, 4).map((item) => (
               <article class="reference-card">
                 <p class="reference-card__meta">
-                  {[item.journal ?? "Publication", item.year].join(" | ")}
+                  {[item.journal ?? "Publication", item.year].join(" / ")}
                 </p>
                 <a class="reference-card__title" href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
                 <p class="reference-card__note">{item.citation}</p>
@@ -76,10 +76,10 @@ const groupedPublications = groupPublicationsByYear(publications);
   )}
 
   <section class="section section--utility archive-band">
-    <div class="shell page-section__header page-section__header--compact">
+    <div class="shell section-heading section-heading--compact">
       <div class="reveal">
         <p class="eyebrow">Archive</p>
-        <h2>Year-grouped publication record.</h2>
+        <h2>Year-grouped citation ledger.</h2>
       </div>
     </div>
 

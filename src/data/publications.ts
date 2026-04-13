@@ -14,8 +14,10 @@ export const publications = [
     doi: "10.1016/j.cell.2025.11.041",
     pmid: "41468884",
     featured: true,
+    leadFeature: true,
+    homepageProof: true,
     summary:
-      "A mechanistic and structural analysis of HSV-1 helicase-primase inhibition and replication fork assembly.",
+      "Structural and single-molecule analysis showing how helicase-primase inhibitors arrest herpesvirus DNA replication and reveal assembly of a replication fork complex.",
     image: "/assets/images/publications/hsv-helicase-primase.jpg",
     imagePosition: "center 34%",
     imageAlt:
@@ -34,8 +36,9 @@ export const publications = [
     doi: "10.1038/s41564-025-02085-6",
     pmid: "40781447",
     featured: true,
+    homepageProof: true,
     summary:
-      "High-resolution definition of arenavirus spike architecture and the molecular organization of the glycoprotein complex.",
+      "Cryo-EM analysis of New World arenavirus glycoprotein complexes clarifying organization, receptor-facing architecture, and control of membrane fusion.",
     image: "/assets/images/publications/arenavirus-gpc.jpeg",
     imagePosition: "center 42%",
     imageAlt:
@@ -54,8 +57,9 @@ export const publications = [
     doi: "10.1016/j.cell.2025.03.029",
     pmid: "40187345",
     featured: true,
+    homepageProof: true,
     summary:
-      "Structural dissection of receptor switching in an encephalitic arbovirus and its implications for tissue tropism.",
+      "Structural and functional analysis explaining how receptor recognition shifted in an encephalitic arbovirus and what that implies for tropism and outbreak risk.",
     image: "/assets/images/publications/weev-structures.jpeg",
     imagePosition: "center 38%",
     imageAlt:

@@ -32,6 +32,8 @@ const viewports = [
   { name: "1440", width: 1440, height: 1600 }
 ];
 
+const themes = ["light", "dark"];
+
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",
@@ -120,16 +122,16 @@ async function startStaticServer() {
   return server;
 }
 
-function screenshotName(route, viewport) {
-  return `${route.slug}-${viewport.name}.png`;
+function screenshotName(route, viewport, theme) {
+  return `${route.slug}-${viewport.name}-${theme}.png`;
 }
 
 async function writeIndex(manifest) {
   const cards = manifest
     .map(
-      ({ route, viewport, relativePath }) => `
+      ({ route, viewport, theme, relativePath }) => `
         <article class="card">
-          <h2>${route.slug} · ${viewport.name}px</h2>
+          <h2>${route.slug} · ${viewport.name}px · ${theme}</h2>
           <p>${route.path}</p>
           <a href="${relativePath}"><img src="${relativePath}" alt="${route.slug} at ${viewport.name}px" loading="lazy" /></a>
         </article>
@@ -198,43 +200,48 @@ async function run() {
       const page = await context.newPage();
 
       for (const route of routes) {
-        const url = `http://127.0.0.1:${port}${route.path}`;
-        await page.goto(url, { waitUntil: "networkidle" });
-        await page.evaluate(async () => {
-          if (document.fonts?.ready) {
-            await document.fonts.ready;
-          }
-          document.querySelectorAll(".reveal").forEach((node) => node.classList.add("is-visible"));
-          document.querySelector(".site-nav")?.classList.remove("is-open");
-          document.querySelector(".nav-toggle")?.setAttribute("aria-expanded", "false");
-        });
-        await page.addStyleTag({
-          content: `
-            *, *::before, *::after {
-              animation: none !important;
-              transition: none !important;
-              scroll-behavior: auto !important;
+        for (const theme of themes) {
+          const url = `http://127.0.0.1:${port}${route.path}`;
+          await page.goto(url, { waitUntil: "networkidle" });
+          await page.evaluate(async (activeTheme) => {
+            if (document.fonts?.ready) {
+              await document.fonts.ready;
             }
-            .reveal {
-              opacity: 1 !important;
-              transform: none !important;
-            }
-          `
-        });
+            document.documentElement.dataset.theme = activeTheme;
+            document.documentElement.style.colorScheme = activeTheme;
+            document.querySelectorAll(".reveal").forEach((node) => node.classList.add("is-visible"));
+            document.querySelector(".site-nav")?.classList.remove("is-open");
+            document.querySelector(".nav-toggle")?.setAttribute("aria-expanded", "false");
+          }, theme);
+          await page.addStyleTag({
+            content: `
+              *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+              }
+              .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+              }
+            `
+          });
 
-        const fileName = screenshotName(route, viewport);
-        const filePath = path.join(screenshotRoot, fileName);
-        await page.screenshot({
-          path: filePath,
-          fullPage: true,
-          animations: "disabled"
-        });
+          const fileName = screenshotName(route, viewport, theme);
+          const filePath = path.join(screenshotRoot, fileName);
+          await page.screenshot({
+            path: filePath,
+            fullPage: true,
+            animations: "disabled"
+          });
 
-        manifest.push({
-          route,
-          viewport,
-          relativePath: `screenshots/${fileName}`
-        });
+          manifest.push({
+            route,
+            viewport,
+            theme,
+            relativePath: `screenshots/${fileName}`
+          });
+        }
       }
 
       await context.close();

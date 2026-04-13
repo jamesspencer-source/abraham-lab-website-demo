@@ -5,9 +5,9 @@ export const newsItems = [
     date: "2026-03-03",
     category: "Institutional Coverage",
     source: "HMS Office for Graduate Education",
-    title: "Inside the Labs of HMS profiles the Abraham Lab's pandemic-preparedness research",
+    title: "Inside the Labs of HMS profiles the Abraham Lab's work on viral infection mechanisms",
     summary:
-      "A Harvard Medical School video feature profiles how the lab studies viral infection mechanisms relevant to future outbreak preparedness.",
+      "A Harvard Medical School video feature follows the lab's work on how viruses infect cells and how mechanistic insight can sharpen outbreak preparedness.",
     link: "https://ogephd.hms.harvard.edu/news?page=2",
     linkLabel: "View HMS feature",
     image: "/assets/images/research/viral-entry-comparison.png",

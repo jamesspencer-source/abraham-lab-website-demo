@@ -3,9 +3,9 @@ import type { PeopleData } from "./types";
 export const peopleData = {
   currentMembers: [
     {
-      name: "Jonathan Abraham, M.D., Ph.D.",
+      name: "Jonathan Abraham, MD, PhD",
       title: "Associate Professor of Microbiology, Harvard Medical School",
-      note: "Structural virology, host receptor recognition, antiviral antibodies, and polymerase biology.",
+      note: "Structural virology of receptor engagement, antibody recognition, and viral replication machinery.",
       group: "Leadership",
       image: "/assets/images/people/jonathan-abraham.jpeg",
       imageAlt: "Jonathan Abraham",
@@ -144,7 +144,7 @@ export const peopleData = {
     {
       name: "James Spencer",
       title: "Lab Manager",
-      note: "Laboratory management and operations.",
+      note: "Laboratory management and research administration.",
       group: "Operations & Strategy",
       image: "/assets/images/people/james-spencer.png",
       imageAlt: "James Spencer",
@@ -156,8 +156,8 @@ export const peopleData = {
       label: "Postdoctoral and Research Fellows",
       entries: [
         { name: "Dan Olal, Ph.D." },
-        { name: "Poorna Goswami, Ph.D.", destination: "Adjunct Faculty, Lasell University" },
-        { name: "Gabor Oroszán, Ph.D.", destination: "Senior Scientist, In Silico Lead, VRG Therapeutics" },
+        { name: "Poorna Goswami, Ph.D.", destination: "Lasell University" },
+        { name: "Gabor Oroszán, Ph.D.", destination: "VRG Therapeutics" },
         { name: "Chieyu Lin, Ph.D." },
         { name: "Sundaresh Shankar, Ph.D." },
         { name: "Keshalini Sabaratnam, Ph.D." }
@@ -166,11 +166,11 @@ export const peopleData = {
     {
       label: "Graduate Students",
       entries: [
-        { name: "Sarah Clark-Drake" },
+        { name: "Sarah Clark-Drake", destination: "Arcellx" },
         { name: "Lars Clark" },
         {
           name: "Katherine Nabel Smith",
-          destination: "Dermatology Resident, University of Pennsylvania"
+          destination: "Penn Dermatology, University of Pennsylvania"
         }
       ]
     },
@@ -181,15 +181,8 @@ export const peopleData = {
     {
       label: "Research Technicians",
       entries: [
-        {
-          name: "Adrian Coscia",
-          destination:
-            "HST M.D.-Ph.D. Program; thesis labs of Stephen Harrison and Tomas Kirchhausen"
-        },
-        {
-          name: "Taleen Dilanyan",
-          destination: "Caltech Chemistry Ph.D. Program; thesis lab of Lior Pachter"
-        }
+        { name: "Adrian Coscia" },
+        { name: "Taleen Dilanyan" }
       ]
     },
     {

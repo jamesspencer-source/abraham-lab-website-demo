@@ -22,18 +22,20 @@ const directoryIndex = [
 ---
 
 <BaseLayout title="People" description="Current members and alumni of the Abraham Lab.">
-  <section class="interior-hero interior-hero--people">
-    <div class="shell interior-hero__grid">
-      <div class="interior-hero__copy reveal">
+  <section class="page-hero page-hero--people">
+    <div class="shell page-hero__grid">
+      <div class="page-hero__copy reveal">
         <p class="eyebrow">People</p>
-        <h1>Faculty, fellows, students, and laboratory operations of the Abraham Lab.</h1>
-        <p>Current members and alumni are listed below.</p>
+        <h1>Faculty, fellows, students, and operations leadership of the Abraham Lab.</h1>
+        <p>Current personnel are grouped below, followed by a compact alumni register.</p>
       </div>
-      <div class="interior-hero__rail reveal">
+      <div class="page-hero__rail reveal">
         <div class="metadata-stack">
           <p class="metadata-label">Directory index</p>
           <ul class="clean-list metadata-list">
+            {leadership && <li>{leadership.label}</li>}
             {remainingGroups.map((group) => <li>{group.label}</li>)}
+            <li>Alumni</li>
           </ul>
         </div>
       </div>
@@ -85,15 +87,15 @@ const directoryIndex = [
             <p class="directory-group__count">{group.entries.length} people</p>
           </div>
 
-          <div class="directory-grid">
+          <div class="directory-list">
             {group.entries.map((person) => (
-              <article class="directory-record">
-                <div class="directory-record__media frame" style={person.imagePosition ? `--media-position: ${person.imagePosition};` : undefined}>
+              <article class="directory-row">
+                <div class="directory-row__media frame" style={person.imagePosition ? `--media-position: ${person.imagePosition};` : undefined}>
                   <img src={withBase(person.image)} alt={person.imageAlt} loading="lazy" />
                 </div>
-                <div class="directory-record__body">
+                <div class="directory-row__body">
                   <h3>{person.name}</h3>
-                  <p class="directory-record__title">{person.title}</p>
+                  <p class="directory-row__title">{person.title}</p>
                   {person.note && <p>{person.note}</p>}
                 </div>
               </article>
@@ -105,7 +107,7 @@ const directoryIndex = [
   </section>
 
   <section class="section section--utility alumni-band" id="alumni">
-    <div class="shell page-section__header page-section__header--compact">
+    <div class="shell section-heading section-heading--compact">
       <div class="reveal">
         <p class="eyebrow">Alumni</p>
         <h2>Past lab members.</h2>

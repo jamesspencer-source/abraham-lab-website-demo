@@ -3,15 +3,15 @@ export type NavItem = {
   href: string;
 };
 
+export type ThemeSettings = {
+  storageKey: string;
+  defaultMode: "system" | "light" | "dark";
+  allowToggle?: boolean;
+};
+
 export type HeroFactItem = {
   label: string;
   value: string;
-};
-
-export type HeroProofItem = {
-  label: string;
-  value: string;
-  href?: string;
 };
 
 export type HeroFigure = {
@@ -44,7 +44,6 @@ export type ContactData = {
   homeLocationLabel: string;
   mapQuery: string;
   mapUrl: string;
-  appleMapUrl?: string;
   mapPreviewImage: string;
   mapPreviewAlt: string;
   mapContext: string;
@@ -57,10 +56,10 @@ export type SiteData = {
   shortInstitution: string;
   description: string;
   url: string;
+  theme: ThemeSettings;
   heroTitle: string;
   heroDeck: string;
   heroFacts: HeroFactItem[];
-  heroProof: HeroProofItem[];
   heroFigures: HeroFigure[];
   institutionLabel: string;
   institutionTitle: string;
@@ -108,6 +107,8 @@ export type Publication = {
   doi?: string;
   pmid?: string;
   featured?: boolean;
+  leadFeature?: boolean;
+  homepageProof?: boolean;
   summary?: string;
   image?: string;
   imagePosition?: string;

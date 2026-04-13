@@ -8,19 +8,19 @@ import { researchPrograms } from "../../data/research";
   title="Research"
   description="Research themes in viral entry, antiviral antibodies, and viral polymerase biology at the Abraham Lab."
 >
-  <section class="interior-hero interior-hero--research">
-    <div class="shell interior-hero__grid">
-      <div class="interior-hero__copy reveal">
+  <section class="page-hero page-hero--research">
+    <div class="shell page-hero__grid">
+      <div class="page-hero__copy reveal">
         <p class="eyebrow">Research</p>
-        <h1>Mechanistic problems in viral entry, neutralization, and replication.</h1>
+        <h1>Mechanistic chapters in viral infection biology.</h1>
         <p>
-          The laboratory&apos;s public work concentrates on receptor recognition, glycoprotein architecture,
+          The Abraham Lab's public work concentrates on receptor recognition, glycoprotein architecture,
           antibody interfaces, and polymerase assemblies in medically important viruses. The emphasis is on
-          experimentally resolved mechanism rather than broad descriptive surveying.
+          experimentally resolved mechanism and source-backed public results.
         </p>
       </div>
 
-      <div class="interior-hero__rail reveal">
+      <div class="page-hero__rail reveal">
         <div class="metadata-stack">
           <p class="metadata-label">Core systems</p>
           <ul class="clean-list metadata-list">
@@ -44,6 +44,18 @@ import { researchPrograms } from "../../data/research";
   </section>
 
   <section class="section section--flagship">
+    <div class="shell section-heading section-heading--split">
+      <div class="reveal">
+        <p class="eyebrow">Technical atlas</p>
+        <h2>Three scientific programs anchored to public papers and resolved mechanism.</h2>
+      </div>
+      <div class="reveal">
+        <p>
+          Each chapter below is tied to published work, representative systems, and experimental methods already
+          described in the public record.
+        </p>
+      </div>
+    </div>
     <div class="shell research-chapter-list">
       {researchPrograms.map((item, index) => (
         <ResearchChapter
@@ -59,14 +71,13 @@ import { researchPrograms } from "../../data/research";
           image={item.image}
           imageAlt={item.imageAlt}
           imagePosition={item.imagePosition}
-          reverse={index % 2 === 1}
           headingTag="h2"
         />
       ))}
     </div>
   </section>
 
-  <section class="section section--utility methods-band">
+  <section class="section section--utility support-band">
     <div class="shell methods-band__grid">
       <div class="reveal">
         <p class="eyebrow">Experimental approach</p>

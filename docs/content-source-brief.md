@@ -1,6 +1,6 @@
 # Abraham Lab Website Content Source Brief
 
-Verified and reviewed on April 12, 2026.
+Verified and reviewed on April 13, 2026.
 
 ## Institutional wording
 
@@ -18,8 +18,14 @@ Recommended website wording:
 
 Location note used on the site:
 
-- Veritas Science Center (VSC) is used as the building name for 77 Avenue Louis Pasteur in this pass.
-- This naming update was provided directly by the lab and reflected in the contact presentation.
+- HMS Pulse story confirming the rename:
+  - https://pulseimpact.hms.harvard.edu/news/new-research-building-renamed-veritas-science-center
+- HMS campus planning page using VSC naming:
+  - https://campusplanning.hms.harvard.edu/campus-services/room-scheduling-conference-center/conference-center-scheduling-guidelines
+
+Recommended website wording:
+
+`Veritas Science Center, 77 Avenue Louis Pasteur, Boston, MA 02115`
 
 ## Jonathan Abraham
 
@@ -37,8 +43,8 @@ Location note used on the site:
 Public titles used on the site:
 
 - Associate Professor of Microbiology, Harvard Medical School
-- Investigator, Howard Hughes Medical Institute
-- Division of Infectious Diseases, Brigham and Women's Hospital
+- HHMI Investigator
+- Associate Physician, Division of Infectious Diseases, Brigham and Women's Hospital
 
 ## Current people roster
 
@@ -49,6 +55,8 @@ Notes:
 
 - Pan Yang is listed publicly as Instructor of Microbiology.
 - James Spencer is listed publicly as Lab Manager.
+- Public roster source:
+  - https://abrahamlab.med.harvard.edu/people/
 
 ## Recent publications used as featured proof
 
@@ -65,6 +73,16 @@ Notes:
 - Nature Communications 2024 VLDLR recognition paper:
   - https://pubmed.ncbi.nlm.nih.gov/39095394/
 
+Recommended homepage proof set:
+
+- Mechanisms of HSV-1 helicase-primase inhibition and replication fork complex assembly
+- Molecular organization of the New World arenavirus spike glycoprotein complex
+- Molecular basis for shifted receptor recognition by an encephalitic arbovirus
+
+Lead paper recommendation:
+
+- The 2026 Cell HSV-1 helicase-primase paper is the lead homepage publication because it is the newest verified paper and the strongest recent mechanistic structure story.
+
 ## Public news items used
 
 - Inside the Labs of HMS: Preventing the Next Pandemic:
@@ -80,4 +98,8 @@ Notes:
 
 - Public email and phone listings are inconsistent across institutional pages.
 - A clearly official Abraham Lab Bluesky account was not verified during this pass.
-- The canonical public roster remains the current Abraham Lab site unless updated directly by the lab.
+- Only a subset of alumni destinations were independently re-verified during this pass:
+  - Lasell University
+  - VRG Therapeutics
+  - Arcellx
+  - Penn Dermatology / University of Pennsylvania

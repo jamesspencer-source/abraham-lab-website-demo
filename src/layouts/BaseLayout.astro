@@ -16,6 +16,8 @@ const pageTitle = title ? `${title} | ${siteData.fullName}` : siteData.fullName;
 const metaDescription = description ?? siteData.description;
 const canonical = new URL(Astro.url.pathname, siteData.url).toString();
 const socialImage = new URL(withBase(siteData.heroFigures[0].image), siteData.url).toString();
+const themeStorageKey = siteData.theme.storageKey;
+const themeDefaultMode = siteData.theme.defaultMode;
 ---
 
 <!doctype html>
@@ -55,22 +57,66 @@ const socialImage = new URL(withBase(siteData.heroFigures[0].image), siteData.ur
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <script is:inline define:vars={{ themeStorageKey, themeDefaultMode }}>
+      (() => {
+        const root = document.documentElement;
+        const resolveTheme = () => {
+          try {
+            const stored = window.localStorage.getItem(themeStorageKey);
+            if (stored === "light" || stored === "dark") {
+              return stored;
+            }
+          } catch {}
+
+          if (themeDefaultMode === "light" || themeDefaultMode === "dark") {
+            return themeDefaultMode;
+          }
+
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        };
+
+        const theme = resolveTheme();
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script>
   </head>
-  <body class={pageClass}>
+  <body class:list={["site-body", pageClass]}>
     <Header currentPath={Astro.url.pathname} />
     <main id="main-content">
       <slot />
     </main>
     <Footer />
-    <script is:inline>
+    <script is:inline define:vars={{ themeStorageKey, themeDefaultMode }}>
       const navToggle = document.querySelector(".nav-toggle");
       const nav = document.querySelector(".site-nav");
       const themeToggle = document.querySelector(".theme-toggle");
       const themeLabel = document.querySelector(".theme-toggle__label");
       const root = document.documentElement;
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+      const getStoredTheme = () => {
+        try {
+          const stored = window.localStorage.getItem(themeStorageKey);
+          return stored === "light" || stored === "dark" ? stored : null;
+        } catch {
+          return null;
+        }
+      };
+      const resolveTheme = () => {
+        const stored = getStoredTheme();
+        if (stored) return stored;
+        if (themeDefaultMode === "light" || themeDefaultMode === "dark") {
+          return themeDefaultMode;
+        }
+        return prefersDark.matches ? "dark" : "light";
+      };
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      };
 
       const syncThemeToggle = () => {
         const theme = root.dataset.theme === "dark" ? "dark" : "light";
@@ -86,14 +132,28 @@ const socialImage = new URL(withBase(siteData.heroFigures[0].image), siteData.ur
         }
       };
 
+      applyTheme(resolveTheme());
+      syncThemeToggle();
+
+      const syncSystemTheme = () => {
+        if (!getStoredTheme() && themeDefaultMode === "system") {
+          applyTheme(prefersDark.matches ? "dark" : "light");
+          syncThemeToggle();
+        }
+      };
+
+      if ("addEventListener" in prefersDark) {
+        prefersDark.addEventListener("change", syncSystemTheme);
+      } else if ("addListener" in prefersDark) {
+        prefersDark.addListener(syncSystemTheme);
+      }
+
       if (themeToggle) {
-        syncThemeToggle();
         themeToggle.addEventListener("click", () => {
           const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
-          root.dataset.theme = nextTheme;
-          root.style.colorScheme = nextTheme;
+          applyTheme(nextTheme);
           try {
-            window.localStorage.setItem("abraham-theme", nextTheme);
+            window.localStorage.setItem(themeStorageKey, nextTheme);
           } catch {}
           syncThemeToggle();
         });

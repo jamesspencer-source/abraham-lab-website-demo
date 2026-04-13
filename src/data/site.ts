@@ -5,82 +5,65 @@ export const siteData = {
   fullName: "Jonathan Abraham Lab",
   shortInstitution: "Harvard Medical School",
   description:
-    "The Abraham Lab studies viral entry, antibody recognition, and genome replication using structural biology, molecular virology, and biophysics.",
+    "The Abraham Lab studies viral entry, immune recognition, and genome replication using structural biology, molecular virology, and biophysics.",
   url: process.env.SITE_URL || "https://abrahamlab.med.harvard.edu",
-  heroTitle: "Mechanistic studies of viral entry, antibody escape, and genome replication.",
+  theme: {
+    storageKey: "abraham-theme",
+    defaultMode: "system",
+    allowToggle: true
+  },
+  heroTitle: "Mechanisms of viral entry, immune recognition, and genome replication.",
   heroDeck:
-    "The laboratory studies receptor engagement, glycoprotein architecture, antiviral antibodies, and polymerase complexes in human viral pathogens, with emphasis on mechanisms relevant to pathogenesis and antiviral development.",
+    "The laboratory uses structural biology, molecular virology, and biophysics to resolve how viral surface proteins engage receptors, how glycoproteins and antibodies shape neutralization or escape, and how replication complexes create therapeutic vulnerability in medically important human viruses.",
   heroFacts: [
     {
-      label: "Institution",
+      label: "Affiliation",
       value: "Department of Microbiology, Blavatnik Institute, Harvard Medical School"
     },
     {
-      label: "Appointments",
-      value: "Harvard Medical School, Howard Hughes Medical Institute, Brigham and Women's Hospital"
+      label: "Scope",
+      value: "Viral entry, glycoprotein architecture, antibody recognition, and replication machinery"
     },
     {
-      label: "Methods",
-      value: "Structural biology, molecular virology, and biophysics"
-    }
-  ],
-  heroProof: [
-    {
-      label: "Cell | 2026",
-      value: "HSV-1 helicase-primase inhibition and replication fork assembly",
-      href: "https://www.cell.com/cell/fulltext/S0092-8674(25)01376-5"
-    },
-    {
-      label: "Nature Microbiology | 2025",
-      value: "New World arenavirus spike glycoprotein architecture",
-      href: "https://www.nature.com/articles/s41564-025-02085-6"
-    },
-    {
-      label: "Cell | 2025",
-      value: "Shifted receptor recognition in an encephalitic arbovirus",
-      href: "https://www.cell.com/cell/fulltext/S0092-8674(25)00347-2"
-    },
-    {
-      label: "HHMI | 2024-present",
-      value: "Jonathan Abraham named HHMI Investigator",
-      href: "https://www.hhmi.org/scientists/jonathan-abraham"
+      label: "Recent record",
+      value: "Cell 2026 | Nature Microbiology 2025 | Cell 2025"
     }
   ],
   heroFigures: [
     {
-      label: "Entry",
-      title: "Receptor recognition across encephalitic alphaviruses",
-      image: "/assets/images/research/viral-entry-comparison.png",
-      alt: "Structural comparison figure showing receptor recognition features across encephalitic alphaviruses.",
-      note: "Nature Communications, 2024",
-      href: "https://www.nature.com/articles/s41467-024-50887-9",
-      imagePosition: "center center"
+      label: "Cell | 2025",
+      title: "Receptor-bound structure of an encephalitic arbovirus",
+      image: "/assets/images/publications/weev-structures.jpeg",
+      alt: "Composite structural figure from the 2025 Cell paper on shifted receptor recognition by an encephalitic arbovirus.",
+      note: "Entry biology",
+      href: "https://www.cell.com/cell/fulltext/S0092-8674(25)00347-2",
+      imagePosition: "center 40%"
     },
     {
-      label: "Replication",
+      label: "Nature Microbiology | 2025",
+      title: "Prefusion architecture of the New World arenavirus spike",
+      image: "/assets/images/publications/arenavirus-gpc.jpeg",
+      alt: "Cryo-EM figure showing the prefusion architecture of the New World arenavirus glycoprotein complex.",
+      note: "Glycoprotein structure",
+      href: "https://www.nature.com/articles/s41564-025-02085-6",
+      imagePosition: "center 42%"
+    },
+    {
+      label: "Cell | 2026",
       title: "HSV-1 helicase-primase and replication fork assembly",
       image: "/assets/images/publications/hsv-helicase-primase.jpg",
-      alt: "Publication figure showing the HSV helicase-primase complex and replication fork assembly.",
-      note: "Cell, 2026",
+      alt: "Structural figure showing the HSV-1 helicase-primase complex and replication fork assembly.",
+      note: "Replication machinery",
       href: "https://www.cell.com/cell/fulltext/S0092-8674(25)01376-5",
-      imagePosition: "center center"
-    },
-    {
-      label: "Neutralization",
-      title: "SARS-CoV-2 receptor-binding domain antibody evasion",
-      image: "/assets/images/research/antibody-evasion.jpg",
-      alt: "Structural antibody footprint figure illustrating receptor-binding domain antibody evasion.",
-      note: "Science, 2022",
-      href: "https://www.science.org/doi/10.1126/science.abl6251",
-      imagePosition: "center center"
+      imagePosition: "center 34%"
     }
   ],
   institutionLabel: "Institutional Affiliation",
   institutionTitle: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
   institutionSummary:
-    "The laboratory is based in the Department of Microbiology at Harvard Medical School and is part of the Blavatnik Institute. Jonathan Abraham is an HHMI Investigator and also serves on the faculty of the Division of Infectious Diseases at Brigham and Women's Hospital.",
+    "The laboratory is based in the Department of Microbiology at Harvard Medical School. Jonathan Abraham is an HHMI Investigator, and the laboratory's work spans structural virology, host-pathogen interaction, and antiviral mechanism.",
   tagline:
-    "Structural virology and molecular mechanisms of viral entry, neutralization, and genome replication.",
+    "Structural virology and molecular mechanisms of viral entry, immune recognition, and genome replication.",
   nav: [
     { label: "Home", href: "/" },
     { label: "Research", href: "/research/" },
@@ -112,7 +95,7 @@ export const siteData = {
     lab: "Abraham Lab",
     department: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
     institutionDisplayLines: ["Department of Microbiology", "Blavatnik Institute, Harvard Medical School"],
-    addressLines: ["77 Avenue Louis Pasteur", "Veritas Science Center (VSC)", "Boston, MA 02115"],
+    addressLines: ["Veritas Science Center (VSC)", "77 Avenue Louis Pasteur", "Boston, MA 02115"],
     email: "jonathan_abraham@hms.harvard.edu",
     managerEmail: "james_spencer@hms.harvard.edu",
     mapDisplayName: "Harvard Medical School",
@@ -120,11 +103,9 @@ export const siteData = {
     mapQuery: "Harvard Medical School, 77 Avenue Louis Pasteur, Boston, MA 02115",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Harvard+Medical+School%2C+77+Avenue+Louis+Pasteur%2C+Boston%2C+MA+02115",
-    appleMapUrl:
-      "https://maps.apple.com/?q=Harvard%20Medical%20School&ll=42.3387705,-71.1027833",
     mapPreviewImage: "/assets/images/location/veritas-science-center-map.svg",
     mapPreviewAlt: "Stylized locator map highlighting Harvard Medical School and Veritas Science Center (VSC) in the Longwood Medical Area.",
-    mapContext: "Longwood Medical Area, Boston",
+    mapContext: "Boston Longwood campus",
     mapBuilding: "Veritas Science Center (VSC)"
   },
   social: {

@@ -41,23 +41,24 @@ const indexLabel = String(index).padStart(2, "0");
 ---
 
 <article class:list={["research-chapter", reverse && "research-chapter--reverse", "reveal"]}>
-  <div class="research-chapter__heading">
-    <p class="section-index">{indexLabel}</p>
-    <HeadingTag>{title}</HeadingTag>
-    <p class="research-chapter__question">{keyQuestion}</p>
-    <p class="research-chapter__importance">{importance}</p>
-  </div>
-
   <div class="research-chapter__visual science-figure" style={imagePosition ? `--media-position: ${imagePosition};` : undefined}>
     <img src={withBase(image)} alt={imageAlt} loading="lazy" />
   </div>
 
   <div class="research-chapter__body">
+    <p class="section-index">{indexLabel}</p>
+    <HeadingTag>{title}</HeadingTag>
+    <p class="research-chapter__question">{keyQuestion}</p>
     <p class="research-chapter__summary">{summary}</p>
     {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
   </div>
 
   <aside class="research-chapter__rail">
+    <div class="metadata-stack">
+      <p class="metadata-label">Why it matters</p>
+      <p class="research-chapter__importance">{importance}</p>
+    </div>
+
     <div class="metadata-stack">
       <p class="metadata-label">Representative systems</p>
       <ul class="clean-list metadata-list">

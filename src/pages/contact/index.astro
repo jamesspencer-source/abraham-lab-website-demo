@@ -11,8 +11,8 @@ import { siteData } from "../../data/site";
         <p class="eyebrow">Contact</p>
         <h1>For collaborations, speaking requests, and administrative inquiries.</h1>
         <p>
-          The Abraham Lab is based in the Department of Microbiology, Blavatnik Institute, Harvard Medical School,
-          in Boston's Longwood Medical Area.
+          The Abraham Lab is based in the Department of Microbiology at Harvard Medical School, within the
+          Blavatnik Institute and the Longwood Medical Area.
         </p>
       </div>
     </div>
@@ -29,13 +29,15 @@ import { siteData } from "../../data/site";
 
           <article class="metadata-panel reveal">
             <p class="metadata-label">Contact</p>
-            <p><strong>Jonathan Abraham</strong><br /><a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
-            <p><strong>James Spencer</strong><br /><a href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
+            <p><strong>Jonathan Abraham</strong><br /><a class="u-nowrap email-link" href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
+            <p><strong>James Spencer</strong><br /><a class="u-nowrap email-link" href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
           </article>
 
           <article class="metadata-panel reveal">
             <p class="metadata-label">Affiliation</p>
-            <p>{siteData.institutionTitle}</p>
+            {siteData.contact.institutionDisplayLines?.map((line) => (
+              <p class={line.includes("Blavatnik Institute") ? "u-nowrap" : undefined}>{line}</p>
+            ))}
             <ul class="clean-list metadata-list">
               {siteData.affiliations.map((affiliation) => (
                 <li><a href={affiliation.href} target="_blank" rel="noreferrer">{affiliation.shortName ?? affiliation.name}</a></li>
@@ -48,7 +50,7 @@ import { siteData } from "../../data/site";
       <MapWidget
         mode="contact"
         eyebrow="Campus map"
-        description={`${siteData.contact.mapBuilding} · ${siteData.contact.mapContext}`}
+        description="Harvard Medical School campus"
       />
     </div>
   </section>

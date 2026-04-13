@@ -5,11 +5,11 @@ export const siteData = {
   fullName: "Jonathan Abraham Lab",
   shortInstitution: "Harvard Medical School",
   description:
-    "The Abraham Lab uses molecular virology and structural biology to study how viruses enter cells, evade neutralizing antibodies, and replicate their genomes, with a focus on emerging viruses and human disease.",
+    "The Abraham Lab studies viral entry, antibody recognition, and genome replication using structural biology, molecular virology, and biophysics.",
   url: process.env.SITE_URL || "https://abrahamlab.med.harvard.edu",
-  heroTitle: "Mechanistic virology for viral entry, antibody escape, and genome replication.",
+  heroTitle: "Mechanistic studies of viral entry, antibody escape, and genome replication.",
   heroDeck:
-    "The laboratory studies receptor recognition, viral glycoprotein architecture, antiviral antibodies, and polymerase machinery in medically significant viruses to define therapeutic vulnerability and strengthen outbreak preparedness.",
+    "The laboratory studies receptor engagement, glycoprotein architecture, antiviral antibodies, and polymerase complexes in human viral pathogens, with emphasis on mechanisms relevant to pathogenesis and antiviral development.",
   heroFacts: [
     {
       label: "Institution",
@@ -78,7 +78,7 @@ export const siteData = {
   institutionLabel: "Institutional Affiliation",
   institutionTitle: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
   institutionSummary:
-    "The laboratory is based in the Department of Microbiology, Blavatnik Institute, Harvard Medical School. Jonathan Abraham also serves as an HHMI Investigator and on the faculty of the Division of Infectious Diseases at Brigham and Women's Hospital.",
+    "The laboratory is based in the Department of Microbiology at Harvard Medical School and is part of the Blavatnik Institute. Jonathan Abraham is an HHMI Investigator and also serves on the faculty of the Division of Infectious Diseases at Brigham and Women's Hospital.",
   tagline:
     "Structural virology and molecular mechanisms of viral entry, neutralization, and genome replication.",
   nav: [
@@ -111,7 +111,8 @@ export const siteData = {
   contact: {
     lab: "Abraham Lab",
     department: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
-    addressLines: ["77 Avenue Louis Pasteur", "NRB 939", "Boston, MA 02115"],
+    institutionDisplayLines: ["Department of Microbiology", "Blavatnik Institute, Harvard Medical School"],
+    addressLines: ["77 Avenue Louis Pasteur", "Veritas Science Center", "Boston, MA 02115"],
     email: "jonathan_abraham@hms.harvard.edu",
     managerEmail: "james_spencer@hms.harvard.edu",
     mapDisplayName: "Harvard Medical School",
@@ -119,10 +120,12 @@ export const siteData = {
     mapQuery: "Harvard Medical School, 77 Avenue Louis Pasteur, Boston, MA 02115",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Harvard+Medical+School%2C+77+Avenue+Louis+Pasteur%2C+Boston%2C+MA+02115",
-    mapPreviewImage: "/assets/images/location/hms-map-tile-1.png",
-    mapPreviewAlt: "Map tile centered on Harvard Medical School in the Longwood Medical Area.",
+    appleMapUrl:
+      "https://maps.apple.com/?q=Harvard%20Medical%20School&ll=42.3387705,-71.1027833",
+    mapPreviewImage: "/assets/images/location/veritas-science-center-map.svg",
+    mapPreviewAlt: "Stylized locator map highlighting Harvard Medical School and Veritas Science Center in the Longwood Medical Area.",
     mapContext: "Longwood Medical Area, Boston",
-    mapBuilding: "New Research Building"
+    mapBuilding: "Veritas Science Center"
   },
   social: {
     x: "https://twitter.com/abrahamlabhms"

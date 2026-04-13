@@ -7,8 +7,10 @@ import { withBase } from "../lib/content";
   <div class="shell site-footer__grid">
     <section class="site-footer__primary">
       <p class="footer-label">Abraham Lab</p>
-      <p>{siteData.institutionTitle}</p>
-      <p>{siteData.contact.addressLines.join(" · ")}</p>
+      {siteData.contact.institutionDisplayLines?.map((line) => (
+        <p class={line.includes("Blavatnik Institute") ? "u-nowrap" : undefined}>{line}</p>
+      ))}
+      {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
     </section>
 
     <section>
@@ -22,8 +24,8 @@ import { withBase } from "../lib/content";
 
     <section>
       <p class="footer-label">Contact</p>
-      <p><a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
-      <p><a href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
+      <p><a class="u-nowrap email-link" href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
+      <p><a class="u-nowrap email-link" href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
       <p><a href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open map</a></p>
     </section>
 

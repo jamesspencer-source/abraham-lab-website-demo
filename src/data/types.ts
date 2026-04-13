@@ -36,6 +36,7 @@ export type Affiliation = {
 export type ContactData = {
   lab: string;
   department: string;
+  institutionDisplayLines?: string[];
   addressLines: string[];
   email: string;
   managerEmail: string;
@@ -43,6 +44,7 @@ export type ContactData = {
   homeLocationLabel: string;
   mapQuery: string;
   mapUrl: string;
+  appleMapUrl?: string;
   mapPreviewImage: string;
   mapPreviewAlt: string;
   mapContext: string;

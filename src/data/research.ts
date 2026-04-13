@@ -3,14 +3,14 @@ import type { ResearchProgram } from "./types";
 export const researchPrograms = [
   {
     title: "Viral entry",
-    keyQuestion: "How do viruses identify susceptible cells and commit to entry?",
+    keyQuestion: "Which receptor interactions and fusion steps define cellular entry?",
     importance:
-      "Entry determines which cells and tissues become susceptible to infection and exposes one of the clearest intervention points in the viral life cycle.",
+      "Receptor engagement and membrane fusion define tropism and establish the first committed step in infection.",
     summary:
-      "The lab defines receptor usage and membrane-fusion mechanisms that set tropism, pathogenesis, and the first actionable step in infection.",
+      "The lab resolves how viral attachment and fusion proteins engage host receptors and how those interfaces vary across strains, tissues, and host species.",
     paragraphs: [
-      "Entry is the first irreversible commitment to infection, making receptor recognition and fusion machinery central determinants of tropism, pathogenesis, and therapeutic opportunity.",
-      "Using structural biology, functional virology, and receptor-focused experiments, the group resolves how viral surface proteins engage host factors and how those interactions change across strains, host species, and disease contexts."
+      "Entry is the first irreversible commitment to infection, making receptor recognition and fusion machinery central determinants of viral tropism and pathogenesis.",
+      "Using structural biology, receptor-focused experiments, and functional virology, the group defines how viral surface proteins engage host factors and how those interactions shift across related viruses."
     ],
     systems: ["alphaviruses", "arenaviruses", "arthropod-borne viruses"],
     methods: [
@@ -42,14 +42,14 @@ export const researchPrograms = [
   },
   {
     title: "Antiviral antibodies and glycoprotein vulnerability",
-    keyQuestion: "Which viral surface features remain vulnerable to neutralization?",
+    keyQuestion: "Which glycoprotein surfaces remain accessible to neutralizing antibodies?",
     importance:
-      "Antibody responses can prevent infection or lose ground to viral variation, making neutralization breadth and escape central to durable countermeasure design.",
+      "Neutralization depends on defined structural epitopes, conformational states, and routes of escape.",
     summary:
-      "The group maps high-resolution antibody-virus interfaces and glycoprotein architecture to understand neutralization breadth, vulnerability, and routes of immune evasion.",
+      "The group maps glycoprotein architecture and antibody interfaces to distinguish durable neutralizing sites from strain-specific recognition.",
     paragraphs: [
-      "Neutralizing antibodies can act by preventing receptor engagement or by locking viral glycoproteins away from the structural transitions needed for membrane fusion.",
-      "The lab combines glycoprotein structure determination, monoclonal antibody analysis, and mechanistic neutralization experiments to identify surfaces that remain exploitable across strain variation and emerging threats."
+      "Neutralizing antibodies can act by blocking receptor engagement or by constraining the structural transitions required for membrane fusion.",
+      "The lab combines glycoprotein structure determination, monoclonal antibody analysis, and mechanistic neutralization experiments to define which viral surfaces support broad recognition and which readily escape."
     ],
     systems: ["SARS-CoV-2", "alphaviruses", "mammarenaviruses"],
     methods: [
@@ -81,14 +81,14 @@ export const researchPrograms = [
   },
   {
     title: "Viral polymerases",
-    keyQuestion: "How does replication machinery create leverage for antiviral design?",
+    keyQuestion: "How do viral polymerase assemblies govern replication, inhibition, and resistance?",
     importance:
-      "Replication machinery is essential to viral propagation and provides a direct route to mechanism-based antiviral development and resistance analysis.",
+      "Replication complexes contain essential enzymology and many clinically relevant antiviral targets.",
     summary:
-      "The lab investigates replication machinery as both a core engine of infection and a structural framework for understanding drug action and resistance.",
+      "The lab analyzes polymerase assemblies, inhibitor engagement, and resistance mutations in DNA and RNA virus systems.",
     paragraphs: [
-      "Once viruses enter cells, genome replication and transcription depend on specialized polymerase complexes with distinctive structural and mechanistic vulnerabilities.",
-      "By resolving polymerase assemblies, inhibitor interactions, and resistance mechanisms, the group aims to define features that can be exploited for more durable antiviral development."
+      "After entry, genome replication and transcription depend on specialized polymerase complexes with distinctive structural organization and catalytic logic.",
+      "By resolving polymerase assemblies, inhibitor interactions, and resistance mechanisms, the group connects structural observations to drug action and antiviral failure."
     ],
     systems: ["herpesviruses", "RNA viruses", "replication fork complexes"],
     methods: [

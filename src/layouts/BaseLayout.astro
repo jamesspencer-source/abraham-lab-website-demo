@@ -32,14 +32,12 @@ const socialImage = new URL(withBase(siteData.heroFigures[0].image), siteData.ur
           const resolved =
             stored === "light" || stored === "dark"
               ? stored
-              : window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "dark"
-                : "light";
+              : "dark";
           root.dataset.theme = resolved;
           root.style.colorScheme = resolved;
         } catch {
-          root.dataset.theme = "light";
-          root.style.colorScheme = "light";
+          root.dataset.theme = "dark";
+          root.style.colorScheme = "dark";
         }
       })();
     </script>
@@ -131,7 +129,7 @@ const socialImage = new URL(withBase(siteData.heroFigures[0].image), siteData.ur
         });
 
         window.addEventListener("resize", () => {
-          if (window.innerWidth > 1080) {
+          if (window.innerWidth > 1160) {
             closeNav();
           }
         });

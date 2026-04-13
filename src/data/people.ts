@@ -15,7 +15,7 @@ export const peopleData = {
     {
       name: "Pan Yang, Ph.D.",
       title: "Instructor of Microbiology",
-      note: "Instructor; structural and mechanistic studies in virology.",
+      note: "Structural virology and mechanism.",
       group: "Postdoctoral Fellows",
       image: "/assets/images/people/pan-yang.jpg",
       imageAlt: "Pan Yang",
@@ -144,7 +144,7 @@ export const peopleData = {
     {
       name: "James Spencer",
       title: "Lab Manager",
-      note: "Laboratory operations, administration, and research coordination.",
+      note: "Laboratory management and operations.",
       group: "Operations & Strategy",
       image: "/assets/images/people/james-spencer.png",
       imageAlt: "James Spencer",
@@ -156,24 +156,21 @@ export const peopleData = {
       label: "Postdoctoral and Research Fellows",
       entries: [
         { name: "Dan Olal, Ph.D." },
-        { name: "Poorna Goswami, Ph.D.", destination: "Lasell University" },
-        { name: "Gabor Oroszán, Ph.D.", destination: "VRG Therapeutics" },
-        { name: "Chieyu Lin, Ph.D.", destination: "Beam Therapeutics" },
-        {
-          name: "Sundaresh Shankar, Ph.D.",
-          destination: "Broad Institute of MIT and Harvard"
-        },
-        { name: "Keshalini Sabaratnam, Ph.D.", destination: "Kinapse" }
+        { name: "Poorna Goswami, Ph.D.", destination: "Adjunct Faculty, Lasell University" },
+        { name: "Gabor Oroszán, Ph.D.", destination: "Senior Scientist, In Silico Lead, VRG Therapeutics" },
+        { name: "Chieyu Lin, Ph.D." },
+        { name: "Sundaresh Shankar, Ph.D." },
+        { name: "Keshalini Sabaratnam, Ph.D." }
       ]
     },
     {
       label: "Graduate Students",
       entries: [
-        { name: "Sarah Clark-Drake", destination: "Arcellx" },
-        { name: "Lars Clark", destination: "Vertex Pharmaceuticals" },
+        { name: "Sarah Clark-Drake" },
+        { name: "Lars Clark" },
         {
           name: "Katherine Nabel Smith",
-          destination: "MGH/Brigham and University of Pennsylvania"
+          destination: "Dermatology Resident, University of Pennsylvania"
         }
       ]
     },
@@ -198,9 +195,9 @@ export const peopleData = {
     {
       label: "Summer Students",
       entries: [
-        { name: "Cecilia Bradley", destination: "Harvard SHURP, Amherst College" },
-        { name: "Arya Akbarshahi", destination: "HHMI SURP, Emory University" },
-        { name: "Linzy Malcolm", destination: "Harvard SHURP, Ohio State University" }
+        { name: "Cecilia Bradley" },
+        { name: "Arya Akbarshahi" },
+        { name: "Linzy Malcolm" }
       ]
     }
   ]

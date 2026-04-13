@@ -25,6 +25,11 @@ const { eyebrow = "Location", description, mode = "home" } = Astro.props;
       <p>{siteData.contact.mapBuilding}</p>
       <p>{siteData.contact.mapContext}</p>
     </div>
-    <a class="text-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open in Google Maps</a>
+    <div class="map-widget__actions">
+      <a class="text-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Google Maps</a>
+      {siteData.contact.appleMapUrl && (
+        <a class="text-link" href={siteData.contact.appleMapUrl} target="_blank" rel="noreferrer">Apple Maps</a>
+      )}
+    </div>
   </div>
 </aside>

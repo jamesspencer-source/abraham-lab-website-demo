@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ResearchChapter from "../components/ResearchChapter.astro";
 import MapWidget from "../components/MapWidget.astro";
 import { siteData } from "../data/site";
 import { researchPrograms } from "../data/research";
@@ -10,9 +9,19 @@ import { featuredOnly, formatMonthYear, limitItems, withBase } from "../lib/cont
 
 const featuredPublications = featuredOnly(publications);
 const leadPublication = featuredPublications[0];
-const publicationRail = featuredPublications.slice(1, 5);
 const recentNews = limitItems(newsItems, 4);
-const [leadFigure, ...supportFigures] = siteData.heroFigures;
+const [leadFigure] = siteData.heroFigures;
+const heroVisual = leadPublication?.image
+  ? {
+      image: leadPublication.image,
+      alt: leadPublication.imageAlt ?? leadFigure.alt,
+      imagePosition: leadPublication.imagePosition
+    }
+  : {
+      image: leadFigure.image,
+      alt: leadFigure.alt,
+      imagePosition: leadFigure.imagePosition
+    };
 ---
 
 <BaseLayout pageClass="page-home">
@@ -20,49 +29,46 @@ const [leadFigure, ...supportFigures] = siteData.heroFigures;
     <div class="marquee__shell shell">
       <div class="marquee__grid">
         <div class="marquee__copy">
-          <p class="eyebrow reveal">Structural virology | molecular virology | biophysics</p>
+          <p class="eyebrow reveal">Mechanistic virology</p>
           <h1 class="reveal">{siteData.heroTitle}</h1>
           <p class="marquee__deck reveal">{siteData.heroDeck}</p>
 
           <div class="button-row reveal">
             <a class="button button--primary" href={withBase("/research/")}>Research</a>
-            <a class="button button--ghost" href={withBase("/publications/")}>Selected publications</a>
+            <a class="button button--ghost" href={withBase("/publications/")}>Publication record</a>
           </div>
-
-          <dl class="hero-facts reveal">
-            {siteData.heroFacts.map((item) => (
-              <div class="hero-facts__item">
-                <dt>{item.label}</dt>
-                <dd>{item.value}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
-        <div class="science-stage reveal">
-          <article class="science-stage__primary science-card frame" style={leadFigure.imagePosition ? `--media-position: ${leadFigure.imagePosition};` : undefined}>
-            <img src={withBase(leadFigure.image)} alt={leadFigure.alt} loading="eager" />
-            <div class="science-card__caption">
-              <p class="science-card__label">{leadFigure.label}</p>
-              <h2>{leadFigure.title}</h2>
-              {leadFigure.note && <p>{leadFigure.note}</p>}
-              {leadFigure.href && <a class="text-link" href={leadFigure.href} target="_blank" rel="noreferrer">Open paper</a>}
-            </div>
-          </article>
+        <aside class="hero-dossier reveal">
+          <div class="hero-dossier__media frame" style={heroVisual.imagePosition ? `--media-position: ${heroVisual.imagePosition};` : undefined}>
+            <img src={withBase(heroVisual.image)} alt={heroVisual.alt} loading="eager" />
+          </div>
+          <div class="hero-dossier__body">
+            <p class="eyebrow">Current publication</p>
+            <h2>{leadPublication?.title ?? leadFigure.title}</h2>
+            <p class="hero-dossier__meta">
+              {leadPublication
+                ? [leadPublication.journal, leadPublication.publishedAt ? formatMonthYear(leadPublication.publishedAt) : undefined, leadPublication.pmid ? `PMID ${leadPublication.pmid}` : undefined].filter(Boolean).join(" | ")
+                : leadFigure.note}
+            </p>
+            {leadPublication?.summary && <p>{leadPublication.summary}</p>}
 
-          <div class="science-stage__stack">
-            {supportFigures.map((item) => (
-              <article class="science-card frame" style={item.imagePosition ? `--media-position: ${item.imagePosition};` : undefined}>
-                <img src={withBase(item.image)} alt={item.alt} loading="lazy" />
-                <div class="science-card__caption">
-                  <p class="science-card__label">{item.label}</p>
-                  <h2>{item.title}</h2>
-                  {item.note && <p>{item.note}</p>}
+            <dl class="hero-dossier__facts">
+              {siteData.heroFacts.map((item) => (
+                <div class="hero-dossier__fact">
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
                 </div>
-              </article>
-            ))}
+              ))}
+            </dl>
+
+            {leadPublication ? (
+              <a class="text-link" href={leadPublication.link} target="_blank" rel="noreferrer">Open paper</a>
+            ) : (
+              leadFigure.href && <a class="text-link" href={leadFigure.href} target="_blank" rel="noreferrer">Open source</a>
+            )}
           </div>
-        </div>
+        </aside>
       </div>
 
       <div class="hero-proof reveal">
@@ -84,7 +90,11 @@ const [leadFigure, ...supportFigures] = siteData.heroFigures;
     <div class="shell institution-band__grid">
       <div class="institution-band__copy reveal">
         <p class="eyebrow">{siteData.institutionLabel}</p>
-        <h2>{siteData.institutionTitle}</h2>
+        <h2 class="institution-band__title">
+          {siteData.contact.institutionDisplayLines?.map((line) => (
+            <span class={line.includes("Blavatnik Institute") ? "u-nowrap" : undefined}>{line}</span>
+          ))}
+        </h2>
         <p>{siteData.institutionSummary}</p>
       </div>
 
@@ -107,86 +117,53 @@ const [leadFigure, ...supportFigures] = siteData.heroFigures;
   <section class="section section--flagship home-research">
     <div class="shell page-section__header page-section__header--wide">
       <div class="reveal">
-        <p class="eyebrow">Scientific program</p>
-        <h2>Three connected research programs centered on public, mechanistic proof.</h2>
+        <p class="eyebrow">Scientific questions</p>
+        <h2>Three research areas spanning entry, neutralization, and replication.</h2>
       </div>
       <div class="reveal">
         <p>
-          The Abraham Lab studies how viruses enter cells, how antibodies block or fail to block infection,
-          and how replication complexes create therapeutic leverage. The emphasis is on mechanisms that can be
-          traced directly to public papers, public structures, and public institutional reporting.
+          Across current publications, the lab focuses on receptor engagement and entry, glycoprotein
+          architecture and antibody recognition, and polymerase assemblies that govern replication,
+          inhibition, and resistance.
         </p>
       </div>
     </div>
 
-    <div class="shell research-chapter-list">
+    <div class="shell home-program-list">
       {researchPrograms.map((item, index) => (
-        <ResearchChapter
-          index={index + 1}
-          title={item.title}
-          keyQuestion={item.keyQuestion}
-          importance={item.importance}
-          summary={item.summary}
-          paragraphs={item.paragraphs}
-          systems={item.systems}
-          methods={item.methods}
-          papers={item.papers}
-          image={item.image}
-          imageAlt={item.imageAlt}
-          imagePosition={item.imagePosition}
-          reverse={index % 2 === 1}
-        />
+        <article class="home-program reveal">
+          <div class="home-program__visual frame" style={item.imagePosition ? `--media-position: ${item.imagePosition};` : undefined}>
+            <img src={withBase(item.image)} alt={item.imageAlt} loading="lazy" />
+          </div>
+          <div class="home-program__body">
+            <p class="section-index">{String(index + 1).padStart(2, "0")}</p>
+            <h3>{item.title}</h3>
+            <p class="home-program__question">{item.keyQuestion}</p>
+            <p>{item.summary}</p>
+          </div>
+          <div class="home-program__rail">
+            <div class="metadata-stack">
+              <p class="metadata-label">Representative systems</p>
+              <p>{item.systems.join(" | ")}</p>
+            </div>
+            {item.papers[0] && (
+              <div class="metadata-stack">
+                <p class="metadata-label">Representative paper</p>
+                <a class="text-link" href={item.papers[0].href} target="_blank" rel="noreferrer">{item.papers[0].title}</a>
+                <p>{item.papers[0].journal} | {item.papers[0].year}</p>
+              </div>
+            )}
+          </div>
+        </article>
       ))}
     </div>
   </section>
-
-  {leadPublication && (
-    <section class="section section--flagship publication-band">
-      <div class="shell publication-band__grid">
-        <div class="publication-band__body reveal">
-          <p class="eyebrow">Lead publication</p>
-          <h2>{leadPublication.title}</h2>
-          <p class="publication-band__meta">
-            {[leadPublication.journal, leadPublication.publishedAt ? formatMonthYear(leadPublication.publishedAt) : undefined, leadPublication.doi].filter(Boolean).join(" | ")}
-          </p>
-          <p class="publication-band__summary">{leadPublication.summary}</p>
-          <p class="citation-text">{leadPublication.citation}</p>
-          <div class="button-row">
-            <a class="button button--primary" href={leadPublication.link} target="_blank" rel="noreferrer">Read publication</a>
-            <a class="button button--ghost" href={withBase("/publications/")}>View archive</a>
-          </div>
-        </div>
-
-        <div class="publication-band__visual reveal">
-          <div class="publication-band__image frame" style={leadPublication.imagePosition ? `--media-position: ${leadPublication.imagePosition};` : undefined}>
-            <img src={withBase(leadPublication.image!)} alt={leadPublication.imageAlt!} loading="lazy" />
-          </div>
-        </div>
-
-        <aside class="publication-band__rail reveal">
-          <p class="metadata-label">Recent papers</p>
-          <div class="reference-list">
-            {publicationRail.map((item) => (
-              <article class="reference-card">
-                <p class="reference-card__meta">{item.journal ?? "Publication"} | {item.year}</p>
-                <a class="reference-card__title" href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
-                {item.summary && <p class="reference-card__note">{item.summary}</p>}
-              </article>
-            ))}
-          </div>
-        </aside>
-      </div>
-    </section>
-  )}
 
   <section class="section section--utility updates-band">
     <div class="shell page-section__header page-section__header--compact">
       <div class="reveal">
         <p class="eyebrow">Recent updates</p>
-        <h2>Public research updates and institutional coverage.</h2>
-      </div>
-      <div class="reveal">
-        <p>Selected publications, institutional features, and science-facing updates from the Abraham Lab.</p>
+        <h2>Selected updates on publications, awards, invited talks, and institutional coverage.</h2>
       </div>
     </div>
 
@@ -219,6 +196,10 @@ const [leadFigure, ...supportFigures] = siteData.heroFigures;
       <div class="location-band__copy reveal">
         <p class="eyebrow">Location</p>
         <h2>{siteData.contact.homeLocationLabel}</h2>
+        <p class="location-band__institution">
+          <span>{siteData.contact.institutionDisplayLines?.[0]}</span>
+          <span class="u-nowrap">{siteData.contact.institutionDisplayLines?.[1]}</span>
+        </p>
         <p>For collaborations, speaking requests, and administrative inquiries.</p>
         <div class="location-list">
           {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
@@ -232,7 +213,7 @@ const [leadFigure, ...supportFigures] = siteData.heroFigures;
       <MapWidget
         mode="home"
         eyebrow="Campus map"
-        description={`${siteData.contact.addressLines[0]} · ${siteData.contact.addressLines[1]}`}
+        description="Harvard Medical School campus"
       />
     </div>
   </section>

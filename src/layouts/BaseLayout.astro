@@ -26,21 +26,28 @@ const themeDefaultMode = siteData.theme.defaultMode;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <script is:inline>
+    <script is:inline define:vars={{ themeStorageKey, themeDefaultMode }}>
       (() => {
         const root = document.documentElement;
+        let theme = null;
+
         try {
-          const stored = window.localStorage.getItem("abraham-theme");
-          const resolved =
-            stored === "light" || stored === "dark"
-              ? stored
-              : "dark";
-          root.dataset.theme = resolved;
-          root.style.colorScheme = resolved;
-        } catch {
-          root.dataset.theme = "dark";
-          root.style.colorScheme = "dark";
+          const stored = window.localStorage.getItem(themeStorageKey);
+          if (stored === "light" || stored === "dark") {
+            theme = stored;
+          }
+        } catch {}
+
+        if (theme !== "light" && theme !== "dark") {
+          if (themeDefaultMode === "light" || themeDefaultMode === "dark") {
+            theme = themeDefaultMode;
+          } else {
+            theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          }
         }
+
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
       })();
     </script>
     <title>{pageTitle}</title>
@@ -60,29 +67,6 @@ const themeDefaultMode = siteData.theme.defaultMode;
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <script is:inline define:vars={{ themeStorageKey, themeDefaultMode }}>
-      (() => {
-        const root = document.documentElement;
-        const resolveTheme = () => {
-          try {
-            const stored = window.localStorage.getItem(themeStorageKey);
-            if (stored === "light" || stored === "dark") {
-              return stored;
-            }
-          } catch {}
-
-          if (themeDefaultMode === "light" || themeDefaultMode === "dark") {
-            return themeDefaultMode;
-          }
-
-          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        };
-
-        const theme = resolveTheme();
-        root.dataset.theme = theme;
-        root.style.colorScheme = theme;
-      })();
-    </script>
   </head>
   <body class:list={["site-body", pageClass]}>
     <Header currentPath={Astro.url.pathname} />

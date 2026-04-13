@@ -20,7 +20,7 @@ const { eyebrow = "Location", description, mode = "home" } = Astro.props;
     <p class="eyebrow">{eyebrow}</p>
     <h3>{siteData.contact.mapBuilding}</h3>
     <p class="map-widget__campus">{siteData.contact.mapDisplayName}</p>
-    {description && <p>{description}</p>}
+    {description && <p class="map-widget__description">{description}</p>}
     <div class="map-widget__address">
       {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
     </div>

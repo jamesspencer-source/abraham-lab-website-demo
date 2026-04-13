@@ -1,6 +1,6 @@
 <svg width="960" height="760" viewBox="0 0 960 760" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Harvard Medical School locator map</title>
-  <desc id="desc">Stylized campus locator highlighting Veritas Science Center within Harvard Medical School in Boston's Longwood Medical Area.</desc>
+  <desc id="desc">Stylized campus locator highlighting Veritas Science Center (VSC) within Harvard Medical School in Boston's Longwood Medical Area.</desc>
   <rect width="960" height="760" fill="#0B131B"/>
   <g opacity="0.18">
     <path d="M0 112H960" stroke="#9AA8B6" stroke-width="1"/>
@@ -42,7 +42,7 @@
   <g fill="#EAF0F5">
     <text x="760" y="240" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700">Harvard Medical School</text>
     <text x="760" y="276" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="500" fill="#B7C3CF">Longwood Medical Area</text>
-    <text x="828" y="404" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Veritas Science Center</text>
+    <text x="828" y="404" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Veritas Science Center (VSC)</text>
     <text x="828" y="438" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="500" fill="#B7C3CF">77 Avenue Louis Pasteur</text>
     <text x="228" y="198" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" fill="#B7C3CF">Longwood Avenue</text>
     <text x="366" y="506" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" fill="#B7C3CF">Avenue Louis Pasteur</text>

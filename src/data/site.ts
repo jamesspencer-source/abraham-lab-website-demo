@@ -112,7 +112,7 @@ export const siteData = {
     lab: "Abraham Lab",
     department: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
     institutionDisplayLines: ["Department of Microbiology", "Blavatnik Institute, Harvard Medical School"],
-    addressLines: ["77 Avenue Louis Pasteur", "Veritas Science Center", "Boston, MA 02115"],
+    addressLines: ["77 Avenue Louis Pasteur", "Veritas Science Center (VSC)", "Boston, MA 02115"],
     email: "jonathan_abraham@hms.harvard.edu",
     managerEmail: "james_spencer@hms.harvard.edu",
     mapDisplayName: "Harvard Medical School",
@@ -123,9 +123,9 @@ export const siteData = {
     appleMapUrl:
       "https://maps.apple.com/?q=Harvard%20Medical%20School&ll=42.3387705,-71.1027833",
     mapPreviewImage: "/assets/images/location/veritas-science-center-map.svg",
-    mapPreviewAlt: "Stylized locator map highlighting Harvard Medical School and Veritas Science Center in the Longwood Medical Area.",
+    mapPreviewAlt: "Stylized locator map highlighting Harvard Medical School and Veritas Science Center (VSC) in the Longwood Medical Area.",
     mapContext: "Longwood Medical Area, Boston",
-    mapBuilding: "Veritas Science Center"
+    mapBuilding: "Veritas Science Center (VSC)"
   },
   social: {
     x: "https://twitter.com/abrahamlabhms"

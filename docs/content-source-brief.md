@@ -18,7 +18,7 @@ Recommended website wording:
 
 Location note used on the site:
 
-- Veritas Science Center is used as the building name for 77 Avenue Louis Pasteur in this pass.
+- Veritas Science Center (VSC) is used as the building name for 77 Avenue Louis Pasteur in this pass.
 - This naming update was provided directly by the lab and reflected in the contact presentation.
 
 ## Jonathan Abraham

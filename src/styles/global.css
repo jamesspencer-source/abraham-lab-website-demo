@@ -874,15 +874,31 @@ dd {
 
 .map-widget {
   display: grid;
-  gap: 12px;
-  max-width: 320px;
+  gap: 10px;
+  max-width: 360px;
   justify-self: end;
 }
 
+.map-widget--contact {
+  max-width: 420px;
+}
+
 .map-widget__media {
+  position: relative;
   display: block;
-  height: 192px;
-  text-decoration: none;
+  height: 228px;
+  background: #dce3e8;
+}
+
+.map-widget--contact .map-widget__media {
+  height: 260px;
+}
+
+.map-widget__iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .map-widget__body {
@@ -1619,7 +1635,11 @@ dd {
   }
 
   .map-widget__media {
-    height: 176px;
+    height: 210px;
+  }
+
+  .map-widget--contact .map-widget__media {
+    height: 230px;
   }
 
   .directory-lead__media {

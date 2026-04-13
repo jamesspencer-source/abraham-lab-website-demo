@@ -1,6 +1,5 @@
 ---
 import { siteData } from "../data/site";
-import { withBase } from "../lib/content";
 
 interface Props {
   eyebrow?: string;
@@ -12,9 +11,16 @@ const { eyebrow = "Location", description, mode = "home" } = Astro.props;
 ---
 
 <aside class:list={["map-widget", `map-widget--${mode}`, "reveal"]}>
-  <a class="map-widget__media frame" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">
-    <img src={withBase(siteData.contact.mapPreviewImage)} alt={siteData.contact.mapPreviewAlt} loading="lazy" />
-  </a>
+  <div class="map-widget__media frame">
+    <iframe
+      class="map-widget__iframe"
+      title="Map of Harvard Medical School and Veritas Science Center"
+      src={siteData.contact.mapEmbedUrl}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen
+    ></iframe>
+  </div>
 
   <div class="map-widget__body">
     <p class="eyebrow">{eyebrow}</p>

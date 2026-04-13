@@ -103,6 +103,8 @@ export const siteData = {
     mapQuery: "Harvard Medical School, 77 Avenue Louis Pasteur, Boston, MA 02115",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Harvard+Medical+School%2C+77+Avenue+Louis+Pasteur%2C+Boston%2C+MA+02115",
+    mapEmbedUrl:
+      "https://maps.google.com/maps?q=Harvard%20Medical%20School%2C%2077%20Avenue%20Louis%20Pasteur%2C%20Boston%2C%20MA%2002115&t=&z=17&ie=UTF8&iwloc=&output=embed",
     mapPreviewImage: "/assets/images/location/veritas-science-center-map.svg",
     mapPreviewAlt: "Stylized locator map highlighting Harvard Medical School and Veritas Science Center (VSC) in the Longwood Medical Area.",
     mapContext: "Boston Longwood campus",

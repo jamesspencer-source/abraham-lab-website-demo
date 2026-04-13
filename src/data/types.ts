@@ -44,6 +44,7 @@ export type ContactData = {
   homeLocationLabel: string;
   mapQuery: string;
   mapUrl: string;
+  mapEmbedUrl: string;
   mapPreviewImage: string;
   mapPreviewAlt: string;
   mapContext: string;

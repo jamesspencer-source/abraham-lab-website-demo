@@ -2,38 +2,35 @@ import type { NewsItem } from "./types";
 
 export const newsItems = [
   {
-    sort: 202603,
-    dateLabel: "March 2026",
+    date: "2026-03-03",
     category: "Institutional Coverage",
-    sourceType: "HMS News",
-    title: "HMS highlights the mechanistic basis of a new class of antivirals",
+    source: "HMS Office for Graduate Education",
+    title: "Inside the Labs of HMS profiles the Abraham Lab's pandemic-preparedness research",
     summary:
-      "Harvard Medical School covered the lab's structural and biophysical work showing how helicase-primase inhibitors disable a critical herpes simplex virus enzyme.",
+      "A Harvard Medical School video feature profiles how the lab studies viral infection mechanisms relevant to future outbreak preparedness.",
+    link: "https://ogephd.hms.harvard.edu/news?page=2",
+    linkLabel: "View HMS feature",
+    image: "/assets/images/research/viral-entry-comparison.png",
+    imageAlt:
+      "Structural comparison figure showing receptor recognition features across encephalitic alphaviruses."
+  },
+  {
+    date: "2026-01-08",
+    category: "Institutional Coverage",
+    source: "Harvard Medical School",
+    title: "Harvard Medical School reports the mechanism of a new class of antivirals",
+    summary:
+      "HMS covered the lab's structural and biophysical work explaining how helicase-primase inhibitors disable a critical HSV enzyme complex.",
     link: "https://hms.harvard.edu/news/researchers-now-understand-how-new-class-antivirals-works",
     linkLabel: "Read HMS story",
     image: "/assets/images/publications/hsv-helicase-primase.jpg",
     imageAlt:
-      "Structural figure associated with HSV-1 helicase-primase inhibition and replication fork assembly."
+      "Publication figure showing the HSV helicase-primase complex and replication fork assembly."
   },
   {
-    sort: 202602,
-    dateLabel: "March 2026",
-    category: "Video",
-    sourceType: "HMS Microbiology",
-    title: "Inside the Labs of HMS profiles the Abraham Lab's outbreak-preparedness work",
-    summary:
-      "A short HMS feature spotlights how members of the lab investigate viral infection to help the world prepare for future threats.",
-    link: "https://www.youtube.com/shorts/GFM3KLZCDps",
-    linkLabel: "Watch feature",
-    image: "/assets/images/research/hero-emergingvirus.jpg",
-    imageAlt:
-      "Illustrated structural virology composition highlighting viral surface proteins and host receptor engagement."
-  },
-  {
-    sort: 202601,
-    dateLabel: "January 2026",
+    date: "2026-01-22",
     category: "Publication",
-    sourceType: "Cell",
+    source: "Cell",
     title: "Cell publishes mechanistic analysis of HSV-1 helicase-primase inhibition",
     summary:
       "A new Cell paper defines the structural basis of HSV-1 helicase-primase inhibition and replication fork complex assembly.",
@@ -44,10 +41,9 @@ export const newsItems = [
       "Structural figure associated with HSV-1 helicase-primase inhibition and replication fork assembly."
   },
   {
-    sort: 202508,
-    dateLabel: "August 2025",
+    date: "2025-08-08",
     category: "Publication",
-    sourceType: "Nature Microbiology",
+    source: "Nature Microbiology",
     title: "Nature Microbiology features arenavirus spike glycoprotein architecture",
     summary:
       "The lab reports the molecular organization of the New World arenavirus spike glycoprotein complex in Nature Microbiology.",
@@ -58,10 +54,9 @@ export const newsItems = [
       "Structural render of the New World arenavirus glycoprotein complex."
   },
   {
-    sort: 202503,
-    dateLabel: "March 2025",
+    date: "2025-04-04",
     category: "Publication",
-    sourceType: "Cell",
+    source: "Cell",
     title: "Cell paper defines shifted receptor recognition in an encephalitic arbovirus",
     summary:
       "A Cell study resolves the molecular basis for altered receptor engagement in an encephalitic arbovirus.",
@@ -72,10 +67,21 @@ export const newsItems = [
       "Comparative structural figure associated with receptor recognition in an encephalitic arbovirus."
   },
   {
-    sort: 202408,
-    dateLabel: "August 2024",
+    date: "2025-01-20",
     category: "Publication",
-    sourceType: "Cell",
+    source: "Cell",
+    title: "Cell reports structural and functional analysis of the Nipah virus polymerase complex",
+    summary:
+      "A Cell study resolves the Nipah virus polymerase complex and identifies features relevant to RNA replication and drug resistance.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/39837328/",
+    linkLabel: "Read paper",
+    image: "/assets/images/publications/hsv-helicase-primase.jpg",
+    imageAlt: "Structural figure associated with viral polymerase architecture."
+  },
+  {
+    date: "2024-08-27",
+    category: "Publication",
+    source: "Cell",
     title: "Cell study identifies structural mechanisms of viral DNA polymerase drug resistance",
     summary:
       "The lab maps resistance-associated conformations in viral DNA polymerase complexes relevant to antiviral action.",
@@ -85,10 +91,9 @@ export const newsItems = [
     imageAlt: "Structural view of a viral polymerase complex."
   },
   {
-    sort: 202407,
-    dateLabel: "July 2024",
+    date: "2024-08-02",
     category: "Publication",
-    sourceType: "Nature Communications",
+    source: "Nature Communications",
     title: "Nature Communications publishes VLDLR recognition study in eastern equine encephalitis virus",
     summary:
       "A receptor-recognition study defines how eastern equine encephalitis virus engages VLDLR at high resolution.",
@@ -99,10 +104,21 @@ export const newsItems = [
       "Publication figure showing the receptor-recognition interface in eastern equine encephalitis virus."
   },
   {
-    sort: 202112,
-    dateLabel: "December 2021",
+    date: "2024-07-23",
+    category: "Institutional Recognition",
+    source: "Harvard Medical Microbiology",
+    title: "Harvard Medical Microbiology highlights Jonathan Abraham as a new HHMI Investigator",
+    summary:
+      "The department archived the announcement that Jonathan Abraham joined the 2024 cohort of HHMI Investigators.",
+    link: "https://micro.hms.harvard.edu/news-events/archived-news",
+    linkLabel: "View archive",
+    image: "/assets/images/people/jonathan-abraham.jpeg",
+    imageAlt: "Portrait of Jonathan Abraham."
+  },
+  {
+    date: "2021-12-01",
     category: "Institutional Coverage",
-    sourceType: "Harvard Gazette",
+    source: "Harvard Gazette",
     title: "Harvard Gazette covers work forecasting antibody escape in SARS-CoV-2 variants",
     summary:
       "Harvard coverage highlighted the lab's work modeling how SARS-CoV-2 variants could evade vaccine- and antibody-derived immunity.",
@@ -112,4 +128,4 @@ export const newsItems = [
     imageAlt:
       "Figure comparing viral entry determinants across alphavirus systems."
   }
-].sort((a, b) => b.sort - a.sort) satisfies NewsItem[];
+].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) satisfies NewsItem[];

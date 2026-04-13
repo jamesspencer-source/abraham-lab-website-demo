@@ -5,10 +5,10 @@ import { withBase } from "../lib/content";
 
 <footer class="site-footer">
   <div class="shell site-footer__grid">
-    <section>
+    <section class="site-footer__primary">
       <p class="footer-label">Abraham Lab</p>
       <p>{siteData.institutionTitle}</p>
-      <p>Boston, Massachusetts</p>
+      <p>{siteData.contact.addressLines.join(" · ")}</p>
     </section>
 
     <section>
@@ -34,7 +34,6 @@ import { withBase } from "../lib/content";
           <li><a href={affiliation.href} target="_blank" rel="noreferrer">{affiliation.shortName ?? affiliation.name}</a></li>
         ))}
         <li><a href={siteData.social.x} target="_blank" rel="noreferrer">Follow on X</a></li>
-        <li><a href={siteData.social.bluesky} target="_blank" rel="noreferrer">Follow on Bluesky</a></li>
       </ul>
     </section>
   </div>

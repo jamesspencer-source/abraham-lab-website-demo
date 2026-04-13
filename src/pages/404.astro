@@ -1,11 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHero from "../components/PageHero.astro";
 import { withBase } from "../lib/content";
 ---
 
 <BaseLayout title="Page Not Found" description="The requested page could not be found.">
-  <PageHero eyebrow="404" title="Page not found." description="The requested page could not be found." />
+  <section class="interior-hero">
+    <div class="shell interior-hero__grid">
+      <div class="interior-hero__copy reveal">
+        <p class="eyebrow">404</p>
+        <h1>Page not found.</h1>
+        <p>The requested page could not be found.</p>
+      </div>
+    </div>
+  </section>
 
   <section class="section section--utility">
     <div class="shell narrow-shell reveal">

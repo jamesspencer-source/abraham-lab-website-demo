@@ -1,0 +1,90 @@
+---
+import { withBase } from "../lib/content";
+import type { PublicationReference } from "../data/types";
+
+interface Props {
+  index: number;
+  title: string;
+  keyQuestion: string;
+  importance: string;
+  summary: string;
+  paragraphs: string[];
+  systems: string[];
+  methods: string[];
+  papers: PublicationReference[];
+  image: string;
+  imageAlt: string;
+  imagePosition?: string;
+  reverse?: boolean;
+  headingTag?: "h2" | "h3";
+}
+
+const {
+  index,
+  title,
+  keyQuestion,
+  importance,
+  summary,
+  paragraphs,
+  systems,
+  methods,
+  papers,
+  image,
+  imageAlt,
+  imagePosition,
+  reverse = false,
+  headingTag = "h3"
+} = Astro.props;
+
+const HeadingTag = headingTag;
+const indexLabel = String(index).padStart(2, "0");
+---
+
+<article class:list={["research-chapter", reverse && "research-chapter--reverse", "reveal"]}>
+  <div class="research-chapter__heading">
+    <p class="section-index">{indexLabel}</p>
+    <HeadingTag>{title}</HeadingTag>
+    <p class="research-chapter__question">{keyQuestion}</p>
+    <p class="research-chapter__importance">{importance}</p>
+  </div>
+
+  <div class="research-chapter__visual science-figure" style={imagePosition ? `--media-position: ${imagePosition};` : undefined}>
+    <img src={withBase(image)} alt={imageAlt} loading="lazy" />
+  </div>
+
+  <div class="research-chapter__body">
+    <p class="research-chapter__summary">{summary}</p>
+    {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  </div>
+
+  <aside class="research-chapter__rail">
+    <div class="metadata-stack">
+      <p class="metadata-label">Representative systems</p>
+      <ul class="clean-list metadata-list">
+        {systems.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <div class="metadata-stack">
+      <p class="metadata-label">Methods</p>
+      <ul class="clean-list metadata-list">
+        {methods.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <div class="metadata-stack">
+      <p class="metadata-label">Representative papers</p>
+      <div class="reference-list">
+        {papers.map((paper) => (
+          <article class="reference-card">
+            <p class="reference-card__meta">{paper.journal} | {paper.year}</p>
+            <a class="reference-card__title" href={paper.href.startsWith("http") ? paper.href : withBase(paper.href)} target="_blank" rel="noreferrer">
+              {paper.title}
+            </a>
+            {paper.note && <p class="reference-card__note">{paper.note}</p>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </aside>
+</article>

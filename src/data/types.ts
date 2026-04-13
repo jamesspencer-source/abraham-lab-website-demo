@@ -3,9 +3,25 @@ export type NavItem = {
   href: string;
 };
 
-export type HeroDossierItem = {
+export type HeroFactItem = {
   label: string;
   value: string;
+};
+
+export type HeroProofItem = {
+  label: string;
+  value: string;
+  href?: string;
+};
+
+export type HeroFigure = {
+  label: string;
+  title: string;
+  image: string;
+  alt: string;
+  note?: string;
+  href?: string;
+  imagePosition?: string;
 };
 
 export type Affiliation = {
@@ -27,7 +43,8 @@ export type ContactData = {
   homeLocationLabel: string;
   mapQuery: string;
   mapUrl: string;
-  mapEmbedUrl: string;
+  mapPreviewImage: string;
+  mapPreviewAlt: string;
   mapContext: string;
   mapBuilding: string;
 };
@@ -40,10 +57,9 @@ export type SiteData = {
   url: string;
   heroTitle: string;
   heroDeck: string;
-  heroImage: string;
-  heroImageAlt: string;
-  heroImagePosition?: string;
-  heroDossier: HeroDossierItem[];
+  heroFacts: HeroFactItem[];
+  heroProof: HeroProofItem[];
+  heroFigures: HeroFigure[];
   institutionLabel: string;
   institutionTitle: string;
   institutionSummary: string;
@@ -53,24 +69,30 @@ export type SiteData = {
   contact: ContactData;
   social: {
     x: string;
-    bluesky: string;
+    bluesky?: string;
   };
+};
+
+export type PublicationReference = {
+  title: string;
+  journal: string;
+  year: number;
+  href: string;
+  note?: string;
 };
 
 export type ResearchProgram = {
   title: string;
-  lead: string;
+  keyQuestion: string;
   importance: string;
   summary: string;
-  intro: string;
   paragraphs: string[];
   systems: string[];
   methods: string[];
   image: string;
   imagePosition?: string;
   imageAlt: string;
-  relatedPublication: string;
-  relatedLink: string;
+  papers: PublicationReference[];
 };
 
 export type Publication = {
@@ -78,7 +100,11 @@ export type Publication = {
   title: string;
   citation: string;
   link: string;
+  authors?: string;
+  journal?: string;
+  publishedAt?: string;
   doi?: string;
+  pmid?: string;
   featured?: boolean;
   summary?: string;
   image?: string;
@@ -87,10 +113,9 @@ export type Publication = {
 };
 
 export type NewsItem = {
-  sort: number;
-  dateLabel: string;
+  date: string;
   category: string;
-  sourceType: string;
+  source: string;
   title: string;
   summary: string;
   link: string;

@@ -4,10 +4,15 @@ export const publications = [
   {
     year: 2026,
     title: "Mechanisms of HSV-1 helicase-primase inhibition and replication fork complex assembly",
+    authors:
+      "Yu Z, Sathyanarayana P, Liu C, Tan JMJ, Yang P, Das B, Olal D, Hu S, Fan X, Ji C, Weller SK, Shekhar M, Coen DM, Kranzusch PJ, Loparo JJ, Abraham J",
+    journal: "Cell",
+    publishedAt: "2026-01-22",
     citation:
       "Yu Z*, Sathyanarayana P*, Liu C, Tan JMJ, Yang P, Das B, Olal D, Hu S, Fan X, Ji C, Weller SK, Shekhar M, Coen DM, Kranzusch PJ, Loparo JJ, Abraham J. Cell. 2026.",
     link: "https://www.cell.com/cell/fulltext/S0092-8674(25)01376-5",
     doi: "10.1016/j.cell.2025.11.041",
+    pmid: "41468884",
     featured: true,
     summary:
       "A mechanistic and structural analysis of HSV-1 helicase-primase inhibition and replication fork assembly.",
@@ -19,10 +24,15 @@ export const publications = [
   {
     year: 2025,
     title: "Molecular organization of the New World arenavirus spike glycoprotein complex",
+    authors:
+      "Mann CJ, Yang P, Olal D, Fan X, Nabel Smith K, Clark LE, Krammer F, Bian Y, Abraham J",
+    journal: "Nature Microbiology",
+    publishedAt: "2025-08-08",
     citation:
       "Mann CJ*, Yang P, Olal D, Fan X, Nabel Smith K, Clarke LE, Krammer F, Bian Y, Abraham J. Nature Microbiology. 2025.",
     link: "https://www.nature.com/articles/s41564-025-02085-6",
     doi: "10.1038/s41564-025-02085-6",
+    pmid: "40781447",
     featured: true,
     summary:
       "High-resolution definition of arenavirus spike architecture and the molecular organization of the glycoprotein complex.",
@@ -34,10 +44,15 @@ export const publications = [
   {
     year: 2025,
     title: "Molecular basis for shifted receptor recognition by an encephalitic arbovirus",
+    authors:
+      "Fan X, Li W, Oros J, Plante JA, Mitchell BM, Plung JS, Basu H, Nagappan-Chettiar S, Boeckers JM, Tjang LV, Mann CJ, Brusic V, Buck TK, Varnum H, Yang P, Malcom LM, Choi SY, de Souza WM, Chiu IM, Umemori H, Weaver SC, Plante KS, Abraham J",
+    journal: "Cell",
+    publishedAt: "2025-04-04",
     citation:
       "Fan X*, Li W*, Oros J, Plante JA, Mitchell BM, Plung JS, Basu H, Nagappan-Chettiar S, Boeckers JM, Tjang LV, Mann CJ, Brusic V, Buck TK, Varnum H, Yang P, Malcom LM, Choi SY, de Souza WM, Chiu IM, Umemori H, Weaver SM, Plante KS, Abraham J. Cell. 2025.",
     link: "https://www.cell.com/cell/fulltext/S0092-8674(25)00347-2",
     doi: "10.1016/j.cell.2025.03.029",
+    pmid: "40187345",
     featured: true,
     summary:
       "Structural dissection of receptor switching in an encephalitic arbovirus and its implications for tissue tropism.",
@@ -49,10 +64,15 @@ export const publications = [
   {
     year: 2024,
     title: "Viral DNA polymerase structures reveal mechanisms of antiviral drug resistance",
+    authors:
+      "Shankar S, Pan J, Yang P, Bian Y, Oroszán G, Yu Z, Mukherjee P, Filman DJ, Hogle JM, Shekhar M, Coen DM, Abraham J",
+    journal: "Cell",
+    publishedAt: "2024-08-27",
     citation:
       "Shankar S*, Pan J, Yang P, Bian Y, Oroszán G, Yu Z, Mukherjee P, Filman DJ, Hogle JM, Shekhar M, Coen DM, Abraham J. Cell. 2024.",
     link: "https://www.cell.com/cell/fulltext/S0092-8674(24)00842-0",
     doi: "10.1016/j.cell.2024.07.048",
+    pmid: "39197451",
     featured: true,
     summary:
       "Structural analysis of viral DNA polymerases clarifying resistance pathways against clinically relevant antiviral compounds.",
@@ -64,10 +84,15 @@ export const publications = [
   {
     year: 2024,
     title: "Structural basis for VLDLR recognition by eastern equine encephalitis virus",
+    authors:
+      "Yang P, Li W, Fan X, Pan J, Mann CJ, Varnum H, Clark LE, Clark SA, Coscia A, Basu H, Nabel Smith K, Brusic V, Abraham J",
+    journal: "Nature Communications",
+    publishedAt: "2024-08-02",
     citation:
       "Yang P*, Li W*, Fan X, Pan J, Mann CJ, Varnum H, Clark LE, Clark SA, Coscia A, Basu H, Nabel Smith K, Brusic V, Abraham J. Nature Communications. 2024.",
     link: "https://www.nature.com/articles/s41467-024-50887-9",
     doi: "10.1038/s41467-024-50887-9",
+    pmid: "39095394",
     featured: true,
     summary:
       "Definition of receptor recognition by eastern equine encephalitis virus and the structural determinants of host engagement.",
@@ -75,6 +100,21 @@ export const publications = [
     imagePosition: "center 44%",
     imageAlt:
       "Publication figure summarizing VLDLR recognition by eastern equine encephalitis virus."
+  },
+  {
+    year: 2025,
+    title: "Structural and functional analysis of the Nipah virus polymerase complex",
+    authors:
+      "Hu S, Kim H, Yang P, Yu Z, Ludeke B, Mobilia S, Pan J, Stratton M, Bian Y, Fearns R, Abraham J",
+    journal: "Cell",
+    publishedAt: "2025-01-20",
+    citation:
+      "Hu S*, Kim H*, Yang P, Yu Z, Ludeke B, Mobilia S, Pan J, Stratton M, Bian Y, Fearns R, Abraham J. Cell. 2025.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/39837328/",
+    doi: "10.1016/j.cell.2024.12.021",
+    pmid: "39837328",
+    summary:
+      "Cryo-EM and functional analysis of the Nipah virus polymerase complex with implications for antiviral development."
   },
   {
     year: 2022,

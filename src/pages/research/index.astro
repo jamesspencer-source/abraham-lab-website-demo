@@ -1,75 +1,90 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHero from "../../components/PageHero.astro";
-import MissionChapter from "../../components/MissionChapter.astro";
+import ResearchChapter from "../../components/ResearchChapter.astro";
 import { researchPrograms } from "../../data/research";
 ---
 
-<BaseLayout title="Research" description="Research themes in viral entry, antibody neutralization, and viral polymerase biology at the Abraham Lab.">
-  <PageHero
-    eyebrow="Research"
-    title="Three connected scientific programs in viral infection biology."
-    description="The lab's work is organized around entry, neutralization, and replication. In each area, structural and mechanistic detail is used to identify leverage points for antiviral intervention."
-    meta={[
-      {
-        label: "Core systems",
-        value: "alphaviruses, arenaviruses, herpesviruses, and other medically significant viral families"
-      },
-      {
-        label: "Core methods",
-        value: "cryo-EM, crystallography, protein biochemistry, genetics, and infection-focused functional assays"
-      },
-      {
-        label: "Program aim",
-        value: "mechanistic resolution of therapeutic vulnerability in human viral disease"
-      }
-    ]}
-  />
+<BaseLayout
+  title="Research"
+  description="Research themes in viral entry, antiviral antibodies, and viral polymerase biology at the Abraham Lab."
+>
+  <section class="interior-hero interior-hero--research">
+    <div class="shell interior-hero__grid">
+      <div class="interior-hero__copy reveal">
+        <p class="eyebrow">Research</p>
+        <h1>Three scientific programs tied together by mechanism, structure, and public evidence.</h1>
+        <p>
+          The Abraham Lab studies viral entry, neutralization, and genome replication at the level of receptor
+          recognition, glycoprotein organization, and polymerase architecture. Across the program, structural and
+          functional experiments are used to identify points of therapeutic vulnerability in medically important
+          viruses.
+        </p>
+      </div>
+
+      <div class="interior-hero__rail reveal">
+        <div class="metadata-stack">
+          <p class="metadata-label">Core systems</p>
+          <ul class="clean-list metadata-list">
+            <li>alphaviruses</li>
+            <li>arenaviruses</li>
+            <li>henipaviruses</li>
+            <li>herpesviruses</li>
+          </ul>
+        </div>
+        <div class="metadata-stack">
+          <p class="metadata-label">Core methods</p>
+          <ul class="clean-list metadata-list">
+            <li>cryo-EM and crystallography</li>
+            <li>protein biochemistry</li>
+            <li>functional virology</li>
+            <li>receptor and antibody analysis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="section section--flagship">
-    <div class="shell mission-list">
+    <div class="shell research-chapter-list">
       {researchPrograms.map((item, index) => (
-        <MissionChapter
+        <ResearchChapter
           index={index + 1}
           title={item.title}
-          lead={item.importance}
-          body={[item.summary, ...item.paragraphs]}
+          keyQuestion={item.keyQuestion}
+          importance={item.importance}
+          summary={item.summary}
+          paragraphs={item.paragraphs}
+          systems={item.systems}
+          methods={item.methods}
+          papers={item.papers}
           image={item.image}
           imageAlt={item.imageAlt}
           imagePosition={item.imagePosition}
+          reverse={index % 2 === 1}
           headingTag="h2"
-          meta={[
-            { label: "Program focus", text: item.lead },
-            { label: "Representative systems", items: item.systems },
-            { label: "Representative methods", items: item.methods },
-            {
-              label: "Representative paper",
-              href: item.relatedLink,
-              hrefLabel: item.relatedPublication
-            }
-          ]}
         />
       ))}
     </div>
   </section>
 
-  <section class="section section--soft section--utility">
-    <div class="shell support-band reveal">
-      <div>
-        <p class="eyebrow">Approach</p>
-        <h2>Integrated structure, biophysics, and infection biology.</h2>
+  <section class="section section--utility methods-band">
+    <div class="shell methods-band__grid">
+      <div class="reveal">
+        <p class="eyebrow">Program method</p>
+        <h2>Integrated structure, mechanism, and infection biology.</h2>
       </div>
-      <div>
+      <div class="reveal">
         <p>
-          The Abraham Lab connects molecular structure with biological consequence through an experimental
-          program that spans discovery genetics, protein science, structural analysis, and infection-focused assays.
+          The laboratory combines discovery genetics, structural biology, protein science, and infection-focused
+          functional experiments. The goal is not simply to describe viral proteins, but to identify mechanisms
+          that explain tropism, neutralization, immune escape, replication, and antiviral failure.
         </p>
       </div>
-      <div class="support-band__list">
+      <div class="reveal methods-band__rail">
         <p>CRISPR-based discovery</p>
-        <p>Protein biochemistry</p>
+        <p>Biophysics and protein biochemistry</p>
         <p>Cryo-EM and crystallography</p>
-        <p>Functional virology</p>
+        <p>Cellular infection assays</p>
       </div>
     </div>
   </section>

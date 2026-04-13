@@ -15,7 +15,7 @@ const { title, description, pageClass } = Astro.props;
 const pageTitle = title ? `${title} | ${siteData.fullName}` : siteData.fullName;
 const metaDescription = description ?? siteData.description;
 const canonical = new URL(Astro.url.pathname, siteData.url).toString();
-const socialImage = new URL(withBase(siteData.heroImage), siteData.url).toString();
+const socialImage = new URL(withBase(siteData.heroFigures[0].image), siteData.url).toString();
 ---
 
 <!doctype html>
@@ -23,9 +23,29 @@ const socialImage = new URL(withBase(siteData.heroImage), siteData.url).toString
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        try {
+          const stored = window.localStorage.getItem("abraham-theme");
+          const resolved =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          root.dataset.theme = resolved;
+          root.style.colorScheme = resolved;
+        } catch {
+          root.dataset.theme = "light";
+          root.style.colorScheme = "light";
+        }
+      })();
+    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
-    <meta name="theme-color" content="#090f16" />
+    <meta name="theme-color" content="#0c1218" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
     <meta property="og:type" content="website" />
@@ -50,6 +70,36 @@ const socialImage = new URL(withBase(siteData.heroImage), siteData.url).toString
     <script is:inline>
       const navToggle = document.querySelector(".nav-toggle");
       const nav = document.querySelector(".site-nav");
+      const themeToggle = document.querySelector(".theme-toggle");
+      const themeLabel = document.querySelector(".theme-toggle__label");
+      const root = document.documentElement;
+
+      const syncThemeToggle = () => {
+        const theme = root.dataset.theme === "dark" ? "dark" : "light";
+        if (themeLabel) {
+          themeLabel.textContent = theme === "dark" ? "Dark" : "Light";
+        }
+        if (themeToggle) {
+          themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+          themeToggle.setAttribute(
+            "aria-label",
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+          );
+        }
+      };
+
+      if (themeToggle) {
+        syncThemeToggle();
+        themeToggle.addEventListener("click", () => {
+          const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+          root.dataset.theme = nextTheme;
+          root.style.colorScheme = nextTheme;
+          try {
+            window.localStorage.setItem("abraham-theme", nextTheme);
+          } catch {}
+          syncThemeToggle();
+        });
+      }
 
       if (navToggle && nav) {
         const closeNav = () => {

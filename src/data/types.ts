@@ -4,9 +4,7 @@ export type NavItem = {
 };
 
 export type ThemeSettings = {
-  storageKey: string;
-  defaultMode: "system" | "light" | "dark";
-  allowToggle?: boolean;
+  defaultMode: "system";
 };
 
 export type HeroFactItem = {
@@ -41,13 +39,8 @@ export type ContactData = {
   email: string;
   managerEmail: string;
   mapDisplayName: string;
-  homeLocationLabel: string;
-  mapQuery: string;
   mapUrl: string;
   mapEmbedUrl: string;
-  mapPreviewImage: string;
-  mapPreviewAlt: string;
-  mapContext: string;
   mapBuilding: string;
 };
 
@@ -114,6 +107,7 @@ export type Publication = {
   image?: string;
   imagePosition?: string;
   imageAlt?: string;
+  visualReuseStatus?: "open-access" | "lab-approved" | "link-only";
 };
 
 export type NewsItem = {
@@ -132,7 +126,7 @@ export type Person = {
   name: string;
   title: string;
   note?: string;
-  group: "Leadership" | "Postdoctoral Fellows" | "Graduate Students" | "Operations & Strategy";
+  group: "Leadership" | "Postdoctoral Fellows & Instructors" | "Graduate Students" | "Operations & Strategy";
   image: string;
   imageAlt: string;
   imagePosition?: string;

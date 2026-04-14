@@ -55,6 +55,7 @@ Notes:
 
 - Pan Yang is listed publicly as Instructor of Microbiology.
 - James Spencer is listed publicly as Lab Manager.
+- For directory grouping, Pan can appear alongside postdoctoral-level scientists so long as the visible title remains `Instructor of Microbiology`.
 - Public roster source:
   - https://abrahamlab.med.harvard.edu/people/
 
@@ -82,6 +83,11 @@ Recommended homepage proof set:
 Lead paper recommendation:
 
 - The 2026 Cell HSV-1 helicase-primase paper is the lead homepage publication because it is the newest verified paper and the strongest recent mechanistic structure story.
+
+Visual-use note:
+
+- The 2025 Nature Microbiology arenavirus paper is the safest immediate homepage/publication visual source because the article is open access.
+- The 2026 Cell HSV helicase-primase paper and the 2025 Cell arbovirus receptor paper are stronger proof points than default image sources unless author-approved figure exports are available.
 
 ## Public news items used
 

@@ -20,6 +20,7 @@ export const publications = [
       "Structural and single-molecule analysis showing how helicase-primase inhibitors arrest herpesvirus DNA replication and reveal assembly of a replication fork complex.",
     image: "/assets/images/publications/hsv-helicase-primase.jpg",
     imagePosition: "center 34%",
+    visualReuseStatus: "link-only",
     imageAlt:
       "Publication figure showing the HSV helicase-primase complex and replication fork assembly."
   },
@@ -41,6 +42,7 @@ export const publications = [
       "Cryo-EM analysis of New World arenavirus glycoprotein complexes clarifying organization, receptor-facing architecture, and control of membrane fusion.",
     image: "/assets/images/publications/arenavirus-gpc.jpeg",
     imagePosition: "center 42%",
+    visualReuseStatus: "open-access",
     imageAlt:
       "Structural figure illustrating the organization of the New World arenavirus spike glycoprotein complex."
   },
@@ -62,6 +64,7 @@ export const publications = [
       "Structural and functional analysis explaining how receptor recognition shifted in an encephalitic arbovirus and what that implies for tropism and outbreak risk.",
     image: "/assets/images/publications/weev-structures.jpeg",
     imagePosition: "center 38%",
+    visualReuseStatus: "link-only",
     imageAlt:
       "Structural figure showing comparative receptor recognition in an encephalitic arbovirus."
   },

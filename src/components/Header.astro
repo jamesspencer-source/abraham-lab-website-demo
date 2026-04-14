@@ -1,7 +1,6 @@
 ---
 import { siteData } from "../data/site";
 import { withBase } from "../lib/content";
-import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
   currentPath: string;
@@ -24,7 +23,7 @@ const isActive = (href: string) => {
 <header class="site-header">
   <div class="shell site-header__inner">
     <a class="brand" href={withBase("/")} aria-label={`${siteData.fullName} home`}>
-      <span class="brand__eyebrow">{siteData.shortInstitution} / Microbiology / HHMI</span>
+      <span class="brand__eyebrow">Harvard Medical School / Microbiology / HHMI</span>
       <span class="brand__name">{siteData.name}</span>
     </a>
 
@@ -36,8 +35,6 @@ const isActive = (href: string) => {
           </a>
         ))}
       </nav>
-
-      <ThemeToggle />
 
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
         Menu

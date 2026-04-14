@@ -15,9 +15,14 @@ const anchorFor = (label: string) =>
     .replace(/^-|-$/g, "");
 
 const directoryIndex = [
-  leadership ? { label: leadership.label, count: leadership.entries.length, id: anchorFor(leadership.label) } : null,
-  ...remainingGroups.map((group) => ({ label: group.label, count: group.entries.length, id: anchorFor(group.label) })),
-  { label: "Alumni", count: totalAlumni, id: "alumni" }
+  leadership ? { label: leadership.label, count: leadership.entries.length, id: anchorFor(leadership.label), filter: "Leadership" } : null,
+  ...remainingGroups.map((group) => ({
+    label: group.label,
+    count: group.entries.length,
+    id: anchorFor(group.label),
+    filter: group.label
+  })),
+  { label: "Alumni", count: totalAlumni, id: "alumni", filter: "alumni" }
 ].filter(Boolean);
 ---
 
@@ -27,36 +32,52 @@ const directoryIndex = [
       <div class="page-hero__copy reveal">
         <p class="eyebrow">People</p>
         <h1>Faculty, fellows, students, and operations leadership of the Abraham Lab.</h1>
-        <p>Current personnel are grouped below, followed by a compact alumni register.</p>
+        <p>
+          Current personnel are grouped below in a compact directory, followed by a structured alumni
+          register.
+        </p>
       </div>
       <div class="page-hero__rail reveal">
         <div class="metadata-stack">
-          <p class="metadata-label">Directory index</p>
-          <ul class="clean-list metadata-list">
-            {leadership && <li>{leadership.label}</li>}
-            {remainingGroups.map((group) => <li>{group.label}</li>)}
-            <li>Alumni</li>
-          </ul>
+          <p class="metadata-label">Current members</p>
+          <p>{peopleData.currentMembers.length}</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--utility directory-index-band">
-    <div class="shell directory-index">
-      {directoryIndex.map((item) => (
-        item && (
-          <a class="directory-index__chip reveal" href={`#${item.id}`}>
-            <span>{item.label}</span>
-            <strong>{item.count}</strong>
-          </a>
-        )
-      ))}
+  <section class="section section--utility directory-controls-band">
+    <div class="shell directory-controls">
+      <div class="directory-index">
+        {directoryIndex.map((item) => (
+          item && (
+            <a class="directory-index__chip reveal" href={`#${item.id}`}>
+              <span>{item.label}</span>
+              <strong>{item.count}</strong>
+            </a>
+          )
+        ))}
+      </div>
+
+      <div class="directory-filters reveal" role="toolbar" aria-label="Filter directory sections">
+        <button class="directory-filter is-active" type="button" data-directory-filter="all" aria-pressed="true">All</button>
+        {directoryIndex.map((item) => (
+          item && (
+            <button class="directory-filter" type="button" data-directory-filter={item.filter} aria-pressed="false">
+              {item.label}
+            </button>
+          )
+        ))}
+      </div>
     </div>
   </section>
 
   {leadership && (
-    <section class="section section--flagship" id={anchorFor(leadership.label)}>
+    <section
+      class="section section--flagship"
+      id={anchorFor(leadership.label)}
+      data-directory-group={leadership.label}
+    >
       <div class="shell directory-lead">
         {leadership.entries.map((person) => (
           <article class="directory-lead__row reveal">
@@ -68,6 +89,10 @@ const directoryIndex = [
               <h2>{person.name}</h2>
               <p class="directory-lead__title">{person.title}</p>
               {person.note && <p>{person.note}</p>}
+              <div class="button-row">
+                <a class="button button--primary" href={withBase("/jonathan-abraham/")}>Profile</a>
+                <a class="button button--ghost" href={withBase("/contact/")}>Contact</a>
+              </div>
             </div>
           </article>
         ))}
@@ -78,7 +103,7 @@ const directoryIndex = [
   <section class="section section--utility">
     <div class="shell directory-groups">
       {remainingGroups.map((group) => (
-        <section class="directory-group reveal" id={anchorFor(group.label)}>
+        <section class="directory-group reveal" id={anchorFor(group.label)} data-directory-group={group.label}>
           <div class="directory-group__header">
             <div>
               <p class="eyebrow">Current members</p>
@@ -87,7 +112,7 @@ const directoryIndex = [
             <p class="directory-group__count">{group.entries.length} people</p>
           </div>
 
-          <div class="directory-list">
+          <div class="directory-grid">
             {group.entries.map((person) => (
               <article class="directory-row">
                 <div class="directory-row__media frame" style={person.imagePosition ? `--media-position: ${person.imagePosition};` : undefined}>
@@ -106,7 +131,7 @@ const directoryIndex = [
     </div>
   </section>
 
-  <section class="section section--utility alumni-band" id="alumni">
+  <section class="section section--utility alumni-band" id="alumni" data-directory-group="alumni">
     <div class="shell section-heading section-heading--compact">
       <div class="reveal">
         <p class="eyebrow">Alumni</p>
@@ -133,4 +158,30 @@ const directoryIndex = [
       ))}
     </div>
   </section>
+
+  <script is:inline>
+    const filterButtons = Array.from(document.querySelectorAll("[data-directory-filter]"));
+    const filterSections = Array.from(document.querySelectorAll("[data-directory-group]"));
+
+    const applyDirectoryFilter = (value) => {
+      filterButtons.forEach((button) => {
+        const active = button.getAttribute("data-directory-filter") === value;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+
+      filterSections.forEach((section) => {
+        const group = section.getAttribute("data-directory-group");
+        const visible = value === "all" || group === value;
+        section.hidden = !visible;
+      });
+    };
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const value = button.getAttribute("data-directory-filter");
+        if (value) applyDirectoryFilter(value);
+      });
+    });
+  </script>
 </BaseLayout>

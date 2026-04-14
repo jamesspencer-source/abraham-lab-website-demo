@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ResearchChapter from "../../components/ResearchChapter.astro";
 import { publications } from "../../data/publications";
+import { researchPrograms } from "../../data/research";
 import { featuredOnly, formatMonthYear, groupPublicationsByYear, leadPublication, withBase } from "../../lib/content";
 
 const featuredPublications = featuredOnly(publications);
@@ -13,11 +15,10 @@ const groupedPublications = groupPublicationsByYear(publications);
     <div class="shell page-hero__grid">
       <div class="page-hero__copy reveal">
         <p class="eyebrow">Publications</p>
-        <h1>Publication record in entry biology, glycoprotein structure, and viral replication.</h1>
+        <h1>Publication record in structural virology, receptor biology, and viral replication.</h1>
         <p>
-          The publication record spans receptor recognition, glycoprotein architecture, antibody-mediated
-          neutralization, and replication machinery, with an emphasis on mechanistic questions relevant to
-          antiviral design and emerging infectious disease.
+          The publication record centers on mechanistic studies of viral entry, glycoprotein structure,
+          antibody recognition, and replication machinery in medically important human viruses.
         </p>
       </div>
       <div class="page-hero__rail reveal">
@@ -74,6 +75,41 @@ const groupedPublications = groupPublicationsByYear(publications);
       </div>
     </section>
   )}
+
+  <section class="section section--flagship atlas-band" id="research-atlas">
+    <div class="shell section-heading section-heading--split">
+      <div class="reveal">
+        <p class="eyebrow">Research atlas</p>
+        <h2>Published scientific chapters tied to public papers, systems, and methods.</h2>
+      </div>
+      <div class="reveal">
+        <p>
+          The themes below are drawn from the published record rather than from unpublished work or
+          programmatic overview language.
+        </p>
+      </div>
+    </div>
+
+    <div class="shell research-chapter-list">
+      {researchPrograms.map((item, index) => (
+        <ResearchChapter
+          index={index + 1}
+          title={item.title}
+          keyQuestion={item.keyQuestion}
+          importance={item.importance}
+          summary={item.summary}
+          paragraphs={item.paragraphs}
+          systems={item.systems}
+          methods={item.methods}
+          papers={item.papers}
+          image={item.image}
+          imageAlt={item.imageAlt}
+          imagePosition={item.imagePosition}
+          headingTag="h2"
+        />
+      ))}
+    </div>
+  </section>
 
   <section class="section section--utility archive-band">
     <div class="shell section-heading section-heading--compact">

@@ -1,100 +1,36 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ResearchChapter from "../../components/ResearchChapter.astro";
-import { researchPrograms } from "../../data/research";
+import { withBase } from "../../lib/content";
+
+const destination = withBase("/publications/#research-atlas");
 ---
 
 <BaseLayout
   title="Research"
-  description="Research themes in viral entry, antiviral antibodies, and viral polymerase biology at the Abraham Lab."
+  description="Published research themes from the Abraham Lab."
+  canonicalPath="/publications/"
 >
-  <section class="page-hero page-hero--research">
+  <script is:inline define:vars={{ destination }}>
+    if (typeof window !== "undefined") {
+      window.location.replace(destination);
+    }
+  </script>
+
+  <section class="page-hero page-hero--research-legacy">
     <div class="shell page-hero__grid">
       <div class="page-hero__copy reveal">
         <p class="eyebrow">Research</p>
-        <h1>Mechanistic chapters in viral infection biology.</h1>
+        <h1>Research themes now live within Publications.</h1>
         <p>
-          The Abraham Lab's published work examines receptor recognition, glycoprotein architecture,
-          antibody interfaces, and polymerase assemblies in medically important viruses. The emphasis is on
-          experimentally resolved mechanism in peer-reviewed studies.
+          The scientific atlas for the Abraham Lab is now integrated into the publications page so that
+          mechanistic themes sit directly alongside public papers, figures, and citation records.
         </p>
       </div>
-
       <div class="page-hero__rail reveal">
         <div class="metadata-stack">
-          <p class="metadata-label">Core systems</p>
-          <ul class="clean-list metadata-list">
-            <li>alphaviruses</li>
-            <li>arenaviruses</li>
-            <li>henipaviruses</li>
-            <li>herpesviruses</li>
-          </ul>
+          <p class="metadata-label">Forwarding</p>
+          <p><a class="text-link" href={destination}>Go to Publications</a></p>
         </div>
-        <div class="metadata-stack">
-          <p class="metadata-label">Core methods</p>
-          <ul class="clean-list metadata-list">
-            <li>cryo-EM and crystallography</li>
-            <li>protein biochemistry</li>
-            <li>functional virology</li>
-            <li>receptor and antibody analysis</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--flagship">
-    <div class="shell section-heading section-heading--split">
-      <div class="reveal">
-        <p class="eyebrow">Technical atlas</p>
-        <h2>Three scientific programs anchored to public papers and resolved mechanism.</h2>
-      </div>
-      <div class="reveal">
-        <p>
-          Each chapter below is tied to published papers, representative systems, and experimental methods
-          from the laboratory record.
-        </p>
-      </div>
-    </div>
-    <div class="shell research-chapter-list">
-      {researchPrograms.map((item, index) => (
-        <ResearchChapter
-          index={index + 1}
-          title={item.title}
-          keyQuestion={item.keyQuestion}
-          importance={item.importance}
-          summary={item.summary}
-          paragraphs={item.paragraphs}
-          systems={item.systems}
-          methods={item.methods}
-          papers={item.papers}
-          image={item.image}
-          imageAlt={item.imageAlt}
-          imagePosition={item.imagePosition}
-          headingTag="h2"
-        />
-      ))}
-    </div>
-  </section>
-
-  <section class="section section--utility support-band">
-    <div class="shell methods-band__grid">
-      <div class="reveal">
-        <p class="eyebrow">Experimental approach</p>
-        <h2>Structure, biochemistry, and functional virology in parallel.</h2>
-      </div>
-      <div class="reveal">
-        <p>
-          The laboratory combines structural biology, protein biochemistry, receptor analysis, and
-          infection-focused functional experiments. Across projects, the goal is to connect molecular
-          architecture to experimentally tractable mechanisms.
-        </p>
-      </div>
-      <div class="reveal methods-band__rail">
-        <p>CRISPR-based discovery</p>
-        <p>Biophysics and protein biochemistry</p>
-        <p>Cryo-EM and crystallography</p>
-        <p>Cellular infection assays</p>
       </div>
     </div>
   </section>

@@ -16,7 +16,7 @@ export const peopleData = {
       name: "Pan Yang, Ph.D.",
       title: "Instructor of Microbiology",
       note: "Structural virology and mechanism.",
-      group: "Postdoctoral Fellows",
+      group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/pan-yang.jpg",
       imageAlt: "Pan Yang",
       order: 2
@@ -24,7 +24,7 @@ export const peopleData = {
     {
       name: "Wanyu Li, Ph.D.",
       title: "Postdoctoral Fellow",
-      group: "Postdoctoral Fellows",
+      group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/wanyu-li.jpeg",
       imageAlt: "Wanyu Li",
       order: 3
@@ -32,7 +32,7 @@ export const peopleData = {
     {
       name: "Side Hu, Ph.D.",
       title: "Postdoctoral Fellow",
-      group: "Postdoctoral Fellows",
+      group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/side-hu.jpg",
       imageAlt: "Side Hu",
       order: 4
@@ -40,7 +40,7 @@ export const peopleData = {
     {
       name: "Chenggong Ji, Ph.D.",
       title: "Postdoctoral Fellow",
-      group: "Postdoctoral Fellows",
+      group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/chenggong-ji.png",
       imageAlt: "Chenggong Ji",
       order: 5
@@ -48,7 +48,7 @@ export const peopleData = {
     {
       name: "Zishuo Yu, Ph.D.",
       title: "Postdoctoral Fellow",
-      group: "Postdoctoral Fellows",
+      group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/zishuo-yu.jpg",
       imageAlt: "Zishuo Yu",
       order: 6
@@ -56,7 +56,7 @@ export const peopleData = {
     {
       name: "Xiaoyi Fan, Ph.D.",
       title: "Postdoctoral Fellow",
-      group: "Postdoctoral Fellows",
+      group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/xiaoyi-fan.jpg",
       imageAlt: "Xiaoyi Fan",
       order: 7
@@ -64,7 +64,7 @@ export const peopleData = {
     {
       name: "Cristina Gutierrez-Vargas, Ph.D.",
       title: "Postdoctoral Fellow",
-      group: "Postdoctoral Fellows",
+      group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/cristina-gutierrez-vargas.jpg",
       imageAlt: "Cristina Gutierrez-Vargas",
       order: 8
@@ -72,7 +72,7 @@ export const peopleData = {
     {
       name: "Biswajit Das, Ph.D.",
       title: "Postdoctoral Fellow",
-      group: "Postdoctoral Fellows",
+      group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/biswajit-das.jpeg",
       imageAlt: "Biswajit Das",
       order: 9
@@ -80,7 +80,7 @@ export const peopleData = {
     {
       name: "Judy Huang, Ph.D.",
       title: "Postdoctoral Fellow",
-      group: "Postdoctoral Fellows",
+      group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/judy-huang.jpeg",
       imageAlt: "Judy Huang",
       order: 10
@@ -144,7 +144,7 @@ export const peopleData = {
     {
       name: "James Spencer",
       title: "Lab Manager",
-      note: "Laboratory management and research administration.",
+      note: "Laboratory operations and administrative coordination.",
       group: "Operations & Strategy",
       image: "/assets/images/people/james-spencer.png",
       imageAlt: "James Spencer",

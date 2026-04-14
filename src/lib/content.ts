@@ -2,7 +2,7 @@ import type { Person, Publication } from "../data/types";
 
 const PEOPLE_GROUP_ORDER = [
   "Leadership",
-  "Postdoctoral Fellows",
+  "Postdoctoral Fellows & Instructors",
   "Graduate Students",
   "Operations & Strategy"
 ] as const;

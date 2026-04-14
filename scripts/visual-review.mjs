@@ -185,7 +185,7 @@ async function run() {
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       throw new Error(
-        `Unable to launch Chromium for local visual review. The repo-integrated GitHub Actions workflow should still generate screenshot artifacts on Linux.\n\n${message}`
+        `Unable to launch Chromium for local visual review. On some macOS environments, headless Chromium fails with local MachPort permission errors even when the site build succeeds. The repo-integrated GitHub Actions workflow remains the canonical screenshot review path, and local review may require a headed browser outside this sandbox.\n\n${message}`
       );
     }
 

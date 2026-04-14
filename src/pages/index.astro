@@ -1,32 +1,37 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import MapWidget from "../components/MapWidget.astro";
 import { siteData } from "../data/site";
 import { publications } from "../data/publications";
 import { newsItems } from "../data/news";
-import { formatMonthYear, homepageProofOnly, leadPublication, limitItems, withBase } from "../lib/content";
+import { peopleData } from "../data/people";
+import { formatMonthYear, groupPeople, homepageProofOnly, leadPublication, limitItems, withBase } from "../lib/content";
 
 const homepageProof = homepageProofOnly(publications);
 const leadPaper = leadPublication(publications) ?? homepageProof[0];
 const supportingPapers = homepageProof.filter((item) => item.title !== leadPaper?.title).slice(0, 2);
 const recentNews = limitItems(newsItems, 3);
+const groupedPeople = groupPeople(peopleData.currentMembers);
+const leadership = groupedPeople.find((group) => group.label === "Leadership");
+const postdocs = groupedPeople.find((group) => group.label === "Postdoctoral Fellows & Instructors");
+const students = groupedPeople.find((group) => group.label === "Graduate Students");
+const currentMemberCount = peopleData.currentMembers.length;
 ---
 
 <BaseLayout pageClass="page-home">
   <section class="marquee">
-    <div class="marquee__shell shell">
+    <div class="shell marquee__shell">
       <div class="marquee__grid">
-        <div class="marquee__copy">
-          <p class="eyebrow reveal">Abraham Lab</p>
-          <h1 class="reveal">{siteData.heroTitle}</h1>
-          <p class="marquee__deck reveal">{siteData.heroDeck}</p>
+        <div class="marquee__copy reveal">
+          <p class="eyebrow">Abraham Lab</p>
+          <h1>{siteData.heroTitle}</h1>
+          <p class="marquee__deck">{siteData.heroDeck}</p>
 
-          <div class="button-row reveal">
+          <div class="button-row">
             <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
-            <a class="button button--ghost" href={withBase("/research/")}>Explore research</a>
+            <a class="button button--ghost" href={withBase("/jonathan-abraham/")}>Jonathan Abraham</a>
           </div>
 
-          <dl class="marquee__facts reveal">
+          <dl class="marquee__facts">
             {siteData.heroFacts.map((item) => (
               <div class="marquee__fact">
                 <dt>{item.label}</dt>
@@ -36,41 +41,44 @@ const recentNews = limitItems(newsItems, 3);
           </dl>
         </div>
 
-        <div class="marquee__stage reveal">
-          <div class="hero-mosaic">
-            {siteData.heroFigures.map((item, index) => (
-              <a
-                class:list={["hero-mosaic__figure", `hero-mosaic__figure--${index + 1}`]}
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-                style={item.imagePosition ? `--media-position: ${item.imagePosition};` : undefined}
-              >
-                <img src={withBase(item.image)} alt={item.alt} loading={index === 0 ? "eager" : "lazy"} />
-                <div class="hero-mosaic__caption">
-                  <p>{item.label}</p>
-                  <h2>{item.title}</h2>
-                  {item.note && <span>{item.note}</span>}
-                </div>
-              </a>
-            ))}
-
-            <aside class="hero-dossier">
-              <p class="eyebrow">Recent record</p>
-              <div class="hero-dossier__list">
-                {homepageProof.map((item) => (
-                  <article class="hero-dossier__item">
-                    <p class="metadata-label">
-                      {[item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : item.year].filter(Boolean).join(" | ")}
-                    </p>
-                    <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
-                  </article>
-                ))}
-              </div>
-            </aside>
-          </div>
-        </div>
+        <figure
+          class="marquee__visual reveal"
+          style={siteData.heroFigures[0]?.imagePosition ? `--media-position: ${siteData.heroFigures[0].imagePosition};` : undefined}
+        >
+          <img
+            src={withBase(siteData.heroFigures[0].image)}
+            alt={siteData.heroFigures[0].alt}
+            loading="eager"
+          />
+          <figcaption class="marquee__caption">
+            <p>{siteData.heroFigures[0].label}</p>
+            <h2>{siteData.heroFigures[0].title}</h2>
+            {siteData.heroFigures[0].note && <span>{siteData.heroFigures[0].note}</span>}
+          </figcaption>
+        </figure>
       </div>
+
+      <aside class="proof-rail reveal" aria-label="Recent publications">
+        <div class="proof-rail__header">
+          <div>
+            <p class="eyebrow">Recent proof</p>
+            <h2>Three recent papers anchoring the laboratory record.</h2>
+          </div>
+          <a class="text-link" href={withBase("/publications/")}>Full publication record</a>
+        </div>
+
+        <div class="proof-rail__list">
+          {homepageProof.map((item) => (
+            <article class="proof-rail__item">
+              <p class="metadata-label">
+                {[item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : item.year].filter(Boolean).join(" / ")}
+              </p>
+              <h3><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h3>
+              {item.summary && <p>{item.summary}</p>}
+            </article>
+          ))}
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -107,12 +115,12 @@ const recentNews = limitItems(newsItems, 3);
       <div class="shell section-heading section-heading--split">
         <div class="reveal">
           <p class="eyebrow">Lead publication</p>
-          <h2>Recent peer-reviewed work.</h2>
+          <h2>Recent mechanistic work in viral replication and entry biology.</h2>
         </div>
         <div class="reveal">
           <p>
-            Recent papers define mechanisms of HSV-1 replication, New World arenavirus glycoprotein
-            organization, and arbovirus receptor recognition.
+            The newest lead study resolves how HSV-1 helicase-primase inhibitors interrupt replication
+            machinery and clarifies assembly of the replication fork complex.
           </p>
         </div>
       </div>
@@ -140,12 +148,12 @@ const recentNews = limitItems(newsItems, 3);
 
         <aside class="editorial-feature__rail reveal">
           <div class="metadata-stack">
-            <p class="metadata-label">Venue</p>
-            <p>{leadPaper.journal}</p>
-          </div>
-          <div class="metadata-stack">
             <p class="metadata-label">Published</p>
             <p>{leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : leadPaper.year}</p>
+          </div>
+          <div class="metadata-stack">
+            <p class="metadata-label">Venue</p>
+            <p>{leadPaper.journal}</p>
           </div>
           {leadPaper.pmid && (
             <div class="metadata-stack">
@@ -161,13 +169,13 @@ const recentNews = limitItems(newsItems, 3);
   <section class="section section--utility record-band">
     <div class="shell section-heading section-heading--split">
       <div class="reveal">
-        <p class="eyebrow">Recent record</p>
-        <h2>Recent publications and selected public updates.</h2>
+        <p class="eyebrow">Current record</p>
+        <h2>Recent papers and selected public updates.</h2>
       </div>
       <div class="reveal">
         <p>
-          Additional publications and updates point to the broader laboratory record across virology,
-          structural biology, and host-pathogen interaction.
+          Recent publications and institutional coverage provide the quickest public view of the laboratory's
+          current scientific output.
         </p>
       </div>
     </div>
@@ -176,7 +184,7 @@ const recentNews = limitItems(newsItems, 3);
       <section class="ledger-panel reveal">
         <div class="ledger-panel__header">
           <p class="eyebrow">Recent publications</p>
-          <a class="text-link" href={withBase("/publications/")}>Publication record</a>
+          <a class="text-link" href={withBase("/publications/")}>All publications</a>
         </div>
         <div class="ledger-list">
           {supportingPapers.map((item) => (
@@ -205,38 +213,49 @@ const recentNews = limitItems(newsItems, 3);
             </article>
           ))}
         </div>
-        <div class="ledger-panel__footer">
-          <p class="metadata-label">Social</p>
-          <a class="text-link" href={siteData.social.x} target="_blank" rel="noreferrer">Abraham Lab on X</a>
-        </div>
       </section>
     </div>
   </section>
 
-  <section class="section section--utility location-band">
-    <div class="shell location-band__grid">
-      <div class="location-band__copy reveal">
-        <p class="eyebrow">Location</p>
-        <h2>{siteData.contact.homeLocationLabel}</h2>
-        <p class="location-band__institution">
-          <span>{siteData.contact.institutionDisplayLines?.[0]}</span>
-          <span class="u-nowrap">{siteData.contact.institutionDisplayLines?.[1]}</span>
-        </p>
-        <p>For collaborations, speaking requests, and administrative inquiries.</p>
-        <div class="location-list">
-          {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
+  <section class="section section--utility lab-signal">
+    <div class="shell lab-signal__grid">
+      {leadership && leadership.entries[0] && (
+        <div
+          class="lab-signal__portrait frame reveal"
+          style={leadership.entries[0].imagePosition ? `--media-position: ${leadership.entries[0].imagePosition};` : undefined}
+        >
+          <img src={withBase(leadership.entries[0].image)} alt={leadership.entries[0].imageAlt} loading="lazy" />
         </div>
+      )}
+
+      <div class="lab-signal__copy reveal">
+        <p class="eyebrow">Leadership and laboratory</p>
+        <h2>Led by Jonathan Abraham at Harvard Medical School and HHMI.</h2>
+        <p>
+          The laboratory brings together structural virology, receptor biology, immune recognition, and
+          replication mechanism across current fellows, students, and operations leadership.
+        </p>
+
+        <div class="lab-signal__stats">
+          <article>
+            <span>{currentMemberCount}</span>
+            <p>Current members</p>
+          </article>
+          <article>
+            <span>{postdocs?.entries.length ?? 0}</span>
+            <p>Postdoctoral fellows and instructors</p>
+          </article>
+          <article>
+            <span>{students?.entries.length ?? 0}</span>
+            <p>Graduate students</p>
+          </article>
+        </div>
+
         <div class="button-row">
-          <a class="button button--primary" href={`mailto:${siteData.contact.email}`}>Email Jonathan Abraham</a>
-          <a class="button button--ghost" href={withBase("/contact/")}>Contact page</a>
+          <a class="button button--primary" href={withBase("/people/")}>People</a>
+          <a class="button button--ghost" href={withBase("/contact/")}>Contact</a>
         </div>
       </div>
-
-      <MapWidget
-        mode="home"
-        eyebrow="Campus map"
-        description="Harvard Medical School campus"
-      />
     </div>
   </section>
 </BaseLayout>

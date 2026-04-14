@@ -88,7 +88,13 @@ const currentMemberCount = peopleData.currentMembers.length;
         <p class="eyebrow">{siteData.institutionLabel}</p>
         <h2 class="institution-strip__title">
           {siteData.contact.institutionDisplayLines?.map((line) => (
-            <span class={line.includes("Blavatnik Institute") ? "u-nowrap" : undefined}>{line}</span>
+            line.includes("Blavatnik Institute") ? (
+              <span>
+                <span class="institution-strip__title-fragment">Blavatnik Institute</span>, Harvard Medical School
+              </span>
+            ) : (
+              <span>{line}</span>
+            )
           ))}
         </h2>
         <p>{siteData.institutionSummary}</p>

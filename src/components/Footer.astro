@@ -24,8 +24,7 @@ import { withBase } from "../lib/content";
 
     <section>
       <p class="footer-label">Contact</p>
-      <p><a class="u-nowrap email-link" href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
-      <p><a class="u-nowrap email-link" href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
+      <p><a href={withBase("/contact/")}>Contact page</a></p>
       <p><a href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Google Maps</a></p>
     </section>
 

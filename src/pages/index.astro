@@ -9,7 +9,27 @@ import { formatMonthYear, groupPeople, homepageProofOnly, leadPublication, limit
 const homepageProof = homepageProofOnly(publications);
 const leadPaper = leadPublication(publications) ?? homepageProof[0];
 const supportingPapers = homepageProof.filter((item) => item.title !== leadPaper?.title).slice(0, 2);
-const recentNews = limitItems(newsItems, 3);
+const homepageUpdates = limitItems(newsItems.filter((item) => item.homepageEligible ?? true), 2);
+const currentRecord = [
+  ...supportingPapers.map((item) => ({
+    kind: "Publication",
+    date: item.publishedAt ?? `${item.year}-01-01`,
+    label: [item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : item.year].filter(Boolean).join(" / "),
+    title: item.title,
+    summary: item.significanceLine ?? item.summary,
+    href: item.link,
+    actionLabel: "Read paper"
+  })),
+  ...homepageUpdates.map((item) => ({
+    kind: "Update",
+    date: item.date,
+    label: `${formatMonthYear(item.date)} / ${item.category}`,
+    title: item.title,
+    summary: item.summary,
+    href: item.link,
+    actionLabel: item.linkLabel ?? "Open source"
+  }))
+].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 const groupedPeople = groupPeople(peopleData.currentMembers);
 const leadership = groupedPeople.find((group) => group.label === "Leadership");
 const postdocs = groupedPeople.find((group) => group.label === "Postdoctoral Fellows & Instructors");
@@ -17,7 +37,7 @@ const students = groupedPeople.find((group) => group.label === "Graduate Student
 const currentMemberCount = peopleData.currentMembers.length;
 ---
 
-<BaseLayout pageClass="page-home">
+<BaseLayout pageClass="page-home" socialImage={leadPaper?.image ?? siteData.heroFigures[0].image}>
   <section class="marquee">
     <div class="shell marquee__shell">
       <div class="marquee__grid">
@@ -57,28 +77,6 @@ const currentMemberCount = peopleData.currentMembers.length;
           </figcaption>
         </figure>
       </div>
-
-      <aside class="proof-rail reveal" aria-label="Recent publications">
-        <div class="proof-rail__header">
-          <div>
-            <p class="eyebrow">Recent proof</p>
-            <h2>Three recent papers anchoring the laboratory record.</h2>
-          </div>
-          <a class="text-link" href={withBase("/publications/")}>Full publication record</a>
-        </div>
-
-        <div class="proof-rail__list">
-          {homepageProof.map((item) => (
-            <article class="proof-rail__item">
-              <p class="metadata-label">
-                {[item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : item.year].filter(Boolean).join(" / ")}
-              </p>
-              <h3><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h3>
-              {item.summary && <p>{item.summary}</p>}
-            </article>
-          ))}
-        </div>
-      </aside>
     </div>
   </section>
 
@@ -121,12 +119,12 @@ const currentMemberCount = peopleData.currentMembers.length;
       <div class="shell section-heading section-heading--split">
         <div class="reveal">
           <p class="eyebrow">Lead publication</p>
-          <h2>Recent mechanistic work in viral replication and entry biology.</h2>
+          <h2>One paper that captures the laboratory’s current mechanistic edge.</h2>
         </div>
         <div class="reveal">
           <p>
-            The newest lead study resolves how HSV-1 helicase-primase inhibitors interrupt replication
-            machinery and clarifies assembly of the replication fork complex.
+            Recent work resolves how HSV-1 helicase-primase inhibitors interrupt replication
+            and clarifies assembly of a herpesvirus replication fork complex.
           </p>
         </div>
       </div>
@@ -176,46 +174,42 @@ const currentMemberCount = peopleData.currentMembers.length;
     <div class="shell section-heading section-heading--split">
       <div class="reveal">
         <p class="eyebrow">Current record</p>
-        <h2>Recent papers and selected public updates.</h2>
+        <h2>Recent papers and public milestones.</h2>
       </div>
       <div class="reveal">
         <p>
-          Recent publications and institutional coverage provide the quickest public view of the laboratory's
-          current scientific output.
+          A compact view of current scientific output and major public signals from the laboratory.
         </p>
       </div>
     </div>
 
-    <div class="shell record-band__grid">
-      <section class="ledger-panel reveal">
+    <div class="shell">
+      <section class="ledger-panel ledger-panel--dossier reveal">
         <div class="ledger-panel__header">
-          <p class="eyebrow">Recent publications</p>
-          <a class="text-link" href={withBase("/publications/")}>All publications</a>
+          <div>
+            <p class="eyebrow">Recent record</p>
+            <h2>Two recent papers and two recent milestones.</h2>
+          </div>
+          <div class="button-row">
+            <a class="text-link" href={withBase("/publications/")}>Publications</a>
+            <a class="text-link" href={withBase("/news/")}>News</a>
+          </div>
         </div>
-        <div class="ledger-list">
-          {supportingPapers.map((item) => (
-            <article class="ledger-item">
-              <p class="ledger-item__meta">
-                {[item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : item.year].filter(Boolean).join(" / ")}
-              </p>
-              <h3><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h3>
-              {item.summary && <p>{item.summary}</p>}
-            </article>
-          ))}
-        </div>
-      </section>
 
-      <section class="ledger-panel reveal">
-        <div class="ledger-panel__header">
-          <p class="eyebrow">Selected updates</p>
-          <a class="text-link" href={withBase("/news/")}>All updates</a>
-        </div>
-        <div class="ledger-list">
-          {recentNews.map((item) => (
-            <article class="ledger-item">
-              <p class="ledger-item__meta">{formatMonthYear(item.date)} / {item.category}</p>
-              <h3><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h3>
-              <p>{item.summary}</p>
+        <div class="updates-ledger">
+          {currentRecord.map((item) => (
+            <article class="updates-ledger__row reveal">
+              <div class="updates-ledger__meta">
+                <p>{item.kind}</p>
+                <span>{item.label}</span>
+              </div>
+              <div class="updates-ledger__body">
+                <h2><a href={item.href} target="_blank" rel="noreferrer">{item.title}</a></h2>
+                {item.summary && <p>{item.summary}</p>}
+              </div>
+              <div class="updates-ledger__action">
+                <a class="text-link" href={item.href} target="_blank" rel="noreferrer">{item.actionLabel}</a>
+              </div>
             </article>
           ))}
         </div>
@@ -235,11 +229,11 @@ const currentMemberCount = peopleData.currentMembers.length;
       )}
 
       <div class="lab-signal__copy reveal">
-        <p class="eyebrow">Leadership and laboratory</p>
+        <p class="eyebrow">Leadership</p>
         <h2>Led by Jonathan Abraham at Harvard Medical School and HHMI.</h2>
         <p>
-          The laboratory brings together structural virology, receptor biology, immune recognition, and
-          replication mechanism across current fellows, students, and operations leadership.
+          The laboratory is organized across structural virology, mechanistic infection biology, graduate
+          training, and operations support within a focused team structure.
         </p>
 
         <div class="lab-signal__stats">

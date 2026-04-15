@@ -10,14 +10,15 @@ interface Props {
   description?: string;
   pageClass?: string;
   canonicalPath?: string;
+  socialImage?: string;
 }
 
-const { title, description, pageClass, canonicalPath } = Astro.props;
+const { title, description, pageClass, canonicalPath, socialImage: socialImagePath } = Astro.props;
 const pageTitle = title ? `${title} | ${siteData.fullName}` : siteData.fullName;
 const metaDescription = description ?? siteData.description;
 const canonicalTarget = canonicalPath ?? Astro.url.pathname;
 const canonical = new URL(canonicalTarget, siteData.url).toString();
-const socialImage = new URL(withBase(siteData.heroFigures[0].image), siteData.url).toString();
+const socialImage = new URL(withBase(socialImagePath ?? siteData.heroFigures[0].image), siteData.url).toString();
 const themeDefaultMode = siteData.theme.defaultMode;
 const themeColorLight = "#f8fafc";
 const themeColorDark = "#151d26";
@@ -35,6 +36,7 @@ const isHomePage = pageClass === "page-home";
     <script is:inline define:vars={{ themeDefaultMode, themeColorLight, themeColorDark, themeColorHero, isHomePage }}>
       (() => {
         const root = document.documentElement;
+        root.classList.add("js");
         const themeMeta = document.querySelector('meta[name="theme-color"]');
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         const theme = themeDefaultMode === "system" ? (prefersDark ? "dark" : "light") : "light";
@@ -53,6 +55,10 @@ const isHomePage = pageClass === "page-home";
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={siteData.fullName} />
     <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={withBase("/assets/images/brands/favicon.svg")} type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

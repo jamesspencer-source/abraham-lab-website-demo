@@ -103,6 +103,12 @@ export type Publication = {
   featured?: boolean;
   leadFeature?: boolean;
   homepageProof?: boolean;
+  foundational?: boolean;
+  system?: string;
+  methodCluster?: string;
+  significanceLine?: string;
+  openAccess?: boolean;
+  coverageLinks?: string[];
   summary?: string;
   image?: string;
   imagePosition?: string;
@@ -118,6 +124,8 @@ export type NewsItem = {
   summary: string;
   link: string;
   linkLabel?: string;
+  homepageEligible?: boolean;
+  milestoneTier?: "major" | "secondary";
   image?: string;
   imageAlt?: string;
 };
@@ -126,6 +134,8 @@ export type Person = {
   name: string;
   title: string;
   note?: string;
+  roleSummary?: string;
+  expertiseTags?: string[];
   group: "Leadership" | "Postdoctoral Fellows & Instructors" | "Graduate Students" | "Operations & Strategy";
   image: string;
   imageAlt: string;

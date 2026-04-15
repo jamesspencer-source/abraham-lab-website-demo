@@ -34,6 +34,36 @@ const viewports = [
 
 const themes = ["light", "dark"];
 
+function parseSelection(value, catalog, matcher) {
+  if (!value) {
+    return catalog;
+  }
+
+  const requested = value
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+
+  if (!requested.length) {
+    return catalog;
+  }
+
+  const selected = catalog.filter((item) => requested.some((entry) => matcher(item, entry)));
+  if (!selected.length) {
+    throw new Error(`VISUAL_REVIEW selection did not match any items: ${requested.join(", ")}`);
+  }
+
+  return selected;
+}
+
+const selectedRoutes = parseSelection(process.env.VISUAL_REVIEW_ROUTES, routes, (route, entry) => {
+  const normalizedEntry = entry.replace(/^\/+|\/+$/g, "");
+  return route.slug === entry || route.path === entry || route.path.replace(/^\/+|\/+$/g, "") === normalizedEntry;
+});
+
+const selectedViewports = parseSelection(process.env.VISUAL_REVIEW_VIEWPORTS, viewports, (viewport, entry) => viewport.name === entry);
+const selectedThemes = parseSelection(process.env.VISUAL_REVIEW_THEMES, themes, (theme, entry) => theme === entry);
+
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",
@@ -150,6 +180,8 @@ async function writeIndex(manifest) {
       main { width: min(1320px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 48px; }
       h1 { margin: 0 0 10px; font-size: 2rem; }
       p { margin: 0 0 16px; color: rgba(245,247,250,0.78); }
+      .meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 20px; font-size: 0.9rem; color: rgba(245,247,250,0.62); }
+      .meta code { font: inherit; }
       .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
       .card { padding: 16px; border: 1px solid rgba(255,255,255,0.12); background: #171f29; }
       .card h2 { margin: 0 0 8px; font-size: 1rem; }
@@ -162,6 +194,11 @@ async function writeIndex(manifest) {
     <main>
       <h1>Abraham Lab Visual Review</h1>
       <p>Generated screenshots for all public routes across the required viewport matrix.</p>
+      <div class="meta">
+        <span>Routes: <code>${selectedRoutes.length}</code></span>
+        <span>Viewports: <code>${selectedViewports.length}</code></span>
+        <span>Themes: <code>${selectedThemes.join(", ")}</code></span>
+      </div>
       <section class="grid">
         ${cards}
       </section>
@@ -173,6 +210,7 @@ async function writeIndex(manifest) {
 }
 
 async function run() {
+  await fs.rm(outputRoot, { recursive: true, force: true });
   await ensureDir(screenshotRoot);
   const server = await startStaticServer();
 
@@ -191,16 +229,16 @@ async function run() {
 
     const manifest = [];
 
-    for (const viewport of viewports) {
+    for (const viewport of selectedViewports) {
       const context = await browser.newContext({
         viewport: { width: viewport.width, height: viewport.height },
-        colorScheme: "light",
         deviceScaleFactor: 1
       });
-      const page = await context.newPage();
 
-      for (const route of routes) {
-        for (const theme of themes) {
+      for (const route of selectedRoutes) {
+        for (const theme of selectedThemes) {
+          const page = await context.newPage();
+          await page.emulateMedia({ colorScheme: theme });
           const url = `http://127.0.0.1:${port}${route.path}`;
           await page.goto(url, { waitUntil: "networkidle" });
           await page.evaluate(async (activeTheme) => {
@@ -241,6 +279,8 @@ async function run() {
             theme,
             relativePath: `screenshots/${fileName}`
           });
+
+          await page.close();
         }
       }
 

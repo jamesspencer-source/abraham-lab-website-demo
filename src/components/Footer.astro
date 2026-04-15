@@ -7,9 +7,7 @@ import { withBase } from "../lib/content";
   <div class="shell site-footer__grid">
     <section class="site-footer__primary">
       <p class="footer-label">Abraham Lab</p>
-      {siteData.contact.institutionDisplayLines?.map((line) => (
-        <p class={line.includes("Blavatnik Institute") ? "u-nowrap" : undefined}>{line}</p>
-      ))}
+      {siteData.contact.institutionDisplayLines?.map((line) => <p>{line}</p>)}
       {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
     </section>
 

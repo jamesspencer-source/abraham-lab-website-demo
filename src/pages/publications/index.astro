@@ -3,22 +3,37 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import ResearchChapter from "../../components/ResearchChapter.astro";
 import { publications } from "../../data/publications";
 import { researchPrograms } from "../../data/research";
-import { featuredOnly, formatMonthYear, groupPublicationsByYear, leadPublication, withBase } from "../../lib/content";
+import {
+  formatMonthYear,
+  groupPublicationsByYear,
+  homepageProofOnly,
+  leadPublication,
+  withBase
+} from "../../lib/content";
 
-const featuredPublications = featuredOnly(publications);
-const leadPaper = leadPublication(publications) ?? featuredPublications[0];
+const proofPapers = homepageProofOnly(publications);
+const leadPaper = leadPublication(publications) ?? proofPapers[0];
+const recentProofPapers = proofPapers.slice(0, 3);
+const foundationalPublications = publications
+  .filter((item) => item.foundational)
+  .filter((item) => item.title !== leadPaper?.title)
+  .slice(0, 6);
 const groupedPublications = groupPublicationsByYear(publications);
 ---
 
-<BaseLayout title="Publications" description="Selected and archived Abraham Lab publications.">
+<BaseLayout
+  title="Publications"
+  description="Selected and archived Abraham Lab publications."
+  socialImage={leadPaper?.image}
+>
   <section class="page-hero page-hero--publications">
     <div class="shell page-hero__grid">
       <div class="page-hero__copy reveal">
         <p class="eyebrow">Publications</p>
-        <h1>Publication record in structural virology, receptor biology, and viral replication.</h1>
+        <h1>The publication record is the laboratory’s primary scientific dossier.</h1>
         <p>
-          The publication record centers on mechanistic studies of viral entry, glycoprotein structure,
-          antibody recognition, and replication machinery in medically important human viruses.
+          Publications define the laboratory’s work in receptor engagement, glycoprotein structure,
+          antibody recognition, and replication mechanism across medically important viruses.
         </p>
       </div>
       <div class="page-hero__rail reveal">
@@ -30,6 +45,10 @@ const groupedPublications = groupPublicationsByYear(publications);
             <li>Nature Communications</li>
             <li>Science</li>
           </ul>
+        </div>
+        <div class="metadata-stack">
+          <p class="metadata-label">Current proof set</p>
+          <p>{recentProofPapers.length} recent papers</p>
         </div>
       </div>
     </div>
@@ -44,7 +63,7 @@ const groupedPublications = groupPublicationsByYear(publications);
           <p class="editorial-feature__meta">
             {[leadPaper.journal, leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : undefined, leadPaper.pmid ? `PMID ${leadPaper.pmid}` : undefined].filter(Boolean).join(" / ")}
           </p>
-          <p class="editorial-feature__summary">{leadPaper.summary}</p>
+          <p class="editorial-feature__summary">{leadPaper.significanceLine ?? leadPaper.summary}</p>
           <p class="citation-text">{leadPaper.citation}</p>
           <div class="button-row">
             <a class="button button--primary" href={leadPaper.link} target="_blank" rel="noreferrer">Read paper</a>
@@ -60,32 +79,87 @@ const groupedPublications = groupPublicationsByYear(publications);
 
         <aside class="editorial-feature__rail reveal">
           <p class="metadata-label">Selected papers</p>
-          <div class="reference-list">
-            {featuredPublications.filter((item) => item.title !== leadPaper.title).slice(0, 4).map((item) => (
-              <article class="reference-card">
-                <p class="reference-card__meta">
-                  {[item.journal ?? "Publication", item.year].join(" / ")}
-                </p>
-                <a class="reference-card__title" href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
-                <p class="reference-card__note">{item.citation}</p>
-              </article>
-            ))}
+          <div class="metadata-stack">
+            <p class="metadata-label">System</p>
+            <p>{leadPaper.system ?? "Mechanistic virology"}</p>
           </div>
+          <div class="metadata-stack">
+            <p class="metadata-label">Methods</p>
+            <p>{leadPaper.methodCluster ?? "Structural biology and virology"}</p>
+          </div>
+          {leadPaper.openAccess !== undefined && (
+            <div class="metadata-stack">
+              <p class="metadata-label">Access</p>
+              <p>{leadPaper.openAccess ? "Open access" : "Journal access"}</p>
+            </div>
+          )}
+          {leadPaper.coverageLinks?.[0] && (
+            <div class="metadata-stack">
+              <p class="metadata-label">Coverage</p>
+              <a class="text-link" href={leadPaper.coverageLinks[0]} target="_blank" rel="noreferrer">
+                Institutional coverage
+              </a>
+            </div>
+          )}
         </aside>
       </div>
     </section>
   )}
 
+  <section class="section section--flagship updates-band">
+    <div class="shell section-heading section-heading--split">
+      <div class="reveal">
+        <p class="eyebrow">Current proof set</p>
+        <h2>Three recent papers define the present public record.</h2>
+      </div>
+      <div class="reveal">
+        <p>
+          These papers anchor the present view of viral entry, spike architecture, receptor recognition,
+          and replication mechanism in the Abraham Lab.
+        </p>
+      </div>
+    </div>
+
+    <div class="shell updates-ledger updates-ledger--publication-proof">
+      {recentProofPapers.map((item) => (
+        <article class="updates-ledger__row reveal">
+          <div class="updates-ledger__meta">
+            <p>{item.journal ?? "Publication"}</p>
+            <span>{item.publishedAt ? formatMonthYear(item.publishedAt) : item.year}</span>
+          </div>
+          <div class="updates-ledger__body">
+            <div class="tag-list">
+              {item.system && <span class="tag-chip">{item.system}</span>}
+              {item.methodCluster && <span class="tag-chip">{item.methodCluster}</span>}
+              {item.openAccess && <span class="tag-chip">Open access</span>}
+            </div>
+            <h2><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h2>
+            {item.significanceLine && <p>{item.significanceLine}</p>}
+            <p class="citation-text">{item.citation}</p>
+          </div>
+          <div class="updates-ledger__action">
+            <a class="text-link" href={item.link} target="_blank" rel="noreferrer">Read paper</a>
+            {item.coverageLinks?.[0] && (
+              <a class="text-link" href={item.coverageLinks[0]} target="_blank" rel="noreferrer">
+                Coverage
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
   <section class="section section--flagship atlas-band" id="research-atlas">
     <div class="shell section-heading section-heading--split">
       <div class="reveal">
         <p class="eyebrow">Research atlas</p>
-        <h2>Published scientific chapters tied to public papers, systems, and methods.</h2>
+        <h2>Mechanistic chapters drawn directly from the publication record.</h2>
       </div>
       <div class="reveal">
         <p>
-          The themes below are drawn from the published record rather than from unpublished work or
-          programmatic overview language.
+          The atlas groups recurring scientific problems addressed across the published work, with named
+          papers, representative systems, and methods attached to each chapter.
         </p>
       </div>
     </div>
@@ -110,6 +184,36 @@ const groupedPublications = groupPublicationsByYear(publications);
       ))}
     </div>
   </section>
+
+  {foundationalPublications.length > 0 && (
+    <section class="section section--utility">
+      <div class="shell section-heading section-heading--split">
+        <div class="reveal">
+          <p class="eyebrow">Foundational work</p>
+          <h2>Selected papers that continue to frame the laboratory record.</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            Earlier papers remain central to receptor discovery, antibody escape, and antiviral mechanism
+            across the broader program.
+          </p>
+        </div>
+      </div>
+
+      <div class="shell reference-list reference-list--grid">
+        {foundationalPublications.map((item) => (
+          <article class="reference-card reveal">
+            <p class="reference-card__meta">
+              {[item.journal ?? "Publication", item.year].filter(Boolean).join(" / ")}
+            </p>
+            <a class="reference-card__title" href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
+            {item.significanceLine && <p class="reference-card__note">{item.significanceLine}</p>}
+            <p class="citation-text">{item.citation}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
 
   <section class="section section--utility archive-band">
     <div class="shell section-heading section-heading--compact">

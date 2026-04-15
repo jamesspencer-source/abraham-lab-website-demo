@@ -1,5 +1,6 @@
 ---
 import { siteData } from "../data/site";
+import { withBase } from "../lib/content";
 
 interface Props {
   eyebrow?: string;
@@ -7,18 +8,31 @@ interface Props {
 }
 
 const { eyebrow = "Campus map", mode = "contact" } = Astro.props;
+const mapTiles = [
+  "/assets/images/location/hms-map-tile-1.png",
+  "/assets/images/location/hms-map-tile-2.png",
+  "/assets/images/location/hms-map-tile-3.png",
+  "/assets/images/location/hms-map-tile-4.png"
+].map((tile) => withBase(tile));
 ---
 
-<aside class:list={["map-widget", `map-widget--${mode}`, "reveal"]}>
+<aside class:list={["map-widget", `map-widget--${mode}`, "reveal"]} data-map-widget-root>
   <div class="map-widget__media">
-    <iframe
-      class="map-widget__iframe"
-      title="Google map of Veritas Science Center at Harvard Medical School"
-      src={siteData.contact.mapEmbedUrl}
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      allowfullscreen
-    ></iframe>
+    <div class="map-widget__preview" data-map-preview>
+      <div class="map-widget__tiles" aria-hidden="true">
+        {mapTiles.map((tile, index) => (
+          <img src={tile} alt="" loading={index < 2 ? "eager" : "lazy"} />
+        ))}
+      </div>
+      <div class="map-widget__marker">
+        <span class="map-widget__pin"></span>
+        <div class="map-widget__marker-copy">
+          <p>{siteData.contact.mapDisplayName}</p>
+          <span>{siteData.contact.mapBuilding}</span>
+        </div>
+      </div>
+    </div>
+    <div class="map-widget__interactive" data-map-frame hidden></div>
   </div>
 
   <div class="map-widget__body">
@@ -27,7 +41,42 @@ const { eyebrow = "Campus map", mode = "contact" } = Astro.props;
     <p class="map-widget__campus">{siteData.contact.mapBuilding}</p>
     <p class="map-widget__description">Veritas Science Center on the Harvard Medical School campus.</p>
     <div class="map-widget__actions">
+      <button
+        class="button button--ghost map-widget__load"
+        type="button"
+        data-map-load
+        data-map-src={siteData.contact.mapEmbedUrl}
+      >
+        Load interactive map
+      </button>
       <a class="text-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open in Google Maps</a>
     </div>
   </div>
 </aside>
+
+<script is:inline>
+  document.querySelectorAll("[data-map-widget-root]").forEach((widget) => {
+    const button = widget.querySelector("[data-map-load]");
+    const preview = widget.querySelector("[data-map-preview]");
+    const frameHost = widget.querySelector("[data-map-frame]");
+
+    if (!(button instanceof HTMLButtonElement) || !(frameHost instanceof HTMLElement)) return;
+
+    button.addEventListener("click", () => {
+      if (!frameHost.querySelector("iframe")) {
+        const iframe = document.createElement("iframe");
+        iframe.className = "map-widget__iframe";
+        iframe.title = "Google map of Veritas Science Center at Harvard Medical School";
+        iframe.src = button.dataset.mapSrc || "";
+        iframe.loading = "lazy";
+        iframe.referrerPolicy = "no-referrer-when-downgrade";
+        iframe.allowFullscreen = true;
+        frameHost.appendChild(iframe);
+      }
+
+      frameHost.hidden = false;
+      preview?.setAttribute("hidden", "hidden");
+      button.hidden = true;
+    });
+  });
+</script>

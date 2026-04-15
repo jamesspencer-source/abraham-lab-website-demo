@@ -1,13 +1,14 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { jonathanProfile } from "../../data/jonathan";
-import { publications } from "../../data/publications";
-import { featuredOnly, limitItems, withBase } from "../../lib/content";
-
-const selectedPublications = limitItems(featuredOnly(publications), 5);
+import { withBase } from "../../lib/content";
 ---
 
-<BaseLayout title="Jonathan Abraham" description="Profile of Jonathan Abraham, M.D., Ph.D.">
+<BaseLayout
+  title="Jonathan Abraham"
+  description="Profile of Jonathan Abraham, M.D., Ph.D."
+  socialImage={jonathanProfile.portrait}
+>
   <section class="profile-hero">
     <div class="shell profile-hero__grid">
       <div class="profile-hero__copy reveal">
@@ -36,6 +37,10 @@ const selectedPublications = limitItems(featuredOnly(publications), 5);
       <div class="profile-band__body reveal">
         <p class="eyebrow">Scientific biography</p>
         {jonathanProfile.biography.map((paragraph) => <p>{paragraph}</p>)}
+        <div class="button-row">
+          <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
+          <a class="button button--ghost" href={withBase("/contact/")}>Contact</a>
+        </div>
       </div>
 
       <div class="profile-band__rail reveal">
@@ -52,40 +57,12 @@ const selectedPublications = limitItems(featuredOnly(publications), 5);
           </ul>
         </article>
         <article class="metadata-panel">
-          <p class="metadata-label">Representative work</p>
+          <p class="metadata-label">Program record</p>
           <ul class="clean-list metadata-list">
             {jonathanProfile.representativeWork.map((item) => <li>{item}</li>)}
           </ul>
         </article>
       </div>
-    </div>
-  </section>
-
-  <section class="section section--utility updates-band">
-    <div class="shell section-heading section-heading--compact">
-      <div class="reveal">
-        <p class="eyebrow">Selected publications</p>
-        <h2>Representative papers aligned with the laboratory program.</h2>
-      </div>
-    </div>
-
-    <div class="shell updates-ledger">
-      {selectedPublications.map((item) => (
-        <article class="updates-ledger__row reveal">
-          <div class="updates-ledger__meta">
-            <p>{item.year}</p>
-            <span>{item.journal ?? "Publication"}</span>
-          </div>
-          <div class="updates-ledger__body">
-            <h2>{item.title}</h2>
-            {item.summary && <p>{item.summary}</p>}
-            <p class="citation-text">{item.citation}</p>
-          </div>
-          <div class="updates-ledger__action">
-            <a class="text-link" href={item.link} target="_blank" rel="noreferrer">Read paper</a>
-          </div>
-        </article>
-      ))}
     </div>
   </section>
 </BaseLayout>

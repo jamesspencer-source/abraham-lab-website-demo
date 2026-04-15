@@ -3,16 +3,23 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { newsItems } from "../../data/news";
 import { formatDateLabel } from "../../lib/content";
 import { siteData } from "../../data/site";
+
+const milestoneNews = newsItems.filter((item) => item.milestoneTier !== "secondary");
+const renderedNews = milestoneNews.length ? milestoneNews : newsItems;
 ---
 
-<BaseLayout title="News" description="Selected updates from the Abraham Lab.">
+<BaseLayout
+  title="News"
+  description="Selected updates from the Abraham Lab."
+  socialImage={renderedNews[0]?.image}
+>
   <section class="page-hero page-hero--news">
     <div class="shell page-hero__grid">
       <div class="page-hero__copy reveal">
         <p class="eyebrow">News</p>
-        <h1>Selected updates on publications, awards, invited talks, and institutional coverage from the Abraham Lab.</h1>
+        <h1>Selected milestones from the Abraham Lab.</h1>
         <p>
-          Recent publications, institutional coverage, and scientific distinctions related to the laboratory.
+          Recent publications, institutional recognition, and consequential public updates related to the laboratory.
         </p>
       </div>
       <div class="page-hero__rail reveal">
@@ -28,7 +35,7 @@ import { siteData } from "../../data/site";
 
   <section class="section section--utility updates-band">
     <div class="shell updates-ledger">
-      {newsItems.map((item) => (
+      {renderedNews.map((item) => (
         <article class="updates-ledger__row reveal">
           <div class="updates-ledger__meta">
             <p>{formatDateLabel(item.date)}</p>

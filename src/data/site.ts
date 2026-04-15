@@ -5,14 +5,14 @@ export const siteData = {
   fullName: "Jonathan Abraham Lab",
   shortInstitution: "Harvard Medical School",
   description:
-    "The Abraham Lab studies viral entry, immune recognition, and genome replication through structural biology, molecular virology, and biophysics.",
+    "The Abraham Lab studies how medically important viruses enter cells, evade antibodies, and replicate.",
   url: process.env.SITE_URL || "https://abrahamlab.med.harvard.edu",
   theme: {
     defaultMode: "system"
   },
-  heroTitle: "Published mechanisms in viral entry, immune recognition, and genome replication.",
+  heroTitle: "The Abraham Lab defines how viruses enter cells, evade antibodies, and replicate.",
   heroDeck:
-    "The laboratory combines structural biology, molecular virology, and biophysics to define how viral proteins engage receptors, how immune recognition succeeds or fails, and how replication complexes create therapeutic vulnerability in medically important human viruses.",
+    "Published work spans HSV-1 helicase-primase inhibition, arenavirus spike organization, and receptor recognition by encephalitic arboviruses, connecting structural biology to antiviral mechanism.",
   heroFacts: [
     {
       label: "Affiliation",
@@ -20,17 +20,17 @@ export const siteData = {
     },
     {
       label: "Scope",
-      value: "Viral entry, glycoprotein architecture, antibody recognition, and replication machinery"
+      value: "HSV-1, arenaviruses, arboviruses, and replication complexes"
     },
     {
       label: "Recent venues",
-      value: "Cell | Nature Microbiology | Nature Communications"
+      value: "Cell | Nature Microbiology | Cell"
     }
   ],
   heroFigures: [
     {
       label: "Nature Microbiology | 2025",
-      title: "Prefusion architecture of the New World arenavirus spike",
+      title: "Molecular organization of the New World arenavirus spike glycoprotein complex",
       image: "/assets/images/publications/arenavirus-gpc.jpeg",
       alt: "Cryo-EM figure showing the prefusion architecture of the New World arenavirus glycoprotein complex.",
       note: "Open-access structural study",
@@ -39,7 +39,7 @@ export const siteData = {
     },
     {
       label: "Cell | 2025",
-      title: "Receptor-bound structure of an encephalitic arbovirus",
+      title: "Molecular basis for shifted receptor recognition by an encephalitic arbovirus",
       image: "/assets/images/publications/weev-structures.jpeg",
       alt: "Composite structural figure from the 2025 Cell paper on shifted receptor recognition by an encephalitic arbovirus.",
       note: "Entry biology",
@@ -59,9 +59,8 @@ export const siteData = {
   institutionLabel: "Institutional Affiliation",
   institutionTitle: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
   institutionSummary:
-    "The Abraham Lab is based in the Department of Microbiology at Harvard Medical School. Jonathan Abraham is an HHMI Investigator, and the laboratory's published work spans viral entry, glycoprotein architecture, immune recognition, and antiviral mechanism.",
-  tagline:
-    "Structural virology and molecular mechanisms of viral entry, immune recognition, and genome replication.",
+    "The Abraham Lab is in the Department of Microbiology, Blavatnik Institute, Harvard Medical School. Jonathan Abraham is an HHMI Investigator, and the lab's public record spans viral entry, glycoprotein architecture, antibody recognition, and replication mechanism.",
+  tagline: "Structural virology of viral entry, antibody recognition, and replication.",
   nav: [
     { label: "Home", href: "/" },
     { label: "Publications", href: "/publications/" },

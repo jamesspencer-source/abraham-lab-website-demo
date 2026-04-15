@@ -5,7 +5,9 @@ export const peopleData = {
     {
       name: "Jonathan Abraham, MD, PhD",
       title: "Associate Professor of Microbiology, Harvard Medical School",
-      note: "Structural virology of receptor engagement, antibody recognition, and viral replication machinery.",
+      note: "Structural virology of receptor engagement, antibody recognition, and replication.",
+      roleSummary: "Associate Professor of Microbiology and HHMI Investigator leading the lab's structural virology program.",
+      expertiseTags: ["structural virology", "viral entry", "antiviral mechanism"],
       group: "Leadership",
       image: "/assets/images/people/jonathan-abraham.jpeg",
       imageAlt: "Jonathan Abraham",
@@ -15,7 +17,9 @@ export const peopleData = {
     {
       name: "Pan Yang, Ph.D.",
       title: "Instructor of Microbiology",
-      note: "Structural virology and mechanism.",
+      note: "Instructor of Microbiology focused on structural virology.",
+      roleSummary: "Instructor of Microbiology.",
+      expertiseTags: ["structural virology", "mechanism"],
       group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/pan-yang.jpg",
       imageAlt: "Pan Yang",
@@ -24,6 +28,8 @@ export const peopleData = {
     {
       name: "Wanyu Li, Ph.D.",
       title: "Postdoctoral Fellow",
+      roleSummary: "Postdoctoral Fellow.",
+      expertiseTags: ["structural virology"],
       group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/wanyu-li.jpeg",
       imageAlt: "Wanyu Li",
@@ -32,6 +38,8 @@ export const peopleData = {
     {
       name: "Side Hu, Ph.D.",
       title: "Postdoctoral Fellow",
+      roleSummary: "Postdoctoral Fellow.",
+      expertiseTags: ["structural virology"],
       group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/side-hu.jpg",
       imageAlt: "Side Hu",
@@ -40,6 +48,8 @@ export const peopleData = {
     {
       name: "Chenggong Ji, Ph.D.",
       title: "Postdoctoral Fellow",
+      roleSummary: "Postdoctoral Fellow.",
+      expertiseTags: ["structural virology"],
       group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/chenggong-ji.png",
       imageAlt: "Chenggong Ji",
@@ -48,6 +58,8 @@ export const peopleData = {
     {
       name: "Zishuo Yu, Ph.D.",
       title: "Postdoctoral Fellow",
+      roleSummary: "Postdoctoral Fellow.",
+      expertiseTags: ["structural virology"],
       group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/zishuo-yu.jpg",
       imageAlt: "Zishuo Yu",
@@ -56,6 +68,8 @@ export const peopleData = {
     {
       name: "Xiaoyi Fan, Ph.D.",
       title: "Postdoctoral Fellow",
+      roleSummary: "Postdoctoral Fellow.",
+      expertiseTags: ["structural virology"],
       group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/xiaoyi-fan.jpg",
       imageAlt: "Xiaoyi Fan",
@@ -64,6 +78,8 @@ export const peopleData = {
     {
       name: "Cristina Gutierrez-Vargas, Ph.D.",
       title: "Postdoctoral Fellow",
+      roleSummary: "Postdoctoral Fellow.",
+      expertiseTags: ["structural virology"],
       group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/cristina-gutierrez-vargas.jpg",
       imageAlt: "Cristina Gutierrez-Vargas",
@@ -72,6 +88,8 @@ export const peopleData = {
     {
       name: "Biswajit Das, Ph.D.",
       title: "Postdoctoral Fellow",
+      roleSummary: "Postdoctoral Fellow.",
+      expertiseTags: ["structural virology"],
       group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/biswajit-das.jpeg",
       imageAlt: "Biswajit Das",
@@ -80,6 +98,8 @@ export const peopleData = {
     {
       name: "Judy Huang, Ph.D.",
       title: "Postdoctoral Fellow",
+      roleSummary: "Postdoctoral Fellow.",
+      expertiseTags: ["structural virology"],
       group: "Postdoctoral Fellows & Instructors",
       image: "/assets/images/people/judy-huang.jpeg",
       imageAlt: "Judy Huang",
@@ -88,6 +108,8 @@ export const peopleData = {
     {
       name: "Haley Varnum",
       title: "Graduate Student (MD-PhD, Biophysics)",
+      roleSummary: "Graduate Student.",
+      expertiseTags: ["biophysics", "virology"],
       group: "Graduate Students",
       image: "/assets/images/people/haley-varnum.jpg",
       imageAlt: "Haley Varnum",
@@ -96,6 +118,8 @@ export const peopleData = {
     {
       name: "Jesse Plung",
       title: "Graduate Student (Virology)",
+      roleSummary: "Graduate Student.",
+      expertiseTags: ["virology"],
       group: "Graduate Students",
       image: "/assets/images/people/jesse-plung.jpeg",
       imageAlt: "Jesse Plung",
@@ -104,6 +128,8 @@ export const peopleData = {
     {
       name: "Jessica Oros",
       title: "Graduate Student (Virology)",
+      roleSummary: "Graduate Student.",
+      expertiseTags: ["virology"],
       group: "Graduate Students",
       image: "/assets/images/people/jessica-oros.jpg",
       imageAlt: "Jessica Oros",
@@ -112,6 +138,8 @@ export const peopleData = {
     {
       name: "Rick Li",
       title: "Graduate Student (MD-PhD, BBS)",
+      roleSummary: "Graduate Student.",
+      expertiseTags: ["biophysics", "virology"],
       group: "Graduate Students",
       image: "/assets/images/people/rick-li.jpeg",
       imageAlt: "Rick Li",
@@ -120,6 +148,8 @@ export const peopleData = {
     {
       name: "Colin Mann",
       title: "Graduate Student (Virology)",
+      roleSummary: "Graduate Student.",
+      expertiseTags: ["virology"],
       group: "Graduate Students",
       image: "/assets/images/people/colin-mann.jpg",
       imageAlt: "Colin Mann",
@@ -128,6 +158,8 @@ export const peopleData = {
     {
       name: "Laurentia Vianney Tjang",
       title: "Graduate Student (Virology)",
+      roleSummary: "Graduate Student.",
+      expertiseTags: ["virology"],
       group: "Graduate Students",
       image: "/assets/images/people/laurentia-tjang.jpg",
       imageAlt: "Laurentia Vianney Tjang",
@@ -136,6 +168,8 @@ export const peopleData = {
     {
       name: "Corazón Núñez",
       title: "Graduate Student (Virology)",
+      roleSummary: "Graduate Student.",
+      expertiseTags: ["virology"],
       group: "Graduate Students",
       image: "/assets/images/people/corazon-nunez.jpeg",
       imageAlt: "Corazón Núñez",
@@ -144,7 +178,9 @@ export const peopleData = {
     {
       name: "James Spencer",
       title: "Lab Manager",
-      note: "Laboratory operations and administrative coordination.",
+      note: "Lab operations and research coordination.",
+      roleSummary: "Laboratory operations, administration, and research coordination.",
+      expertiseTags: ["operations", "research coordination"],
       group: "Operations & Strategy",
       image: "/assets/images/people/james-spencer.png",
       imageAlt: "James Spencer",

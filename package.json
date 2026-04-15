@@ -7,8 +7,9 @@
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "validate:content": "node scripts/validate-content.mjs",
     "visual:setup": "PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium",
-    "visual:review": "npm run build && node scripts/visual-review.mjs"
+    "visual:review": "npm run build && npm run validate:content && node scripts/visual-review.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",

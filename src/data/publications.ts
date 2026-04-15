@@ -16,6 +16,11 @@ export const publications = [
     featured: true,
     leadFeature: true,
     homepageProof: true,
+    system: "HSV-1",
+    methodCluster: "single-particle cryo-EM, biochemistry, inhibitor mechanism",
+    significanceLine: "Shows how helicase-primase inhibitors arrest herpesvirus replication.",
+    openAccess: false,
+    coverageLinks: ["https://hms.harvard.edu/news/researchers-now-understand-how-new-class-antivirals-works"],
     summary:
       "Structural and single-molecule analysis showing how helicase-primase inhibitors arrest herpesvirus DNA replication and reveal assembly of a replication fork complex.",
     image: "/assets/images/publications/hsv-helicase-primase.jpg",
@@ -38,6 +43,10 @@ export const publications = [
     pmid: "40781447",
     featured: true,
     homepageProof: true,
+    system: "New World arenaviruses",
+    methodCluster: "single-particle cryo-EM, glycoprotein architecture",
+    significanceLine: "Defines the organization of the arenavirus spike glycoprotein complex.",
+    openAccess: true,
     summary:
       "Cryo-EM analysis of New World arenavirus glycoprotein complexes clarifying organization, receptor-facing architecture, and control of membrane fusion.",
     image: "/assets/images/publications/arenavirus-gpc.jpeg",
@@ -60,6 +69,10 @@ export const publications = [
     pmid: "40187345",
     featured: true,
     homepageProof: true,
+    system: "encephalitic arboviruses",
+    methodCluster: "structural biology, receptor binding, functional virology",
+    significanceLine: "Explains shifted receptor recognition in an encephalitic arbovirus.",
+    openAccess: false,
     summary:
       "Structural and functional analysis explaining how receptor recognition shifted in an encephalitic arbovirus and what that implies for tropism and outbreak risk.",
     image: "/assets/images/publications/weev-structures.jpeg",
@@ -80,7 +93,11 @@ export const publications = [
     link: "https://www.cell.com/cell/fulltext/S0092-8674(24)00842-0",
     doi: "10.1016/j.cell.2024.07.048",
     pmid: "39197451",
-    featured: true,
+    foundational: true,
+    system: "viral DNA polymerases",
+    methodCluster: "cryo-EM, resistance mapping, polymerase mechanism",
+    significanceLine: "Maps structural routes to antiviral resistance.",
+    openAccess: false,
     summary:
       "Structural analysis of viral DNA polymerases clarifying resistance pathways against clinically relevant antiviral compounds.",
     image: "/assets/images/research/polymerase-complex.jpg",
@@ -101,6 +118,11 @@ export const publications = [
     doi: "10.1038/s41467-024-50887-9",
     pmid: "39095394",
     featured: true,
+    foundational: true,
+    system: "eastern equine encephalitis virus",
+    methodCluster: "cryo-EM, receptor recognition, host engagement",
+    significanceLine: "Defines VLDLR engagement by eastern equine encephalitis virus.",
+    openAccess: true,
     summary:
       "Definition of receptor recognition by eastern equine encephalitis virus and the structural determinants of host engagement.",
     image: "/assets/images/publications/vldlr-recognition.jpeg",
@@ -120,12 +142,17 @@ export const publications = [
     link: "https://pubmed.ncbi.nlm.nih.gov/39837328/",
     doi: "10.1016/j.cell.2024.12.021",
     pmid: "39837328",
+    system: "Nipah virus",
+    methodCluster: "cryo-EM, enzymology, polymerase function",
+    significanceLine: "Defines Nipah polymerase architecture and function relevant to antiviral development.",
+    openAccess: false,
     summary:
       "Cryo-EM and functional analysis of the Nipah virus polymerase complex with implications for antiviral development."
   },
   {
     year: 2022,
     title: "VLDLR and ApoER2 are receptors for multiple alphaviruses",
+    foundational: true,
     citation:
       "Clark LE*, Clark SA*, Lin CY*, Liu J*, Coscia AC, Nabel KG, Yang P, Neel DV, Lee H, Brusic V, Stryapunina I, Plante KS, Ahmed AA, Catteruccia F, Young-Pearse TL, Chiu IM, Llopis PM, Weaver SC, Abraham J. Nature. 2022.",
     link: "https://www.nature.com/articles/s41586-021-04326-0"
@@ -133,6 +160,7 @@ export const publications = [
   {
     year: 2022,
     title: "Structural basis for continued antibody evasion by the SARS-CoV-2 receptor-binding domain",
+    foundational: true,
     citation:
       "Nabel KG*, Clark SA*, Shankar S*, Pan J*, Clark LE, Yang P, Coscia A, McKay LGA, Varnum HH, Brusic V, Tolan NV, Zhou G, Desjardins M, Turbett SE, Kanjilal S, Sherman AC, Dighe A, LaRocque RC, Ryan ET, Tylek C, Cohen-Solal JF, Darcy AT, Clabers A, Fan Y, Griffiths A, Correia IR, Seagal J, Baden LR, Charles RC, Abraham J. Science. 2022.",
     link: "https://www.science.org/doi/10.1126/science.abl6251"
@@ -140,6 +168,7 @@ export const publications = [
   {
     year: 2022,
     title: "Emerging enterococcus pore-forming toxins with MHC/HLA-I as receptors",
+    foundational: true,
     citation:
       "Xiong X, Tian S, Yang P, Lebreton F, Bao H, Sheng K, Yin L, Chen P, Zhang J, Qi W, Ruan J, Wu H, Chen H, Breault DT, Wu H, Earl AM, Gilmore MS, Abraham J, Dong M. Cell. 2022.",
     link: "https://www.cell.com/cell/pdf/S0092-8674(22)00142-8.pdf"
@@ -147,6 +176,7 @@ export const publications = [
   {
     year: 2022,
     title: "Monoclonal antibodies with extended half-life to prevent COVID-19",
+    foundational: true,
     citation: "Abraham J. New England Journal of Medicine. 2022.",
     link: "https://www.nejm.org/doi/full/10.1056/NEJMe2205563"
   },
@@ -160,6 +190,7 @@ export const publications = [
   {
     year: 2022,
     title: "FcγR-mediated SARS-CoV-2 infection of monocytes activates inflammation",
+    foundational: true,
     citation:
       "Junqueira C, Crespo Â, Ranjbar S, de Lacerda LB, Lewandrowski M, Ingber J, Parry B, Ravid S, Clark S, Schrimpf MR, Ho F, Beakes C, Margolin J, Russell N, Kays K, Boucau J, Das Adhikari U, Vora SM, Leger V, Gehrke L, Henderson LA, Janssen E, Kwon D, Sander C, Abraham J, Goldberg MB, Wu H, Mehta G, Bell S, Goldfeld AE, Filbin MR, Lieberman J. Nature. 2022.",
     link: "https://www.nature.com/articles/s41586-022-04702-4"
@@ -167,6 +198,7 @@ export const publications = [
   {
     year: 2022,
     title: "IgM antibodies derived from memory B cells are potent cross-variant neutralizers of SARS-CoV-2",
+    foundational: true,
     citation:
       "Hale M, Netland J, Chen Y, Thouvenel CD, Smith KN, Rich LM, Vanderwall ER, Miranda MC, Eggenberger J, Hao L, Watson MJ, Mundorff CC, Rodda LB, King NP, Guttman M, Gale M, Abraham J, Debley JS, Pepper M, Rawlings DJ. Journal of Experimental Medicine. 2022.",
     link: "https://rupress.org/jem/article/219/9/e20220849/213384/IgM-antibodies-derived-from-memory-B-cells-are"
@@ -175,6 +207,7 @@ export const publications = [
     year: 2022,
     title:
       "Antibody-based inhibition of pathogenic New World hemorrhagic fever mammarenaviruses by steric occlusion of the human transferrin receptor 1 apical domain",
+    foundational: true,
     citation:
       "Ferrero S, Flores MD, Short C, Vazquez CA, Clark LE, Ziegenbein J, Zink S, Fuentes D, Payes C, Batto MV, Collazo M, García CC, Abraham J, Cordo SM, Rodriguez JA, Helguera G. Journal of Virology. 2022.",
     link:
@@ -183,6 +216,7 @@ export const publications = [
   {
     year: 2021,
     title: "SARS-CoV-2 evolution in an immunocompromised host reveals shared neutralization escape mechanisms",
+    foundational: true,
     citation:
       "Clark SA*, Clark LE*, Pan J*, Coscia A, McKay LGA, Shankar S, Johnson RI, Brusic V, Choudhary MC, Regan J, Li JZ, Griffiths A, Abraham J. Cell. 2021.",
     link: "https://www.cell.com/cell/fulltext/S0092-8674(21)00355-X"
@@ -219,6 +253,7 @@ export const publications = [
     year: 2018,
     title:
       "Vaccine-elicited receptor-binding site antibodies neutralize two New World hemorrhagic fever arenaviruses",
+    foundational: true,
     citation:
       "Clark LE, Mahmutovic S, Raymond DD, Dilanyan T, Koma T, Manning JT, Shankar S, Levis SC, Briggiler AM, Enria DA, Wucherpfennig KW, Paessler S, Abraham J. Nature Communications. 2018.",
     link: "https://www.nature.com/articles/s41467-018-04271-z"
@@ -226,6 +261,7 @@ export const publications = [
   {
     year: 2018,
     title: "Transferrin receptor 1 is a reticulocyte-specific receptor for Plasmodium vivax",
+    foundational: true,
     citation:
       "Gruszczyk J, Kanjee U, Chan LJ, Menant S, Malleret B, Lim NTY, Schmidt CQ, Mok YF, Lin KM, Pearson RD, Rangel G, Smith BJ, Call MJ, Weekes MP, Griffin MDW, Murphy JM, Abraham J, Sriprawat K, Menezes MJ, Ferreira MU, Russell B, Renia L, Duraisingh MT, Tham WH. Science. 2018.",
     link: "https://science.sciencemag.org/content/359/6371/48.long"
@@ -233,6 +269,7 @@ export const publications = [
   {
     year: 2010,
     title: "Structural basis for receptor recognition by New World hemorrhagic fever arenaviruses",
+    foundational: true,
     citation:
       "Abraham J, Corbett KD, Farzan M, Choe H, Harrison SC. Nature Structural & Molecular Biology. 2010.",
     link: "https://www.nature.com/articles/nsmb.1772"
@@ -241,6 +278,7 @@ export const publications = [
     year: 2009,
     title:
       "Host-species transferrin receptor 1 orthologs are cellular receptors for nonpathogenic New World clade B arena viruses",
+    foundational: true,
     citation:
       "Abraham J, Kwong JA, Albariño CG, Lu JG, Radoshitzky SR, Salazar-Bravo J, Farzan M, Spiropoulou CF, Choe H. PLoS Pathogens. 2009.",
     link: "https://doi.org/10.1371/journal.ppat.1000358"
@@ -248,6 +286,7 @@ export const publications = [
   {
     year: 2007,
     title: "Transferrin receptor 1 is a cellular receptor for New World hemorrhagic fever arenaviruses",
+    foundational: true,
     citation:
       "Radoshitzky SR, Abraham J, Spiropoulou CF, Kuhn JH, Nguyen D, Li W, Nagel J, Schmidt PJ, Nunberg JH, Andrews NC, Farzan M, Choe H. Nature. 2007.",
     link: "https://www.nature.com/articles/nature05539"

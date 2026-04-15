@@ -4,7 +4,11 @@ import MapWidget from "../../components/MapWidget.astro";
 import { siteData } from "../../data/site";
 ---
 
-<BaseLayout title="Contact" description="Contact information for the Abraham Lab.">
+<BaseLayout
+  title="Contact"
+  description="Contact information for the Abraham Lab."
+  socialImage="/assets/images/location/hms-map-tile-1.png"
+>
   <section class="page-hero page-hero--contact">
     <div class="shell page-hero__grid">
       <div class="page-hero__copy reveal">
@@ -18,12 +22,12 @@ import { siteData } from "../../data/site";
       <div class="page-hero__rail reveal">
         <div class="metadata-stack">
           <p class="metadata-label">Location</p>
-          <p>{siteData.contact.addressLines[0]}</p>
+          <p>{siteData.contact.mapBuilding}</p>
           <p>{siteData.contact.addressLines[1]}</p>
         </div>
         <div class="metadata-stack">
-          <p class="metadata-label">Primary email</p>
-          <p><a class="u-nowrap email-link" href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
+          <p class="metadata-label">Maps</p>
+          <p><a class="text-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open in Google Maps</a></p>
         </div>
       </div>
     </div>
@@ -40,15 +44,13 @@ import { siteData } from "../../data/site";
 
           <article class="metadata-panel">
             <p class="metadata-label">Contact</p>
-            <p><strong>Jonathan Abraham</strong><br /><a class="u-nowrap email-link" href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
-            <p><strong>James Spencer</strong><br /><a class="u-nowrap email-link" href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
+            <p><strong>Jonathan Abraham</strong><br /><a class="email-link" href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a></p>
+            <p><strong>James Spencer</strong><br /><a class="email-link" href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a></p>
           </article>
 
           <article class="metadata-panel">
             <p class="metadata-label">Affiliation</p>
-            {siteData.contact.institutionDisplayLines?.map((line) => (
-              <p class={line.includes("Blavatnik Institute") ? "u-nowrap" : undefined}>{line}</p>
-            ))}
+            {siteData.contact.institutionDisplayLines?.map((line) => <p>{line}</p>)}
             <ul class="clean-list metadata-list">
               {siteData.affiliations.map((affiliation) => (
                 <li><a href={affiliation.href} target="_blank" rel="noreferrer">{affiliation.shortName ?? affiliation.name}</a></li>

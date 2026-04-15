@@ -19,6 +19,10 @@ const canonicalTarget = canonicalPath ?? Astro.url.pathname;
 const canonical = new URL(canonicalTarget, siteData.url).toString();
 const socialImage = new URL(withBase(siteData.heroFigures[0].image), siteData.url).toString();
 const themeDefaultMode = siteData.theme.defaultMode;
+const themeColorLight = "#f8fafc";
+const themeColorDark = "#151d26";
+const themeColorHero = "#1d2833";
+const isHomePage = pageClass === "page-home";
 ---
 
 <!doctype html>
@@ -27,18 +31,22 @@ const themeDefaultMode = siteData.theme.defaultMode;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <script is:inline define:vars={{ themeDefaultMode }}>
+    <meta name="theme-color" content={isHomePage ? themeColorHero : themeColorLight} />
+    <script is:inline define:vars={{ themeDefaultMode, themeColorLight, themeColorDark, themeColorHero, isHomePage }}>
       (() => {
         const root = document.documentElement;
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         const theme = themeDefaultMode === "system" ? (prefersDark ? "dark" : "light") : "light";
         root.dataset.theme = theme;
         root.style.colorScheme = theme;
+        if (themeMeta) {
+          themeMeta.setAttribute("content", isHomePage ? themeColorHero : (theme === "dark" ? themeColorDark : themeColorLight));
+        }
       })();
     </script>
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
-    <meta name="theme-color" content="#0c1218" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
     <meta property="og:type" content="website" />
@@ -60,20 +68,42 @@ const themeDefaultMode = siteData.theme.defaultMode;
       <slot />
     </main>
     <Footer />
-    <script is:inline define:vars={{ themeDefaultMode }}>
+    <script is:inline define:vars={{ themeDefaultMode, themeColorLight, themeColorDark, themeColorHero }}>
       const navToggle = document.querySelector(".nav-toggle");
       const nav = document.querySelector(".site-nav");
       const root = document.documentElement;
+      const body = document.body;
+      const hero = document.querySelector(".page-home .marquee");
+      const header = document.querySelector(".site-header");
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
       const resolveTheme = () => {
         return prefersDark.matches ? "dark" : "light";
       };
+      const syncThemeColor = () => {
+        if (!themeMeta) return;
+        const theme = root.dataset.theme === "dark" ? "dark" : "light";
+        const heroActive = body.classList.contains("page-home") && !body.classList.contains("home-hero-past");
+        themeMeta.setAttribute("content", heroActive ? themeColorHero : (theme === "dark" ? themeColorDark : themeColorLight));
+      };
       const applyTheme = (theme) => {
         root.dataset.theme = theme;
         root.style.colorScheme = theme;
+        syncThemeColor();
+      };
+      const syncHeroHeader = () => {
+        if (!(hero instanceof HTMLElement) || !(header instanceof HTMLElement)) {
+          body.classList.remove("home-hero-past");
+          syncThemeColor();
+          return;
+        }
+        const threshold = Math.max(hero.offsetHeight - header.offsetHeight - 24, 0);
+        body.classList.toggle("home-hero-past", window.scrollY > threshold);
+        syncThemeColor();
       };
 
       applyTheme(resolveTheme());
+      syncHeroHeader();
 
       const syncSystemTheme = () => {
         if (themeDefaultMode === "system") {
@@ -121,6 +151,11 @@ const themeDefaultMode = siteData.theme.defaultMode;
             closeNav();
           }
         });
+      }
+
+      if (body.classList.contains("page-home")) {
+        window.addEventListener("scroll", syncHeroHeader, { passive: true });
+        window.addEventListener("resize", syncHeroHeader);
       }
 
       const revealNodes = document.querySelectorAll(".reveal");

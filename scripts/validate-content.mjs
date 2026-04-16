@@ -27,11 +27,22 @@ const scannedTextFiles = [
   path.join(repoRoot, "src", "data", "publications.ts"),
   path.join(repoRoot, "src", "data", "jonathan.ts"),
   path.join(repoRoot, "src", "data", "research.ts"),
+  path.join(repoRoot, "src", "data", "news.ts"),
+  path.join(repoRoot, "src", "data", "people.ts"),
   path.join(repoRoot, "src", "pages", "index.astro"),
   path.join(repoRoot, "src", "pages", "publications", "index.astro"),
   path.join(repoRoot, "src", "pages", "jonathan-abraham", "index.astro"),
+  path.join(repoRoot, "src", "pages", "people", "index.astro"),
+  path.join(repoRoot, "src", "pages", "news", "index.astro"),
   path.join(repoRoot, "src", "pages", "research", "index.astro"),
   path.join(repoRoot, "src", "pages", "contact", "index.astro")
+];
+
+const discouragedPlainLanguagePatterns = [
+  /\bvia\b/i,
+  /\butiliz(?:e|es|ed|ing)\b/i,
+  /\bleverag(?:e|es|ed|ing)\b/i,
+  /\bfacilitat(?:e|es|ed|ing)\b/i
 ];
 
 function transpileTsModule(source, filePath) {
@@ -258,6 +269,15 @@ async function main() {
     const text = await fs.readFile(filePath, "utf8");
     if (/\bNRB\b/.test(text)) {
       fail(`Forbidden legacy label "NRB" found in ${path.relative(repoRoot, filePath)}.`);
+    }
+
+    for (const pattern of discouragedPlainLanguagePatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        fail(
+          `Discouraged wording "${match[0]}" found in ${path.relative(repoRoot, filePath)}. Use plainer language.`
+        );
+      }
     }
   }
 

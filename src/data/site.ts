@@ -12,7 +12,7 @@ export const siteData = {
   },
   heroTitle: "The Abraham Lab defines how viruses enter cells, evade antibodies, and replicate.",
   heroDeck:
-    "Published work spans HSV-1 helicase-primase inhibition, arenavirus spike organization, and receptor recognition by encephalitic arboviruses, connecting structural biology to antiviral mechanism.",
+    "Recent papers cover HSV-1 helicase-primase inhibition, arenavirus spike organization, and receptor recognition by encephalitic arboviruses, linking structural biology to antiviral mechanism.",
   heroFacts: [
     {
       label: "Affiliation",
@@ -59,7 +59,7 @@ export const siteData = {
   institutionLabel: "Institutional Affiliation",
   institutionTitle: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
   institutionSummary:
-    "The Abraham Lab is in the Department of Microbiology, Blavatnik Institute, Harvard Medical School. Jonathan Abraham is an HHMI Investigator, and the lab's public record spans viral entry, glycoprotein architecture, antibody recognition, and replication mechanism.",
+    "The Abraham Lab is in the Department of Microbiology, Blavatnik Institute, Harvard Medical School. Jonathan Abraham is an HHMI Investigator, and the lab's published work covers viral entry, glycoprotein structure, antibody recognition, and replication.",
   tagline: "Structural virology of viral entry, antibody recognition, and replication.",
   nav: [
     { label: "Home", href: "/" },

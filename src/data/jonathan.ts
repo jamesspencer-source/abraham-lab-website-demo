@@ -8,7 +8,7 @@ export const jonathanProfile = {
   portraitAlt: "Jonathan Abraham",
   portraitPosition: "center 22%",
   overview:
-    "Jonathan Abraham leads a structural virology program focused on receptor engagement, antibody recognition, and replication complexes in medically important viruses.",
+    "Jonathan Abraham leads a structural virology lab focused on receptor engagement, antibody recognition, and replication complexes in medically important viruses.",
   biography: [
     "Jonathan Abraham is Associate Professor of Microbiology at Harvard Medical School and an HHMI Investigator.",
     "He received a bachelor's degree in biochemical sciences from Harvard College, a PhD in biophysics from Harvard University, and an MD from Harvard Medical School through the Harvard-MIT MD-PhD Program.",

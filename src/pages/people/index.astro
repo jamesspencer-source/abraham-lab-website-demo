@@ -15,14 +15,13 @@ const anchorFor = (label: string) =>
     .replace(/^-|-$/g, "");
 
 const directoryIndex = [
-  leadership ? { label: leadership.label, count: leadership.entries.length, id: anchorFor(leadership.label), filter: "Leadership" } : null,
+  leadership ? { label: leadership.label, count: leadership.entries.length, id: anchorFor(leadership.label) } : null,
   ...remainingGroups.map((group) => ({
     label: group.label,
     count: group.entries.length,
-    id: anchorFor(group.label),
-    filter: group.label
+    id: anchorFor(group.label)
   })),
-  { label: "Alumni", count: totalAlumni, id: "alumni", filter: "alumni" }
+  { label: "Alumni", count: totalAlumni, id: "alumni" }
 ].filter(Boolean);
 ---
 
@@ -58,17 +57,6 @@ const directoryIndex = [
               <span>{item.label}</span>
               <strong>{item.count}</strong>
             </a>
-          )
-        ))}
-      </div>
-
-      <div class="directory-filters reveal" role="toolbar" aria-label="Filter directory sections">
-        <button class="directory-filter is-active" type="button" data-directory-filter="all" aria-pressed="true">All</button>
-        {directoryIndex.map((item) => (
-          item && (
-            <button class="directory-filter" type="button" data-directory-filter={item.filter} aria-pressed="false">
-              {item.label}
-            </button>
           )
         ))}
       </div>
@@ -171,30 +159,4 @@ const directoryIndex = [
       ))}
     </div>
   </section>
-
-  <script is:inline>
-    const filterButtons = Array.from(document.querySelectorAll("[data-directory-filter]"));
-    const filterSections = Array.from(document.querySelectorAll("[data-directory-group]"));
-
-    const applyDirectoryFilter = (value) => {
-      filterButtons.forEach((button) => {
-        const active = button.getAttribute("data-directory-filter") === value;
-        button.classList.toggle("is-active", active);
-        button.setAttribute("aria-pressed", String(active));
-      });
-
-      filterSections.forEach((section) => {
-        const group = section.getAttribute("data-directory-group");
-        const visible = value === "all" || group === value;
-        section.hidden = !visible;
-      });
-    };
-
-    filterButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const value = button.getAttribute("data-directory-filter");
-        if (value) applyDirectoryFilter(value);
-      });
-    });
-  </script>
 </BaseLayout>

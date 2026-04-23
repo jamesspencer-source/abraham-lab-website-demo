@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ResearchChapter from "../../components/ResearchChapter.astro";
 import { publications } from "../../data/publications";
 import { researchPrograms } from "../../data/research";
 import {
@@ -23,7 +22,7 @@ const groupedPublications = groupPublicationsByYear(publications);
 
 <BaseLayout
   title="Publications"
-  description="Selected and archived Abraham Lab publications."
+  description="Abraham Lab publications and archive."
   socialImage={leadPaper?.image}
 >
   <section class="page-hero page-hero--publications">
@@ -32,13 +31,13 @@ const groupedPublications = groupPublicationsByYear(publications);
         <p class="eyebrow">Publications</p>
         <h1>Publications define the laboratory's scientific work.</h1>
         <p>
-          These papers define work on receptor engagement, glycoprotein structure, antibody recognition,
-          and replication in medically important viruses.
+          The papers center on HSV-1 replication machinery, arenavirus spike organization, and receptor
+          recognition in encephalitic arboviruses.
         </p>
       </div>
       <div class="page-hero__rail reveal">
         <div class="metadata-stack">
-          <p class="metadata-label">Recent venues</p>
+          <p class="metadata-label">Venues</p>
           <ul class="clean-list metadata-list">
             <li>Cell</li>
             <li>Nature Microbiology</li>
@@ -109,12 +108,13 @@ const groupedPublications = groupPublicationsByYear(publications);
   <section class="section section--flagship updates-band">
     <div class="shell section-heading section-heading--split">
       <div class="reveal">
-        <p class="eyebrow">Recent papers</p>
-        <h2>Three papers at the front of the lab's recent work.</h2>
+        <p class="eyebrow">Featured papers</p>
+        <h2>Three papers at the front of the lab's work.</h2>
       </div>
       <div class="reveal">
         <p>
-          These papers span viral entry, spike architecture, receptor recognition, and replication.
+          The lead Cell paper examines HSV-1 replication. The Nature Microbiology paper examines
+          arenavirus spike organization. The 2025 Cell paper examines receptor recognition in WEEV.
         </p>
       </div>
     </div>
@@ -153,33 +153,34 @@ const groupedPublications = groupPublicationsByYear(publications);
     <div class="shell section-heading section-heading--split">
       <div class="reveal">
         <p class="eyebrow">Research areas</p>
-        <h2>Research areas tied to published papers.</h2>
+        <h2>Research areas tied to named papers.</h2>
       </div>
       <div class="reveal">
         <p>
-          These sections group recurring scientific questions in the published work and tie each one to
-          named papers, systems, and methods.
+          Each area below starts from published work and links to the papers that support it.
         </p>
       </div>
     </div>
 
-    <div class="shell research-chapter-list">
+    <div class="shell research-anchor-list">
       {researchPrograms.map((item, index) => (
-        <ResearchChapter
-          index={index + 1}
-          title={item.title}
-          keyQuestion={item.keyQuestion}
-          importance={item.importance}
-          summary={item.summary}
-          paragraphs={item.paragraphs}
-          systems={item.systems}
-          methods={item.methods}
-          papers={item.papers}
-          image={item.image}
-          imageAlt={item.imageAlt}
-          imagePosition={item.imagePosition}
-          headingTag="h2"
-        />
+        <article class="research-anchor reveal">
+          <div class="research-anchor__index">
+            <p class="section-index">{String(index + 1).padStart(2, "0")}</p>
+          </div>
+          <div class="research-anchor__body">
+            <h2>{item.title}</h2>
+            <p>{item.summary}</p>
+            <div class="tag-list">
+              {item.systems.slice(0, 3).map((system) => <span class="tag-chip">{system}</span>)}
+            </div>
+          </div>
+          <div class="research-anchor__paper">
+            <p class="metadata-label">Anchor paper</p>
+            <a href={item.papers[0].href} target="_blank" rel="noreferrer">{item.papers[0].title}</a>
+            <p>{item.papers[0].journal} | {item.papers[0].year}</p>
+          </div>
+        </article>
       ))}
     </div>
   </section>
@@ -189,12 +190,11 @@ const groupedPublications = groupPublicationsByYear(publications);
       <div class="shell section-heading section-heading--split">
         <div class="reveal">
           <p class="eyebrow">Foundational work</p>
-          <h2>Earlier papers that still frame the lab's work.</h2>
+          <h2>Earlier papers on receptors, antibody escape, and antiviral resistance.</h2>
         </div>
         <div class="reveal">
           <p>
-            Earlier papers remain central to receptor discovery, antibody escape, and antiviral mechanism
-            across the broader program.
+            These papers remain useful entry points into durable themes in the lab's work.
           </p>
         </div>
       </div>

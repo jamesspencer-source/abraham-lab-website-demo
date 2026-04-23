@@ -22,7 +22,7 @@ export const publications = [
     openAccess: false,
     coverageLinks: ["https://hms.harvard.edu/news/researchers-now-understand-how-new-class-antivirals-works"],
     summary:
-      "Structural and single-molecule analysis showing how helicase-primase inhibitors arrest herpesvirus DNA replication and reveal assembly of a replication fork complex.",
+      "Structural and single-molecule analysis shows how helicase-primase inhibitors block herpesvirus DNA replication and reveals assembly of a replication fork complex.",
     image: "/assets/images/publications/hsv-helicase-primase.jpg",
     imagePosition: "center 34%",
     visualReuseStatus: "link-only",
@@ -48,7 +48,7 @@ export const publications = [
     significanceLine: "Defines the organization of the arenavirus spike glycoprotein complex.",
     openAccess: true,
     summary:
-      "Cryo-EM analysis of New World arenavirus glycoprotein complexes clarifying organization, receptor-facing architecture, and control of membrane fusion.",
+      "Cryo-EM analysis defines the organization of New World arenavirus glycoprotein complexes and their receptor-facing architecture.",
     image: "/assets/images/publications/arenavirus-gpc.jpeg",
     imagePosition: "center 42%",
     visualReuseStatus: "open-access",
@@ -74,7 +74,7 @@ export const publications = [
     significanceLine: "Explains shifted receptor recognition in an encephalitic arbovirus.",
     openAccess: false,
     summary:
-      "Structural and functional analysis explaining how receptor recognition shifted in an encephalitic arbovirus and what that implies for tropism and outbreak risk.",
+      "Structural and functional analysis shows how receptor recognition shifted in an encephalitic arbovirus and links that shift to tropism.",
     image: "/assets/images/publications/weev-structures.jpeg",
     imagePosition: "center 38%",
     visualReuseStatus: "link-only",
@@ -99,7 +99,7 @@ export const publications = [
     significanceLine: "Maps structural routes to antiviral resistance.",
     openAccess: false,
     summary:
-      "Structural analysis of viral DNA polymerases clarifying resistance pathways against clinically relevant antiviral compounds.",
+      "Structural analysis of viral DNA polymerases defines routes to resistance against clinically relevant antivirals.",
     image: "/assets/images/research/polymerase-complex.jpg",
     imagePosition: "center 42%",
     imageAlt:
@@ -124,7 +124,7 @@ export const publications = [
     significanceLine: "Defines VLDLR engagement by eastern equine encephalitis virus.",
     openAccess: true,
     summary:
-      "Definition of receptor recognition by eastern equine encephalitis virus and the structural determinants of host engagement.",
+      "Structural analysis shows how eastern equine encephalitis virus binds VLDLR.",
     image: "/assets/images/publications/vldlr-recognition.jpeg",
     imagePosition: "center 44%",
     imageAlt:
@@ -144,10 +144,10 @@ export const publications = [
     pmid: "39837328",
     system: "Nipah virus",
     methodCluster: "cryo-EM, enzymology, polymerase function",
-    significanceLine: "Defines Nipah polymerase architecture and function relevant to antiviral development.",
+    significanceLine: "Defines Nipah polymerase architecture relevant to antiviral development.",
     openAccess: false,
     summary:
-      "Cryo-EM and functional analysis of the Nipah virus polymerase complex with implications for antiviral development."
+      "Cryo-EM and functional work define the Nipah virus polymerase complex and features tied to RNA replication."
   },
   {
     year: 2022,

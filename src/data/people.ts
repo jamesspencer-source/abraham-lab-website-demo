@@ -178,8 +178,8 @@ export const peopleData = {
     {
       name: "James Spencer",
       title: "Lab Manager",
-      note: "Lab operations and research coordination.",
-      roleSummary: "Lab operations and research coordination.",
+      note: "Lab management and research coordination.",
+      roleSummary: "Lab management and research coordination.",
       expertiseTags: ["operations", "research coordination"],
       group: "Operations & Strategy",
       image: "/assets/images/people/james-spencer.png",

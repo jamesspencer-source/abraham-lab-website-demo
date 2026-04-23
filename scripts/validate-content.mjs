@@ -19,7 +19,9 @@ const dataFiles = {
   site: path.join(repoRoot, "src", "data", "site.ts"),
   publications: path.join(repoRoot, "src", "data", "publications.ts"),
   jonathan: path.join(repoRoot, "src", "data", "jonathan.ts"),
-  research: path.join(repoRoot, "src", "data", "research.ts")
+  research: path.join(repoRoot, "src", "data", "research.ts"),
+  news: path.join(repoRoot, "src", "data", "news.ts"),
+  people: path.join(repoRoot, "src", "data", "people.ts")
 };
 
 const scannedTextFiles = [
@@ -79,6 +81,46 @@ function compareDatesDesc(left, right) {
   return new Date(right).getTime() - new Date(left).getTime();
 }
 
+function sentenceWordCount(sentence) {
+  return (sentence.match(/\b[\p{L}\p{N}'-]+\b/gu) || []).length;
+}
+
+function splitSentences(text) {
+  return normalize(text)
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+}
+
+function addRhythmWarnings(label, value, note) {
+  if (typeof value !== "string") {
+    return;
+  }
+
+  const normalized = normalize(value);
+  if (!normalized) {
+    return;
+  }
+
+  const sentences = splitSentences(normalized);
+  if (!sentences.length) {
+    return;
+  }
+
+  for (const sentence of sentences) {
+    const words = sentenceWordCount(sentence);
+    const commas = (sentence.match(/,/g) || []).length;
+
+    if (words > 28) {
+      note(`Rhythm review: ${label} has a sentence with ${words} words. "${sentence}"`);
+    }
+
+    if (commas > 2) {
+      note(`Rhythm review: ${label} has a sentence with ${commas} commas. "${sentence}"`);
+    }
+  }
+}
+
 function collectStrings(value, bucket = [], seen = new Set()) {
   if (value === null || value === undefined) {
     return bucket;
@@ -120,6 +162,8 @@ async function main() {
   const publications = await loadTsExport(dataFiles.publications, "publications");
   const jonathanProfile = await loadTsExport(dataFiles.jonathan, "jonathanProfile");
   const researchPrograms = await loadTsExport(dataFiles.research, "researchPrograms");
+  const newsItems = await loadTsExport(dataFiles.news, "newsItems");
+  const peopleData = await loadTsExport(dataFiles.people, "peopleData");
 
   const fail = (message) => errors.push(message);
   const note = (message) => warn.push(message);
@@ -285,7 +329,9 @@ async function main() {
   const jonathanStrings = collectStrings(jonathanProfile);
   const researchStrings = collectStrings(researchPrograms);
   const publicationStrings = collectStrings(publications);
-  const allStrings = [...siteStrings, ...jonathanStrings, ...researchStrings, ...publicationStrings]
+  const newsStrings = collectStrings(newsItems);
+  const peopleStrings = collectStrings(peopleData);
+  const allStrings = [...siteStrings, ...jonathanStrings, ...researchStrings, ...publicationStrings, ...newsStrings, ...peopleStrings]
     .map(normalize)
     .filter(Boolean);
 
@@ -301,6 +347,45 @@ async function main() {
   for (const marker of canonicalMarkers) {
     if (!allStrings.some((value) => value.includes(marker))) {
       note(`Marker not found in loaded content: "${marker}".`);
+    }
+  }
+
+  addRhythmWarnings("siteData.description", siteData.description, note);
+  addRhythmWarnings("siteData.heroTitle", siteData.heroTitle, note);
+  addRhythmWarnings("siteData.heroDeck", siteData.heroDeck, note);
+  addRhythmWarnings("siteData.institutionSummary", siteData.institutionSummary, note);
+  addRhythmWarnings("siteData.tagline", siteData.tagline, note);
+
+  addRhythmWarnings("jonathanProfile.overview", jonathanProfile.overview, note);
+  for (const [index, paragraph] of (jonathanProfile.biography || []).entries()) {
+    addRhythmWarnings(`jonathanProfile.biography[${index}]`, paragraph, note);
+  }
+  for (const [index, item] of (jonathanProfile.focusAreas || []).entries()) {
+    addRhythmWarnings(`jonathanProfile.focusAreas[${index}]`, item, note);
+  }
+
+  for (const [index, publication] of publications.entries()) {
+    addRhythmWarnings(`publications[${index}].significanceLine`, publication.significanceLine, note);
+    addRhythmWarnings(`publications[${index}].summary`, publication.summary, note);
+  }
+
+  for (const [index, item] of newsItems.entries()) {
+    addRhythmWarnings(`newsItems[${index}].summary`, item.summary, note);
+  }
+
+  for (const [index, person] of peopleData.currentMembers.entries()) {
+    addRhythmWarnings(`peopleData.currentMembers[${index}].note`, person.note, note);
+    addRhythmWarnings(`peopleData.currentMembers[${index}].roleSummary`, person.roleSummary, note);
+  }
+
+  for (const [index, program] of researchPrograms.entries()) {
+    addRhythmWarnings(`researchPrograms[${index}].importance`, program.importance, note);
+    addRhythmWarnings(`researchPrograms[${index}].summary`, program.summary, note);
+    for (const [paragraphIndex, paragraph] of (program.paragraphs || []).entries()) {
+      addRhythmWarnings(`researchPrograms[${index}].paragraphs[${paragraphIndex}]`, paragraph, note);
+    }
+    for (const [paperIndex, paper] of (program.papers || []).entries()) {
+      addRhythmWarnings(`researchPrograms[${index}].papers[${paperIndex}].note`, paper.note, note);
     }
   }
 

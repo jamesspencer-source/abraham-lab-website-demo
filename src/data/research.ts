@@ -4,12 +4,12 @@ export const researchPrograms = [
   {
     title: "Receptor engagement and entry",
     keyQuestion: "Which host receptors and entry interfaces determine tropism and cross-species risk?",
-    importance: "Entry sets the first committed step in infection and constrains tissue tropism.",
+    importance: "Entry is the first committed step in infection and helps set tropism.",
     summary:
-      "The lab defines how viral surface proteins recognize host receptors and how those interfaces shift across related viruses.",
+      "The lab studies how viral surface proteins bind host receptors and how those contacts change across related viruses.",
     paragraphs: [
-      "Entry is the first irreversible commitment to infection, making receptor recognition and membrane-fusion machinery central determinants of viral tropism.",
-      "Using structural biology, receptor-binding experiments, and functional virology, the laboratory defines how viral surface proteins engage host factors across related viruses."
+      "Receptor binding and membrane fusion help determine which cells and tissues a virus can infect.",
+      "The lab uses structural biology, binding experiments, and cell-based infection assays to define how viral surface proteins engage host factors."
     ],
     systems: ["alphaviruses", "arenaviruses", "arthropod-borne viruses"],
     methods: [
@@ -28,14 +28,14 @@ export const researchPrograms = [
         journal: "Cell",
         year: 2025,
         href: "https://www.cell.com/cell/fulltext/S0092-8674(25)00347-2",
-        note: "Defines altered receptor usage in an encephalitic arbovirus."
+        note: "Shows altered receptor usage in an encephalitic arbovirus."
       },
       {
         title: "Structural basis for VLDLR recognition by eastern equine encephalitis virus",
         journal: "Nature Communications",
         year: 2024,
         href: "https://www.nature.com/articles/s41467-024-50887-9",
-        note: "Resolves how eastern equine encephalitis virus engages VLDLR."
+        note: "Shows how eastern equine encephalitis virus engages VLDLR."
       },
       {
         title: "VLDLR and ApoER2 are receptors for multiple alphaviruses",
@@ -51,10 +51,10 @@ export const researchPrograms = [
     keyQuestion: "Which glycoprotein surfaces support neutralization, and which support escape?",
     importance: "Neutralization depends on defined epitopes and conformational control.",
     summary:
-      "The group maps glycoprotein architecture and antibody interfaces to distinguish conserved recognition surfaces from escape-prone regions.",
+      "The lab maps glycoprotein architecture and antibody binding sites to distinguish conserved surfaces from escape-prone regions.",
     paragraphs: [
-      "Neutralizing antibodies can block receptor engagement or constrain the structural transitions required for membrane fusion.",
-      "The laboratory combines glycoprotein structure determination, monoclonal antibody analysis, and mechanistic neutralization experiments to define which viral surfaces support broad recognition and which readily escape."
+      "Neutralizing antibodies can block receptor binding or constrain the structural changes needed for fusion.",
+      "The lab combines glycoprotein structures, monoclonal antibody analysis, and neutralization experiments to define which viral surfaces support broad recognition."
     ],
     systems: ["SARS-CoV-2", "alphaviruses", "mammarenaviruses"],
     methods: [
@@ -73,14 +73,14 @@ export const researchPrograms = [
         journal: "Nature Microbiology",
         year: 2025,
         href: "https://www.nature.com/articles/s41564-025-02085-6",
-        note: "Defines arenavirus glycoprotein complex organization with implications for fusion control."
+        note: "Defines arenavirus spike organization and fusion control."
       },
       {
         title: "Structural basis for continued antibody evasion by the SARS-CoV-2 receptor-binding domain",
         journal: "Science",
         year: 2022,
         href: "https://www.science.org/doi/10.1126/science.abl6251",
-        note: "Maps convergent routes of antibody escape in SARS-CoV-2."
+        note: "Shows convergent routes of antibody escape in SARS-CoV-2."
       },
       {
         title: "Vaccine-elicited receptor-binding site antibodies neutralize two New World hemorrhagic fever arenaviruses",
@@ -96,10 +96,10 @@ export const researchPrograms = [
     keyQuestion: "How do viral replication assemblies govern inhibition and resistance?",
     importance: "Replication complexes contain enzymology and drug targets.",
     summary:
-      "The laboratory analyzes polymerase assemblies, inhibitor engagement, and resistance in DNA and RNA virus systems.",
+      "The lab studies polymerase assemblies, inhibitor binding, and resistance in DNA and RNA virus systems.",
     paragraphs: [
-      "After entry, genome replication and transcription depend on specialized polymerase complexes with distinctive structural organization and catalytic logic.",
-      "By resolving polymerase assemblies, inhibitor interactions, and resistance mechanisms, the group connects structural observations to drug action and antiviral failure."
+      "Genome replication and transcription depend on polymerase complexes with distinct structural organization.",
+      "The lab resolves polymerase assemblies, inhibitor interactions, and resistance mechanisms to connect structure with drug action."
     ],
     systems: ["herpesviruses", "RNA viruses", "replication fork complexes"],
     methods: [
@@ -118,14 +118,14 @@ export const researchPrograms = [
         journal: "Cell",
         year: 2026,
         href: "https://www.cell.com/cell/fulltext/S0092-8674(25)01376-5",
-        note: "Explains how a clinically relevant antiviral class disables an HSV enzyme complex."
+        note: "Shows how a clinically relevant antiviral class disables an HSV enzyme complex."
       },
       {
         title: "Structural and functional analysis of the Nipah virus polymerase complex",
         journal: "Cell",
         year: 2025,
         href: "https://pubmed.ncbi.nlm.nih.gov/39837328/",
-        note: "Defines the Nipah polymerase complex and features relevant to antiviral development."
+        note: "Defines the Nipah polymerase complex and features tied to antiviral development."
       },
       {
         title: "Viral DNA polymerase structures reveal mechanisms of antiviral drug resistance",

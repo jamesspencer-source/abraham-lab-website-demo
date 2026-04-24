@@ -135,7 +135,7 @@ export type Person = {
   title: string;
   note?: string;
   roleSummary?: string;
-  expertiseTags?: string[];
+  programTags?: Array<"Virology" | "MD-PhD / Biophysics" | "MD-PhD / Biological and Biomedical Sciences">;
   group: "Leadership" | "Postdoctoral Fellows & Instructors" | "Graduate Students" | "Operations & Strategy";
   image: string;
   imageAlt: string;

@@ -47,6 +47,22 @@ const discouragedPlainLanguagePatterns = [
   /\bfacilitat(?:e|es|ed|ing)\b/i
 ];
 
+const allowedPersonProgramTags = new Set([
+  "Virology",
+  "MD-PhD / Biophysics",
+  "MD-PhD / Biological and Biomedical Sciences"
+]);
+
+const expectedProgramTagsByPerson = new Map([
+  ["Haley Varnum", ["MD-PhD / Biophysics"]],
+  ["Jesse Plung", ["Virology"]],
+  ["Jessica Oros", ["Virology"]],
+  ["Rick Li", ["MD-PhD / Biological and Biomedical Sciences"]],
+  ["Colin Mann", ["Virology"]],
+  ["Laurentia Vianney Tjang", ["Virology"]],
+  ["Corazón Núñez", ["Virology"]]
+]);
+
 function transpileTsModule(source, filePath) {
   const result = ts.transpileModule(source, {
     compilerOptions: {
@@ -305,6 +321,33 @@ async function main() {
   for (const title of jonathanProfile.representativeWork || []) {
     if (!publicationTitleSet.has(normalize(title))) {
       fail(`Jonathan representative work "${title}" does not match any publication title.`);
+    }
+  }
+
+  for (const person of peopleData.currentMembers || []) {
+    if ("expertiseTags" in person) {
+      fail(`Person "${person.name}" uses obsolete expertiseTags. Use verified programTags only.`);
+    }
+
+    const tags = person.programTags || [];
+    if (!Array.isArray(tags)) {
+      fail(`Person "${person.name}" programTags must be an array.`);
+      continue;
+    }
+
+    for (const tag of tags) {
+      if (!allowedPersonProgramTags.has(tag)) {
+        fail(`Person "${person.name}" has unsupported program tag "${tag}".`);
+      }
+    }
+
+    const expectedTags = expectedProgramTagsByPerson.get(person.name);
+    if (expectedTags) {
+      if (JSON.stringify(tags) !== JSON.stringify(expectedTags)) {
+        fail(`Person "${person.name}" must use programTags ${JSON.stringify(expectedTags)}.`);
+      }
+    } else if (tags.length) {
+      fail(`Person "${person.name}" has programTags but no verified tag assignment.`);
     }
   }
 

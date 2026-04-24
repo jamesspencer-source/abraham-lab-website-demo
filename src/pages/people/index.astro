@@ -81,9 +81,9 @@ const directoryIndex = [
               <p class="eyebrow">Leadership</p>
               <h2>{person.name}</h2>
               <p class="directory-lead__title">{person.title}</p>
-              {person.expertiseTags?.length ? (
+              {person.programTags?.length ? (
                 <div class="tag-list">
-                  {person.expertiseTags.map((tag) => <span class="tag-chip">{tag}</span>)}
+                  {person.programTags.map((tag) => <span class="tag-chip">{tag}</span>)}
                 </div>
               ) : null}
               <div class="button-row">
@@ -118,9 +118,9 @@ const directoryIndex = [
                 <div class="directory-row__body">
                   <h3>{person.name}</h3>
                   <p class="directory-row__title">{person.title}</p>
-                  {person.expertiseTags?.length ? (
+                  {person.programTags?.length ? (
                     <div class="tag-list">
-                      {person.expertiseTags.map((tag) => <span class="tag-chip">{tag}</span>)}
+                      {person.programTags.map((tag) => <span class="tag-chip">{tag}</span>)}
                     </div>
                   ) : null}
                 </div>

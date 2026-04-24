@@ -10,8 +10,8 @@ const newsItemsList: NewsItem[] = [
       "An HMS video feature follows the lab's work on viral infection and outbreak preparedness.",
     link: "https://ogephd.hms.harvard.edu/news?page=2",
     linkLabel: "View HMS feature",
-    homepageEligible: true,
-    milestoneTier: "major",
+    homepageEligible: false,
+    milestoneTier: "secondary",
     image: "/assets/images/research/viral-entry-comparison.png",
     imageAlt:
       "Structural comparison figure showing receptor recognition features across encephalitic alphaviruses."
@@ -114,8 +114,8 @@ const newsItemsList: NewsItem[] = [
       "The department archived the announcement that Jonathan Abraham joined the 2024 HHMI Investigator cohort.",
     link: "https://micro.hms.harvard.edu/news-events/archived-news",
     linkLabel: "View archive",
-    homepageEligible: true,
-    milestoneTier: "major",
+    homepageEligible: false,
+    milestoneTier: "secondary",
     image: "/assets/images/people/jonathan-abraham.jpeg",
     imageAlt: "Portrait of Jonathan Abraham."
   }

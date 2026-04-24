@@ -42,7 +42,7 @@ const scannedTextFiles = [
 
 const discouragedPlainLanguagePatterns = [
   /\bvia\b/i,
-  /\butiliz(?:e|es|ed|ing)\b/i,
+  /\butili[sz](?:e|es|ed|ing|ation|ations)\b/i,
   /\bleverag(?:e|es|ed|ing)\b/i,
   /\bfacilitat(?:e|es|ed|ing)\b/i
 ];

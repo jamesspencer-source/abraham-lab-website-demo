@@ -5,12 +5,15 @@ import { formatDateLabel } from "../../lib/content";
 import { siteData } from "../../data/site";
 
 const milestoneNews = newsItems.filter((item) => item.milestoneTier !== "secondary");
-const renderedNews = milestoneNews.length ? milestoneNews : newsItems;
+const isScienceOrHmsCoverage = (item: (typeof newsItems)[number]) =>
+  item.category === "Publication" || item.category === "Institutional coverage";
+const scopedNews = milestoneNews.filter(isScienceOrHmsCoverage);
+const renderedNews = scopedNews.length ? scopedNews : newsItems.filter(isScienceOrHmsCoverage);
 ---
 
 <BaseLayout
   title="News"
-  description="Selected updates from the Abraham Lab."
+  description="Papers and Harvard Medical School coverage from the Abraham Lab."
   socialImage={renderedNews[0]?.image}
 >
   <section class="page-hero page-hero--news">
@@ -19,7 +22,7 @@ const renderedNews = milestoneNews.length ? milestoneNews : newsItems;
         <p class="eyebrow">News</p>
         <h1>News from the Abraham Lab.</h1>
         <p>
-          Major papers, honors, and institutional coverage from the lab.
+          Papers and Harvard Medical School coverage from the lab.
         </p>
       </div>
       <div class="page-hero__rail reveal">

@@ -8,7 +8,6 @@ import { withBase } from "../lib/content";
     <section class="site-footer__primary">
       <p class="footer-label">Abraham Lab</p>
       {siteData.contact.institutionDisplayLines?.map((line) => <p>{line}</p>)}
-      {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
     </section>
 
     <section>
@@ -22,8 +21,7 @@ import { withBase } from "../lib/content";
 
     <section>
       <p class="footer-label">Contact</p>
-      <p><a href={withBase("/contact/")}>Contact page</a></p>
-      <p><a href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Google Maps</a></p>
+      <p><a href={withBase("/contact/")}>Contact</a></p>
     </section>
 
     <section>

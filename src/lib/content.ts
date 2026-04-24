@@ -74,14 +74,16 @@ export function formatDateLabel(value: string) {
   return new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",
-    year: "numeric"
+    year: "numeric",
+    timeZone: "UTC"
   }).format(new Date(value));
 }
 
 export function formatMonthYear(value: string) {
   return new Intl.DateTimeFormat("en-US", {
     month: "long",
-    year: "numeric"
+    year: "numeric",
+    timeZone: "UTC"
   }).format(new Date(value));
 }
 

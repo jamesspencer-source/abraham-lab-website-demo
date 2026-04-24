@@ -6,7 +6,7 @@ export const researchPrograms = [
     keyQuestion: "Which host receptors and entry interfaces determine tropism and cross-species risk?",
     importance: "Entry is the first committed step in infection and helps set tropism.",
     summary:
-      "The lab studies how viral surface proteins bind host receptors and how those contacts change across related viruses.",
+      "Papers on WEEV, EEEV, and related alphaviruses define receptor interfaces that shape entry and tropism.",
     paragraphs: [
       "Receptor binding and membrane fusion help determine which cells and tissues a virus can infect.",
       "The lab uses structural biology, binding experiments, and cell-based infection assays to define how viral surface proteins engage host factors."
@@ -51,7 +51,7 @@ export const researchPrograms = [
     keyQuestion: "Which glycoprotein surfaces support neutralization, and which support escape?",
     importance: "Neutralization depends on defined epitopes and conformational control.",
     summary:
-      "The lab maps glycoprotein architecture and antibody binding sites to distinguish conserved surfaces from escape-prone regions.",
+      "Arenavirus and antibody-escape papers define viral surfaces that control neutralization and escape.",
     paragraphs: [
       "Neutralizing antibodies can block receptor binding or constrain the structural changes needed for fusion.",
       "The lab combines glycoprotein structures, monoclonal antibody analysis, and neutralization experiments to define which viral surfaces support broad recognition."
@@ -96,7 +96,7 @@ export const researchPrograms = [
     keyQuestion: "How do viral replication assemblies govern inhibition and resistance?",
     importance: "Replication complexes contain enzymology and drug targets.",
     summary:
-      "The lab studies polymerase assemblies, inhibitor binding, and resistance in DNA and RNA virus systems.",
+      "HSV-1 and Nipah papers define replication-complex assembly, polymerase function, and inhibitor response.",
     paragraphs: [
       "Genome replication and transcription depend on polymerase complexes with distinct structural organization.",
       "The lab resolves polymerase assemblies, inhibitor interactions, and resistance mechanisms to connect structure with drug action."

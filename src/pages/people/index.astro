@@ -13,6 +13,8 @@ const anchorFor = (label: string) =>
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+const countLabel = (count: number, singular: string, plural: string) =>
+  `${count} ${count === 1 ? singular : plural}`;
 
 const directoryIndex = [
   leadership ? { label: leadership.label, count: leadership.entries.length, id: anchorFor(leadership.label) } : null,
@@ -34,9 +36,9 @@ const directoryIndex = [
     <div class="shell page-hero__grid">
       <div class="page-hero__copy reveal">
         <p class="eyebrow">People</p>
-        <h1>Faculty, fellows, students, and operations leadership of the Abraham Lab.</h1>
+        <h1>Faculty, fellows, students, and staff in the Abraham Lab.</h1>
         <p>
-          Current members are grouped by role. Alumni are listed below.
+          Current members and alumni.
         </p>
       </div>
       <div class="page-hero__rail reveal">
@@ -79,7 +81,6 @@ const directoryIndex = [
               <p class="eyebrow">Leadership</p>
               <h2>{person.name}</h2>
               <p class="directory-lead__title">{person.title}</p>
-              {(person.roleSummary ?? person.note) && <p>{person.roleSummary ?? person.note}</p>}
               {person.expertiseTags?.length ? (
                 <div class="tag-list">
                   {person.expertiseTags.map((tag) => <span class="tag-chip">{tag}</span>)}
@@ -105,7 +106,7 @@ const directoryIndex = [
               <p class="eyebrow">Current members</p>
               <h2>{group.label}</h2>
             </div>
-            <p class="directory-group__count">{group.entries.length} people</p>
+            <p class="directory-group__count">{countLabel(group.entries.length, "person", "people")}</p>
           </div>
 
           <div class="directory-grid">
@@ -117,7 +118,6 @@ const directoryIndex = [
                 <div class="directory-row__body">
                   <h3>{person.name}</h3>
                   <p class="directory-row__title">{person.title}</p>
-                  {(person.roleSummary ?? person.note) && <p>{person.roleSummary ?? person.note}</p>}
                   {person.expertiseTags?.length ? (
                     <div class="tag-list">
                       {person.expertiseTags.map((tag) => <span class="tag-chip">{tag}</span>)}
@@ -136,7 +136,7 @@ const directoryIndex = [
     <div class="shell section-heading section-heading--compact">
       <div class="reveal">
         <p class="eyebrow">Alumni</p>
-        <h2>Past members.</h2>
+        <h2>Alumni register.</h2>
       </div>
     </div>
 
@@ -145,7 +145,7 @@ const directoryIndex = [
         <section class="alumni-group reveal">
           <div class="directory-group__header">
             <h3>{group.label}</h3>
-            <p class="directory-group__count">{group.entries.length} entries</p>
+            <p class="directory-group__count">{countLabel(group.entries.length, "entry", "entries")}</p>
           </div>
           <div class="alumni-list">
             {group.entries.map((entry) => (

@@ -218,6 +218,10 @@ async function main() {
       message: 'jonathanProfile.title must reference Harvard Medical School.'
     },
     {
+      condition: jonathanProfile.title === "Professor of Microbiology, Harvard Medical School",
+      message: 'jonathanProfile.title must be "Professor of Microbiology, Harvard Medical School".'
+    },
+    {
       condition: jonathanProfile.secondaryTitle === "HHMI Investigator",
       message: 'jonathanProfile.secondaryTitle must be "HHMI Investigator".'
     }
@@ -325,6 +329,10 @@ async function main() {
   }
 
   for (const person of peopleData.currentMembers || []) {
+    if (person.name === "Jonathan Abraham, MD, PhD" && person.title !== "Professor of Microbiology, Harvard Medical School") {
+      fail('Jonathan Abraham must be listed as "Professor of Microbiology, Harvard Medical School" in peopleData.');
+    }
+
     if ("expertiseTags" in person) {
       fail(`Person "${person.name}" uses obsolete expertiseTags. Use verified programTags only.`);
     }
@@ -356,6 +364,10 @@ async function main() {
     const text = await fs.readFile(filePath, "utf8");
     if (/\bNRB\b/.test(text)) {
       fail(`Forbidden legacy label "NRB" found in ${path.relative(repoRoot, filePath)}.`);
+    }
+
+    if (/Associate Professor of Microbiology, Harvard Medical School/.test(text)) {
+      fail(`Outdated Jonathan title found in ${path.relative(repoRoot, filePath)}.`);
     }
 
     for (const pattern of discouragedPlainLanguagePatterns) {

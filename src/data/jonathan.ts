@@ -2,7 +2,7 @@ import type { JonathanProfile } from "./types";
 
 export const jonathanProfile = {
   name: "Jonathan Abraham, MD, PhD",
-  title: "Associate Professor of Microbiology, Harvard Medical School",
+  title: "Professor of Microbiology, Harvard Medical School",
   secondaryTitle: "HHMI Investigator",
   portrait: "/assets/images/people/jonathan-abraham.jpeg",
   portraitAlt: "Jonathan Abraham",
@@ -10,7 +10,7 @@ export const jonathanProfile = {
   overview:
     "Jonathan Abraham leads a structural virology lab that studies receptor engagement, antibody recognition, and replication complexes in medically important viruses.",
   biography: [
-    "Jonathan Abraham is Associate Professor of Microbiology at Harvard Medical School and an HHMI Investigator.",
+    "Jonathan Abraham is Professor of Microbiology at Harvard Medical School and an HHMI Investigator.",
     "He received a bachelor's degree in biochemical sciences from Harvard College and a PhD in biophysics from Harvard University.",
     "He received an MD from Harvard Medical School through the Harvard-MIT MD-PhD Program.",
     "He completed residency training in internal medicine at Brigham and Women's Hospital.",
@@ -19,7 +19,7 @@ export const jonathanProfile = {
     "He also serves as an associate physician in the Division of Infectious Diseases at Brigham and Women's Hospital."
   ],
   appointments: [
-    "Associate Professor of Microbiology, Harvard Medical School",
+    "Professor of Microbiology, Harvard Medical School",
     "HHMI Investigator",
     "Associate Physician, Division of Infectious Diseases, Brigham and Women's Hospital"
   ],

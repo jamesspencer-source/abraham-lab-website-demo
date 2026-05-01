@@ -4,7 +4,7 @@ export const peopleData = {
   currentMembers: [
     {
       name: "Jonathan Abraham, MD, PhD",
-      title: "Associate Professor of Microbiology, Harvard Medical School",
+      title: "Professor of Microbiology, Harvard Medical School",
       group: "Leadership",
       image: "/assets/images/people/jonathan-abraham.jpeg",
       imageAlt: "Jonathan Abraham",

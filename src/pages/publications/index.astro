@@ -123,7 +123,7 @@ const groupedPublications = groupPublicationsByYear(publications);
       {recentProofPapers.map((item) => (
         <article class="updates-ledger__row reveal">
           <div class="updates-ledger__meta">
-            <p>{item.journal ?? "Publication"}</p>
+            <p>{item.journal ?? item.year}</p>
             <span>{item.publishedAt ? formatMonthYear(item.publishedAt) : item.year}</span>
           </div>
           <div class="updates-ledger__body">
@@ -152,12 +152,12 @@ const groupedPublications = groupPublicationsByYear(publications);
   <section class="section section--flagship atlas-band" id="research-atlas">
     <div class="shell section-heading section-heading--split">
       <div class="reveal">
-        <p class="eyebrow">Scientific threads</p>
-        <h2>Scientific threads in the publication record.</h2>
+        <p class="eyebrow">Published mechanisms</p>
+        <h2>Mechanisms shown in published work.</h2>
       </div>
       <div class="reveal">
         <p>
-          The papers define receptor use, glycoprotein organization, antibody recognition, replication machinery, and drug mechanism.
+          The papers show how viral proteins bind receptors, organize entry machinery, evade antibodies, and respond to antivirals.
         </p>
       </div>
     </div>
@@ -203,7 +203,7 @@ const groupedPublications = groupPublicationsByYear(publications);
         {foundationalPublications.map((item) => (
           <article class="reference-card reveal">
             <p class="reference-card__meta">
-              {[item.journal ?? "Publication", item.year].filter(Boolean).join(" / ")}
+              {[item.journal, item.year].filter(Boolean).join(" / ")}
             </p>
             <a class="reference-card__title" href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
             {item.significanceLine && <p class="reference-card__note">{item.significanceLine}</p>}
@@ -218,7 +218,7 @@ const groupedPublications = groupPublicationsByYear(publications);
     <div class="shell section-heading section-heading--compact">
       <div class="reveal">
         <p class="eyebrow">Archive</p>
-        <h2>Year-grouped citations.</h2>
+        <h2>Citation archive.</h2>
       </div>
     </div>
 
@@ -232,10 +232,12 @@ const groupedPublications = groupPublicationsByYear(publications);
             {yearGroup.entries.map((item) => (
               <li>
                 <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
-                <p>
-                  {[item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : undefined, item.pmid ? `PMID ${item.pmid}` : undefined].filter(Boolean).join(" | ")}
-                </p>
-                <p>{item.citation}</p>
+                {[item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : undefined, item.pmid ? `PMID ${item.pmid}` : undefined].filter(Boolean).length > 0 && (
+                  <p class="archive-group__meta">
+                    {[item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : undefined, item.pmid ? `PMID ${item.pmid}` : undefined].filter(Boolean).join(" | ")}
+                  </p>
+                )}
+                <p class="archive-group__citation">{item.citation}</p>
               </li>
             ))}
           </ol>

@@ -10,7 +10,7 @@ export const siteData = {
   theme: {
     defaultMode: "system"
   },
-  heroTitle: "Published mechanisms of viral infection.",
+  heroTitle: "Mechanisms of viral infection.",
   heroDeck:
     "Work from the Abraham Lab identifies mechanisms of viral entry, antibody escape, and replication in medically important viruses. Recent papers define HSV-1 replication machinery, New World arenavirus spike organization, and receptor recognition in encephalitic arboviruses.",
   heroFigures: [

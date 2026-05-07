@@ -1,7 +1,7 @@
 <svg width="960" height="760" viewBox="0 0 960 760" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Harvard Medical School locator map</title>
   <desc id="desc">Stylized campus locator highlighting Veritas Science Center (VSC) within Harvard Medical School in Boston's Longwood Medical Area.</desc>
-  <rect width="960" height="760" fill="#0B131B"/>
+  <rect width="960" height="760" fill="#0C0F11"/>
   <g opacity="0.18">
     <path d="M0 112H960" stroke="#9AA8B6" stroke-width="1"/>
     <path d="M0 224H960" stroke="#9AA8B6" stroke-width="1"/>
@@ -20,18 +20,18 @@
   <g opacity="0.9">
     <path d="M74 555C147 512 250 486 380 476C483 468 592 465 721 480C807 490 870 513 915 545" stroke="#CCD4DC" stroke-width="36" stroke-linecap="round"/>
     <path d="M268 78C361 155 453 234 540 319C604 382 665 453 732 548" stroke="#CCD4DC" stroke-width="28" stroke-linecap="round"/>
-    <path d="M248 146C360 228 480 301 604 360C689 401 780 427 873 438" stroke="#708196" stroke-width="12" stroke-linecap="round"/>
+    <path d="M248 146C360 228 480 301 604 360C689 401 780 427 873 438" stroke="#718089" stroke-width="12" stroke-linecap="round"/>
   </g>
   <g>
-    <rect x="392" y="233" width="176" height="128" rx="6" fill="#13202B" stroke="#E2E8EE" stroke-opacity="0.52"/>
-    <rect x="432" y="203" width="176" height="128" rx="6" fill="#172635" stroke="#E2E8EE" stroke-opacity="0.52"/>
-    <rect x="470" y="281" width="166" height="118" rx="6" fill="#0E1822" stroke="#E2E8EE" stroke-opacity="0.52"/>
-    <rect x="515" y="247" width="192" height="144" rx="6" fill="#1A2A38" stroke="#E2E8EE" stroke-opacity="0.52"/>
+    <rect x="392" y="233" width="176" height="128" rx="6" fill="#151B1E" stroke="#E2E8EE" stroke-opacity="0.52"/>
+    <rect x="432" y="203" width="176" height="128" rx="6" fill="#1A2226" stroke="#E2E8EE" stroke-opacity="0.52"/>
+    <rect x="470" y="281" width="166" height="118" rx="6" fill="#111619" stroke="#E2E8EE" stroke-opacity="0.52"/>
+    <rect x="515" y="247" width="192" height="144" rx="6" fill="#20282D" stroke="#E2E8EE" stroke-opacity="0.52"/>
   </g>
   <g>
-    <circle cx="598" cy="321" r="18" fill="#8A223E"/>
-    <circle cx="598" cy="321" r="36" fill="#8A223E" fill-opacity="0.16"/>
-    <circle cx="598" cy="321" r="58" fill="#8A223E" fill-opacity="0.08"/>
+    <circle cx="598" cy="321" r="18" fill="#7DBBC3"/>
+    <circle cx="598" cy="321" r="36" fill="#7DBBC3" fill-opacity="0.18"/>
+    <circle cx="598" cy="321" r="58" fill="#7DBBC3" fill-opacity="0.09"/>
   </g>
   <g>
     <path d="M636 307L744 246" stroke="#E2E8EE" stroke-width="2"/>
@@ -47,6 +47,6 @@
     <text x="228" y="198" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" fill="#B7C3CF">Longwood Avenue</text>
     <text x="366" y="506" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" fill="#B7C3CF">Avenue Louis Pasteur</text>
   </g>
-  <rect x="38" y="36" width="182" height="64" rx="6" fill="#0F1A23" stroke="#E2E8EE" stroke-opacity="0.18"/>
+  <rect x="38" y="36" width="182" height="64" rx="6" fill="#111619" stroke="#E2E8EE" stroke-opacity="0.18"/>
   <text x="60" y="76" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#EAF0F5">Campus locator</text>
 </svg>

@@ -20,9 +20,9 @@ const canonicalTarget = canonicalPath ?? Astro.url.pathname;
 const canonical = new URL(canonicalTarget, siteData.url).toString();
 const socialImage = new URL(withBase(socialImagePath ?? siteData.heroFigures[0].image), siteData.url).toString();
 const themeDefaultMode = siteData.theme.defaultMode;
-const themeColorLight = "#f7f9fb";
-const themeColorDark = "#141d25";
-const themeColorHero = "#16222d";
+const themeColorLight = "#f6f7f8";
+const themeColorDark = "#15191c";
+const themeColorHero = "#0c0f11";
 const isHomePage = pageClass === "page-home";
 ---
 

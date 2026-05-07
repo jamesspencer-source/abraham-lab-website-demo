@@ -10,23 +10,9 @@ export const siteData = {
   theme: {
     defaultMode: "system"
   },
-  heroTitle: "The Abraham Lab defines how viruses enter cells, evade antibodies, and replicate.",
+  heroTitle: "Published mechanisms of viral infection.",
   heroDeck:
-    "Recent papers show how HSV-1 helicase-primase inhibitors block replication, how arenavirus spikes are organized, and how receptor recognition shifts in encephalitic arboviruses.",
-  heroFacts: [
-    {
-      label: "Affiliation",
-      value: "Department of Microbiology, Blavatnik Institute, Harvard Medical School"
-    },
-    {
-      label: "Scope",
-      value: "HSV-1, arenaviruses, arboviruses, and replication complexes"
-    },
-    {
-      label: "Recent venues",
-      value: "Cell | Nature Microbiology | Cell"
-    }
-  ],
+    "Work from the Abraham Lab identifies mechanisms of viral entry, antibody escape, and replication in medically important viruses. Recent papers define HSV-1 replication machinery, New World arenavirus spike organization, and receptor recognition in encephalitic arboviruses.",
   heroFigures: [
     {
       label: "Nature Microbiology | 2025",
@@ -56,11 +42,11 @@ export const siteData = {
       imagePosition: "center 34%"
     }
   ],
-  institutionLabel: "Institutional Affiliation",
+  institutionLabel: "Affiliation",
   institutionTitle: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
   institutionSummary:
-    "The Abraham Lab is in the Department of Microbiology, Blavatnik Institute, Harvard Medical School. Jonathan Abraham is an HHMI Investigator. Published work addresses viral entry and glycoprotein structure. It also addresses antibody recognition and replication.",
-  tagline: "Structural virology of viral entry, antibody recognition, and replication.",
+    "The Abraham Lab is in the Department of Microbiology, Blavatnik Institute, Harvard Medical School. Jonathan Abraham is an HHMI Investigator.",
+  tagline: "Mechanisms of viral entry, antibody recognition, and replication.",
   nav: [
     { label: "Home", href: "/" },
     { label: "Publications", href: "/publications/" },

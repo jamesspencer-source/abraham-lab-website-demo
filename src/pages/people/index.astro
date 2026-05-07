@@ -36,9 +36,9 @@ const directoryIndex = [
     <div class="shell page-hero__grid">
       <div class="page-hero__copy reveal">
         <p class="eyebrow">People</p>
-        <h1>Faculty, fellows, students, and staff in the Abraham Lab.</h1>
+        <h1>Faculty, fellows, students, and staff.</h1>
         <p>
-          Current members and alumni.
+          Current Abraham Lab members and alumni.
         </p>
       </div>
       <div class="page-hero__rail reveal">
@@ -78,7 +78,7 @@ const directoryIndex = [
               <img src={withBase(person.image)} alt={person.imageAlt} loading="lazy" />
             </div>
             <div class="directory-lead__body">
-              <p class="eyebrow">Leadership</p>
+              <p class="metadata-label">Leadership</p>
               <h2>{person.name}</h2>
               <p class="directory-lead__title">{person.title}</p>
               {person.programTags?.length ? (
@@ -103,7 +103,7 @@ const directoryIndex = [
         <section class="directory-group reveal" id={anchorFor(group.label)} data-directory-group={group.label}>
           <div class="directory-group__header">
             <div>
-              <p class="eyebrow">Current members</p>
+              <p class="metadata-label">Current members</p>
               <h2>{group.label}</h2>
             </div>
             <p class="directory-group__count">{countLabel(group.entries.length, "person", "people")}</p>
@@ -135,7 +135,7 @@ const directoryIndex = [
   <section class="section section--utility alumni-band" id="alumni" data-directory-group="alumni">
     <div class="shell section-heading section-heading--compact">
       <div class="reveal">
-        <p class="eyebrow">Alumni</p>
+        <p class="metadata-label">Alumni</p>
         <h2>Alumni register.</h2>
       </div>
     </div>
@@ -151,7 +151,7 @@ const directoryIndex = [
             {group.entries.map((entry) => (
               <div class="alumni-row">
                 <p class="alumni-row__name">{entry.name}</p>
-                <p class="alumni-row__destination">{entry.destination ?? ""}</p>
+                {entry.destination && <p class="alumni-row__destination">{entry.destination}</p>}
               </div>
             ))}
           </div>

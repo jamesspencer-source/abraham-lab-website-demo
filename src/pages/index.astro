@@ -10,7 +10,7 @@ const homepageProof = homepageProofOnly(publications);
 const leadPaper = leadPublication(publications) ?? homepageProof[0];
 const supportingPapers = homepageProof.filter((item) => item.title !== leadPaper?.title).slice(0, 2);
 const isHmsCoverage = (item: (typeof newsItems)[number]) => item.category === "Institutional coverage";
-const homepageUpdates = limitItems(newsItems.filter((item) => (item.homepageEligible ?? true) && isHmsCoverage(item)), 2);
+const homepageUpdates = limitItems(newsItems.filter((item) => (item.homepageEligible ?? true) && isHmsCoverage(item)), 1);
 const currentRecord = [
   ...supportingPapers.map((item) => ({
     kind: "Publication",
@@ -39,11 +39,10 @@ const currentMemberCount = peopleData.currentMembers.length;
 ---
 
 <BaseLayout pageClass="page-home" socialImage={leadPaper?.image ?? siteData.heroFigures[0].image}>
-  <section class="marquee">
+  <section class="marquee dossier-hero">
     <div class="shell marquee__shell">
       <div class="marquee__grid">
         <div class="marquee__copy reveal">
-          <p class="eyebrow">Abraham Lab</p>
           <h1>{siteData.heroTitle}</h1>
           <p class="marquee__deck">{siteData.heroDeck}</p>
 
@@ -75,8 +74,9 @@ const currentMemberCount = peopleData.currentMembers.length;
   <section class="institution-strip">
     <div class="shell institution-strip__grid">
       <div class="institution-strip__copy reveal">
-        <p class="eyebrow">{siteData.institutionLabel}</p>
+        <p class="metadata-label">{siteData.institutionLabel}</p>
         <p class="institution-strip__line">{siteData.institutionTitle}</p>
+        <p>{siteData.institutionSummary}</p>
       </div>
 
       <div class="institution-strip__rail">
@@ -85,6 +85,7 @@ const currentMemberCount = peopleData.currentMembers.length;
             <div class="institution-strip__logo">
               <img src={withBase(affiliation.logo)} alt={affiliation.alt} loading="lazy" />
             </div>
+            <span>{affiliation.shortName ?? affiliation.name}</span>
           </a>
         ))}
       </div>
@@ -95,7 +96,6 @@ const currentMemberCount = peopleData.currentMembers.length;
     <section class="section section--flagship proof-feature">
       <div class="shell section-heading section-heading--split">
         <div class="reveal">
-          <p class="eyebrow">Lead publication</p>
           <h2>How HSV-1 helicase-primase inhibitors stop replication.</h2>
         </div>
         <div class="reveal">
@@ -107,7 +107,7 @@ const currentMemberCount = peopleData.currentMembers.length;
 
       <div class="shell editorial-feature editorial-feature--home">
         <div class="editorial-feature__copy reveal">
-          <p class="eyebrow">{leadPaper.journal}</p>
+          <p class="metadata-label">{leadPaper.journal}</p>
           <h2>{leadPaper.title}</h2>
           <p class="editorial-feature__meta">
             {[leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : undefined, leadPaper.pmid ? `PMID ${leadPaper.pmid}` : undefined].filter(Boolean).join(" / ")}
@@ -150,7 +150,7 @@ const currentMemberCount = peopleData.currentMembers.length;
     <div class="shell ledger-panel ledger-panel--dossier reveal">
       <div class="ledger-panel__header">
         <div>
-          <p class="eyebrow">Updates</p>
+          <p class="metadata-label">Updates</p>
           <h2>Published work and HMS coverage.</h2>
         </div>
         <div class="button-row">
@@ -191,10 +191,9 @@ const currentMemberCount = peopleData.currentMembers.length;
       )}
 
       <div class="lab-signal__copy reveal">
-        <p class="eyebrow">Leadership</p>
         <h2>Led by Jonathan Abraham at Harvard Medical School and HHMI.</h2>
         <p>
-          Fellows, graduate students, and staff work across structural virology and infection biology.
+          Fellows, graduate students, and staff work across structural virology, infection biology, and laboratory operations.
         </p>
 
         <div class="lab-signal__stats">

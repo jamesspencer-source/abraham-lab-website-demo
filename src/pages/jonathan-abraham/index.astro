@@ -12,7 +12,6 @@ import { withBase } from "../../lib/content";
   <section class="profile-hero">
     <div class="shell profile-hero__grid">
       <div class="profile-hero__copy reveal">
-        <p class="eyebrow">Jonathan Abraham</p>
         <h1>{jonathanProfile.name}</h1>
         <p class="profile-hero__title">{jonathanProfile.title}</p>
         <p class="profile-hero__title">{jonathanProfile.secondaryTitle}</p>
@@ -35,7 +34,7 @@ import { withBase } from "../../lib/content";
   <section class="section section--flagship profile-band">
     <div class="shell profile-band__grid">
       <div class="profile-band__body reveal">
-        <p class="eyebrow">Scientific biography</p>
+        <p class="metadata-label">Scientific biography</p>
         {jonathanProfile.biography.map((paragraph) => <p>{paragraph}</p>)}
         <div class="button-row">
           <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
@@ -45,19 +44,19 @@ import { withBase } from "../../lib/content";
 
       <div class="profile-band__rail reveal">
         <article class="metadata-panel">
-          <p class="metadata-label">Distinctions</p>
+          <h2>Distinctions</h2>
           <ul class="clean-list metadata-list">
             {jonathanProfile.distinctions.map((item) => <li>{item}</li>)}
           </ul>
         </article>
         <article class="metadata-panel">
-          <p class="metadata-label">Research focus</p>
+          <h2>Research focus</h2>
           <ul class="clean-list metadata-list">
             {jonathanProfile.focusAreas.map((item) => <li>{item}</li>)}
           </ul>
         </article>
         <article class="metadata-panel">
-          <p class="metadata-label">Selected papers</p>
+          <h2>Selected papers</h2>
           <ul class="clean-list metadata-list">
             {jonathanProfile.representativeWork.map((item) => <li>{item}</li>)}
           </ul>

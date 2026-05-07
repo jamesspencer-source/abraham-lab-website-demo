@@ -29,10 +29,9 @@ const groupedPublications = groupPublicationsByYear(publications);
     <div class="shell page-hero__grid">
       <div class="page-hero__copy reveal">
         <p class="eyebrow">Publications</p>
-        <h1>The lab's papers define its scientific work.</h1>
+        <h1>The scientific record of the Abraham Lab.</h1>
         <p>
-          Recent papers examine HSV-1 replication machinery, arenavirus spike organization, and receptor
-          recognition in encephalitic arboviruses.
+          Papers from the lab define mechanisms of viral entry, antibody recognition, replication, and antiviral response.
         </p>
       </div>
       <div class="page-hero__rail reveal">
@@ -47,7 +46,7 @@ const groupedPublications = groupPublicationsByYear(publications);
         </div>
         <div class="metadata-stack">
           <p class="metadata-label">Lead papers</p>
-          <p>{recentProofPapers.length} papers</p>
+          <p>{recentProofPapers.length} recent papers</p>
         </div>
       </div>
     </div>
@@ -57,7 +56,7 @@ const groupedPublications = groupPublicationsByYear(publications);
     <section class="section section--flagship proof-feature proof-feature--interior">
       <div class="shell editorial-feature editorial-feature--interior">
         <div class="editorial-feature__copy reveal">
-          <p class="eyebrow">Lead paper</p>
+          <p class="metadata-label">Lead paper</p>
           <h2>{leadPaper.title}</h2>
           <p class="editorial-feature__meta">
             {[leadPaper.journal, leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : undefined, leadPaper.pmid ? `PMID ${leadPaper.pmid}` : undefined].filter(Boolean).join(" / ")}
@@ -108,13 +107,12 @@ const groupedPublications = groupPublicationsByYear(publications);
   <section class="section section--flagship updates-band">
     <div class="shell section-heading section-heading--split">
       <div class="reveal">
-        <p class="eyebrow">Papers</p>
-        <h2>HSV-1, arenavirus, and WEEV papers.</h2>
+        <p class="metadata-label">Recent papers</p>
+        <h2>Three recent studies define replication, spike organization, and receptor recognition.</h2>
       </div>
       <div class="reveal">
         <p>
-          The lead Cell paper examines HSV-1 replication. The Nature Microbiology paper examines
-          arenavirus spike organization. The 2025 Cell paper examines receptor recognition in WEEV.
+          These papers are the clearest current proof points for the lab's work.
         </p>
       </div>
     </div>
@@ -152,12 +150,12 @@ const groupedPublications = groupPublicationsByYear(publications);
   <section class="section section--flagship atlas-band" id="research-atlas">
     <div class="shell section-heading section-heading--split">
       <div class="reveal">
-        <p class="eyebrow">Published mechanisms</p>
-        <h2>Mechanisms shown in published work.</h2>
+        <p class="metadata-label">Published mechanisms</p>
+        <h2>Mechanistic threads in the papers.</h2>
       </div>
       <div class="reveal">
         <p>
-          The papers show how viral proteins bind receptors, organize entry machinery, evade antibodies, and respond to antivirals.
+          Each thread is tied to named publications, not unpublished work.
         </p>
       </div>
     </div>
@@ -176,7 +174,7 @@ const groupedPublications = groupPublicationsByYear(publications);
             </div>
           </div>
           <div class="research-anchor__paper">
-            <p class="metadata-label">Anchor paper</p>
+            <p class="metadata-label">Paper anchor</p>
             <a href={item.papers[0].href} target="_blank" rel="noreferrer">{item.papers[0].title}</a>
             <p>{item.papers[0].journal} | {item.papers[0].year}</p>
           </div>
@@ -189,12 +187,12 @@ const groupedPublications = groupPublicationsByYear(publications);
     <section class="section section--utility">
       <div class="shell section-heading section-heading--split">
         <div class="reveal">
-          <p class="eyebrow">Foundational papers</p>
+          <p class="metadata-label">Foundational papers</p>
           <h2>Core papers on receptors, antibody escape, and antiviral resistance.</h2>
         </div>
         <div class="reveal">
           <p>
-            These papers remain core references for the lab's work.
+            Earlier papers provide durable reference points for receptor use, antibody escape, and antiviral resistance.
           </p>
         </div>
       </div>
@@ -217,7 +215,7 @@ const groupedPublications = groupPublicationsByYear(publications);
   <section class="section section--utility archive-band">
     <div class="shell section-heading section-heading--compact">
       <div class="reveal">
-        <p class="eyebrow">Archive</p>
+        <p class="metadata-label">Archive</p>
         <h2>Citation archive.</h2>
       </div>
     </div>

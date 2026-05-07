@@ -8,15 +8,14 @@ export const jonathanProfile = {
   portraitAlt: "Jonathan Abraham",
   portraitPosition: "center 22%",
   overview:
-    "Jonathan Abraham leads a structural virology lab that studies receptor engagement, antibody recognition, and replication complexes in medically important viruses.",
+    "Jonathan Abraham studies the molecular basis of viral infection in medically important viruses.",
   biography: [
     "Jonathan Abraham is Professor of Microbiology at Harvard Medical School and an HHMI Investigator.",
-    "He received a bachelor's degree in biochemical sciences from Harvard College and a PhD in biophysics from Harvard University.",
-    "He received an MD from Harvard Medical School through the Harvard-MIT MD-PhD Program.",
+    "His laboratory uses structural biology and virology to study receptor engagement, antibody recognition, and replication complexes.",
+    "He received a bachelor's degree in biochemical sciences from Harvard College and a PhD in biophysics from Harvard University. He received an MD from Harvard Medical School through the Harvard-MIT MD-PhD Program.",
     "He completed residency training in internal medicine at Brigham and Women's Hospital.",
     "He completed fellowship training in infectious diseases through the Brigham and Women's Hospital and Massachusetts General Hospital combined program.",
-    "He started the laboratory in the Department of Microbiology at Harvard Medical School in 2017.",
-    "He also serves as an associate physician in the Division of Infectious Diseases at Brigham and Women's Hospital."
+    "He started the laboratory in the Department of Microbiology at Harvard Medical School in 2017. He also serves as an associate physician in the Division of Infectious Diseases at Brigham and Women's Hospital."
   ],
   appointments: [
     "Professor of Microbiology, Harvard Medical School",

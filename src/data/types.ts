@@ -7,11 +7,6 @@ export type ThemeSettings = {
   defaultMode: "system";
 };
 
-export type HeroFactItem = {
-  label: string;
-  value: string;
-};
-
 export type HeroFigure = {
   label: string;
   title: string;
@@ -53,7 +48,6 @@ export type SiteData = {
   theme: ThemeSettings;
   heroTitle: string;
   heroDeck: string;
-  heroFacts: HeroFactItem[];
   heroFigures: HeroFigure[];
   institutionLabel: string;
   institutionTitle: string;

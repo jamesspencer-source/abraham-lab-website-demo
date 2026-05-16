@@ -42,7 +42,7 @@ Recommended website wording:
 
 Public titles used on the site:
 
-- Associate Professor of Microbiology, Harvard Medical School
+- Professor of Microbiology, Harvard Medical School
 - HHMI Investigator
 - Associate Physician, Division of Infectious Diseases, Brigham and Women's Hospital
 

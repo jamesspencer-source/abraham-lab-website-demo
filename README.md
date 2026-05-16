@@ -17,6 +17,18 @@ npm run build
 
 The GitHub Actions workflow in `.github/workflows/deploy.yml` builds the Astro site and publishes `_site` to GitHub Pages.
 
+## GitHub Pages configuration
+
+This repository is intended to publish through the custom GitHub Actions workflow in `.github/workflows/deploy.yml`.
+
+In GitHub repository settings, set `Settings > Pages > Build and deployment > Source` to `GitHub Actions`.
+
+If Pages is left on a branch source, GitHub will try to run its built-in Jekyll workflow against the Astro source tree at the repository root. That produces the failing `pages build and deployment` run seen on `main`, even when the custom Astro deploy succeeds.
+
+The repository root and `public/` both include `.nojekyll` markers so a branch-based fallback will bypass the Jekyll build. The authoritative deployment path is still the custom Actions workflow.
+
+The content research notes live under `references/` rather than `docs/` so the repo no longer looks like a branch-published `/docs` site.
+
 ## Content validation
 
 ```bash

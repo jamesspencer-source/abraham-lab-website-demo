@@ -4,54 +4,19 @@ import { siteData } from "../data/site";
 import { publications } from "../data/publications";
 import { newsItems } from "../data/news";
 import { peopleData } from "../data/people";
-import { formatMonthYear, groupPeople, homepageProofOnly, leadPublication, limitItems, withBase } from "../lib/content";
+import { groupPeople, homepageProofOnly, leadPublication, withBase } from "../lib/content";
 
 const homepageProof = homepageProofOnly(publications);
-const leadPaper = leadPublication(publications) ?? homepageProof[0];
-const supportingPapers = homepageProof.filter((item) => item.title !== leadPaper?.title).slice(0, 2);
-const isHmsCoverage = (item: (typeof newsItems)[number]) => item.category === "Institutional coverage";
-const homepageUpdates = limitItems(newsItems.filter((item) => (item.homepageEligible ?? true) && isHmsCoverage(item)), 1);
-const currentRecord = [
-  ...supportingPapers.map((item) => ({
-    kind: "Paper",
-    date: item.publishedAt ?? `${item.year}-01-01`,
-    label: [item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : item.year].filter(Boolean).join(" · "),
-    title: item.title,
-    summary: item.significanceLine ?? item.summary,
-    href: item.link,
-    actionLabel: "Read paper"
-  })),
-  ...homepageUpdates.map((item) => ({
-    kind: "HMS",
-    date: item.date,
-    label: `${formatMonthYear(item.date)} · ${item.category}`,
-    title: item.title,
-    summary: item.summary,
-    href: item.link,
-    actionLabel: item.linkLabel ?? "Read coverage"
-  }))
-].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+const recentPaper = leadPublication(publications) ?? homepageProof[0];
+const labFilm = newsItems.find((item) => item.link.includes("GFM3KLZCDps"));
 const groupedPeople = groupPeople(peopleData.currentMembers);
 const leadership = groupedPeople.find((group) => group.label === "Leadership");
-const postdocs = groupedPeople.find((group) => group.label === "Postdoctoral Fellows & Instructors");
-const students = groupedPeople.find((group) => group.label === "Graduate Students");
-const currentMemberCount = peopleData.currentMembers.length;
 const heroFigure = siteData.heroFigures[0];
 ---
 
 <BaseLayout pageClass="page-home" socialImage={heroFigure.image}>
   <section class="home-hero">
-    <img
-      class="home-hero__image"
-      src={withBase(heroFigure.image)}
-      alt=""
-      aria-hidden="true"
-      style={heroFigure.imagePosition ? `--media-position: ${heroFigure.imagePosition};` : undefined}
-      loading="eager"
-    />
-    <div class="home-hero__veil" aria-hidden="true"></div>
-
-    <div class="shell home-hero__inner">
+    <div class="shell home-hero__grid">
       <div class="home-hero__copy reveal">
         <p class="overline overline--inverse">Harvard Medical School · HHMI</p>
         <h1>{siteData.heroTitle}</h1>
@@ -62,9 +27,17 @@ const heroFigure = siteData.heroFigures[0];
         </div>
       </div>
 
-      <a class="home-hero__source" href={heroFigure.href} target="_blank" rel="noreferrer">
-        <span>{heroFigure.label}</span>
-        <strong>{heroFigure.title}</strong>
+      <a class="home-hero__figure reveal" href={heroFigure.href} target="_blank" rel="noreferrer">
+        <figure>
+          <div class="home-hero__figure-plate">
+            <img src={withBase(heroFigure.image)} alt={heroFigure.alt} loading="eager" />
+          </div>
+          <figcaption>
+            <span>{heroFigure.label}</span>
+            <strong>{heroFigure.title}</strong>
+            <span aria-hidden="true">↗</span>
+          </figcaption>
+        </figure>
       </a>
     </div>
   </section>
@@ -86,28 +59,28 @@ const heroFigure = siteData.heroFigures[0];
     </div>
   </section>
 
-  {leadPaper && (
+  {recentPaper && (
     <section class="section lead-paper">
       <div class="shell section-intro section-intro--wide reveal">
-        <p class="overline">Lead paper · {leadPaper.journal} · {leadPaper.year}</p>
+        <p class="overline">Recent paper · {recentPaper.journal} · {recentPaper.year}</p>
         <h2>How HSV-1 replication machinery assembles—and how inhibitors stop it.</h2>
       </div>
 
       <div class="shell lead-paper__grid">
         <article class="lead-paper__body reveal">
-          <h3>{leadPaper.title}</h3>
-          <p class="lead-paper__summary">{leadPaper.summary}</p>
-          <p class="citation-text">{leadPaper.citation}</p>
+          <h3>{recentPaper.title}</h3>
+          <p class="lead-paper__summary">{recentPaper.summary}</p>
+          <p class="citation-text">{recentPaper.citation}</p>
           <div class="button-row">
-            <a class="button button--primary" href={leadPaper.link} target="_blank" rel="noreferrer">Read in {leadPaper.journal}</a>
-            {leadPaper.coverageLinks?.[0] && (
-              <a class="button button--secondary" href={leadPaper.coverageLinks[0]} target="_blank" rel="noreferrer">HMS coverage</a>
+            <a class="button button--primary" href={recentPaper.link} target="_blank" rel="noreferrer">Read in {recentPaper.journal}</a>
+            {recentPaper.coverageLinks?.[0] && (
+              <a class="button button--secondary" href={recentPaper.coverageLinks[0]} target="_blank" rel="noreferrer">HMS coverage</a>
             )}
           </div>
         </article>
 
-        <aside class="lead-paper__signal reveal" aria-label="Lead paper details">
-          <p class="lead-paper__system">{leadPaper.system}</p>
+        <aside class="lead-paper__signal reveal" aria-label="Recent paper details">
+          <p class="lead-paper__system">{recentPaper.system}</p>
           <dl>
             <div>
               <dt>Mechanism</dt>
@@ -119,12 +92,12 @@ const heroFigure = siteData.heroFigures[0];
             </div>
             <div>
               <dt>Methods</dt>
-              <dd>{leadPaper.methodCluster}</dd>
+              <dd>{recentPaper.methodCluster}</dd>
             </div>
-            {leadPaper.pmid && (
+            {recentPaper.pmid && (
               <div>
                 <dt>PubMed</dt>
-                <dd>{leadPaper.pmid}</dd>
+                <dd>{recentPaper.pmid}</dd>
               </div>
             )}
           </dl>
@@ -132,32 +105,6 @@ const heroFigure = siteData.heroFigures[0];
       </div>
     </section>
   )}
-
-  <section class="section evidence-section">
-    <div class="shell section-intro reveal">
-      <p class="overline">Current record</p>
-      <h2>Recent work and institutional coverage.</h2>
-    </div>
-
-    <div class="shell evidence-list">
-      {currentRecord.map((item, index) => (
-        <article class="evidence-row reveal">
-          <p class="evidence-row__number">{String(index + 1).padStart(2, "0")}</p>
-          <div class="evidence-row__meta">
-            <span>{item.kind}</span>
-            <p>{item.label}</p>
-          </div>
-          <div class="evidence-row__body">
-            <h3><a href={item.href} target="_blank" rel="noreferrer">{item.title}</a></h3>
-            {item.summary && <p>{item.summary}</p>}
-          </div>
-          <a class="arrow-link" href={item.href} target="_blank" rel="noreferrer" aria-label={`${item.actionLabel}: ${item.title}`}>
-            <span>{item.actionLabel}</span><span aria-hidden="true">↗</span>
-          </a>
-        </article>
-      ))}
-    </div>
-  </section>
 
   <section class="section team-signal">
     <div class="shell team-signal__grid">
@@ -169,19 +116,21 @@ const heroFigure = siteData.heroFigures[0];
 
       <div class="team-signal__body reveal">
         <p class="overline">The laboratory</p>
-        <h2>Led by Jonathan Abraham at Harvard Medical School and HHMI.</h2>
-        <p>The lab includes postdoctoral fellows, instructors, graduate students, and staff working across structural biology and virology.</p>
+        <h2>Jonathan Abraham leads a team across structural biology and virology.</h2>
+        <p>Jonathan is Professor of Microbiology at Harvard Medical School and an Investigator of the Howard Hughes Medical Institute.</p>
         <div class="button-row">
           <a class="button button--primary" href={withBase("/people/")}>Meet the lab</a>
           <a class="button button--secondary" href={withBase("/jonathan-abraham/")}>Jonathan Abraham</a>
         </div>
       </div>
 
-      <dl class="team-signal__facts reveal">
-        <div><dt>{currentMemberCount}</dt><dd>Current members</dd></div>
-        <div><dt>{postdocs?.entries.length ?? 0}</dt><dd>Fellows and instructors</dd></div>
-        <div><dt>{students?.entries.length ?? 0}</dt><dd>Graduate students</dd></div>
-      </dl>
+      {labFilm && (
+        <a class="team-signal__film reveal" href={labFilm.link} target="_blank" rel="noreferrer">
+          <span class="overline">HMS film</span>
+          <strong>{labFilm.title}</strong>
+          <span>{labFilm.linkLabel ?? "Watch film"} <span aria-hidden="true">↗</span></span>
+        </a>
+      )}
     </div>
   </section>
 </BaseLayout>

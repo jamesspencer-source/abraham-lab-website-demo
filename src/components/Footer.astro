@@ -17,6 +17,7 @@ import { withBase } from "../lib/content";
         {siteData.nav.map((item) => (
           <li><a href={withBase(item.href)}>{item.label}</a></li>
         ))}
+        <li><a href={withBase("/news/")}>HMS coverage</a></li>
       </ul>
     </section>
 

@@ -5,13 +5,13 @@ const newsItemsList: NewsItem[] = [
     date: "2026-03-03",
     category: "Institutional coverage",
     source: "HMS Office for Graduate Education",
-    title: "HMS Office for Graduate Education profiles the Abraham Lab's viral infection research",
+    title: "Inside the Labs of HMS: Preventing the Next Pandemic",
     summary:
-      "An HMS video feature follows the lab's work on viral infection and outbreak preparedness.",
-    link: "https://ogephd.hms.harvard.edu/news?page=2",
-    linkLabel: "View HMS feature",
-    homepageEligible: false,
-    milestoneTier: "secondary",
+      "An HMS film follows members of the Abraham Lab as they study how viruses infect cells.",
+    link: "https://www.youtube.com/shorts/GFM3KLZCDps",
+    linkLabel: "Watch the HMS film",
+    homepageEligible: true,
+    milestoneTier: "major",
     image: "/assets/images/research/viral-entry-comparison.png",
     imageAlt:
       "Structural comparison figure showing receptor recognition features across encephalitic alphaviruses."

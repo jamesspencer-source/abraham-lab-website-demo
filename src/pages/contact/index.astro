@@ -4,7 +4,7 @@ import MapWidget from "../../components/MapWidget.astro";
 import { siteData } from "../../data/site";
 ---
 
-<BaseLayout title="Contact" description="Contact information for the Abraham Lab." socialImage="/assets/images/location/hms-map-tile-1.png">
+<BaseLayout title="Contact" description="Contact information for the Abraham Lab.">
   <section class="page-intro page-intro--contact">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
@@ -18,30 +18,35 @@ import { siteData } from "../../data/site";
   <section class="section contact-page">
     <div class="shell contact-page__grid">
       <div class="contact-page__details reveal">
-        <section class="contact-block">
+        <section class="contact-block contact-block--person">
           <p class="overline">Principal investigator</p>
           <h2>Jonathan Abraham</h2>
+          <p>Scientific correspondence and speaking requests.</p>
           <a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a>
         </section>
-        <section class="contact-block">
+        <section class="contact-block contact-block--person">
           <p class="overline">Laboratory operations</p>
           <h2>James Spencer</h2>
+          <p>Administrative and operational inquiries.</p>
           <a href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a>
         </section>
-        <section class="contact-block">
+        <section class="contact-block contact-block--address">
           <p class="overline">Address</p>
-          {siteData.contact.addressLines.map((line) => <p>{line}</p>)}
-        </section>
-        <section class="contact-block">
-          <p class="overline">Affiliations</p>
-          <ul>
-            {siteData.affiliations.map((affiliation) => (
-              <li><a class="arrow-link" href={affiliation.href} target="_blank" rel="noreferrer"><span>{affiliation.shortName ?? affiliation.name}</span><span aria-hidden="true">↗</span></a></li>
-            ))}
-          </ul>
+          <address>
+            {siteData.contact.addressLines.map((line) => <span>{line}</span>)}
+          </address>
         </section>
       </div>
-      <MapWidget mode="contact" eyebrow="Campus map" />
+      <MapWidget mode="contact" eyebrow="Campus location" />
+    </div>
+
+    <div class="shell contact-page__affiliations reveal">
+      <p class="overline">Affiliations</p>
+      <div>
+        {siteData.affiliations.map((affiliation) => (
+          <a class="arrow-link" href={affiliation.href} target="_blank" rel="noreferrer"><span>{affiliation.shortName ?? affiliation.name}</span><span aria-hidden="true">↗</span></a>
+        ))}
+      </div>
     </div>
   </section>
 </BaseLayout>

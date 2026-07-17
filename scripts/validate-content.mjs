@@ -54,13 +54,12 @@ const allowedPersonProgramTags = new Set([
 ]);
 
 const expectedProgramTagsByPerson = new Map([
-  ["Haley Varnum", ["MD-PhD / Biophysics"]],
   ["Jesse Plung", ["Virology"]],
   ["Jessica Oros", ["Virology"]],
   ["Rick Li", ["MD-PhD / Biological and Biomedical Sciences"]],
-  ["Colin Mann", ["Virology"]],
   ["Laurentia Vianney Tjang", ["Virology"]],
-  ["Corazón Núñez", ["Virology"]]
+  ["Corazón Núñez", ["Virology"]],
+  ["Alex Liu", ["Virology"]]
 ]);
 
 function transpileTsModule(source, filePath) {
@@ -245,8 +244,8 @@ async function main() {
       message: 'jonathanProfile.title must be "Professor of Microbiology, Harvard Medical School".'
     },
     {
-      condition: jonathanProfile.secondaryTitle === "HHMI Investigator",
-      message: 'jonathanProfile.secondaryTitle must be "HHMI Investigator".'
+      condition: jonathanProfile.secondaryTitle === "Investigator, Howard Hughes Medical Institute",
+      message: 'jonathanProfile.secondaryTitle must be "Investigator, Howard Hughes Medical Institute".'
     }
   ];
 
@@ -364,12 +363,19 @@ async function main() {
       fail(`Person "${person.name}" uses obsolete expertiseTags. Use verified programTags only.`);
     }
 
-    if (!person.image || !(await localAssetExists(person.image))) {
-      fail(`Current member "${person.name}" needs an existing local portrait.`);
-    }
+    if (person.portraitStatus === "pending") {
+      if (person.image || person.imageAlt) {
+        fail(`Current member "${person.name}" cannot combine portraitStatus pending with an image.`);
+      }
+      note(`Portrait needed: ${person.name}.`);
+    } else {
+      if (!person.image || !(await localAssetExists(person.image))) {
+        fail(`Current member "${person.name}" needs an existing local portrait.`);
+      }
 
-    if (!normalize(person.imageAlt)) {
-      fail(`Current member "${person.name}" needs portrait alt text.`);
+      if (!normalize(person.imageAlt)) {
+        fail(`Current member "${person.name}" needs portrait alt text.`);
+      }
     }
 
     const tags = person.programTags || [];

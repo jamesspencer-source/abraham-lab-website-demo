@@ -7,11 +7,15 @@ const groupedPeople = groupPeople(peopleData.currentMembers);
 const leadership = groupedPeople.find((group) => group.label === "Leadership");
 const remainingGroups = groupedPeople.filter((group) => group.label !== "Leadership");
 const totalAlumni = peopleData.alumni.reduce((total, group) => total + group.entries.length, 0);
+const totalCurrent = peopleData.currentMembers.length + peopleData.seasonalMembers.length;
 const anchorFor = (label: string) =>
   label.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const initialsFor = (name: string) =>
+  name.replace(/,.*$/, "").split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
 const directoryIndex = [
   leadership ? { label: leadership.label, count: leadership.entries.length, id: anchorFor(leadership.label) } : null,
   ...remainingGroups.map((group) => ({ label: group.label, count: group.entries.length, id: anchorFor(group.label) })),
+  { label: "Summer 2026", count: peopleData.seasonalMembers.length, id: "summer-2026" },
   { label: "Alumni", count: totalAlumni, id: "alumni" }
 ].filter(Boolean);
 ---
@@ -25,8 +29,8 @@ const directoryIndex = [
         <p>Faculty, fellows, students, and staff at Harvard Medical School.</p>
       </div>
       <dl class="page-intro__facts reveal">
-        <div><dt>{peopleData.currentMembers.length}</dt><dd>Current members</dd></div>
-        <div><dt>{remainingGroups.length + 1}</dt><dd>Role groups</dd></div>
+        <div><dt>{totalCurrent}</dt><dd>Current members</dd></div>
+        <div><dt>{remainingGroups.length + 2}</dt><dd>Role groups</dd></div>
         <div><dt>{totalAlumni}</dt><dd>Alumni listed</dd></div>
       </dl>
     </div>
@@ -74,7 +78,13 @@ const directoryIndex = [
           {group.entries.map((person) => (
             <article class="person-card reveal">
               <div class="person-card__portrait" style={person.imagePosition ? `--media-position: ${person.imagePosition};` : undefined}>
-                <img src={withBase(person.image)} alt={person.imageAlt} loading="lazy" />
+                {person.image ? (
+                  <img src={withBase(person.image)} alt={person.imageAlt ?? person.name} loading="lazy" />
+                ) : (
+                  <div class="person-card__monogram" role="img" aria-label={`Portrait not yet available for ${person.name}`}>
+                    <span>{initialsFor(person.name)}</span>
+                  </div>
+                )}
               </div>
               <div class="person-card__body">
                 <h3>{person.name}</h3>
@@ -91,6 +101,24 @@ const directoryIndex = [
       </section>
     ))}
   </div>
+
+  <section class="section seasonal-register" id="summer-2026">
+    <div class="shell section-intro reveal">
+      <p class="overline">Summer 2026</p>
+      <h2>Summer researchers.</h2>
+    </div>
+    <div class="shell seasonal-register__grid">
+      {peopleData.seasonalMembers.map((person, index) => (
+        <article class="seasonal-entry reveal">
+          <p>{String(index + 1).padStart(2, "0")}</p>
+          <div>
+            <h3>{person.name}</h3>
+            <span>{[person.title, person.program].filter(Boolean).join(" · ")}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
 
   <section class="section alumni-register" id="alumni">
     <div class="shell section-intro reveal">

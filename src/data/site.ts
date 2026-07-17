@@ -52,7 +52,6 @@ export const siteData = {
     { label: "Publications", href: "/publications/" },
     { label: "Jonathan Abraham", href: "/jonathan-abraham/" },
     { label: "People", href: "/people/" },
-    { label: "Updates", href: "/news/" },
     { label: "Contact", href: "/contact/" }
   ],
   affiliations: [
@@ -82,9 +81,9 @@ export const siteData = {
     managerEmail: "james_spencer@hms.harvard.edu",
     mapDisplayName: "Harvard Medical School",
     mapUrl:
-      "https://www.google.com/maps/search/?api=1&query=Harvard+Medical+School%2C+77+Avenue+Louis+Pasteur%2C+Boston%2C+MA+02115",
+      "https://www.google.com/maps/search/?api=1&query=Veritas+Science+Center%2C+77+Avenue+Louis+Pasteur%2C+Boston%2C+MA+02115",
     mapEmbedUrl:
-      "https://maps.google.com/maps?q=Harvard%20Medical%20School%2C%2077%20Avenue%20Louis%20Pasteur%2C%20Boston%2C%20MA%2002115&t=&z=17&ie=UTF8&iwloc=&output=embed",
+      "https://maps.google.com/maps?q=42.33825%2C-71.10362&t=m&z=17&ie=UTF8&iwloc=&output=embed",
     mapBuilding: "Veritas Science Center (VSC)"
   },
   social: {

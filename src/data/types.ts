@@ -131,10 +131,17 @@ export type Person = {
   roleSummary?: string;
   programTags?: Array<"Virology" | "MD-PhD / Biophysics" | "MD-PhD / Biological and Biomedical Sciences">;
   group: "Leadership" | "Postdoctoral Fellows & Instructors" | "Graduate Students" | "Operations & Strategy";
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
   imagePosition?: string;
+  portraitStatus?: "pending";
   order: number;
+};
+
+export type SeasonalMember = {
+  name: string;
+  title: string;
+  program?: string;
 };
 
 export type AlumniEntry = {
@@ -149,6 +156,7 @@ export type AlumniGroup = {
 
 export type PeopleData = {
   currentMembers: Person[];
+  seasonalMembers: SeasonalMember[];
   alumni: AlumniGroup[];
 };
 

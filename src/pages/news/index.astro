@@ -4,20 +4,16 @@ import { newsItems } from "../../data/news";
 import { formatDateLabel } from "../../lib/content";
 import { siteData } from "../../data/site";
 
-const milestoneNews = newsItems.filter((item) => item.milestoneTier !== "secondary");
-const isScienceOrHmsCoverage = (item: (typeof newsItems)[number]) =>
-  item.category === "Publication" || item.category === "Institutional coverage";
-const scopedNews = milestoneNews.filter(isScienceOrHmsCoverage);
-const renderedNews = scopedNews.length ? scopedNews : newsItems.filter(isScienceOrHmsCoverage);
+const renderedNews = newsItems.filter((item) => item.category === "Institutional coverage");
 ---
 
-<BaseLayout title="Updates" description="Papers and Harvard Medical School coverage from the Abraham Lab." socialImage={renderedNews[0]?.image}>
+<BaseLayout title="HMS coverage" description="Harvard Medical School coverage of work from the Abraham Lab." socialImage={renderedNews[0]?.image}>
   <section class="page-intro page-intro--updates">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
-        <p class="overline">Updates</p>
-        <h1>Published work and major lab news.</h1>
-        <p>Papers and Harvard Medical School coverage.</p>
+        <p class="overline">HMS coverage</p>
+        <h1>Films and stories from Harvard Medical School.</h1>
+        <p>Harvard Medical School coverage of the lab and its published work.</p>
       </div>
       <div class="page-intro__aside reveal">
         <p class="overline">Follow</p>

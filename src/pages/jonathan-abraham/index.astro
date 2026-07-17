@@ -1,67 +1,69 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { jonathanProfile } from "../../data/jonathan";
+import { publications } from "../../data/publications";
 import { withBase } from "../../lib/content";
+
+const selectedPapers = jonathanProfile.representativeWork
+  .map((title) => publications.find((item) => item.title === title))
+  .filter(Boolean);
 ---
 
-<BaseLayout
-  title="Jonathan Abraham"
-  description="Profile of Jonathan Abraham, M.D., Ph.D."
-  socialImage={jonathanProfile.portrait}
->
-  <section class="profile-hero">
-    <div class="shell profile-hero__grid">
-      <div class="profile-hero__copy reveal">
+<BaseLayout title="Jonathan Abraham" description="Profile of Jonathan Abraham, MD, PhD." socialImage={jonathanProfile.portrait}>
+  <section class="profile-masthead">
+    <div class="shell profile-masthead__grid">
+      <div class="profile-masthead__copy reveal">
+        <p class="overline">Principal investigator</p>
         <h1>{jonathanProfile.name}</h1>
-        <p class="profile-hero__title">{jonathanProfile.title}</p>
-        <p class="profile-hero__title">{jonathanProfile.secondaryTitle}</p>
-        <p class="profile-hero__overview">{jonathanProfile.overview}</p>
-      </div>
-      <div class="profile-hero__portrait frame reveal" style={jonathanProfile.portraitPosition ? `--media-position: ${jonathanProfile.portraitPosition};` : undefined}>
-        <img src={withBase(jonathanProfile.portrait)} alt={jonathanProfile.portraitAlt} loading="lazy" />
-      </div>
-      <div class="profile-hero__rail reveal">
-        <div class="metadata-stack">
-          <p class="metadata-label">Appointments</p>
-          <ul class="clean-list metadata-list">
-            {jonathanProfile.appointments.map((item) => <li>{item}</li>)}
-          </ul>
+        <p class="profile-masthead__title">{jonathanProfile.title}</p>
+        <p class="profile-masthead__title">{jonathanProfile.secondaryTitle}</p>
+        <p class="profile-masthead__overview">{jonathanProfile.overview}</p>
+        <div class="button-row">
+          <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
+          <a class="button button--secondary" href={withBase("/contact/")}>Contact</a>
         </div>
+      </div>
+      <div class="profile-masthead__portrait reveal" style={jonathanProfile.portraitPosition ? `--media-position: ${jonathanProfile.portraitPosition};` : undefined}>
+        <img src={withBase(jonathanProfile.portrait)} alt={jonathanProfile.portraitAlt} loading="eager" />
       </div>
     </div>
   </section>
 
-  <section class="section section--flagship profile-band">
-    <div class="shell profile-band__grid">
-      <div class="profile-band__body reveal">
-        <p class="metadata-label">Scientific biography</p>
-        {jonathanProfile.biography.map((paragraph) => <p>{paragraph}</p>)}
-        <div class="button-row">
-          <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
-          <a class="button button--ghost" href={withBase("/contact/")}>Contact</a>
-        </div>
-      </div>
+  <section class="appointment-band">
+    <div class="shell appointment-band__inner">
+      {jonathanProfile.appointments.map((item) => <p>{item}</p>)}
+    </div>
+  </section>
 
-      <div class="profile-band__rail reveal">
-        <article class="metadata-panel">
-          <h2>Distinctions</h2>
-          <ul class="clean-list metadata-list">
+  <section class="section profile-story">
+    <div class="shell profile-story__grid">
+      <article class="profile-story__body reveal">
+        <p class="overline">Biography</p>
+        {jonathanProfile.biography.map((paragraph) => <p>{paragraph}</p>)}
+      </article>
+
+      <aside class="profile-story__rail">
+        <section class="profile-list reveal">
+          <p class="overline">Distinctions</p>
+          <ul>
             {jonathanProfile.distinctions.map((item) => <li>{item}</li>)}
           </ul>
-        </article>
-        <article class="metadata-panel">
-          <h2>Research focus</h2>
-          <ul class="clean-list metadata-list">
+        </section>
+        <section class="profile-list reveal">
+          <p class="overline">Research focus</p>
+          <ul>
             {jonathanProfile.focusAreas.map((item) => <li>{item}</li>)}
           </ul>
-        </article>
-        <article class="metadata-panel">
-          <h2>Selected papers</h2>
-          <ul class="clean-list metadata-list">
-            {jonathanProfile.representativeWork.map((item) => <li>{item}</li>)}
+        </section>
+        <section class="profile-list reveal">
+          <p class="overline">Selected work</p>
+          <ul>
+            {selectedPapers.map((item) => item && (
+              <li><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></li>
+            ))}
           </ul>
-        </article>
-      </div>
+        </section>
+      </aside>
     </div>
   </section>
 </BaseLayout>

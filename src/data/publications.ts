@@ -1,6 +1,6 @@
 import type { Publication } from "./types";
 
-export const publications = [
+export const publications: Publication[] = [
   {
     year: 2026,
     title: "Mechanisms of HSV-1 helicase-primase inhibition and replication fork complex assembly",

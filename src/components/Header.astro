@@ -23,8 +23,8 @@ const isActive = (href: string) => {
 <header class="site-header">
   <div class="shell site-header__inner">
     <a class="brand" href={withBase("/")} aria-label={`${siteData.fullName} home`}>
-      <span class="brand__eyebrow">Harvard Medical School / Microbiology / HHMI</span>
       <span class="brand__name">{siteData.name}</span>
+      <span class="brand__institution">Harvard Medical School · HHMI</span>
     </a>
 
     <div class="site-header__controls">
@@ -37,7 +37,8 @@ const isActive = (href: string) => {
       </nav>
 
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        Menu
+        <span>Menu</span>
+        <span class="nav-toggle__mark" aria-hidden="true"></span>
       </button>
     </div>
   </div>

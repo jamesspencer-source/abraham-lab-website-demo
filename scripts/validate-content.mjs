@@ -93,6 +93,29 @@ function normalize(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
 
+function publicAssetPath(value) {
+  if (typeof value !== "string" || !value.startsWith("/")) {
+    return null;
+  }
+
+  const publicRoot = path.join(repoRoot, "public");
+  const candidate = path.resolve(publicRoot, value.replace(/^\/+/, ""));
+  const relative = path.relative(publicRoot, candidate);
+  return relative && !relative.startsWith("..") && !path.isAbsolute(relative) ? candidate : null;
+}
+
+async function localAssetExists(value) {
+  const candidate = publicAssetPath(value);
+  if (!candidate) return false;
+
+  try {
+    await fs.access(candidate);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function compareDatesDesc(left, right) {
   return new Date(right).getTime() - new Date(left).getTime();
 }
@@ -270,6 +293,10 @@ async function main() {
     if (publication.homepageProof && !publication.imageAlt) {
       fail(`Homepage proof publication "${title}" needs imageAlt.`);
     }
+
+    if (publication.homepageProof && publication.image && !(await localAssetExists(publication.image))) {
+      fail(`Homepage proof publication "${title}" references a missing image: ${publication.image}`);
+    }
   }
 
   const sortedPublications = [...publications].sort((left, right) =>
@@ -335,6 +362,14 @@ async function main() {
 
     if ("expertiseTags" in person) {
       fail(`Person "${person.name}" uses obsolete expertiseTags. Use verified programTags only.`);
+    }
+
+    if (!person.image || !(await localAssetExists(person.image))) {
+      fail(`Current member "${person.name}" needs an existing local portrait.`);
+    }
+
+    if (!normalize(person.imageAlt)) {
+      fail(`Current member "${person.name}" needs portrait alt text.`);
     }
 
     const tags = person.programTags || [];

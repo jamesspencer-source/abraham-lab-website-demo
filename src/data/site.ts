@@ -12,7 +12,7 @@ export const siteData = {
   },
   heroTitle: "Mechanisms of viral infection.",
   heroDeck:
-    "Work from the Abraham Lab identifies mechanisms of viral entry, antibody escape, and replication in medically important viruses. Recent papers define HSV-1 replication machinery, New World arenavirus spike organization, and receptor recognition in encephalitic arboviruses.",
+    "The Abraham Lab studies how medically important viruses enter cells, evade antibodies, and replicate. Recent work resolves HSV-1 replication machinery, New World arenavirus spike organization, and receptor recognition by encephalitic alphaviruses.",
   heroFigures: [
     {
       label: "Nature Microbiology | 2025",
@@ -45,14 +45,14 @@ export const siteData = {
   institutionLabel: "Affiliation",
   institutionTitle: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
   institutionSummary:
-    "The Abraham Lab is in the Department of Microbiology, Blavatnik Institute, Harvard Medical School. Jonathan Abraham is an HHMI Investigator.",
+    "Based in the Department of Microbiology at Harvard Medical School. Jonathan Abraham is an HHMI Investigator.",
   tagline: "Mechanisms of viral entry, antibody recognition, and replication.",
   nav: [
     { label: "Home", href: "/" },
     { label: "Publications", href: "/publications/" },
     { label: "Jonathan Abraham", href: "/jonathan-abraham/" },
     { label: "People", href: "/people/" },
-    { label: "News", href: "/news/" },
+    { label: "Updates", href: "/news/" },
     { label: "Contact", href: "/contact/" }
   ],
   affiliations: [

@@ -6,12 +6,13 @@ import { withBase } from "../lib/content";
 <footer class="site-footer">
   <div class="shell site-footer__grid">
     <section class="site-footer__primary">
-      <p class="footer-label">Abraham Lab</p>
-      {siteData.contact.institutionDisplayLines?.map((line) => <p>{line}</p>)}
+      <p class="site-footer__name">Abraham Lab</p>
+      <p>{siteData.tagline}</p>
+      <p class="site-footer__institution">Department of Microbiology · Harvard Medical School · HHMI</p>
     </section>
 
     <section>
-      <p class="footer-label">Navigate</p>
+      <p class="footer-label">Explore</p>
       <ul class="footer-links">
         {siteData.nav.map((item) => (
           <li><a href={withBase(item.href)}>{item.label}</a></li>
@@ -20,12 +21,7 @@ import { withBase } from "../lib/content";
     </section>
 
     <section>
-      <p class="footer-label">Contact</p>
-      <p><a href={withBase("/contact/")}>Contact</a></p>
-    </section>
-
-    <section>
-      <p class="footer-label">Affiliations</p>
+      <p class="footer-label">Institution</p>
       <ul class="footer-links">
         {siteData.affiliations.map((affiliation) => (
           <li><a href={affiliation.href} target="_blank" rel="noreferrer">{affiliation.shortName ?? affiliation.name}</a></li>
@@ -33,5 +29,9 @@ import { withBase } from "../lib/content";
         <li><a href={siteData.social.x} target="_blank" rel="noreferrer">Follow on X</a></li>
       </ul>
     </section>
+  </div>
+  <div class="shell site-footer__legal">
+    <p>© {new Date().getFullYear()} Abraham Lab</p>
+    <a href={withBase("/contact/")}>Contact</a>
   </div>
 </footer>

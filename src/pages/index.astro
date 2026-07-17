@@ -13,22 +13,22 @@ const isHmsCoverage = (item: (typeof newsItems)[number]) => item.category === "I
 const homepageUpdates = limitItems(newsItems.filter((item) => (item.homepageEligible ?? true) && isHmsCoverage(item)), 1);
 const currentRecord = [
   ...supportingPapers.map((item) => ({
-    kind: "Publication",
+    kind: "Paper",
     date: item.publishedAt ?? `${item.year}-01-01`,
-    label: [item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : item.year].filter(Boolean).join(" / "),
+    label: [item.journal, item.publishedAt ? formatMonthYear(item.publishedAt) : item.year].filter(Boolean).join(" · "),
     title: item.title,
     summary: item.significanceLine ?? item.summary,
     href: item.link,
     actionLabel: "Read paper"
   })),
   ...homepageUpdates.map((item) => ({
-    kind: "Update",
+    kind: "HMS",
     date: item.date,
-    label: `${formatMonthYear(item.date)} / ${item.category}`,
+    label: `${formatMonthYear(item.date)} · ${item.category}`,
     title: item.title,
     summary: item.summary,
     href: item.link,
-    actionLabel: item.linkLabel ?? "Open source"
+    actionLabel: item.linkLabel ?? "Read coverage"
   }))
 ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 const groupedPeople = groupPeople(peopleData.currentMembers);
@@ -36,56 +36,50 @@ const leadership = groupedPeople.find((group) => group.label === "Leadership");
 const postdocs = groupedPeople.find((group) => group.label === "Postdoctoral Fellows & Instructors");
 const students = groupedPeople.find((group) => group.label === "Graduate Students");
 const currentMemberCount = peopleData.currentMembers.length;
+const heroFigure = siteData.heroFigures[0];
 ---
 
-<BaseLayout pageClass="page-home" socialImage={leadPaper?.image ?? siteData.heroFigures[0].image}>
-  <section class="marquee dossier-hero">
-    <div class="shell marquee__shell">
-      <div class="marquee__grid">
-        <div class="marquee__copy reveal">
-          <h1>{siteData.heroTitle}</h1>
-          <p class="marquee__deck">{siteData.heroDeck}</p>
+<BaseLayout pageClass="page-home" socialImage={heroFigure.image}>
+  <section class="home-hero">
+    <img
+      class="home-hero__image"
+      src={withBase(heroFigure.image)}
+      alt=""
+      aria-hidden="true"
+      style={heroFigure.imagePosition ? `--media-position: ${heroFigure.imagePosition};` : undefined}
+      loading="eager"
+    />
+    <div class="home-hero__veil" aria-hidden="true"></div>
 
-          <div class="button-row">
-            <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
-            <a class="button button--ghost" href={withBase("/jonathan-abraham/")}>Jonathan Abraham</a>
-          </div>
+    <div class="shell home-hero__inner">
+      <div class="home-hero__copy reveal">
+        <p class="overline overline--inverse">Harvard Medical School · HHMI</p>
+        <h1>{siteData.heroTitle}</h1>
+        <p class="home-hero__deck">{siteData.heroDeck}</p>
+        <div class="button-row">
+          <a class="button button--light" href={withBase("/publications/")}>View publications</a>
+          <a class="button button--outline-light" href={withBase("/people/")}>Meet the lab</a>
         </div>
-
-        <figure
-          class="marquee__visual reveal"
-          style={siteData.heroFigures[0]?.imagePosition ? `--media-position: ${siteData.heroFigures[0].imagePosition};` : undefined}
-        >
-          <img
-            src={withBase(siteData.heroFigures[0].image)}
-            alt={siteData.heroFigures[0].alt}
-            loading="eager"
-          />
-          <figcaption class="marquee__caption">
-            <p>{siteData.heroFigures[0].label}</p>
-            <h2>{siteData.heroFigures[0].title}</h2>
-            {siteData.heroFigures[0].note && <span>{siteData.heroFigures[0].note}</span>}
-          </figcaption>
-        </figure>
       </div>
+
+      <a class="home-hero__source" href={heroFigure.href} target="_blank" rel="noreferrer">
+        <span>{heroFigure.label}</span>
+        <strong>{heroFigure.title}</strong>
+      </a>
     </div>
   </section>
 
-  <section class="institution-strip">
-    <div class="shell institution-strip__grid">
-      <div class="institution-strip__copy reveal">
-        <p class="metadata-label">{siteData.institutionLabel}</p>
-        <p class="institution-strip__line">{siteData.institutionTitle}</p>
+  <section class="endorsement-band" aria-label="Institutional affiliations">
+    <div class="shell endorsement-band__inner">
+      <div class="endorsement-band__copy reveal">
+        <p class="overline">Institutional affiliation</p>
+        <p class="endorsement-band__title">{siteData.institutionTitle}</p>
         <p>{siteData.institutionSummary}</p>
       </div>
-
-      <div class="institution-strip__rail">
+      <div class="endorsement-band__marks">
         {siteData.affiliations.map((affiliation) => (
-          <a class="institution-strip__item reveal" href={affiliation.href} target="_blank" rel="noreferrer">
-            <div class="institution-strip__logo">
-              <img src={withBase(affiliation.logo)} alt={affiliation.alt} loading="lazy" />
-            </div>
-            <span>{affiliation.shortName ?? affiliation.name}</span>
+          <a href={affiliation.href} target="_blank" rel="noreferrer" aria-label={affiliation.name}>
+            <img src={withBase(affiliation.logo)} alt={affiliation.alt} loading="lazy" />
           </a>
         ))}
       </div>
@@ -93,129 +87,101 @@ const currentMemberCount = peopleData.currentMembers.length;
   </section>
 
   {leadPaper && (
-    <section class="section section--flagship proof-feature">
-      <div class="shell section-heading section-heading--split">
-        <div class="reveal">
-          <h2>How HSV-1 helicase-primase inhibitors stop replication.</h2>
-        </div>
-        <div class="reveal">
-          <p>
-            The 2026 Cell paper shows inhibitor binding and replication fork assembly in HSV-1.
-          </p>
-        </div>
+    <section class="section lead-paper">
+      <div class="shell section-intro section-intro--wide reveal">
+        <p class="overline">Lead paper · {leadPaper.journal} · {leadPaper.year}</p>
+        <h2>How HSV-1 replication machinery assembles—and how inhibitors stop it.</h2>
       </div>
 
-      <div class="shell editorial-feature editorial-feature--home">
-        <div class="editorial-feature__copy reveal">
-          <p class="metadata-label">{leadPaper.journal}</p>
-          <h2>{leadPaper.title}</h2>
-          <p class="editorial-feature__meta">
-            {[leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : undefined, leadPaper.pmid ? `PMID ${leadPaper.pmid}` : undefined].filter(Boolean).join(" / ")}
-          </p>
-          <p class="editorial-feature__summary">{leadPaper.summary}</p>
+      <div class="shell lead-paper__grid">
+        <article class="lead-paper__body reveal">
+          <h3>{leadPaper.title}</h3>
+          <p class="lead-paper__summary">{leadPaper.summary}</p>
           <p class="citation-text">{leadPaper.citation}</p>
           <div class="button-row">
-            <a class="button button--primary" href={leadPaper.link} target="_blank" rel="noreferrer">Read paper</a>
-            {leadPaper.doi && <a class="button button--ghost" href={`https://doi.org/${leadPaper.doi}`} target="_blank" rel="noreferrer">DOI</a>}
+            <a class="button button--primary" href={leadPaper.link} target="_blank" rel="noreferrer">Read in {leadPaper.journal}</a>
+            {leadPaper.coverageLinks?.[0] && (
+              <a class="button button--secondary" href={leadPaper.coverageLinks[0]} target="_blank" rel="noreferrer">HMS coverage</a>
+            )}
           </div>
-        </div>
+        </article>
 
-        <div class="editorial-feature__visual reveal">
-          <div class="frame editorial-feature__frame" style={leadPaper.imagePosition ? `--media-position: ${leadPaper.imagePosition};` : undefined}>
-            <img src={withBase(leadPaper.image!)} alt={leadPaper.imageAlt!} loading="lazy" />
-          </div>
-        </div>
-
-        <aside class="editorial-feature__rail reveal">
-          <div class="metadata-stack">
-            <p class="metadata-label">Published</p>
-            <p>{leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : leadPaper.year}</p>
-          </div>
-          <div class="metadata-stack">
-            <p class="metadata-label">Venue</p>
-            <p>{leadPaper.journal}</p>
-          </div>
-          {leadPaper.pmid && (
-            <div class="metadata-stack">
-              <p class="metadata-label">PubMed</p>
-              <p>{leadPaper.pmid}</p>
+        <aside class="lead-paper__signal reveal" aria-label="Lead paper details">
+          <p class="lead-paper__system">{leadPaper.system}</p>
+          <dl>
+            <div>
+              <dt>Mechanism</dt>
+              <dd>Helicase-primase inhibition</dd>
             </div>
-          )}
+            <div>
+              <dt>Assembly</dt>
+              <dd>Replication fork complex</dd>
+            </div>
+            <div>
+              <dt>Methods</dt>
+              <dd>{leadPaper.methodCluster}</dd>
+            </div>
+            {leadPaper.pmid && (
+              <div>
+                <dt>PubMed</dt>
+                <dd>{leadPaper.pmid}</dd>
+              </div>
+            )}
+          </dl>
         </aside>
       </div>
     </section>
   )}
 
-  <section class="section section--utility record-band">
-    <div class="shell ledger-panel ledger-panel--dossier reveal">
-      <div class="ledger-panel__header">
-        <div>
-          <p class="metadata-label">Updates</p>
-          <h2>Published work and HMS coverage.</h2>
-        </div>
-        <div class="button-row">
-          <a class="text-link" href={withBase("/publications/")}>Publications</a>
-          <a class="text-link" href={withBase("/news/")}>News</a>
-        </div>
-      </div>
+  <section class="section evidence-section">
+    <div class="shell section-intro reveal">
+      <p class="overline">Current record</p>
+      <h2>Recent work and institutional coverage.</h2>
+    </div>
 
-      <div class="updates-ledger">
-        {currentRecord.map((item) => (
-          <article class="updates-ledger__row reveal">
-            <div class="updates-ledger__meta">
-              <p>{item.kind}</p>
-              <span>{item.label}</span>
-            </div>
-            <div class="updates-ledger__body">
-              <h2><a href={item.href} target="_blank" rel="noreferrer">{item.title}</a></h2>
-              {item.summary && <p>{item.summary}</p>}
-            </div>
-            <div class="updates-ledger__action">
-              <a class="text-link" href={item.href} target="_blank" rel="noreferrer">{item.actionLabel}</a>
-            </div>
-          </article>
-        ))}
-      </div>
+    <div class="shell evidence-list">
+      {currentRecord.map((item, index) => (
+        <article class="evidence-row reveal">
+          <p class="evidence-row__number">{String(index + 1).padStart(2, "0")}</p>
+          <div class="evidence-row__meta">
+            <span>{item.kind}</span>
+            <p>{item.label}</p>
+          </div>
+          <div class="evidence-row__body">
+            <h3><a href={item.href} target="_blank" rel="noreferrer">{item.title}</a></h3>
+            {item.summary && <p>{item.summary}</p>}
+          </div>
+          <a class="arrow-link" href={item.href} target="_blank" rel="noreferrer" aria-label={`${item.actionLabel}: ${item.title}`}>
+            <span>{item.actionLabel}</span><span aria-hidden="true">↗</span>
+          </a>
+        </article>
+      ))}
     </div>
   </section>
 
-  <section class="section section--utility lab-signal">
-    <div class="shell lab-signal__grid">
-      {leadership && leadership.entries[0] && (
-        <div
-          class="lab-signal__portrait frame reveal"
-          style={leadership.entries[0].imagePosition ? `--media-position: ${leadership.entries[0].imagePosition};` : undefined}
-        >
+  <section class="section team-signal">
+    <div class="shell team-signal__grid">
+      {leadership?.entries[0] && (
+        <div class="team-signal__portrait reveal" style={leadership.entries[0].imagePosition ? `--media-position: ${leadership.entries[0].imagePosition};` : undefined}>
           <img src={withBase(leadership.entries[0].image)} alt={leadership.entries[0].imageAlt} loading="lazy" />
         </div>
       )}
 
-      <div class="lab-signal__copy reveal">
+      <div class="team-signal__body reveal">
+        <p class="overline">The laboratory</p>
         <h2>Led by Jonathan Abraham at Harvard Medical School and HHMI.</h2>
-        <p>
-          Fellows, graduate students, and staff work across structural virology, infection biology, and laboratory operations.
-        </p>
-
-        <div class="lab-signal__stats">
-          <article>
-            <span>{currentMemberCount}</span>
-            <p>Current members</p>
-          </article>
-          <article>
-            <span>{postdocs?.entries.length ?? 0}</span>
-            <p>Postdoctoral fellows and instructors</p>
-          </article>
-          <article>
-            <span>{students?.entries.length ?? 0}</span>
-            <p>Graduate students</p>
-          </article>
-        </div>
-
+        <p>The lab includes postdoctoral fellows, instructors, graduate students, and staff working across structural biology and virology.</p>
         <div class="button-row">
-          <a class="button button--primary" href={withBase("/people/")}>People</a>
-          <a class="button button--ghost" href={withBase("/contact/")}>Contact</a>
+          <a class="button button--primary" href={withBase("/people/")}>Meet the lab</a>
+          <a class="button button--secondary" href={withBase("/jonathan-abraham/")}>Jonathan Abraham</a>
         </div>
       </div>
+
+      <dl class="team-signal__facts reveal">
+        <div><dt>{currentMemberCount}</dt><dd>Current members</dd></div>
+        <div><dt>{postdocs?.entries.length ?? 0}</dt><dd>Fellows and instructors</dd></div>
+        <div><dt>{students?.entries.length ?? 0}</dt><dd>Graduate students</dd></div>
+      </dl>
     </div>
   </section>
 </BaseLayout>

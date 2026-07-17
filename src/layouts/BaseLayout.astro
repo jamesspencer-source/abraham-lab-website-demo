@@ -20,9 +20,9 @@ const canonicalTarget = canonicalPath ?? Astro.url.pathname;
 const canonical = new URL(canonicalTarget, siteData.url).toString();
 const socialImage = new URL(withBase(socialImagePath ?? siteData.heroFigures[0].image), siteData.url).toString();
 const themeDefaultMode = siteData.theme.defaultMode;
-const themeColorLight = "#f6f7f8";
-const themeColorDark = "#15191c";
-const themeColorHero = "#0c0f11";
+const themeColorLight = "#f4f6f5";
+const themeColorDark = "#111516";
+const themeColorHero = "#080b0c";
 const isHomePage = pageClass === "page-home";
 ---
 
@@ -79,7 +79,7 @@ const isHomePage = pageClass === "page-home";
       const nav = document.querySelector(".site-nav");
       const root = document.documentElement;
       const body = document.body;
-      const hero = document.querySelector(".page-home .marquee");
+      const hero = document.querySelector(".page-home .home-hero");
       const header = document.querySelector(".site-header");
       const themeMeta = document.querySelector('meta[name="theme-color"]');
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");

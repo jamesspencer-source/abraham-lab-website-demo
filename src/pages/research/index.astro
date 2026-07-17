@@ -5,31 +5,13 @@ import { withBase } from "../../lib/content";
 const destination = withBase("/publications/#research-atlas");
 ---
 
-<BaseLayout
-  title="Research"
-  description="Published research themes from the Abraham Lab."
-  canonicalPath="/publications/"
-  socialImage="/assets/images/publications/arenavirus-gpc.jpeg"
->
-  <section class="page-hero page-hero--research-legacy">
-    <div class="shell page-hero__grid">
-      <div class="page-hero__copy reveal">
-        <p class="eyebrow">Research</p>
-        <h1>Research now lives on the publications page.</h1>
-        <p>
-          The publications page brings together research areas, named papers, figures, and the
-          full citation archive.
-        </p>
-        <div class="button-row">
-          <a class="button button--primary" href={destination}>Go to Publications</a>
-        </div>
-      </div>
-      <div class="page-hero__rail reveal">
-        <div class="metadata-stack">
-          <p class="metadata-label">Publications page</p>
-          <p>Lead paper, featured papers, research areas, and full archive</p>
-        </div>
-      </div>
+<BaseLayout title="Research" description="Published research themes from the Abraham Lab." canonicalPath="/publications/" socialImage="/assets/images/publications/arenavirus-gpc.jpeg">
+  <section class="legacy-page">
+    <div class="narrow-shell legacy-page__inner reveal">
+      <p class="overline">Research</p>
+      <h1>Research is organized through the lab’s papers.</h1>
+      <p>Entry, antibody recognition, and replication mechanisms are presented with the publications that establish them.</p>
+      <a class="button button--primary" href={destination}>Explore publications</a>
     </div>
   </section>
 </BaseLayout>

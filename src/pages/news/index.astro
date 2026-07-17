@@ -11,47 +11,33 @@ const scopedNews = milestoneNews.filter(isScienceOrHmsCoverage);
 const renderedNews = scopedNews.length ? scopedNews : newsItems.filter(isScienceOrHmsCoverage);
 ---
 
-<BaseLayout
-  title="News"
-  description="Papers and Harvard Medical School coverage from the Abraham Lab."
-  socialImage={renderedNews[0]?.image}
->
-  <section class="page-hero page-hero--news">
-    <div class="shell page-hero__grid">
-      <div class="page-hero__copy reveal">
-        <p class="eyebrow">News</p>
-        <h1>Updates from the Abraham Lab.</h1>
-        <p>
-          Major papers and Harvard Medical School coverage.
-        </p>
+<BaseLayout title="Updates" description="Papers and Harvard Medical School coverage from the Abraham Lab." socialImage={renderedNews[0]?.image}>
+  <section class="page-intro page-intro--updates">
+    <div class="shell page-intro__grid">
+      <div class="page-intro__copy reveal">
+        <p class="overline">Updates</p>
+        <h1>Published work and major lab news.</h1>
+        <p>Papers and Harvard Medical School coverage.</p>
       </div>
-      <div class="page-hero__rail reveal">
-        <div class="metadata-stack">
-          <p class="metadata-label">Follow the lab</p>
-          <ul class="clean-list metadata-list">
-            <li><a href={siteData.social.x} target="_blank" rel="noreferrer">Abraham Lab on X</a></li>
-          </ul>
-        </div>
+      <div class="page-intro__aside reveal">
+        <p class="overline">Follow</p>
+        <a class="arrow-link" href={siteData.social.x} target="_blank" rel="noreferrer"><span>Abraham Lab on X</span><span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>
 
-  <section class="section section--utility updates-band">
-    <div class="shell updates-ledger">
-      {renderedNews.map((item) => (
-        <article class="updates-ledger__row reveal">
-          <div class="updates-ledger__meta">
-            <p>{formatDateLabel(item.date)}</p>
-            <span>{item.category}</span>
-          </div>
-          <div class="updates-ledger__body">
-            <p class="metadata-label">{item.source}</p>
+  <section class="section updates-page">
+    <div class="shell updates-page__list">
+      {renderedNews.map((item, index) => (
+        <article class="update-entry reveal">
+          <p class="update-entry__number">{String(index + 1).padStart(2, "0")}</p>
+          <div class="update-entry__date"><time datetime={item.date}>{formatDateLabel(item.date)}</time><span>{item.category}</span></div>
+          <div class="update-entry__body">
+            <p class="overline">{item.source}</p>
             <h2>{item.title}</h2>
             <p>{item.summary}</p>
           </div>
-          <div class="updates-ledger__action">
-            <a class="text-link" href={item.link} target="_blank" rel="noreferrer">{item.linkLabel ?? "Open source"}</a>
-          </div>
+          <a class="arrow-link" href={item.link} target="_blank" rel="noreferrer"><span>{item.linkLabel ?? "Read"}</span><span aria-hidden="true">↗</span></a>
         </article>
       ))}
     </div>

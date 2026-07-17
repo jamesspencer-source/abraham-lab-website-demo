@@ -4,16 +4,11 @@ import { withBase } from "../lib/content";
 ---
 
 <BaseLayout title="Page Not Found" description="The requested page could not be found.">
-  <section class="page-hero">
-    <div class="narrow-shell page-hero__copy reveal">
-        <p class="eyebrow">404</p>
-        <h1>Page not found.</h1>
-        <p>The requested page could not be found.</p>
-    </div>
-  </section>
-
-  <section class="section section--utility">
-    <div class="shell narrow-shell reveal">
+  <section class="legacy-page">
+    <div class="narrow-shell legacy-page__inner reveal">
+      <p class="overline">404</p>
+      <h1>Page not found.</h1>
+      <p>The requested page could not be found.</p>
       <a class="button button--primary" href={withBase("/")}>Return home</a>
     </div>
   </section>

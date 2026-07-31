@@ -59,7 +59,8 @@ const expectedProgramTagsByPerson = new Map([
   ["Rick Li", ["MD-PhD / Biological and Biomedical Sciences"]],
   ["Laurentia Vianney Tjang", ["Virology"]],
   ["Corazón Núñez", ["Virology"]],
-  ["Alex Liu", ["Virology"]]
+  ["Alex Liu", ["Virology"]],
+  ["Kevin Gong", ["Virology"]]
 ]);
 
 function transpileTsModule(source, filePath) {

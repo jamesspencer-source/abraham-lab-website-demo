@@ -137,12 +137,20 @@ export const peopleData = {
       order: 16
     },
     {
+      name: "Kevin Gong",
+      title: "Graduate Student (Virology)",
+      programTags: ["Virology"],
+      group: "Graduate Students",
+      portraitStatus: "pending",
+      order: 17
+    },
+    {
       name: "James Spencer",
       title: "Lab Manager",
       group: "Operations & Strategy",
       image: "/assets/images/people/james-spencer.png",
       imageAlt: "James Spencer",
-      order: 17
+      order: 18
     }
   ],
   seasonalMembers: [

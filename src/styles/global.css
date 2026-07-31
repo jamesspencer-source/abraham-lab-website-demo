@@ -1195,15 +1195,19 @@ main {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.appointment-band p {
+.appointment-band__item {
   padding: 1.4rem;
   border-inline-start: 1px solid var(--line);
+}
+
+.appointment-band__item > p:last-child {
+  margin-block-start: 0.45rem;
   font-size: 0.82rem;
   font-weight: 650;
   line-height: 1.4;
 }
 
-.appointment-band p:first-child {
+.appointment-band__item:first-child {
   padding-inline-start: 0;
   border-inline-start: 0;
 }
@@ -1994,14 +1998,14 @@ main {
     grid-template-columns: 1fr;
   }
 
-  .appointment-band p,
-  .appointment-band p:first-child {
+  .appointment-band__item,
+  .appointment-band__item:first-child {
     padding: 1rem 0;
     border-block-start: 1px solid var(--line);
     border-inline-start: 0;
   }
 
-  .appointment-band p:first-child {
+  .appointment-band__item:first-child {
     border-block-start: 0;
   }
 }

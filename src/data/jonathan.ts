@@ -18,9 +18,18 @@ export const jonathanProfile = {
     "He started the laboratory in the Department of Microbiology at Harvard Medical School in 2017. He also serves as Associate Physician in Infectious Diseases at Brigham and Women's Hospital."
   ],
   appointments: [
-    "Professor of Microbiology, Harvard Medical School",
-    "Investigator, Howard Hughes Medical Institute",
-    "Associate Physician in Infectious Diseases, Brigham and Women's Hospital"
+    {
+      label: "Academic appointment",
+      title: "Professor of Microbiology, Harvard Medical School"
+    },
+    {
+      label: "Research appointment",
+      title: "Investigator, Howard Hughes Medical Institute"
+    },
+    {
+      label: "Clinical appointment",
+      title: "Associate Physician in Infectious Diseases, Brigham and Women's Hospital"
+    }
   ],
   distinctions: [
     "HHMI Investigator",

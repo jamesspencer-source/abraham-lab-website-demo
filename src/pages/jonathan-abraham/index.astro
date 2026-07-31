@@ -31,7 +31,12 @@ const selectedPapers = jonathanProfile.representativeWork
 
   <section class="appointment-band">
     <div class="shell appointment-band__inner">
-      {jonathanProfile.appointments.map((item) => <p>{item}</p>)}
+      {jonathanProfile.appointments.map((item) => (
+        <div class="appointment-band__item">
+          <p class="overline">{item.label}</p>
+          <p>{item.title}</p>
+        </div>
+      ))}
     </div>
   </section>
 

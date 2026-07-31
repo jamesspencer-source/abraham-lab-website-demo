@@ -169,7 +169,10 @@ export type JonathanProfile = {
   portraitPosition?: string;
   overview: string;
   biography: string[];
-  appointments: string[];
+  appointments: Array<{
+    label: string;
+    title: string;
+  }>;
   distinctions: string[];
   focusAreas: string[];
   representativeWork: string[];

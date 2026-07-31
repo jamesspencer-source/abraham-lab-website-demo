@@ -7,7 +7,6 @@ const groupedPeople = groupPeople(peopleData.currentMembers);
 const leadership = groupedPeople.find((group) => group.label === "Leadership");
 const remainingGroups = groupedPeople.filter((group) => group.label !== "Leadership");
 const totalAlumni = peopleData.alumni.reduce((total, group) => total + group.entries.length, 0);
-const totalCurrent = peopleData.currentMembers.length + peopleData.seasonalMembers.length;
 const anchorFor = (label: string) =>
   label.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const initialsFor = (name: string) =>
@@ -28,11 +27,6 @@ const directoryIndex = [
         <h1>The Abraham Lab.</h1>
         <p>Faculty, fellows, students, and staff at Harvard Medical School.</p>
       </div>
-      <dl class="page-intro__facts reveal">
-        <div><dt>{totalCurrent}</dt><dd>Current members</dd></div>
-        <div><dt>{remainingGroups.length + 2}</dt><dd>Role groups</dd></div>
-        <div><dt>{totalAlumni}</dt><dd>Alumni listed</dd></div>
-      </dl>
     </div>
   </section>
 

@@ -9,7 +9,7 @@ const pages = [
   "/research/",
   "/publications/",
   "/jonathan-abraham/",
-  "/people/",
+  "/team/",
   "/news/",
   "/contact/"
 ];

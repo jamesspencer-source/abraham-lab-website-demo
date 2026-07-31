@@ -17,7 +17,7 @@ const routes = [
   { slug: "research", path: "/research/" },
   { slug: "publications", path: "/publications/" },
   { slug: "jonathan-abraham", path: "/jonathan-abraham/" },
-  { slug: "people", path: "/people/" },
+  { slug: "team", path: "/team/" },
   { slug: "news", path: "/news/" },
   { slug: "contact", path: "/contact/" }
 ];

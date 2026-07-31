@@ -1,142 +1,21 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { peopleData } from "../../data/people";
-import { groupPeople, withBase } from "../../lib/content";
+import { withBase } from "../../lib/content";
 
-const groupedPeople = groupPeople(peopleData.currentMembers);
-const leadership = groupedPeople.find((group) => group.label === "Leadership");
-const remainingGroups = groupedPeople.filter((group) => group.label !== "Leadership");
-const totalAlumni = peopleData.alumni.reduce((total, group) => total + group.entries.length, 0);
-const anchorFor = (label: string) =>
-  label.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-const initialsFor = (name: string) =>
-  name.replace(/,.*$/, "").split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
-const directoryIndex = [
-  leadership ? { label: leadership.label, count: leadership.entries.length, id: anchorFor(leadership.label) } : null,
-  ...remainingGroups.map((group) => ({ label: group.label, count: group.entries.length, id: anchorFor(group.label) })),
-  { label: "Summer 2026", count: peopleData.seasonalMembers.length, id: "summer-2026" },
-  { label: "Alumni", count: totalAlumni, id: "alumni" }
-].filter(Boolean);
+const destination = withBase("/team/");
 ---
 
-<BaseLayout title="Team" description="Current members and alumni of the Abraham Lab." socialImage={leadership?.entries[0]?.image}>
-  <section class="page-intro page-intro--people">
-    <div class="shell page-intro__grid">
-      <div class="page-intro__copy reveal">
-        <p class="overline">Team</p>
-        <h1>The Abraham Lab.</h1>
-        <p>Faculty, fellows, students, and staff at Harvard Medical School.</p>
-      </div>
-    </div>
-  </section>
-
-  <nav class="directory-nav" aria-label="Team directory sections">
-    <div class="shell directory-nav__inner">
-      {directoryIndex.map((item) => item && (
-        <a href={`#${item.id}`}><span>{item.label}</span><strong>{item.count}</strong></a>
-      ))}
-    </div>
-  </nav>
-
-  {leadership && (
-    <section class="section leadership-profile" id={anchorFor(leadership.label)}>
-      <div class="shell">
-        {leadership.entries.map((person) => (
-          <article class="leadership-profile__grid reveal">
-            <div class="leadership-profile__portrait" style={person.imagePosition ? `--media-position: ${person.imagePosition};` : undefined}>
-              <img src={withBase(person.image)} alt={person.imageAlt} loading="eager" />
-            </div>
-            <div class="leadership-profile__body">
-              <p class="overline">Leadership</p>
-              <h2>{person.name}</h2>
-              <p>{person.title}</p>
-              <div class="button-row">
-                <a class="button button--primary" href={withBase("/jonathan-abraham/")}>View profile</a>
-                <a class="button button--secondary" href={withBase("/contact/")}>Contact</a>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  )}
-
-  <div class="section shell people-groups">
-    {remainingGroups.map((group) => (
-      <section class="people-group" id={anchorFor(group.label)}>
-        <header class="people-group__header reveal">
-          <h2>{group.label}</h2>
-          <p>{group.entries.length}</p>
-        </header>
-        <div class="people-grid">
-          {group.entries.map((person) => (
-            <article class="person-card reveal">
-              <div class="person-card__portrait" style={person.imagePosition ? `--media-position: ${person.imagePosition};` : undefined}>
-                {person.image ? (
-                  <img src={withBase(person.image)} alt={person.imageAlt ?? person.name} loading="lazy" />
-                ) : (
-                  <div class="person-card__monogram" role="img" aria-label={`Portrait not yet available for ${person.name}`}>
-                    <div class="person-card__placeholder-brand">
-                      <img src={withBase("/assets/images/brands/hms-microbiology-logo.svg")} alt="" aria-hidden="true" />
-                    </div>
-                    <div class="person-card__placeholder-identity">
-                      <span>{initialsFor(person.name)}</span>
-                      <p>Program in Virology</p>
-                      <small>Portrait forthcoming</small>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div class="person-card__body">
-                <h3>{person.name}</h3>
-                <p>{person.title}</p>
-                {person.programTags?.length ? (
-                  <ul class="inline-list">
-                    {person.programTags.map((tag) => <li>{tag}</li>)}
-                  </ul>
-                ) : null}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    ))}
-  </div>
-
-  <section class="section seasonal-register" id="summer-2026">
-    <div class="shell section-intro reveal">
-      <p class="overline">Summer 2026</p>
-      <h2>Summer researchers.</h2>
-    </div>
-    <div class="shell seasonal-register__grid">
-      {peopleData.seasonalMembers.map((person, index) => (
-        <article class="seasonal-entry reveal">
-          <p>{String(index + 1).padStart(2, "0")}</p>
-          <div>
-            <h3>{person.name}</h3>
-            <span>{[person.title, person.program].filter(Boolean).join(" · ")}</span>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="section alumni-register" id="alumni">
-    <div class="shell section-intro reveal">
-      <p class="overline">Alumni</p>
-      <h2>Past members.</h2>
-    </div>
-    <div class="shell alumni-register__grid">
-      {peopleData.alumni.map((group) => (
-        <section class="alumni-column reveal">
-          <h3>{group.label}</h3>
-          <ul>
-            {group.entries.map((entry) => (
-              <li><span>{entry.name}</span>{entry.destination && <small>{entry.destination}</small>}</li>
-            ))}
-          </ul>
-        </section>
-      ))}
+<BaseLayout
+  title="Team"
+  description="Current members and alumni of the Abraham Lab."
+  canonicalPath="/team/"
+>
+  <section class="legacy-page">
+    <div class="narrow-shell legacy-page__inner reveal">
+      <p class="overline">Team</p>
+      <h1>The lab directory has moved.</h1>
+      <p>View current members and alumni on the Team page.</p>
+      <a class="button button--primary" href={destination}>View the team</a>
     </div>
   </section>
 </BaseLayout>

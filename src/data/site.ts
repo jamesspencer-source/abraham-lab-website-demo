@@ -51,7 +51,7 @@ export const siteData = {
     { label: "Home", href: "/" },
     { label: "Publications", href: "/publications/" },
     { label: "Jonathan Abraham", href: "/jonathan-abraham/" },
-    { label: "Team", href: "/people/" },
+    { label: "Team", href: "/team/" },
     { label: "Contact", href: "/contact/" }
   ],
   affiliations: [

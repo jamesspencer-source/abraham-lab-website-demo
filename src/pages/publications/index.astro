@@ -6,7 +6,15 @@ import { formatMonthYear, groupPublicationsByYear, homepageProofOnly, leadPublic
 
 const proofPapers = homepageProofOnly(publications);
 const leadPaper = leadPublication(publications) ?? proofPapers[0];
-const recentProofPapers = proofPapers.slice(0, 3);
+const recentPapers = [...publications]
+  .filter((item) => item.title !== leadPaper?.title)
+  .filter((item) => item.significanceLine)
+  .sort((left, right) => {
+    const leftDate = left.publishedAt ?? `${left.year}-01-01`;
+    const rightDate = right.publishedAt ?? `${right.year}-01-01`;
+    return new Date(rightDate).getTime() - new Date(leftDate).getTime();
+  })
+  .slice(0, 3);
 const foundationalPublications = publications
   .filter((item) => item.foundational)
   .filter((item) => item.title !== leadPaper?.title)
@@ -66,11 +74,11 @@ const canShowVisual = (item: (typeof publications)[number]) =>
   <section class="section recent-papers">
     <div class="shell section-intro reveal">
       <p class="overline">Recent papers</p>
-      <h2>Replication, spike organization, and receptor recognition.</h2>
+      <h2>Spike organization, receptor recognition, and Nipah virus polymerase.</h2>
     </div>
 
     <div class="shell paper-grid">
-      {recentProofPapers.map((item, index) => (
+      {recentPapers.map((item, index) => (
         <article class="paper-card reveal">
           {canShowVisual(item) ? (
             <div class="paper-card__visual" style={item.imagePosition ? `--media-position: ${item.imagePosition};` : undefined}>

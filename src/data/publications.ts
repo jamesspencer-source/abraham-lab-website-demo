@@ -107,6 +107,27 @@ export const publications: Publication[] = [
   },
   {
     year: 2024,
+    title: "Shifts in receptors during submergence of an encephalitic arbovirus",
+    authors:
+      "Li W, Plante JA, Lin C, Basu H, Plung JS, Fan X, Boeckers JM, Oros J, Buck TK, Anekal PV, Hanson WA, Varnum H, Wells A, Mann CJ, Tjang LV, Yang P, Reyna RA, Mitchell BM, Shinde DP, Walker JL, Choi SY, Brusic V, Montero Llopis P, Weaver SC, Umemori H, Chiu IM, Plante KS, Abraham J",
+    journal: "Nature",
+    publishedAt: "2024-07-24",
+    citation:
+      "Li W*, Plante JA*, Lin C, Basu H, Plung JS, Fan X, Boeckers JM, Oros J, Buck TK, Anekal PV, Hanson WA, Varnum H, Wells A, Mann CJ, Tjang LV, Yang P, Reyna RA, Mitchell BM, Shinde DP, Walker JL, Choi SY, Brusic V, Montero Llopis P, Weaver SC, Umemori H, Chiu IM, Plante KS, Abraham J. Nature. 2024.",
+    link: "https://www.nature.com/articles/s41586-024-07740-2",
+    doi: "10.1038/s41586-024-07740-2",
+    pmid: "39048821",
+    foundational: true,
+    system: "western equine encephalitis virus",
+    methodCluster: "CRISPR screening, receptor biology, functional virology",
+    significanceLine: "Identifies PCDH10 as a WEEV receptor and shows that receptor use differs between historical and contemporary strains.",
+    openAccess: true,
+    summary:
+      "The study identifies PCDH10 as a WEEV receptor and compares receptor recognition in historical and contemporary strains.",
+    visualReuseStatus: "open-access"
+  },
+  {
+    year: 2024,
     title: "Structural basis for VLDLR recognition by eastern equine encephalitis virus",
     authors:
       "Yang P, Li W, Fan X, Pan J, Mann CJ, Varnum H, Clark LE, Clark SA, Coscia A, Basu H, Nabel Smith K, Brusic V, Abraham J",
@@ -280,6 +301,25 @@ export const publications: Publication[] = [
     citation:
       "Gruszczyk J, Kanjee U, Chan LJ, Menant S, Malleret B, Lim NTY, Schmidt CQ, Mok YF, Lin KM, Pearson RD, Rangel G, Smith BJ, Call MJ, Weekes MP, Griffin MDW, Murphy JM, Abraham J, Sriprawat K, Menezes MJ, Ferreira MU, Russell B, Renia L, Duraisingh MT, Tham WH. Science. 2018.",
     link: "https://science.sciencemag.org/content/359/6371/48.long"
+  },
+  {
+    year: 2015,
+    title: "Molecular basis for antibody-mediated neutralization of New World hemorrhagic fever mammarenaviruses",
+    authors: "Mahmutovic S, Clark L, Levis SC, Briggiler AM, Enria DA, Harrison SC, Abraham J",
+    journal: "Cell Host & Microbe",
+    publishedAt: "2015-12-09",
+    citation:
+      "Mahmutovic S, Clark L, Levis SC, Briggiler AM, Enria DA, Harrison SC, Abraham J. Cell Host & Microbe. 2015.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/26651946/",
+    doi: "10.1016/j.chom.2015.11.005",
+    pmid: "26651946",
+    foundational: true,
+    system: "Junín virus",
+    methodCluster: "X-ray crystallography, antibody mapping, serology",
+    significanceLine: "Shows how a neutralizing antibody mimics the host receptor at a conserved arenavirus site.",
+    openAccess: true,
+    summary:
+      "The structure explains how a neutralizing antibody blocks receptor engagement by a New World hemorrhagic fever mammarenavirus."
   },
   {
     year: 2010,

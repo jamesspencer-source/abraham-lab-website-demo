@@ -19,18 +19,18 @@ const directoryIndex = [
 ].filter(Boolean);
 ---
 
-<BaseLayout title="People" description="Current members and alumni of the Abraham Lab." socialImage={leadership?.entries[0]?.image}>
+<BaseLayout title="Team" description="Current members and alumni of the Abraham Lab." socialImage={leadership?.entries[0]?.image}>
   <section class="page-intro page-intro--people">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
-        <p class="overline">People</p>
+        <p class="overline">Team</p>
         <h1>The Abraham Lab.</h1>
         <p>Faculty, fellows, students, and staff at Harvard Medical School.</p>
       </div>
     </div>
   </section>
 
-  <nav class="directory-nav" aria-label="People directory sections">
+  <nav class="directory-nav" aria-label="Team directory sections">
     <div class="shell directory-nav__inner">
       {directoryIndex.map((item) => item && (
         <a href={`#${item.id}`}><span>{item.label}</span><strong>{item.count}</strong></a>

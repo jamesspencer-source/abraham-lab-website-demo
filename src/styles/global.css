@@ -823,7 +823,8 @@ main {
   color: var(--ink-muted);
 }
 
-.page-intro--contact .page-intro__grid {
+.page-intro--contact .page-intro__grid,
+.page-intro--publications .page-intro__grid {
   grid-template-columns: minmax(0, 58rem);
 }
 

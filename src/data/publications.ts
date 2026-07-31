@@ -3,6 +3,51 @@ import type { Publication } from "./types";
 export const publications: Publication[] = [
   {
     year: 2026,
+    title: "Molecular basis for chikungunya virus recognition of a mosquito-specific receptor",
+    authors:
+      "Fan X, Li W, Plung JS, Plante JA, Hajovsky EM, Tapryal N, Diaz J, Hazell NC, Ji C, Liu Z, Hammond CE, Weaver SC, Plante KS, Abraham J",
+    journal: "bioRxiv",
+    publishedAt: "2026-07-29",
+    citation:
+      "Fan X, Li W, Plung JS, Plante JA, Hajovsky EM, Tapryal N, Diaz J, Hazell NC, Ji C, Liu Z, Hammond CE, Weaver SC, Plante KS, Abraham J. bioRxiv. 2026. Preprint.",
+    link: "https://doi.org/10.64898/2026.07.28.741352",
+    doi: "10.64898/2026.07.28.741352",
+    featured: true,
+    leadFeature: true,
+    homepageProof: true,
+    system: "chikungunya virus",
+    methodCluster: "cryo-EM, receptor binding, functional virology",
+    significanceLine:
+      "Shows how chikungunya virus recognizes the mosquito receptor Lachesin and identifies receptor variants that block binding.",
+    openAccess: true,
+    summary:
+      "Cryo-EM structures show how chikungunya and related alphaviruses bind mosquito Lachesin and define receptor changes that prevent viral recognition.",
+    visualReuseStatus: "open-access"
+  },
+  {
+    year: 2026,
+    title: "Lachesin is a mosquito receptor for multiple arthritogenic alphaviruses",
+    authors:
+      "Plung JS, Mameli E, Li W, de Bruin ACM, Plante JA, Fan X, Das B, Willett BC, Hu Y, Hajovsky EM, Varnum H, Anekal PV, Sun X, Thornburg K, Brusic V, Hammond CE, Montero Llopis P, Viswanatha R, Shaw WR, Catteruccia F, Weaver SC, Plante KS, Perrimon N, Abraham J",
+    journal: "bioRxiv",
+    publishedAt: "2026-07-28",
+    citation:
+      "Plung JS, Mameli E, Li W, de Bruin ACM, Plante JA, Fan X, Das B, Willett BC, Hu Y, Hajovsky EM, Varnum H, Anekal PV, Sun X, Thornburg K, Brusic V, Hammond CE, Montero Llopis P, Viswanatha R, Shaw WR, Catteruccia F, Weaver SC, Plante KS, Perrimon N, Abraham J. bioRxiv. 2026. Preprint.",
+    link: "https://doi.org/10.64898/2026.07.28.741058",
+    doi: "10.64898/2026.07.28.741058",
+    featured: true,
+    homepageProof: true,
+    system: "arthritogenic alphaviruses",
+    methodCluster: "CRISPR screening, receptor binding, functional virology",
+    significanceLine:
+      "Identifies Lachesin as a mosquito receptor for chikungunya virus and related arthritogenic alphaviruses.",
+    openAccess: true,
+    summary:
+      "CRISPR screening and infection studies identify Lachesin as a mosquito receptor used by chikungunya virus and related arthritogenic alphaviruses.",
+    visualReuseStatus: "open-access"
+  },
+  {
+    year: 2026,
     title: "Mechanisms of HSV-1 helicase-primase inhibition and replication fork complex assembly",
     authors:
       "Yu Z, Sathyanarayana P, Liu C, Tan JMJ, Yang P, Das B, Olal D, Hu S, Fan X, Ji C, Weller SK, Shekhar M, Coen DM, Kranzusch PJ, Loparo JJ, Abraham J",
@@ -14,7 +59,6 @@ export const publications: Publication[] = [
     doi: "10.1016/j.cell.2025.11.041",
     pmid: "41468884",
     featured: true,
-    leadFeature: true,
     homepageProof: true,
     system: "HSV-1",
     methodCluster: "single-particle cryo-EM, biochemistry, inhibitor mechanism",
@@ -42,7 +86,6 @@ export const publications: Publication[] = [
     doi: "10.1038/s41564-025-02085-6",
     pmid: "40781447",
     featured: true,
-    homepageProof: true,
     system: "New World arenaviruses",
     methodCluster: "single-particle cryo-EM, glycoprotein architecture",
     significanceLine: "Defines the organization of the arenavirus spike glycoprotein complex.",
@@ -68,7 +111,6 @@ export const publications: Publication[] = [
     doi: "10.1016/j.cell.2025.03.029",
     pmid: "40187345",
     featured: true,
-    homepageProof: true,
     system: "encephalitic arboviruses",
     methodCluster: "structural biology, receptor binding, functional virology",
     significanceLine: "Explains shifted receptor recognition in an encephalitic arbovirus.",

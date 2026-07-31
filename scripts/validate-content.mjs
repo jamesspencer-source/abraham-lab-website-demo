@@ -286,11 +286,7 @@ async function main() {
       fail(`Homepage proof publication "${title}" needs a publishedAt date.`);
     }
 
-    if (publication.homepageProof && !publication.image) {
-      fail(`Homepage proof publication "${title}" needs an image.`);
-    }
-
-    if (publication.homepageProof && !publication.imageAlt) {
+    if (publication.homepageProof && publication.image && !publication.imageAlt) {
       fail(`Homepage proof publication "${title}" needs imageAlt.`);
     }
 

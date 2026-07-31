@@ -63,7 +63,7 @@ const heroFigure = siteData.heroFigures[0];
     <section class="section lead-paper">
       <div class="shell section-intro section-intro--wide reveal">
         <p class="overline">Recent paper · {recentPaper.journal} · {recentPaper.year}</p>
-        <h2>How HSV-1 replication machinery assembles—and how inhibitors stop it.</h2>
+        <h2>{recentPaper.significanceLine}</h2>
       </div>
 
       <div class="shell lead-paper__grid">
@@ -83,21 +83,17 @@ const heroFigure = siteData.heroFigures[0];
           <p class="lead-paper__system">{recentPaper.system}</p>
           <dl>
             <div>
-              <dt>Mechanism</dt>
-              <dd>Helicase-primase inhibition</dd>
-            </div>
-            <div>
-              <dt>Assembly</dt>
-              <dd>Replication fork complex</dd>
+              <dt>Source</dt>
+              <dd>{recentPaper.journal === "bioRxiv" ? "Preprint" : recentPaper.journal}</dd>
             </div>
             <div>
               <dt>Methods</dt>
               <dd>{recentPaper.methodCluster}</dd>
             </div>
-            {recentPaper.pmid && (
+            {recentPaper.doi && (
               <div>
-                <dt>PubMed</dt>
-                <dd>{recentPaper.pmid}</dd>
+                <dt>DOI</dt>
+                <dd>{recentPaper.doi}</dd>
               </div>
             )}
           </dl>

@@ -29,14 +29,9 @@ const canShowVisual = (item: (typeof publications)[number]) =>
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
         <p class="overline">Publications</p>
-        <h1>A record of mechanisms.</h1>
+        <h1>Papers from the Abraham Lab.</h1>
         <p>Papers from the lab define viral entry, antibody recognition, replication, and antiviral response.</p>
       </div>
-      <dl class="page-intro__facts reveal">
-        <div><dt>{publications.length}</dt><dd>Papers in this record</dd></div>
-        <div><dt>{groupedPublications.length}</dt><dd>Publication years</dd></div>
-        <div><dt>3</dt><dd>Mechanistic threads</dd></div>
-      </dl>
     </div>
   </section>
 
@@ -57,12 +52,10 @@ const canShowVisual = (item: (typeof publications)[number]) =>
         </div>
         <div class="publication-lead__signal reveal">
           <p>{leadPaper.system}</p>
-          <span>Replication machinery</span>
-          <span>Inhibitor mechanism</span>
-          <span>Fork-complex assembly</span>
+          {leadPaper.methodCluster?.split(",").map((method) => <span>{method.trim()}</span>)}
         </div>
         <dl class="publication-lead__facts reveal">
-          <div><dt>Published</dt><dd>{leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : leadPaper.year}</dd></div>
+          <div><dt>{leadPaper.journal === "bioRxiv" ? "Posted" : "Published"}</dt><dd>{leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : leadPaper.year}</dd></div>
           <div><dt>Methods</dt><dd>{leadPaper.methodCluster}</dd></div>
           {leadPaper.doi && <div><dt>DOI</dt><dd>{leadPaper.doi}</dd></div>}
           {leadPaper.pmid && <div><dt>PMID</dt><dd>{leadPaper.pmid}</dd></div>}
@@ -74,7 +67,7 @@ const canShowVisual = (item: (typeof publications)[number]) =>
   <section class="section recent-papers">
     <div class="shell section-intro reveal">
       <p class="overline">Recent papers</p>
-      <h2>Spike organization, receptor recognition, and Nipah virus polymerase.</h2>
+      <h2>Mosquito receptor recognition, herpesvirus replication, and arenavirus spike organization.</h2>
     </div>
 
     <div class="shell paper-grid">

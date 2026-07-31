@@ -82,7 +82,14 @@ const directoryIndex = [
                   <img src={withBase(person.image)} alt={person.imageAlt ?? person.name} loading="lazy" />
                 ) : (
                   <div class="person-card__monogram" role="img" aria-label={`Portrait not yet available for ${person.name}`}>
-                    <span>{initialsFor(person.name)}</span>
+                    <div class="person-card__placeholder-brand">
+                      <img src={withBase("/assets/images/brands/hms-microbiology-logo.svg")} alt="" aria-hidden="true" />
+                    </div>
+                    <div class="person-card__placeholder-identity">
+                      <span>{initialsFor(person.name)}</span>
+                      <p>Program in Virology</p>
+                      <small>Portrait forthcoming</small>
+                    </div>
                   </div>
                 )}
               </div>

@@ -34,6 +34,7 @@ const scannedTextFiles = [
   path.join(repoRoot, "src", "pages", "index.astro"),
   path.join(repoRoot, "src", "pages", "publications", "index.astro"),
   path.join(repoRoot, "src", "pages", "jonathan-abraham", "index.astro"),
+  path.join(repoRoot, "src", "pages", "team", "index.astro"),
   path.join(repoRoot, "src", "pages", "people", "index.astro"),
   path.join(repoRoot, "src", "pages", "news", "index.astro"),
   path.join(repoRoot, "src", "pages", "research", "index.astro"),
@@ -360,18 +361,16 @@ async function main() {
       fail(`Person "${person.name}" uses obsolete expertiseTags. Use verified programTags only.`);
     }
 
-    if (person.portraitStatus === "pending") {
-      if (person.image || person.imageAlt) {
-        fail(`Current member "${person.name}" cannot combine portraitStatus pending with an image.`);
+    const memberPhotoFields = ["image", "imageAlt", "imagePosition", "portraitStatus"];
+    for (const field of memberPhotoFields) {
+      if (field in person) {
+        fail(`Current member "${person.name}" uses forbidden photo field "${field}".`);
       }
-      note(`Portrait needed: ${person.name}.`);
-    } else {
-      if (!person.image || !(await localAssetExists(person.image))) {
-        fail(`Current member "${person.name}" needs an existing local portrait.`);
-      }
+    }
 
-      if (!normalize(person.imageAlt)) {
-        fail(`Current member "${person.name}" needs portrait alt text.`);
+    if (person.fellowships !== undefined) {
+      if (!Array.isArray(person.fellowships) || person.fellowships.some((value) => !normalize(value))) {
+        fail(`Person "${person.name}" fellowships must be a list of non-empty verified labels.`);
       }
     }
 
@@ -397,6 +396,18 @@ async function main() {
     }
   }
 
+  for (const field of ["portrait", "portraitAlt", "portraitPosition"]) {
+    if (field in jonathanProfile) {
+      fail(`jonathanProfile uses forbidden photo field "${field}".`);
+    }
+  }
+
+  for (const item of newsItems) {
+    if (normalize(item.image).startsWith("/assets/images/people/")) {
+      fail(`News item "${item.title}" uses a lab-member photo.`);
+    }
+  }
+
   const sourceFiles = [...scannedTextFiles, ...Object.values(dataFiles)];
   for (const filePath of sourceFiles) {
     const text = await fs.readFile(filePath, "utf8");
@@ -406,6 +417,10 @@ async function main() {
 
     if (/Associate Professor of Microbiology, Harvard Medical School/.test(text)) {
       fail(`Outdated Jonathan title found in ${path.relative(repoRoot, filePath)}.`);
+    }
+
+    if (/\/assets\/images\/people\//.test(text)) {
+      fail(`Lab-member photo reference found in ${path.relative(repoRoot, filePath)}.`);
     }
 
     for (const pattern of discouragedPlainLanguagePatterns) {

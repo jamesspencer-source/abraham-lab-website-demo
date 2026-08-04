@@ -4,9 +4,6 @@ export const jonathanProfile = {
   name: "Jonathan Abraham, MD, PhD",
   title: "Professor of Microbiology, Harvard Medical School",
   secondaryTitle: "Investigator, Howard Hughes Medical Institute",
-  portrait: "/assets/images/people/jonathan-abraham.jpeg",
-  portraitAlt: "Jonathan Abraham",
-  portraitPosition: "center 22%",
   overview:
     "Jonathan Abraham studies the molecular basis of viral infection in medically important viruses.",
   biography: [

@@ -3,14 +3,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteData } from "../data/site";
 import { publications } from "../data/publications";
 import { newsItems } from "../data/news";
-import { peopleData } from "../data/people";
-import { groupPeople, homepageProofOnly, leadPublication, withBase } from "../lib/content";
+import { homepageProofOnly, leadPublication, withBase } from "../lib/content";
 
 const homepageProof = homepageProofOnly(publications);
 const recentPaper = leadPublication(publications) ?? homepageProof[0];
 const labFilm = newsItems.find((item) => item.link.includes("GFM3KLZCDps"));
-const groupedPeople = groupPeople(peopleData.currentMembers);
-const leadership = groupedPeople.find((group) => group.label === "Leadership");
 const heroFigure = siteData.heroFigures[0];
 ---
 
@@ -104,12 +101,6 @@ const heroFigure = siteData.heroFigures[0];
 
   <section class="section team-signal">
     <div class="shell team-signal__grid">
-      {leadership?.entries[0] && (
-        <div class="team-signal__portrait reveal" style={leadership.entries[0].imagePosition ? `--media-position: ${leadership.entries[0].imagePosition};` : undefined}>
-          <img src={withBase(leadership.entries[0].image)} alt={leadership.entries[0].imageAlt} loading="lazy" />
-        </div>
-      )}
-
       <div class="team-signal__body reveal">
         <p class="overline">The laboratory</p>
         <h2>Jonathan Abraham leads a team across structural biology and virology.</h2>

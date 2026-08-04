@@ -130,11 +130,8 @@ export type Person = {
   note?: string;
   roleSummary?: string;
   programTags?: Array<"Virology" | "MD-PhD / Biophysics" | "MD-PhD / Biological and Biomedical Sciences">;
+  fellowships?: string[];
   group: "Leadership" | "Postdoctoral Fellows & Instructors" | "Graduate Students" | "Operations & Strategy";
-  image?: string;
-  imageAlt?: string;
-  imagePosition?: string;
-  portraitStatus?: "pending";
   order: number;
 };
 
@@ -164,9 +161,6 @@ export type JonathanProfile = {
   name: string;
   title: string;
   secondaryTitle: string;
-  portrait: string;
-  portraitAlt: string;
-  portraitPosition?: string;
   overview: string;
   biography: string[];
   appointments: Array<{

@@ -115,9 +115,7 @@ const newsItemsList: NewsItem[] = [
     link: "https://micro.hms.harvard.edu/news-events/archived-news",
     linkLabel: "View archive",
     homepageEligible: false,
-    milestoneTier: "secondary",
-    image: "/assets/images/people/jonathan-abraham.jpeg",
-    imageAlt: "Portrait of Jonathan Abraham."
+    milestoneTier: "secondary"
   }
 ];
 

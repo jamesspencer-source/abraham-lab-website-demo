@@ -4,22 +4,17 @@ import { peopleData } from "../../data/people";
 import { groupPeople, withBase } from "../../lib/content";
 
 const groupedPeople = groupPeople(peopleData.currentMembers);
-const leadership = groupedPeople.find((group) => group.label === "Leadership");
-const remainingGroups = groupedPeople.filter((group) => group.label !== "Leadership");
 const totalAlumni = peopleData.alumni.reduce((total, group) => total + group.entries.length, 0);
 const anchorFor = (label: string) =>
   label.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-const initialsFor = (name: string) =>
-  name.replace(/,.*$/, "").split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
 const directoryIndex = [
-  leadership ? { label: leadership.label, count: leadership.entries.length, id: anchorFor(leadership.label) } : null,
-  ...remainingGroups.map((group) => ({ label: group.label, count: group.entries.length, id: anchorFor(group.label) })),
+  ...groupedPeople.map((group) => ({ label: group.label, count: group.entries.length, id: anchorFor(group.label) })),
   { label: "Summer 2026", count: peopleData.seasonalMembers.length, id: "summer-2026" },
   { label: "Alumni", count: totalAlumni, id: "alumni" }
-].filter(Boolean);
+];
 ---
 
-<BaseLayout title="Team" description="Current members and alumni of the Abraham Lab." socialImage={leadership?.entries[0]?.image}>
+<BaseLayout title="Team" description="Current members and alumni of the Abraham Lab.">
   <section class="page-intro page-intro--people">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
@@ -32,69 +27,43 @@ const directoryIndex = [
 
   <nav class="directory-nav" aria-label="Team directory sections">
     <div class="shell directory-nav__inner">
-      {directoryIndex.map((item) => item && (
+      {directoryIndex.map((item) => (
         <a href={`#${item.id}`}><span>{item.label}</span><strong>{item.count}</strong></a>
       ))}
     </div>
   </nav>
 
-  {leadership && (
-    <section class="section leadership-profile" id={anchorFor(leadership.label)}>
-      <div class="shell">
-        {leadership.entries.map((person) => (
-          <article class="leadership-profile__grid reveal">
-            <div class="leadership-profile__portrait" style={person.imagePosition ? `--media-position: ${person.imagePosition};` : undefined}>
-              <img src={withBase(person.image)} alt={person.imageAlt} loading="eager" />
-            </div>
-            <div class="leadership-profile__body">
-              <p class="overline">Leadership</p>
-              <h2>{person.name}</h2>
-              <p>{person.title}</p>
-              <div class="button-row">
-                <a class="button button--primary" href={withBase("/jonathan-abraham/")}>View profile</a>
-                <a class="button button--secondary" href={withBase("/contact/")}>Contact</a>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  )}
-
-  <div class="section shell people-groups">
-    {remainingGroups.map((group) => (
-      <section class="people-group" id={anchorFor(group.label)}>
-        <header class="people-group__header reveal">
+  <div class="section shell team-directory">
+    {groupedPeople.map((group) => (
+      <section class="team-directory__group" id={anchorFor(group.label)}>
+        <header class="team-directory__group-header reveal">
           <h2>{group.label}</h2>
-          <p>{group.entries.length}</p>
+          <p>{String(group.entries.length).padStart(2, "0")}</p>
         </header>
-        <div class="people-grid">
+
+        <div class="team-directory__table" role="list">
+          <div class="team-directory__labels" aria-hidden="true">
+            <span>Name</span>
+            <span>Role</span>
+            <span>Program or fellowship</span>
+          </div>
           {group.entries.map((person) => (
-            <article class="person-card reveal">
-              <div class="person-card__portrait" style={person.imagePosition ? `--media-position: ${person.imagePosition};` : undefined}>
-                {person.image ? (
-                  <img src={withBase(person.image)} alt={person.imageAlt ?? person.name} loading="lazy" />
-                ) : (
-                  <div class="person-card__monogram" role="img" aria-label={`Portrait not yet available for ${person.name}`}>
-                    <div class="person-card__placeholder-brand">
-                      <img src={withBase("/assets/images/brands/hms-microbiology-logo.svg")} alt="" aria-hidden="true" />
-                    </div>
-                    <div class="person-card__placeholder-identity">
-                      <span>{initialsFor(person.name)}</span>
-                      <p>Program in Virology</p>
-                      <small>Portrait forthcoming</small>
-                    </div>
-                  </div>
+            <article class="team-directory__row reveal" role="listitem">
+              <div class="team-directory__identity">
+                <span class="team-directory__mobile-label">Name</span>
+                <h3>{person.name}</h3>
+                {group.label === "Leadership" && (
+                  <a href={withBase("/jonathan-abraham/")}>View profile <span aria-hidden="true">↗</span></a>
                 )}
               </div>
-              <div class="person-card__body">
-                <h3>{person.name}</h3>
+              <div class="team-directory__role">
+                <span class="team-directory__mobile-label">Role</span>
                 <p>{person.title}</p>
-                {person.programTags?.length ? (
-                  <ul class="inline-list">
-                    {person.programTags.map((tag) => <li>{tag}</li>)}
-                  </ul>
-                ) : null}
+              </div>
+              <div class="team-directory__affiliations">
+                <span class="team-directory__mobile-label">Program or fellowship</span>
+                {person.programTags?.map((tag) => <p><span>Program</span>{tag}</p>)}
+                {person.fellowships?.map((fellowship) => <p><span>Fellowship</span>{fellowship}</p>)}
               </div>
             </article>
           ))}
@@ -104,20 +73,38 @@ const directoryIndex = [
   </div>
 
   <section class="section seasonal-register" id="summer-2026">
-    <div class="shell section-intro reveal">
-      <p class="overline">Summer 2026</p>
-      <h2>Summer researchers.</h2>
-    </div>
-    <div class="shell seasonal-register__grid">
-      {peopleData.seasonalMembers.map((person, index) => (
-        <article class="seasonal-entry reveal">
-          <p>{String(index + 1).padStart(2, "0")}</p>
-          <div>
-            <h3>{person.name}</h3>
-            <span>{[person.title, person.program].filter(Boolean).join(" · ")}</span>
-          </div>
-        </article>
-      ))}
+    <div class="shell team-directory__group">
+      <header class="team-directory__group-header reveal">
+        <div>
+          <p class="overline">Summer 2026</p>
+          <h2>Summer researchers</h2>
+        </div>
+        <p>{String(peopleData.seasonalMembers.length).padStart(2, "0")}</p>
+      </header>
+
+      <div class="team-directory__table" role="list">
+        <div class="team-directory__labels" aria-hidden="true">
+          <span>Name</span>
+          <span>Role</span>
+          <span>Program or fellowship</span>
+        </div>
+        {peopleData.seasonalMembers.map((person) => (
+          <article class="team-directory__row reveal" role="listitem">
+            <div class="team-directory__identity">
+              <span class="team-directory__mobile-label">Name</span>
+              <h3>{person.name}</h3>
+            </div>
+            <div class="team-directory__role">
+              <span class="team-directory__mobile-label">Role</span>
+              <p>{person.title}</p>
+            </div>
+            <div class="team-directory__affiliations">
+              <span class="team-directory__mobile-label">Program or fellowship</span>
+              {person.program && <p><span>Program</span>{person.program}</p>}
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 

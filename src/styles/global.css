@@ -723,20 +723,11 @@ main {
 
 .team-signal__grid {
   display: grid;
-  grid-template-columns: minmax(15rem, 0.5fr) minmax(0, 1fr) minmax(16rem, 0.52fr);
-  gap: 4rem;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.48fr);
+  gap: clamp(3rem, 7vw, 7rem);
   align-items: center;
 }
 
-.team-signal__portrait {
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-}
-
-.team-signal__portrait img,
-.profile-masthead__portrait img,
-.leadership-profile__portrait img,
-.person-card__portrait img,
 .paper-card__visual img {
   width: 100%;
   height: 100%;
@@ -1205,8 +1196,7 @@ main {
 
 .profile-masthead__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(24rem, 0.75fr);
-  gap: 6rem;
+  grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
 }
 
@@ -1214,12 +1204,13 @@ main {
   display: grid;
   align-content: center;
   gap: 1.15rem;
+  width: min(58rem, 100%);
   min-width: 0;
-  padding-block: 6rem;
+  padding-block: 7.5rem;
 }
 
 .profile-masthead__copy h1 {
-  max-width: 9ch;
+  max-width: 12ch;
 }
 
 .profile-masthead__title {
@@ -1231,11 +1222,6 @@ main {
   max-width: 42rem;
   margin-block: 0.8rem;
   font-size: 1.16rem;
-}
-
-.profile-masthead__portrait {
-  min-height: 42rem;
-  overflow: hidden;
 }
 
 .appointment-band {
@@ -1354,186 +1340,125 @@ main {
   font-size: 0.68rem;
 }
 
-.leadership-profile__grid {
-  display: grid;
-  grid-template-columns: minmax(22rem, 0.65fr) minmax(0, 1fr);
-  gap: 5rem;
-  align-items: center;
-  padding-block: 1.5rem 2.5rem;
-  border-block: 1px solid var(--line-strong);
-}
-
-.leadership-profile__portrait {
-  aspect-ratio: 4 / 5;
-  max-height: 38rem;
-  overflow: hidden;
-}
-
-.leadership-profile__body {
-  display: grid;
-  gap: 1.1rem;
-}
-
-.leadership-profile__body h2 {
-  max-width: 9ch;
-}
-
-.leadership-profile__body > p:not(.overline) {
-  color: var(--ink-muted);
-  font-size: 1.08rem;
-}
-
-.people-groups {
+.team-directory {
   display: grid;
   gap: 6rem;
 }
 
-.people-group__header {
+.team-directory__group {
+  scroll-margin-top: calc(var(--header-height) + 4rem);
+}
+
+.team-directory__group-header {
   display: flex;
   align-items: end;
   justify-content: space-between;
   gap: 2rem;
-  margin-block-end: 2rem;
-  padding-block-end: 1rem;
-  border-block-end: 1px solid var(--line-strong);
+  margin-block-end: 1.25rem;
 }
 
-.people-group__header h2 {
+.team-directory__group-header h2 {
   font-size: 2.35rem;
 }
 
-.people-group__header p {
+.team-directory__group-header > p {
   color: var(--accent);
   font-family: var(--font-mono);
+  font-size: 0.72rem;
 }
 
-.people-grid {
+.team-directory__table {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3rem 1.5rem;
+  border-block-end: 1px solid var(--line-strong);
 }
 
-.person-card {
-  min-width: 0;
-}
-
-.person-card__portrait {
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  background: var(--surface-soft);
-  border: 1px solid var(--line);
-}
-
-.person-card__monogram {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: clamp(1.15rem, 7%, 2rem);
-  border: 1px solid var(--line-strong);
-  color: var(--ink);
-  background: var(--surface-soft);
-}
-
-.person-card__placeholder-brand {
-  min-height: 4.5rem;
+.team-directory__labels,
+.team-directory__row {
   display: grid;
-  place-items: center;
-  padding: 1rem;
-  border: 1px solid #d6dadd;
-  background: #ffffff;
+  grid-template-columns: minmax(13rem, 0.75fr) minmax(17rem, 0.9fr) minmax(18rem, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
 }
 
-.person-card__monogram .person-card__placeholder-brand img {
-  width: 100%;
-  height: auto;
-  max-height: 3.5rem;
-  object-fit: contain;
-}
-
-.person-card__placeholder-identity {
-  display: grid;
-  gap: 0.45rem;
-  padding-block-start: 1rem;
-  border-block-start: 1px solid var(--line-strong);
-}
-
-.person-card__placeholder-identity span {
+.team-directory__labels {
+  padding-block: 0.7rem;
+  border-block: 1px solid var(--line-strong);
+  color: var(--ink-quiet);
   font-family: var(--font-mono);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 650;
-  line-height: 0.9;
-}
-
-.person-card__placeholder-identity p {
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.person-card__placeholder-identity small {
-  color: var(--ink-muted);
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.person-card__body {
+.team-directory__row {
+  min-width: 0;
+  align-items: start;
+  padding-block: 1.35rem;
+  border-block-start: 1px solid var(--line);
+}
+
+.team-directory__labels + .team-directory__row {
+  border-block-start: 0;
+}
+
+.team-directory__identity,
+.team-directory__role,
+.team-directory__affiliations {
+  min-width: 0;
+}
+
+.team-directory__identity {
   display: grid;
-  gap: 0.45rem;
-  padding-block-start: 1rem;
-  border-block-start: 1px solid var(--line-strong);
+  gap: 0.4rem;
 }
 
-.person-card__body h3 {
-  font-size: 1.05rem;
+.team-directory__identity h3 {
+  font-size: 1rem;
+  line-height: 1.3;
 }
 
-.person-card__body > p {
+.team-directory__identity a {
+  width: fit-content;
+  color: var(--accent-strong);
+  font-size: 0.73rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.team-directory__role p {
   color: var(--ink-muted);
-  font-size: 0.84rem;
+  font-size: 0.87rem;
+  line-height: 1.5;
+}
+
+.team-directory__affiliations {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.team-directory__affiliations p {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.team-directory__affiliations p > span {
+  color: var(--ink-quiet);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.team-directory__mobile-label {
+  display: none;
 }
 
 .seasonal-register {
-  padding-block-end: 1rem;
-}
-
-.seasonal-register__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-block: 1px solid var(--line-strong);
-}
-
-.seasonal-entry {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  gap: 1rem;
-  padding: 1.4rem;
-  border-inline-start: 1px solid var(--line);
-}
-
-.seasonal-entry:first-child {
-  border-inline-start: 0;
-}
-
-.seasonal-entry > p {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-}
-
-.seasonal-entry h3 {
-  font-size: 1rem;
-  line-height: 1.25;
-}
-
-.seasonal-entry span {
-  display: block;
-  margin-block-start: 0.35rem;
-  color: var(--ink-muted);
-  font-size: 0.8rem;
+  padding-block: 1rem var(--section-space);
+  background: var(--surface-soft);
 }
 
 .alumni-register {
@@ -1949,16 +1874,6 @@ main {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .team-signal__grid {
-    grid-template-columns: minmax(15rem, 0.48fr) minmax(0, 1fr);
-  }
-
-  .team-signal__film {
-    grid-column: 1 / -1;
-    min-height: 12rem;
-  }
-
-  .people-grid,
   .alumni-register__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2005,8 +1920,7 @@ main {
   .page-intro__grid,
   .profile-masthead__grid,
   .profile-story__grid,
-  .contact-page__grid,
-  .leadership-profile__grid {
+  .contact-page__grid {
     grid-template-columns: 1fr;
   }
 
@@ -2070,11 +1984,6 @@ main {
 
   .profile-masthead__copy {
     padding-block: 6rem 2rem;
-  }
-
-  .profile-masthead__portrait {
-    min-height: auto;
-    aspect-ratio: 4 / 3;
   }
 
   .appointment-band__inner {
@@ -2141,6 +2050,12 @@ main {
 
   .directory-nav {
     top: var(--header-height);
+  }
+
+  .team-directory__labels,
+  .team-directory__row {
+    grid-template-columns: minmax(11rem, 0.75fr) minmax(13rem, 0.9fr) minmax(14rem, 1fr);
+    gap: 1.5rem;
   }
 }
 
@@ -2232,10 +2147,6 @@ main {
     gap: 2.5rem;
   }
 
-  .team-signal__portrait {
-    width: min(23rem, 100%);
-  }
-
   .publication-lead__facts,
   .page-intro__facts {
     grid-template-columns: 1fr;
@@ -2275,20 +2186,8 @@ main {
 
   .foundational-grid,
   .contact-page__details,
-  .people-grid,
-  .seasonal-register__grid,
   .alumni-register__grid {
     grid-template-columns: 1fr;
-  }
-
-  .seasonal-entry,
-  .seasonal-entry:first-child {
-    border-inline-start: 0;
-    border-block-start: 1px solid var(--line);
-  }
-
-  .seasonal-entry:first-child {
-    border-block-start: 0;
   }
 
   .foundational-item,
@@ -2319,35 +2218,32 @@ main {
     padding-block: 5rem 2rem;
   }
 
-  .profile-masthead__portrait {
-    aspect-ratio: 4 / 5;
+  .team-directory {
+    gap: 4.5rem;
   }
 
-  .leadership-profile__grid {
-    gap: 2.5rem;
+  .team-directory__labels {
+    display: none;
   }
 
-  .leadership-profile__portrait {
-    width: min(24rem, 100%);
+  .team-directory__row {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+    padding-block: 1.5rem;
   }
 
-  .people-groups {
-    gap: 5rem;
+  .team-directory__mobile-label {
+    display: block;
+    margin-block-end: 0.3rem;
+    color: var(--ink-quiet);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
-  .person-card {
-    display: grid;
-    grid-template-columns: minmax(8rem, 0.45fr) minmax(0, 1fr);
-    gap: 1rem;
-    align-items: start;
-  }
-
-  .person-card__portrait {
-    aspect-ratio: 4 / 5;
-  }
-
-  .person-card__body {
-    padding-block-start: 0.7rem;
+  .team-directory__affiliations:has(> .team-directory__mobile-label:only-child) {
+    display: none;
   }
 
   .contact-block--address,
@@ -2423,11 +2319,11 @@ main {
     display: none;
   }
 
-  .person-card {
-    grid-template-columns: 1fr;
+  .team-directory__group-header {
+    align-items: start;
   }
 
-  .person-card__portrait {
-    width: min(15rem, 100%);
+  .team-directory__group-header h2 {
+    font-size: 1.55rem;
   }
 }

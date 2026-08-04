@@ -9,7 +9,7 @@ const selectedPapers = jonathanProfile.representativeWork
   .filter(Boolean);
 ---
 
-<BaseLayout title="Jonathan Abraham" description="Profile of Jonathan Abraham, MD, PhD." socialImage={jonathanProfile.portrait}>
+<BaseLayout title="Jonathan Abraham" description="Profile of Jonathan Abraham, MD, PhD.">
   <section class="profile-masthead">
     <div class="shell profile-masthead__grid">
       <div class="profile-masthead__copy reveal">
@@ -22,9 +22,6 @@ const selectedPapers = jonathanProfile.representativeWork
           <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
           <a class="button button--secondary" href={withBase("/contact/")}>Contact</a>
         </div>
-      </div>
-      <div class="profile-masthead__portrait reveal" style={jonathanProfile.portraitPosition ? `--media-position: ${jonathanProfile.portraitPosition};` : undefined}>
-        <img src={withBase(jonathanProfile.portrait)} alt={jonathanProfile.portraitAlt} loading="eager" />
       </div>
     </div>
   </section>

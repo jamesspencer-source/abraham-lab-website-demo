@@ -45,7 +45,7 @@ const directoryIndex = [
           <div class="team-directory__labels" aria-hidden="true">
             <span>Name</span>
             <span>Role</span>
-            <span>Program or fellowship</span>
+            <span></span>
           </div>
           {group.entries.map((person) => (
             <article class="team-directory__row reveal" role="listitem">
@@ -60,11 +60,12 @@ const directoryIndex = [
                 <span class="team-directory__mobile-label">Role</span>
                 <p>{person.title}</p>
               </div>
-              <div class="team-directory__affiliations">
-                <span class="team-directory__mobile-label">Program or fellowship</span>
-                {person.programTags?.map((tag) => <p><span>Program</span>{tag}</p>)}
-                {person.fellowships?.map((fellowship) => <p><span>Fellowship</span>{fellowship}</p>)}
-              </div>
+              {(person.programTags?.length || person.fellowships?.length) && (
+                <div class="team-directory__affiliations">
+                  {person.programTags?.map((tag) => <p><span>Program</span>{tag}</p>)}
+                  {person.fellowships?.map((fellowship) => <p><span>Fellowship</span>{fellowship}</p>)}
+                </div>
+              )}
             </article>
           ))}
         </div>
@@ -86,7 +87,7 @@ const directoryIndex = [
         <div class="team-directory__labels" aria-hidden="true">
           <span>Name</span>
           <span>Role</span>
-          <span>Program or fellowship</span>
+          <span></span>
         </div>
         {peopleData.seasonalMembers.map((person) => (
           <article class="team-directory__row reveal" role="listitem">
@@ -98,10 +99,11 @@ const directoryIndex = [
               <span class="team-directory__mobile-label">Role</span>
               <p>{person.title}</p>
             </div>
-            <div class="team-directory__affiliations">
-              <span class="team-directory__mobile-label">Program or fellowship</span>
-              {person.program && <p><span>Program</span>{person.program}</p>}
-            </div>
+            {person.program && (
+              <div class="team-directory__affiliations">
+                <p><span>Program</span>{person.program}</p>
+              </div>
+            )}
           </article>
         ))}
       </div>
@@ -110,8 +112,7 @@ const directoryIndex = [
 
   <section class="section alumni-register" id="alumni">
     <div class="shell section-intro reveal">
-      <p class="overline">Alumni</p>
-      <h2>Past members.</h2>
+      <h2>Alumni</h2>
     </div>
     <div class="shell alumni-register__grid">
       {peopleData.alumni.map((group) => (

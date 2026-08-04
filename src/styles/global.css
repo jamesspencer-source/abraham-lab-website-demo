@@ -2242,10 +2242,6 @@ main {
     text-transform: uppercase;
   }
 
-  .team-directory__affiliations:has(> .team-directory__mobile-label:only-child) {
-    display: none;
-  }
-
   .contact-block--address,
   .contact-page__affiliations {
     grid-template-columns: 1fr;

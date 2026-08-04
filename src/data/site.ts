@@ -83,7 +83,7 @@ export const siteData = {
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Veritas+Science+Center%2C+77+Avenue+Louis+Pasteur%2C+Boston%2C+MA+02115",
     mapEmbedUrl:
-      "https://maps.google.com/maps?q=42.33825%2C-71.10362&t=m&z=17&ie=UTF8&iwloc=&output=embed",
+      "https://maps.google.com/maps?q=42.33825%2C-71.10362&t=m&z=16&ie=UTF8&iwloc=&output=embed",
     mapBuilding: "Veritas Science Center (VSC)"
   },
   social: {

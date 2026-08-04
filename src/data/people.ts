@@ -122,17 +122,8 @@ export const peopleData = {
     {
       name: "Louella \"Ella\" Seo",
       title: "Summer Research Student"
-    },
-    {
-      name: "Cecilia \"Cici\" Bradley",
-      title: "Summer Research Technician"
-    },
-    {
-      name: "Zaila Avant-garde",
-      title: "Summer Research Student",
-      program: "SHURP"
     }
-  ],
+  ] as PeopleData["seasonalMembers"],
   alumni: [
     {
       label: "Postdoctoral and Research Fellows",
@@ -166,14 +157,16 @@ export const peopleData = {
       label: "Research Technicians",
       entries: [
         { name: "Adrian Coscia" },
-        { name: "Taleen Dilanyan" }
+        { name: "Taleen Dilanyan" },
+        { name: "Cecilia \"Cici\" Bradley" }
       ]
     },
     {
       label: "Summer Students",
       entries: [
         { name: "Arya Akbarshahi" },
-        { name: "Linzy Malcolm" }
+        { name: "Linzy Malcolm" },
+        { name: "Zaila Avant-garde" }
       ]
     }
   ]

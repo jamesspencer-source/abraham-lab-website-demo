@@ -1147,7 +1147,7 @@ main {
   gap: 2rem;
 }
 
-.archive-year > h3 {
+.archive-year > h2 {
   position: sticky;
   top: calc(var(--header-height) + 1rem);
   align-self: start;
@@ -2201,7 +2201,7 @@ main {
     gap: 0.8rem;
   }
 
-  .archive-year > h3 {
+  .archive-year > h2 {
     position: static;
   }
 

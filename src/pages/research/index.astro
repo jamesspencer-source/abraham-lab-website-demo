@@ -2,16 +2,16 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { withBase } from "../../lib/content";
 
-const destination = withBase("/publications/#research-atlas");
+const destination = withBase("/publications/");
 ---
 
 <BaseLayout title="Research" description="Published research themes from the Abraham Lab." canonicalPath="/publications/" socialImage="/assets/images/publications/arenavirus-gpc.jpeg">
   <section class="legacy-page">
     <div class="narrow-shell legacy-page__inner reveal">
       <p class="overline">Research</p>
-      <h1>Research is organized through the lab’s papers.</h1>
-      <p>Entry, antibody recognition, and replication mechanisms are presented with the publications that establish them.</p>
-      <a class="button button--primary" href={destination}>Explore publications</a>
+      <h1>See the lab’s publications.</h1>
+      <p>The publication record includes work on viral entry, antibody recognition, and replication.</p>
+      <a class="button button--primary" href={destination}>View publications</a>
     </div>
   </section>
 </BaseLayout>

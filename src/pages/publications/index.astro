@@ -1,157 +1,26 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { publications } from "../../data/publications";
-import { researchPrograms } from "../../data/research";
-import { formatMonthYear, groupPublicationsByYear, homepageProofOnly, leadPublication, withBase } from "../../lib/content";
+import { groupPublicationsByYear } from "../../lib/content";
 
-const proofPapers = homepageProofOnly(publications);
-const leadPaper = leadPublication(publications) ?? proofPapers[0];
-const recentPapers = [...publications]
-  .filter((item) => item.title !== leadPaper?.title)
-  .filter((item) => item.significanceLine)
-  .sort((left, right) => {
-    const leftDate = left.publishedAt ?? `${left.year}-01-01`;
-    const rightDate = right.publishedAt ?? `${right.year}-01-01`;
-    return new Date(rightDate).getTime() - new Date(leftDate).getTime();
-  })
-  .slice(0, 3);
-const foundationalPublications = publications
-  .filter((item) => item.foundational)
-  .filter((item) => item.title !== leadPaper?.title)
-  .slice(0, 6);
 const groupedPublications = groupPublicationsByYear(publications);
-const canShowVisual = (item: (typeof publications)[number]) =>
-  Boolean(item.image && (item.visualReuseStatus === "open-access" || item.visualReuseStatus === "lab-approved"));
 ---
 
-<BaseLayout title="Publications" description="Publications from the Abraham Lab." socialImage={proofPapers.find(canShowVisual)?.image}>
+<BaseLayout title="Publications" description="Peer-reviewed papers and preprints from the Abraham Lab.">
   <section class="page-intro page-intro--publications">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
-        <p class="overline">Publications</p>
-        <h1>Papers from the Abraham Lab.</h1>
-        <p>Papers from the lab define viral entry, antibody recognition, replication, and antiviral response.</p>
+        <h1>Publications.</h1>
+        <p>Peer-reviewed papers and preprints from the Abraham Lab.</p>
       </div>
     </div>
   </section>
 
-  {leadPaper && (
-    <section class="publication-lead">
-      <div class="shell publication-lead__grid">
-        <div class="publication-lead__copy reveal">
-          <p class="overline overline--inverse">Recent paper · {leadPaper.journal} · {leadPaper.year}</p>
-          <h2>{leadPaper.title}</h2>
-          <p class="publication-lead__summary">{leadPaper.summary}</p>
-          <p class="citation-text citation-text--inverse">{leadPaper.citation}</p>
-          <div class="button-row">
-            <a class="button button--light" href={leadPaper.link} target="_blank" rel="noreferrer">Read paper</a>
-            {leadPaper.coverageLinks?.[0] && (
-              <a class="button button--outline-light" href={leadPaper.coverageLinks[0]} target="_blank" rel="noreferrer">HMS coverage</a>
-            )}
-          </div>
-        </div>
-        <div class="publication-lead__signal reveal">
-          <p>{leadPaper.system}</p>
-          {leadPaper.methodCluster?.split(",").map((method) => <span>{method.trim()}</span>)}
-        </div>
-        <dl class="publication-lead__facts reveal">
-          <div><dt>{leadPaper.journal === "bioRxiv" ? "Posted" : "Published"}</dt><dd>{leadPaper.publishedAt ? formatMonthYear(leadPaper.publishedAt) : leadPaper.year}</dd></div>
-          <div><dt>Methods</dt><dd>{leadPaper.methodCluster}</dd></div>
-          {leadPaper.doi && <div><dt>DOI</dt><dd>{leadPaper.doi}</dd></div>}
-          {leadPaper.pmid && <div><dt>PMID</dt><dd>{leadPaper.pmid}</dd></div>}
-        </dl>
-      </div>
-    </section>
-  )}
-
-  <section class="section recent-papers">
-    <div class="shell section-intro reveal">
-      <p class="overline">Recent papers</p>
-      <h2>Mosquito receptor recognition, herpesvirus replication, and arenavirus spike organization.</h2>
-    </div>
-
-    <div class="shell paper-grid">
-      {recentPapers.map((item, index) => (
-        <article class="paper-card reveal">
-          {canShowVisual(item) ? (
-            <div class="paper-card__visual" style={item.imagePosition ? `--media-position: ${item.imagePosition};` : undefined}>
-              <img src={withBase(item.image!)} alt={item.imageAlt!} loading="lazy" />
-            </div>
-          ) : (
-            <div class="paper-card__signal" aria-hidden="true">
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <strong>{item.system}</strong>
-            </div>
-          )}
-          <div class="paper-card__body">
-            <p class="paper-card__meta">{item.journal} · {item.publishedAt ? formatMonthYear(item.publishedAt) : item.year}</p>
-            <h3><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h3>
-            <p>{item.significanceLine}</p>
-            <div class="paper-card__footer">
-              <span>{item.openAccess ? "Open access" : "Journal access"}</span>
-              <a class="arrow-link" href={item.link} target="_blank" rel="noreferrer"><span>Read</span><span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="section mechanism-section" id="research-atlas">
-    <div class="shell section-intro reveal">
-      <p class="overline">Mechanisms</p>
-      <h2>Viral entry, antibody recognition, and replication.</h2>
-    </div>
-
-    <div class="shell mechanism-list">
-      {researchPrograms.map((item, index) => (
-        <article class="mechanism-row reveal">
-          <p class="mechanism-row__number">{String(index + 1).padStart(2, "0")}</p>
-          <div class="mechanism-row__body">
-            <h3>{item.title}</h3>
-            <p>{item.summary}</p>
-            <ul class="inline-list" aria-label="Representative systems">
-              {item.systems.slice(0, 3).map((system) => <li>{system}</li>)}
-            </ul>
-          </div>
-          <div class="mechanism-row__paper">
-            <p class="overline">Representative paper</p>
-            <a href={item.papers[0].href} target="_blank" rel="noreferrer">{item.papers[0].title}</a>
-            <span>{item.papers[0].journal} · {item.papers[0].year}</span>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  {foundationalPublications.length > 0 && (
-    <section class="section foundational-section">
-      <div class="shell section-intro reveal">
-        <p class="overline">Foundational work</p>
-        <h2>Receptors, antibody escape, and antiviral resistance.</h2>
-      </div>
-      <div class="shell foundational-grid">
-        {foundationalPublications.map((item) => (
-          <article class="foundational-item reveal">
-            <p>{item.journal} · {item.year}</p>
-            <h3><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h3>
-            {item.significanceLine && <span>{item.significanceLine}</span>}
-          </article>
-        ))}
-      </div>
-    </section>
-  )}
-
-  <section class="section archive-section">
-    <div class="shell section-intro reveal">
-      <p class="overline">Archive</p>
-      <h2>Publication record.</h2>
-    </div>
-
+  <section class="section archive-section" aria-label="Publication record">
     <div class="shell archive-list">
       {groupedPublications.map((yearGroup) => (
-        <section class="archive-year reveal">
-          <h3>{yearGroup.year}</h3>
+        <section class="archive-year reveal" aria-labelledby={`publications-${yearGroup.year}`}>
+          <h2 id={`publications-${yearGroup.year}`}>{yearGroup.year}</h2>
           <ol>
             {yearGroup.entries.map((item) => (
               <li>
@@ -159,9 +28,11 @@ const canShowVisual = (item: (typeof publications)[number]) =>
                   <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
                   <p>{item.citation}</p>
                 </div>
-                <p class="archive-year__meta">
-                  {[item.journal, item.pmid ? `PMID ${item.pmid}` : undefined].filter(Boolean).join(" · ")}
-                </p>
+                {(item.journal || item.pmid) && (
+                  <p class="archive-year__meta">
+                    {[item.journal, item.pmid ? `PMID ${item.pmid}` : undefined].filter(Boolean).join(" · ")}
+                  </p>
+                )}
               </li>
             ))}
           </ol>

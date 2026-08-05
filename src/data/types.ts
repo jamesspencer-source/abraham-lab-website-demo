@@ -131,6 +131,8 @@ export type Person = {
   roleSummary?: string;
   programTags?: Array<"Virology" | "MD-PhD / Biophysics" | "MD-PhD / Biological and Biomedical Sciences">;
   fellowships?: string[];
+  labStart?: string;
+  labEnd?: string;
   group: "Leadership" | "Postdoctoral Fellows & Instructors" | "Graduate Students" | "Operations & Strategy";
   order: number;
 };
@@ -139,11 +141,15 @@ export type SeasonalMember = {
   name: string;
   title: string;
   program?: string;
+  labStart?: string;
+  labEnd?: string;
 };
 
 export type AlumniEntry = {
   name: string;
   destination?: string;
+  labStart?: string;
+  labEnd?: string;
 };
 
 export type AlumniGroup = {

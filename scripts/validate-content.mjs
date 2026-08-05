@@ -121,6 +121,21 @@ function compareDatesDesc(left, right) {
   return new Date(right).getTime() - new Date(left).getTime();
 }
 
+function validateLabDates(entry, label, fail) {
+  const pattern = /^\d{4}-(0[1-9]|1[0-2])$/;
+
+  for (const field of ["labStart", "labEnd"]) {
+    const value = entry?.[field];
+    if (value !== undefined && (typeof value !== "string" || !pattern.test(value))) {
+      fail(`${label}.${field} must use YYYY-MM format.`);
+    }
+  }
+
+  if (entry?.labStart && entry?.labEnd && entry.labEnd < entry.labStart) {
+    fail(`${label}.labEnd cannot be earlier than labStart.`);
+  }
+}
+
 function sentenceWordCount(sentence) {
   return (sentence.match(/\b[\p{L}\p{N}'-]+\b/gu) || []).length;
 }
@@ -353,6 +368,12 @@ async function main() {
   }
 
   for (const person of peopleData.currentMembers || []) {
+    validateLabDates(person, `Current member "${person.name}"`, fail);
+
+    if (person.labEnd) {
+      fail(`Current member "${person.name}" cannot have a labEnd date.`);
+    }
+
     if (person.name === "Jonathan Abraham, MD, PhD" && person.title !== "Professor of Microbiology, Harvard Medical School") {
       fail('Jonathan Abraham must be listed as "Professor of Microbiology, Harvard Medical School" in peopleData.');
     }
@@ -393,6 +414,16 @@ async function main() {
       }
     } else if (tags.length) {
       fail(`Person "${person.name}" has programTags but no verified tag assignment.`);
+    }
+  }
+
+  for (const person of peopleData.seasonalMembers || []) {
+    validateLabDates(person, `Seasonal member "${person.name}"`, fail);
+  }
+
+  for (const group of peopleData.alumni || []) {
+    for (const person of group.entries || []) {
+      validateLabDates(person, `Alumnus "${person.name}"`, fail);
     }
   }
 

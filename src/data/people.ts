@@ -1,6 +1,6 @@
 import type { PeopleData } from "./types";
 
-export const peopleData = {
+export const peopleData: PeopleData = {
   currentMembers: [
     {
       name: "Jonathan Abraham, MD, PhD",
@@ -11,6 +11,7 @@ export const peopleData = {
     {
       name: "Pan Yang, Ph.D.",
       title: "Instructor of Microbiology",
+      labStart: "2019-07",
       group: "Postdoctoral Fellows & Instructors",
       order: 2
     },
@@ -23,6 +24,7 @@ export const peopleData = {
     {
       name: "Side Hu, Ph.D.",
       title: "Postdoctoral Fellow",
+      labStart: "2022-10",
       group: "Postdoctoral Fellows & Instructors",
       order: 4
     },
@@ -41,6 +43,7 @@ export const peopleData = {
     {
       name: "Cristina Gutierrez-Vargas, Ph.D.",
       title: "Postdoctoral Fellow",
+      labStart: "2020-04",
       group: "Postdoctoral Fellows & Instructors",
       order: 7
     },
@@ -80,6 +83,7 @@ export const peopleData = {
       name: "Rick Li",
       title: "Graduate Student",
       programTags: ["MD-PhD / Biological and Biomedical Sciences"],
+      labStart: "2025-09",
       group: "Graduate Students",
       order: 13
     },
@@ -101,6 +105,7 @@ export const peopleData = {
       name: "Alex Liu",
       title: "Graduate Student",
       programTags: ["Virology"],
+      labStart: "2026-05",
       group: "Graduate Students",
       order: 16
     },
@@ -108,6 +113,7 @@ export const peopleData = {
       name: "Kevin Gong",
       title: "Graduate Student",
       programTags: ["Virology"],
+      labStart: "2026-06",
       group: "Graduate Students",
       order: 17
     },
@@ -121,9 +127,10 @@ export const peopleData = {
   seasonalMembers: [
     {
       name: "Louella \"Ella\" Seo",
-      title: "Summer Research Student"
+      title: "Summer Research Student",
+      labStart: "2026-06"
     }
-  ] as PeopleData["seasonalMembers"],
+  ],
   alumni: [
     {
       label: "Postdoctoral and Research Fellows",
@@ -134,7 +141,7 @@ export const peopleData = {
         { name: "Chieyu Lin, Ph.D." },
         { name: "Sundaresh Shankar, Ph.D." },
         { name: "Keshalini Sabaratnam, Ph.D." },
-        { name: "Xiaoyi Fan, Ph.D." }
+        { name: "Xiaoyi Fan, Ph.D.", labStart: "2022-08", labEnd: "2026-06" }
       ]
     },
     {
@@ -158,7 +165,7 @@ export const peopleData = {
       entries: [
         { name: "Adrian Coscia" },
         { name: "Taleen Dilanyan" },
-        { name: "Cecilia \"Cici\" Bradley" }
+        { name: "Cecilia \"Cici\" Bradley", labEnd: "2026-07" }
       ]
     },
     {
@@ -166,8 +173,8 @@ export const peopleData = {
       entries: [
         { name: "Arya Akbarshahi" },
         { name: "Linzy Malcolm" },
-        { name: "Zaila Avant-garde" }
+        { name: "Zaila Avant-garde", labStart: "2026-06", labEnd: "2026-08" }
       ]
     }
   ]
-} satisfies PeopleData;
+};

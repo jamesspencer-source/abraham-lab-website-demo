@@ -7,6 +7,36 @@ const groupedPeople = groupPeople(peopleData.currentMembers);
 const totalAlumni = peopleData.alumni.reduce((total, group) => total + group.entries.length, 0);
 const anchorFor = (label: string) =>
   label.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+const formatLabMonth = (value: string) => {
+  const [year, month] = value.split("-");
+  return `${monthNames[Number(month) - 1]} ${year}`;
+};
+const formatLabDates = (entry: { labStart?: string; labEnd?: string }) => {
+  if (entry.labStart && entry.labEnd) {
+    return `${formatLabMonth(entry.labStart)} - ${formatLabMonth(entry.labEnd)}`;
+  }
+  if (entry.labStart) {
+    return `Joined ${formatLabMonth(entry.labStart)}`;
+  }
+  if (entry.labEnd) {
+    return `Left ${formatLabMonth(entry.labEnd)}`;
+  }
+  return null;
+};
 const directoryIndex = [
   ...groupedPeople.map((group) => ({ label: group.label, count: group.entries.length, id: anchorFor(group.label) })),
   { label: "Summer 2026", count: peopleData.seasonalMembers.length, id: "summer-2026" },
@@ -45,7 +75,7 @@ const directoryIndex = [
           <div class="team-directory__labels" aria-hidden="true">
             <span>Name</span>
             <span>Role</span>
-            <span></span>
+            <span>Details</span>
           </div>
           {group.entries.map((person) => (
             <article class="team-directory__row reveal" role="listitem">
@@ -60,10 +90,11 @@ const directoryIndex = [
                 <span class="team-directory__mobile-label">Role</span>
                 <p>{person.title}</p>
               </div>
-              {(person.programTags?.length || person.fellowships?.length) && (
+              {(person.programTags?.length || person.fellowships?.length || person.labStart || person.labEnd) && (
                 <div class="team-directory__affiliations">
                   {person.programTags?.map((tag) => <p><span>Program</span>{tag}</p>)}
                   {person.fellowships?.map((fellowship) => <p><span>Fellowship</span>{fellowship}</p>)}
+                  {formatLabDates(person) && <p><span>Lab</span>{formatLabDates(person)}</p>}
                 </div>
               )}
             </article>
@@ -87,7 +118,7 @@ const directoryIndex = [
         <div class="team-directory__labels" aria-hidden="true">
           <span>Name</span>
           <span>Role</span>
-          <span></span>
+          <span>Details</span>
         </div>
         {peopleData.seasonalMembers.map((person) => (
           <article class="team-directory__row reveal" role="listitem">
@@ -99,9 +130,10 @@ const directoryIndex = [
               <span class="team-directory__mobile-label">Role</span>
               <p>{person.title}</p>
             </div>
-            {person.program && (
+            {(person.program || person.labStart || person.labEnd) && (
               <div class="team-directory__affiliations">
-                <p><span>Program</span>{person.program}</p>
+                {person.program && <p><span>Program</span>{person.program}</p>}
+                {formatLabDates(person) && <p><span>Lab</span>{formatLabDates(person)}</p>}
               </div>
             )}
           </article>
@@ -120,7 +152,11 @@ const directoryIndex = [
           <h3>{group.label}</h3>
           <ul>
             {group.entries.map((entry) => (
-              <li><span>{entry.name}</span>{entry.destination && <small>{entry.destination}</small>}</li>
+              <li>
+                <span>{entry.name}</span>
+                {formatLabDates(entry) && <small class="alumni-column__dates">{formatLabDates(entry)}</small>}
+                {entry.destination && <small>{entry.destination}</small>}
+              </li>
             ))}
           </ul>
         </section>

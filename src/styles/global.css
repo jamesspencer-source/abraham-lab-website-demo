@@ -1502,6 +1502,13 @@ main {
   font-size: 0.72rem;
 }
 
+.alumni-column__dates {
+  color: var(--ink-muted) !important;
+  font-family: var(--font-mono);
+  font-size: 0.66rem !important;
+  letter-spacing: 0.02em;
+}
+
 .updates-page {
   padding-block-end: var(--section-space);
 }

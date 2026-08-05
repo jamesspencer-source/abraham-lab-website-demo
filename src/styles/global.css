@@ -1457,7 +1457,7 @@ main {
 }
 
 .seasonal-register {
-  padding-block: 1rem var(--section-space);
+  padding-block: clamp(3rem, 5vw, 4.5rem) var(--section-space);
   background: var(--surface-soft);
 }
 

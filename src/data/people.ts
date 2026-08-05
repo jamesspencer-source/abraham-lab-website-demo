@@ -56,6 +56,7 @@ export const peopleData: PeopleData = {
     {
       name: "Judy Huang, Ph.D.",
       title: "Postdoctoral Fellow",
+      labStart: "2025-08",
       group: "Postdoctoral Fellows & Instructors",
       order: 9
     },
@@ -105,7 +106,7 @@ export const peopleData: PeopleData = {
       name: "Alex Liu",
       title: "Graduate Student",
       programTags: ["Virology"],
-      labStart: "2026-05",
+      labStart: "2026-07",
       group: "Graduate Students",
       order: 16
     },
@@ -113,13 +114,14 @@ export const peopleData: PeopleData = {
       name: "Kevin Gong",
       title: "Graduate Student",
       programTags: ["Virology"],
-      labStart: "2026-06",
+      labStart: "2026-07",
       group: "Graduate Students",
       order: 17
     },
     {
       name: "James Spencer",
       title: "Lab Manager",
+      labStart: "2025-08",
       group: "Operations & Strategy",
       order: 18
     }
@@ -153,12 +155,12 @@ export const peopleData: PeopleData = {
           name: "Katherine Nabel Smith",
           destination: "Penn Dermatology, University of Pennsylvania"
         },
-        { name: "Haley Varnum, Ph.D." }
+        { name: "Haley Varnum, Ph.D.", labEnd: "2026-07" }
       ]
     },
     {
       label: "Research Assistant and Lab Manager",
-      entries: [{ name: "Vesna Brusic" }]
+      entries: [{ name: "Vesna Brusic", labEnd: "2025-12" }]
     },
     {
       label: "Research Technicians",

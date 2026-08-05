@@ -1452,6 +1452,14 @@ main {
   text-transform: uppercase;
 }
 
+.team-directory__affiliations p.team-directory__dates {
+  display: block;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+
 .team-directory__mobile-label {
   display: none;
 }

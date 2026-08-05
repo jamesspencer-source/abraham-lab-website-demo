@@ -30,10 +30,10 @@ const formatLabDates = (entry: { labStart?: string; labEnd?: string }) => {
     return `${formatLabMonth(entry.labStart)} - ${formatLabMonth(entry.labEnd)}`;
   }
   if (entry.labStart) {
-    return `Joined ${formatLabMonth(entry.labStart)}`;
+    return formatLabMonth(entry.labStart);
   }
   if (entry.labEnd) {
-    return `Left ${formatLabMonth(entry.labEnd)}`;
+    return formatLabMonth(entry.labEnd);
   }
   return null;
 };
@@ -94,7 +94,7 @@ const directoryIndex = [
                 <div class="team-directory__affiliations">
                   {person.programTags?.map((tag) => <p><span>Program</span>{tag}</p>)}
                   {person.fellowships?.map((fellowship) => <p><span>Fellowship</span>{fellowship}</p>)}
-                  {formatLabDates(person) && <p><span>Lab</span>{formatLabDates(person)}</p>}
+                  {formatLabDates(person) && <p class="team-directory__dates">{formatLabDates(person)}</p>}
                 </div>
               )}
             </article>
@@ -133,7 +133,7 @@ const directoryIndex = [
             {(person.program || person.labStart || person.labEnd) && (
               <div class="team-directory__affiliations">
                 {person.program && <p><span>Program</span>{person.program}</p>}
-                {formatLabDates(person) && <p><span>Lab</span>{formatLabDates(person)}</p>}
+                {formatLabDates(person) && <p class="team-directory__dates">{formatLabDates(person)}</p>}
               </div>
             )}
           </article>

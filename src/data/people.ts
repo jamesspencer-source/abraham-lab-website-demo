@@ -18,6 +18,7 @@ export const peopleData: PeopleData = {
     {
       name: "Wanyu Li, Ph.D.",
       title: "Postdoctoral Fellow",
+      labStart: "2023-07",
       group: "Postdoctoral Fellows & Instructors",
       order: 3
     },
@@ -31,12 +32,14 @@ export const peopleData: PeopleData = {
     {
       name: "Chenggong Ji, Ph.D.",
       title: "Postdoctoral Fellow",
+      labStart: "2024-09",
       group: "Postdoctoral Fellows & Instructors",
       order: 5
     },
     {
       name: "Zishuo Yu, Ph.D.",
       title: "Postdoctoral Fellow",
+      labStart: "2022-11",
       group: "Postdoctoral Fellows & Instructors",
       order: 6
     },
@@ -63,6 +66,7 @@ export const peopleData: PeopleData = {
     {
       name: "Colin Mann, Ph.D.",
       title: "Postdoctoral Fellow",
+      labStart: "2023-07",
       group: "Postdoctoral Fellows & Instructors",
       order: 10
     },
@@ -70,6 +74,7 @@ export const peopleData: PeopleData = {
       name: "Jesse Plung",
       title: "Graduate Student",
       programTags: ["Virology"],
+      labStart: "2024-07",
       group: "Graduate Students",
       order: 11
     },
@@ -137,8 +142,12 @@ export const peopleData: PeopleData = {
     {
       label: "Postdoctoral and Research Fellows",
       entries: [
-        { name: "Dan Olal, Ph.D." },
-        { name: "Poorna Goswami, Ph.D.", destination: "Lasell University" },
+        { name: "Dan Olal, Ph.D.", labStart: "2019-02" },
+        {
+          name: "Poorna Goswami, Ph.D.",
+          destination: "Lasell University",
+          labStart: "2024-04"
+        },
         { name: "Gabor Oroszán, Ph.D.", destination: "VRG Therapeutics" },
         { name: "Chieyu Lin, Ph.D." },
         { name: "Sundaresh Shankar, Ph.D." },
@@ -155,12 +164,12 @@ export const peopleData: PeopleData = {
           name: "Katherine Nabel Smith",
           destination: "Penn Dermatology, University of Pennsylvania"
         },
-        { name: "Haley Varnum, Ph.D.", labEnd: "2026-07" }
+        { name: "Haley Varnum, Ph.D.", labStart: "2023-09", labEnd: "2026-07" }
       ]
     },
     {
       label: "Research Assistant and Lab Manager",
-      entries: [{ name: "Vesna Brusic", labEnd: "2025-11" }]
+      entries: [{ name: "Vesna Brusic", labStart: "2019-10", labEnd: "2025-11" }]
     },
     {
       label: "Research Technicians",

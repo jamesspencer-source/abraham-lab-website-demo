@@ -160,7 +160,7 @@ export const peopleData: PeopleData = {
     },
     {
       label: "Research Assistant and Lab Manager",
-      entries: [{ name: "Vesna Brusic", labEnd: "2025-12" }]
+      entries: [{ name: "Vesna Brusic", labEnd: "2025-11" }]
     },
     {
       label: "Research Technicians",

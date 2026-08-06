@@ -30,10 +30,10 @@ const formatLabDates = (entry: { labStart?: string; labEnd?: string }) => {
     return `${formatLabMonth(entry.labStart)} - ${formatLabMonth(entry.labEnd)}`;
   }
   if (entry.labStart) {
-    return formatLabMonth(entry.labStart);
+    return `Started ${formatLabMonth(entry.labStart)}`;
   }
   if (entry.labEnd) {
-    return formatLabMonth(entry.labEnd);
+    return `Ended ${formatLabMonth(entry.labEnd)}`;
   }
   return null;
 };

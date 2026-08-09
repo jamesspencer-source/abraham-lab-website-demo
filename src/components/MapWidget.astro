@@ -3,14 +3,19 @@ import { siteData } from "../data/site";
 
 interface Props {
   eyebrow?: string;
-  mode?: "contact";
 }
 
-const { eyebrow = "Campus map", mode = "contact" } = Astro.props;
+const { eyebrow = "Campus map" } = Astro.props;
 ---
 
-<aside class:list={["map-widget", `map-widget--${mode}`, "reveal"]}>
+<aside class="map-widget reveal">
   <div class="map-widget__media">
+    <div class="map-widget__fallback" aria-hidden="true">
+      <span class="map-widget__grid"></span>
+      <span class="map-widget__pin"></span>
+      <strong>{siteData.contact.mapBuilding}</strong>
+      <small>Harvard Longwood campus</small>
+    </div>
     <iframe
       class="map-widget__iframe"
       title="Google map of Veritas Science Center at Harvard Medical School"
@@ -18,15 +23,11 @@ const { eyebrow = "Campus map", mode = "contact" } = Astro.props;
       loading="eager"
       referrerpolicy="no-referrer-when-downgrade"
       allowfullscreen
+      onload="this.parentElement.classList.add('is-loaded')"
     ></iframe>
-    <div class="map-widget__location">
-      <span>Harvard Longwood campus</span>
-      <strong>{siteData.contact.mapBuilding}</strong>
-    </div>
   </div>
-
   <div class="map-widget__body">
     <p class="overline">{eyebrow}</p>
-    <a class="arrow-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer"><span>Open in Google Maps</span><span aria-hidden="true">↗</span></a>
+    <a class="text-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
   </div>
 </aside>

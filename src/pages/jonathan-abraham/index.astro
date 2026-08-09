@@ -1,32 +1,48 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { jonathanProfile } from "../../data/jonathan";
-import { publications } from "../../data/publications";
+import { siteData } from "../../data/site";
 import { withBase } from "../../lib/content";
 
-const selectedPapers = jonathanProfile.representativeWork
-  .map((title) => publications.find((item) => item.title === title))
-  .filter(Boolean);
+const personData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: jonathanProfile.name,
+  jobTitle: "Professor of Microbiology",
+  affiliation: [
+    { "@type": "Organization", name: "Harvard Medical School" },
+    { "@type": "Organization", name: "Howard Hughes Medical Institute" }
+  ],
+  url: new URL(withBase("/jonathan-abraham/"), siteData.url).toString(),
+  sameAs: jonathanProfile.profileLinks.slice(0, 2).map((item) => item.href)
+};
 ---
 
-<BaseLayout title="Jonathan Abraham" description="Profile of Jonathan Abraham, MD, PhD.">
-  <section class="profile-masthead">
-    <div class="shell profile-masthead__grid">
-      <div class="profile-masthead__copy reveal">
+<BaseLayout
+  title="Jonathan Abraham"
+  description="Jonathan Abraham is Professor of Microbiology at Harvard Medical School and an HHMI Investigator."
+  structuredData={personData}
+>
+  <section class="profile-dossier">
+    <div class="shell profile-dossier__grid">
+      <header class="profile-dossier__identity reveal">
         <p class="overline">Principal investigator</p>
         <h1>{jonathanProfile.name}</h1>
-        <p class="profile-masthead__title">{jonathanProfile.title}</p>
-        <p class="profile-masthead__title">{jonathanProfile.secondaryTitle}</p>
-        <p class="profile-masthead__overview">{jonathanProfile.overview}</p>
-        <div class="button-row">
-          <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
-          <a class="button button--secondary" href={withBase("/contact/")}>Contact</a>
+        <p>{jonathanProfile.title}</p>
+        <p>{jonathanProfile.secondaryTitle}</p>
+      </header>
+      <div class="profile-dossier__summary reveal">
+        <p class="profile-dossier__overview">{jonathanProfile.overview}</p>
+        <div class="profile-dossier__links">
+          {jonathanProfile.profileLinks.map((item) => (
+            <a class="text-link" href={item.href} target="_blank" rel="noreferrer">{item.label} <span aria-hidden="true">↗</span></a>
+          ))}
         </div>
       </div>
     </div>
   </section>
 
-  <section class="appointment-band">
+  <section class="appointment-band" aria-label="Appointments">
     <div class="shell appointment-band__inner">
       {jonathanProfile.appointments.map((item) => (
         <div class="appointment-band__item">
@@ -40,30 +56,19 @@ const selectedPapers = jonathanProfile.representativeWork
   <section class="section profile-story">
     <div class="shell profile-story__grid">
       <article class="profile-story__body reveal">
-        <p class="overline">Biography</p>
+        <h2>Biography</h2>
         {jonathanProfile.biography.map((paragraph) => <p>{paragraph}</p>)}
+        <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
       </article>
 
       <aside class="profile-story__rail">
         <section class="profile-list reveal">
-          <p class="overline">Distinctions</p>
-          <ul>
-            {jonathanProfile.distinctions.map((item) => <li>{item}</li>)}
-          </ul>
+          <h2>Research</h2>
+          <ul>{jonathanProfile.focusAreas.map((item) => <li>{item}</li>)}</ul>
         </section>
         <section class="profile-list reveal">
-          <p class="overline">Research focus</p>
-          <ul>
-            {jonathanProfile.focusAreas.map((item) => <li>{item}</li>)}
-          </ul>
-        </section>
-        <section class="profile-list reveal">
-          <p class="overline">Selected work</p>
-          <ul>
-            {selectedPapers.map((item) => item && (
-              <li><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></li>
-            ))}
-          </ul>
+          <h2>Distinctions</h2>
+          <ul>{jonathanProfile.distinctions.map((item) => <li>{item}</li>)}</ul>
         </section>
       </aside>
     </div>

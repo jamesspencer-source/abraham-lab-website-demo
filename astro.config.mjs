@@ -14,6 +14,6 @@ export default defineConfig({
     format: "directory"
   },
   server: {
-    host: true
+    host: "127.0.0.1"
   }
 });

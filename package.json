@@ -4,20 +4,32 @@
   "private": true,
   "description": "Static Astro site for the Abraham Lab at Harvard Medical School.",
   "scripts": {
-    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
-    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
-    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev --host 127.0.0.1",
+    "security:check": "node scripts/validate-security.mjs",
+    "build": "node scripts/validate-security.mjs && node scripts/validate-content.mjs && ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "postbuild": "node scripts/validate-build.mjs",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview --host 127.0.0.1",
     "validate:content": "node scripts/validate-content.mjs",
     "visual:setup": "PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium",
     "visual:review": "npm run build && npm run validate:content && node scripts/visual-review.mjs"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
-    "@types/node": "^25.6.0",
-    "playwright": "^1.54.2"
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^25.9.4",
+    "playwright": "^1.61.1"
   },
   "dependencies": {
-    "astro": "^6.1.5",
+    "astro": "^7.2.0",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1",
+    "fast-uri": "^3.1.5",
+    "js-yaml": "^4.3.1",
+    "nanoid": "^3.3.18",
+    "postcss": "^8.5.26",
+    "sharp": "^0.35.3",
+    "svgo": "^4.0.2",
+    "vite": "^8.0.13"
   }
 }

@@ -15,6 +15,10 @@ export type HeroFigure = {
   note?: string;
   href?: string;
   imagePosition?: string;
+  figureCredit?: string;
+  figureNumber?: string;
+  license?: string;
+  visualSource?: string;
 };
 
 export type Affiliation = {
@@ -62,28 +66,6 @@ export type SiteData = {
   };
 };
 
-export type PublicationReference = {
-  title: string;
-  journal: string;
-  year: number;
-  href: string;
-  note?: string;
-};
-
-export type ResearchProgram = {
-  title: string;
-  keyQuestion: string;
-  importance: string;
-  summary: string;
-  paragraphs: string[];
-  systems: string[];
-  methods: string[];
-  image: string;
-  imagePosition?: string;
-  imageAlt: string;
-  papers: PublicationReference[];
-};
-
 export type Publication = {
   year: number;
   title: string;
@@ -108,6 +90,13 @@ export type Publication = {
   imagePosition?: string;
   imageAlt?: string;
   visualReuseStatus?: "open-access" | "lab-approved" | "link-only";
+  articleType: "Research article" | "Preprint" | "Commentary";
+  correspondingAuthor: true;
+  correspondenceSource: string;
+  figureCredit?: string;
+  figureNumber?: string;
+  license?: string;
+  visualSource?: string;
 };
 
 export type NewsItem = {
@@ -176,4 +165,8 @@ export type JonathanProfile = {
   distinctions: string[];
   focusAreas: string[];
   representativeWork: string[];
+  profileLinks: Array<{
+    label: string;
+    href: string;
+  }>;
 };

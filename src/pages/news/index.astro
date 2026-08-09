@@ -7,33 +7,29 @@ import { siteData } from "../../data/site";
 const renderedNews = newsItems.filter((item) => item.category === "Institutional coverage");
 ---
 
-<BaseLayout title="HMS coverage" description="Harvard Medical School coverage of work from the Abraham Lab." socialImage={renderedNews[0]?.image}>
-  <section class="page-intro page-intro--updates">
+<BaseLayout title="HMS coverage" description="Harvard Medical School films and stories about the Abraham Lab and its work.">
+  <section class="page-intro page-intro--quiet">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
         <p class="overline">HMS coverage</p>
-        <h1>Films and stories from Harvard Medical School.</h1>
-        <p>Harvard Medical School coverage of the lab and its published work.</p>
+        <h1>Films and stories.</h1>
+        <p>Harvard Medical School coverage of the lab and its work.</p>
       </div>
-      <div class="page-intro__aside reveal">
-        <p class="overline">Follow</p>
-        <a class="arrow-link" href={siteData.social.x} target="_blank" rel="noreferrer"><span>Abraham Lab on X</span><span aria-hidden="true">↗</span></a>
-      </div>
+      <a class="text-link page-intro__link" href={siteData.social.x} target="_blank" rel="noreferrer">Abraham Lab on X <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 
-  <section class="section updates-page">
-    <div class="shell updates-page__list">
-      {renderedNews.map((item, index) => (
-        <article class="update-entry reveal">
-          <p class="update-entry__number">{String(index + 1).padStart(2, "0")}</p>
-          <div class="update-entry__date"><time datetime={item.date}>{formatDateLabel(item.date)}</time><span>{item.category}</span></div>
-          <div class="update-entry__body">
+  <section class="coverage-list">
+    <div class="shell">
+      {renderedNews.map((item) => (
+        <article class="coverage-row reveal">
+          <time datetime={item.date}>{formatDateLabel(item.date)}</time>
+          <div>
             <p class="overline">{item.source}</p>
-            <h2>{item.title}</h2>
+            <h2><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h2>
             <p>{item.summary}</p>
           </div>
-          <a class="arrow-link" href={item.link} target="_blank" rel="noreferrer"><span>{item.linkLabel ?? "Read"}</span><span aria-hidden="true">↗</span></a>
+          <a class="coverage-row__action" href={item.link} target="_blank" rel="noreferrer" aria-label={`${item.linkLabel ?? "Open"}: ${item.title}`}>↗</a>
         </article>
       ))}
     </div>

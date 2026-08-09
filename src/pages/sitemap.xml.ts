@@ -6,7 +6,6 @@ const rawBase = (process.env.SITE_BASE_PATH || "").trim();
 const basePath = rawBase ? `/${rawBase.replace(/^\/+|\/+$/g, "")}/` : "/";
 const pages = [
   "/",
-  "/research/",
   "/publications/",
   "/jonathan-abraham/",
   "/team/",

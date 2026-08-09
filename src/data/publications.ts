@@ -9,20 +9,23 @@ export const publications: Publication[] = [
     journal: "bioRxiv",
     publishedAt: "2026-07-29",
     citation:
-      "Fan X, Li W, Plung JS, Plante JA, Hajovsky EM, Tapryal N, Diaz J, Hazell NC, Ji C, Liu Z, Hammond CE, Weaver SC, Plante KS, Abraham J. bioRxiv. 2026. Preprint.",
-    link: "https://doi.org/10.64898/2026.07.28.741352",
+      "Fan X, Li W, Plung JS, Plante JA, Hajovsky EM, Tapryal N, Diaz J, Hazell NC, Ji C, Liu Z, Hammond CE, Weaver SC, Plante KS, Abraham J. bioRxiv. 2026.",
+    link: "https://www.biorxiv.org/content/10.64898/2026.07.28.741352v1",
     doi: "10.64898/2026.07.28.741352",
     featured: true,
     leadFeature: true,
     homepageProof: true,
-    system: "chikungunya virus",
-    methodCluster: "cryo-EM, receptor binding, functional virology",
+    system: "Chikungunya virus",
+    methodCluster: "Cryo-EM, receptor binding, functional virology",
     significanceLine:
-      "Shows how chikungunya virus recognizes the mosquito receptor Lachesin and identifies receptor variants that block binding.",
+      "Shows how chikungunya virus recognizes the mosquito receptor Lachesin and identifies receptor changes that block binding.",
     openAccess: true,
     summary:
-      "Cryo-EM structures show how chikungunya and related alphaviruses bind mosquito Lachesin and define receptor changes that prevent viral recognition.",
-    visualReuseStatus: "open-access"
+      "Cryo-EM structures show how chikungunya and related alphaviruses bind mosquito Lachesin. The work also defines receptor changes that prevent viral recognition.",
+    visualReuseStatus: "open-access",
+    articleType: "Preprint",
+    correspondingAuthor: true,
+    correspondenceSource: "https://www.biorxiv.org/content/10.64898/2026.07.28.741352v1"
   },
   {
     year: 2026,
@@ -32,19 +35,22 @@ export const publications: Publication[] = [
     journal: "bioRxiv",
     publishedAt: "2026-07-28",
     citation:
-      "Plung JS, Mameli E, Li W, de Bruin ACM, Plante JA, Fan X, Das B, Willett BC, Hu Y, Hajovsky EM, Varnum H, Anekal PV, Sun X, Thornburg K, Brusic V, Hammond CE, Montero Llopis P, Viswanatha R, Shaw WR, Catteruccia F, Weaver SC, Plante KS, Perrimon N, Abraham J. bioRxiv. 2026. Preprint.",
-    link: "https://doi.org/10.64898/2026.07.28.741058",
+      "Plung JS, Mameli E, Li W, de Bruin ACM, Plante JA, Fan X, Das B, Willett BC, Hu Y, Hajovsky EM, Varnum H, Anekal PV, Sun X, Thornburg K, Brusic V, Hammond CE, Montero Llopis P, Viswanatha R, Shaw WR, Catteruccia F, Weaver SC, Plante KS, Perrimon N, Abraham J. bioRxiv. 2026.",
+    link: "https://www.biorxiv.org/content/10.64898/2026.07.28.741058v1",
     doi: "10.64898/2026.07.28.741058",
     featured: true,
     homepageProof: true,
-    system: "arthritogenic alphaviruses",
+    system: "Arthritogenic alphaviruses",
     methodCluster: "CRISPR screening, receptor binding, functional virology",
     significanceLine:
       "Identifies Lachesin as a mosquito receptor for chikungunya virus and related arthritogenic alphaviruses.",
     openAccess: true,
     summary:
-      "CRISPR screening and infection studies identify Lachesin as a mosquito receptor used by chikungunya virus and related arthritogenic alphaviruses.",
-    visualReuseStatus: "open-access"
+      "CRISPR screening and infection studies identify Lachesin as a mosquito receptor used by chikungunya virus and related alphaviruses.",
+    visualReuseStatus: "open-access",
+    articleType: "Preprint",
+    correspondingAuthor: true,
+    correspondenceSource: "https://www.biorxiv.org/content/10.64898/2026.07.28.741058v1"
   },
   {
     year: 2026,
@@ -54,74 +60,95 @@ export const publications: Publication[] = [
     journal: "Cell",
     publishedAt: "2026-01-22",
     citation:
-      "Yu Z*, Sathyanarayana P*, Liu C, Tan JMJ, Yang P, Das B, Olal D, Hu S, Fan X, Ji C, Weller SK, Shekhar M, Coen DM, Kranzusch PJ, Loparo JJ, Abraham J. Cell. 2026.",
-    link: "https://www.cell.com/cell/fulltext/S0092-8674(25)01376-5",
+      "Yu Z, Sathyanarayana P, Liu C, Tan JMJ, Yang P, Das B, Olal D, Hu S, Fan X, Ji C, Weller SK, Shekhar M, Coen DM, Kranzusch PJ, Loparo JJ, Abraham J. Cell. 2026;189(2):478-494.e18.",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC13082216/",
     doi: "10.1016/j.cell.2025.11.041",
     pmid: "41468884",
     featured: true,
     homepageProof: true,
     system: "HSV-1",
-    methodCluster: "single-particle cryo-EM, biochemistry, inhibitor mechanism",
+    methodCluster: "Cryo-EM, biochemistry, single-molecule analysis",
     significanceLine: "Shows how helicase-primase inhibitors arrest herpesvirus replication.",
-    openAccess: false,
+    openAccess: true,
     coverageLinks: ["https://hms.harvard.edu/news/researchers-now-understand-how-new-class-antivirals-works"],
     summary:
-      "Structural and single-molecule analysis shows how helicase-primase inhibitors block herpesvirus DNA replication and reveals assembly of a replication fork complex.",
-    image: "/assets/images/publications/hsv-helicase-primase.jpg",
-    imagePosition: "center 34%",
-    visualReuseStatus: "link-only",
-    imageAlt:
-      "Publication figure showing the HSV helicase-primase complex and replication fork assembly."
+      "Structural and single-molecule analyses show how helicase-primase inhibitors block herpesvirus DNA replication and how the replication fork complex assembles.",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pmc.ncbi.nlm.nih.gov/articles/PMC13082216/"
   },
   {
     year: 2025,
     title: "Molecular organization of the New World arenavirus spike glycoprotein complex",
-    authors:
-      "Mann CJ, Yang P, Olal D, Fan X, Nabel Smith K, Clark LE, Krammer F, Bian Y, Abraham J",
+    authors: "Mann CJ, Yang P, Olal D, Fan X, Smith KN, Clark LE, Krammer F, Bian Y, Abraham J",
     journal: "Nature Microbiology",
     publishedAt: "2025-08-08",
     citation:
-      "Mann CJ*, Yang P, Olal D, Fan X, Nabel Smith K, Clarke LE, Krammer F, Bian Y, Abraham J. Nature Microbiology. 2025.",
+      "Mann CJ, Yang P, Olal D, Fan X, Smith KN, Clark LE, Krammer F, Bian Y, Abraham J. Nature Microbiology. 2025;10(9):2207-2220.",
     link: "https://www.nature.com/articles/s41564-025-02085-6",
     doi: "10.1038/s41564-025-02085-6",
     pmid: "40781447",
     featured: true,
     system: "New World arenaviruses",
-    methodCluster: "single-particle cryo-EM, glycoprotein architecture",
-    significanceLine: "Defines the organization of the arenavirus spike glycoprotein complex.",
+    methodCluster: "Cryo-EM, glycoprotein architecture",
+    significanceLine: "Defines the organization of the New World arenavirus spike glycoprotein complex.",
     openAccess: true,
     summary:
-      "Cryo-EM analysis defines the organization of New World arenavirus glycoprotein complexes and their receptor-facing architecture.",
-    image: "/assets/images/publications/arenavirus-gpc.jpeg",
-    imagePosition: "center 42%",
+      "Cryo-EM structures define the organization of New World arenavirus glycoprotein complexes and their receptor-facing architecture.",
+    image: "/assets/images/publications/arenavirus-gpc-figure-2.png",
+    imagePosition: "center",
+    imageAlt: "Cryo-EM structures and biochemical measurements of the Machupo virus glycoprotein complex.",
     visualReuseStatus: "open-access",
-    imageAlt:
-      "Structural figure illustrating the organization of the New World arenavirus spike glycoprotein complex."
+    figureCredit: "Mann et al., Nature Microbiology (2025)",
+    figureNumber: "Figure 2",
+    license: "CC BY 4.0",
+    visualSource: "https://www.nature.com/articles/s41564-025-02085-6/figures/2",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://www.nature.com/articles/s41564-025-02085-6"
   },
   {
     year: 2025,
     title: "Molecular basis for shifted receptor recognition by an encephalitic arbovirus",
     authors:
-      "Fan X, Li W, Oros J, Plante JA, Mitchell BM, Plung JS, Basu H, Nagappan-Chettiar S, Boeckers JM, Tjang LV, Mann CJ, Brusic V, Buck TK, Varnum H, Yang P, Malcom LM, Choi SY, de Souza WM, Chiu IM, Umemori H, Weaver SC, Plante KS, Abraham J",
+      "Fan X, Li W, Oros J, Plante JA, Mitchell BM, Plung JS, Basu H, Nagappan-Chettiar S, Boeckers JM, Tjang LV, Mann CJ, Brusic V, Buck TK, Varnum H, Yang P, Malcolm LM, Choi SY, de Souza WM, Chiu IM, Umemori H, Weaver SC, Plante KS, Abraham J",
     journal: "Cell",
-    publishedAt: "2025-04-04",
+    publishedAt: "2025-05-29",
     citation:
-      "Fan X*, Li W*, Oros J, Plante JA, Mitchell BM, Plung JS, Basu H, Nagappan-Chettiar S, Boeckers JM, Tjang LV, Mann CJ, Brusic V, Buck TK, Varnum H, Yang P, Malcom LM, Choi SY, de Souza WM, Chiu IM, Umemori H, Weaver SM, Plante KS, Abraham J. Cell. 2025.",
-    link: "https://www.cell.com/cell/fulltext/S0092-8674(25)00347-2",
+      "Fan X, Li W, Oros J, Plante JA, Mitchell BM, Plung JS, Basu H, Nagappan-Chettiar S, Boeckers JM, Tjang LV, Mann CJ, Brusic V, Buck TK, Varnum H, Yang P, Malcolm LM, Choi SY, de Souza WM, Chiu IM, Umemori H, Weaver SC, Plante KS, Abraham J. Cell. 2025;188(11):2957-2973.e28.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/40187345/",
     doi: "10.1016/j.cell.2025.03.029",
     pmid: "40187345",
     featured: true,
-    system: "encephalitic arboviruses",
-    methodCluster: "structural biology, receptor binding, functional virology",
+    system: "Western equine encephalitis virus",
+    methodCluster: "Structural biology, receptor binding, functional virology",
     significanceLine: "Explains shifted receptor recognition in an encephalitic arbovirus.",
     openAccess: false,
     summary:
-      "Structural and functional analysis shows how receptor recognition shifted in an encephalitic arbovirus and links that shift to tropism.",
-    image: "/assets/images/publications/weev-structures.jpeg",
-    imagePosition: "center 38%",
-    visualReuseStatus: "link-only",
-    imageAlt:
-      "Structural figure showing comparative receptor recognition in an encephalitic arbovirus."
+      "Structural and functional studies show how receptor recognition shifted in an encephalitic arbovirus and connect that shift to viral tropism.",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/40187345/"
+  },
+  {
+    year: 2025,
+    title: "Structural and functional analysis of the Nipah virus polymerase complex",
+    authors: "Hu S, Kim H, Yang P, Yu Z, Ludeke B, Mobilia S, Pan J, Stratton M, Bian Y, Fearns R, Abraham J",
+    journal: "Cell",
+    publishedAt: "2025-02-06",
+    citation:
+      "Hu S, Kim H, Yang P, Yu Z, Ludeke B, Mobilia S, Pan J, Stratton M, Bian Y, Fearns R, Abraham J. Cell. 2025;188(3):688-703.e18.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/39837328/",
+    doi: "10.1016/j.cell.2024.12.021",
+    pmid: "39837328",
+    system: "Nipah virus",
+    methodCluster: "Cryo-EM, enzymology, polymerase function",
+    significanceLine: "Defines the structure and function of the Nipah virus polymerase complex.",
+    openAccess: false,
+    summary: "Cryo-EM and functional work define the Nipah virus polymerase complex and features tied to RNA replication.",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/39837328/"
   },
   {
     year: 2024,
@@ -129,23 +156,43 @@ export const publications: Publication[] = [
     authors:
       "Shankar S, Pan J, Yang P, Bian Y, Oroszán G, Yu Z, Mukherjee P, Filman DJ, Hogle JM, Shekhar M, Coen DM, Abraham J",
     journal: "Cell",
-    publishedAt: "2024-08-27",
+    publishedAt: "2024-10-03",
     citation:
-      "Shankar S*, Pan J, Yang P, Bian Y, Oroszán G, Yu Z, Mukherjee P, Filman DJ, Hogle JM, Shekhar M, Coen DM, Abraham J. Cell. 2024.",
-    link: "https://www.cell.com/cell/fulltext/S0092-8674(24)00842-0",
+      "Shankar S, Pan J, Yang P, Bian Y, Oroszán G, Yu Z, Mukherjee P, Filman DJ, Hogle JM, Shekhar M, Coen DM, Abraham J. Cell. 2024;187(20):5572-5586.e15.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/39197451/",
     doi: "10.1016/j.cell.2024.07.048",
     pmid: "39197451",
     foundational: true,
-    system: "viral DNA polymerases",
-    methodCluster: "cryo-EM, resistance mapping, polymerase mechanism",
-    significanceLine: "Maps structural routes to antiviral resistance.",
+    system: "Viral DNA polymerases",
+    methodCluster: "Cryo-EM, resistance mapping, polymerase mechanism",
+    significanceLine: "Maps structural routes to antiviral drug resistance.",
     openAccess: false,
-    summary:
-      "Structural analysis of viral DNA polymerases defines routes to resistance against clinically relevant antivirals.",
-    image: "/assets/images/research/polymerase-complex.jpg",
-    imagePosition: "center 42%",
-    imageAlt:
-      "Structural figure showing a viral polymerase complex and resistance-associated conformational features."
+    summary: "Structures of viral DNA polymerases define routes to resistance against antiviral drugs.",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/39197451/"
+  },
+  {
+    year: 2024,
+    title: "Structural basis for VLDLR recognition by eastern equine encephalitis virus",
+    authors:
+      "Yang P, Li W, Fan X, Pan J, Mann CJ, Varnum H, Clark LE, Clark SA, Coscia A, Basu H, Smith KN, Brusic V, Abraham J",
+    journal: "Nature Communications",
+    publishedAt: "2024-08-02",
+    citation:
+      "Yang P, Li W, Fan X, Pan J, Mann CJ, Varnum H, Clark LE, Clark SA, Coscia A, Basu H, Smith KN, Brusic V, Abraham J. Nature Communications. 2024;15:6548.",
+    link: "https://www.nature.com/articles/s41467-024-50887-9",
+    doi: "10.1038/s41467-024-50887-9",
+    pmid: "39095394",
+    foundational: true,
+    system: "Eastern equine encephalitis virus",
+    methodCluster: "Cryo-EM, receptor recognition, host engagement",
+    significanceLine: "Defines how eastern equine encephalitis virus binds VLDLR.",
+    openAccess: true,
+    summary: "Structural analysis shows how eastern equine encephalitis virus binds VLDLR.",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://www.nature.com/articles/s41467-024-50887-9"
   },
   {
     year: 2024,
@@ -153,196 +200,148 @@ export const publications: Publication[] = [
     authors:
       "Li W, Plante JA, Lin C, Basu H, Plung JS, Fan X, Boeckers JM, Oros J, Buck TK, Anekal PV, Hanson WA, Varnum H, Wells A, Mann CJ, Tjang LV, Yang P, Reyna RA, Mitchell BM, Shinde DP, Walker JL, Choi SY, Brusic V, Montero Llopis P, Weaver SC, Umemori H, Chiu IM, Plante KS, Abraham J",
     journal: "Nature",
-    publishedAt: "2024-07-24",
+    publishedAt: "2024-08-15",
     citation:
-      "Li W*, Plante JA*, Lin C, Basu H, Plung JS, Fan X, Boeckers JM, Oros J, Buck TK, Anekal PV, Hanson WA, Varnum H, Wells A, Mann CJ, Tjang LV, Yang P, Reyna RA, Mitchell BM, Shinde DP, Walker JL, Choi SY, Brusic V, Montero Llopis P, Weaver SC, Umemori H, Chiu IM, Plante KS, Abraham J. Nature. 2024.",
+      "Li W, Plante JA, Lin C, Basu H, Plung JS, Fan X, Boeckers JM, Oros J, Buck TK, Anekal PV, Hanson WA, Varnum H, Wells A, Mann CJ, Tjang LV, Yang P, Reyna RA, Mitchell BM, Shinde DP, Walker JL, Choi SY, Brusic V, Montero Llopis P, Weaver SC, Umemori H, Chiu IM, Plante KS, Abraham J. Nature. 2024;632(8025):614-621.",
     link: "https://www.nature.com/articles/s41586-024-07740-2",
     doi: "10.1038/s41586-024-07740-2",
     pmid: "39048821",
     foundational: true,
-    system: "western equine encephalitis virus",
+    system: "Western equine encephalitis virus",
     methodCluster: "CRISPR screening, receptor biology, functional virology",
-    significanceLine: "Identifies PCDH10 as a WEEV receptor and shows that receptor use differs between historical and contemporary strains.",
+    significanceLine: "Identifies PCDH10 as a receptor and shows how receptor use changed among WEEV strains.",
     openAccess: true,
-    summary:
-      "The study identifies PCDH10 as a WEEV receptor and compares receptor recognition in historical and contemporary strains.",
-    visualReuseStatus: "open-access"
-  },
-  {
-    year: 2024,
-    title: "Structural basis for VLDLR recognition by eastern equine encephalitis virus",
-    authors:
-      "Yang P, Li W, Fan X, Pan J, Mann CJ, Varnum H, Clark LE, Clark SA, Coscia A, Basu H, Nabel Smith K, Brusic V, Abraham J",
-    journal: "Nature Communications",
-    publishedAt: "2024-08-02",
-    citation:
-      "Yang P*, Li W*, Fan X, Pan J, Mann CJ, Varnum H, Clark LE, Clark SA, Coscia A, Basu H, Nabel Smith K, Brusic V, Abraham J. Nature Communications. 2024.",
-    link: "https://www.nature.com/articles/s41467-024-50887-9",
-    doi: "10.1038/s41467-024-50887-9",
-    pmid: "39095394",
-    featured: true,
-    foundational: true,
-    system: "eastern equine encephalitis virus",
-    methodCluster: "cryo-EM, receptor recognition, host engagement",
-    significanceLine: "Defines VLDLR engagement by eastern equine encephalitis virus.",
-    openAccess: true,
-    summary:
-      "Structural analysis shows how eastern equine encephalitis virus binds VLDLR.",
-    image: "/assets/images/publications/vldlr-recognition.jpeg",
-    imagePosition: "center 44%",
-    imageAlt:
-      "Publication figure summarizing VLDLR recognition by eastern equine encephalitis virus."
-  },
-  {
-    year: 2025,
-    title: "Structural and functional analysis of the Nipah virus polymerase complex",
-    authors:
-      "Hu S, Kim H, Yang P, Yu Z, Ludeke B, Mobilia S, Pan J, Stratton M, Bian Y, Fearns R, Abraham J",
-    journal: "Cell",
-    publishedAt: "2025-01-20",
-    citation:
-      "Hu S*, Kim H*, Yang P, Yu Z, Ludeke B, Mobilia S, Pan J, Stratton M, Bian Y, Fearns R, Abraham J. Cell. 2025.",
-    link: "https://pubmed.ncbi.nlm.nih.gov/39837328/",
-    doi: "10.1016/j.cell.2024.12.021",
-    pmid: "39837328",
-    system: "Nipah virus",
-    methodCluster: "cryo-EM, enzymology, polymerase function",
-    significanceLine: "Defines Nipah polymerase architecture relevant to antiviral development.",
-    openAccess: false,
-    summary:
-      "Cryo-EM and functional work define the Nipah virus polymerase complex and features tied to RNA replication."
+    summary: "The study identifies PCDH10 as a WEEV receptor and compares receptor use in historical and contemporary strains.",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://www.nature.com/articles/s41586-024-07740-2"
   },
   {
     year: 2022,
-    title: "VLDLR and ApoER2 are receptors for multiple alphaviruses",
-    foundational: true,
-    journal: "Nature",
-    citation:
-      "Clark LE*, Clark SA*, Lin CY*, Liu J*, Coscia AC, Nabel KG, Yang P, Neel DV, Lee H, Brusic V, Stryapunina I, Plante KS, Ahmed AA, Catteruccia F, Young-Pearse TL, Chiu IM, Llopis PM, Weaver SC, Abraham J. Nature. 2022.",
-    link: "https://www.nature.com/articles/s41586-021-04326-0"
-  },
-  {
-    year: 2022,
-    title: "Structural basis for continued antibody evasion by the SARS-CoV-2 receptor-binding domain",
-    foundational: true,
-    journal: "Science",
-    citation:
-      "Nabel KG*, Clark SA*, Shankar S*, Pan J*, Clark LE, Yang P, Coscia A, McKay LGA, Varnum HH, Brusic V, Tolan NV, Zhou G, Desjardins M, Turbett SE, Kanjilal S, Sherman AC, Dighe A, LaRocque RC, Ryan ET, Tylek C, Cohen-Solal JF, Darcy AT, Clabers A, Fan Y, Griffiths A, Correia IR, Seagal J, Baden LR, Charles RC, Abraham J. Science. 2022.",
-    link: "https://www.science.org/doi/10.1126/science.abl6251"
+    title: "Monoclonal Antibodies with Extended Half-Life to Prevent Covid-19",
+    authors: "Abraham J",
+    journal: "New England Journal of Medicine",
+    publishedAt: "2022-06-09",
+    citation: "Abraham J. New England Journal of Medicine. 2022;386(23):2236-2238.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/35675183/",
+    doi: "10.1056/NEJMe2205563",
+    pmid: "35675183",
+    articleType: "Commentary",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/35675183/"
   },
   {
     year: 2022,
     title: "Emerging enterococcus pore-forming toxins with MHC/HLA-I as receptors",
-    foundational: true,
+    authors:
+      "Xiong X, Tian S, Yang P, Lebreton F, Bao H, Sheng K, Yin L, Chen P, Zhang J, Qi W, Ruan J, Wu H, Chen H, Breault DT, Wu H, Earl AM, Gilmore MS, Abraham J, Dong M",
     journal: "Cell",
+    publishedAt: "2022-03-31",
     citation:
-      "Xiong X, Tian S, Yang P, Lebreton F, Bao H, Sheng K, Yin L, Chen P, Zhang J, Qi W, Ruan J, Wu H, Chen H, Breault DT, Wu H, Earl AM, Gilmore MS, Abraham J, Dong M. Cell. 2022.",
-    link: "https://www.cell.com/cell/pdf/S0092-8674(22)00142-8.pdf"
+      "Xiong X, Tian S, Yang P, Lebreton F, Bao H, Sheng K, Yin L, Chen P, Zhang J, Qi W, Ruan J, Wu H, Chen H, Breault DT, Wu H, Earl AM, Gilmore MS, Abraham J, Dong M. Cell. 2022;185(7):1157-1171.e22.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/35259335/",
+    doi: "10.1016/j.cell.2022.02.002",
+    pmid: "35259335",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/35259335/"
   },
   {
     year: 2022,
-    title: "Monoclonal antibodies with extended half-life to prevent COVID-19",
-    foundational: true,
-    journal: "New England Journal of Medicine",
-    citation: "Abraham J. New England Journal of Medicine. 2022.",
-    link: "https://www.nejm.org/doi/full/10.1056/NEJMe2205563"
-  },
-  {
-    year: 2022,
-    title: "Host receptor-targeted therapeutic approach to counter pathogenic New World mammarenavirus infections",
-    journal: "Nature Communications",
-    citation:
-      "Hickerson BT, Daniels-Wells TR, Payes C, Clark LE, Candelaria PV, Bailey KW, Sefing EJ, Zink S, Ziegenbein J, Abraham J, Helguera G, Penichet ML, Gowen BB. Nature Communications. 2022.",
-    link: "https://www.nature.com/articles/s41467-021-27949-3"
-  },
-  {
-    year: 2022,
-    title: "FcγR-mediated SARS-CoV-2 infection of monocytes activates inflammation",
-    foundational: true,
+    title: "VLDLR and ApoER2 are receptors for multiple alphaviruses",
+    authors:
+      "Clark LE, Clark SA, Lin CY, Liu J, Coscia AC, Nabel KG, Yang P, Neel DV, Lee H, Brusic V, Stryapunina I, Plante KS, Ahmed AA, Catteruccia F, Young-Pearse TL, Chiu IM, Montero Llopis P, Weaver SC, Abraham J",
     journal: "Nature",
+    publishedAt: "2022-02-17",
     citation:
-      "Junqueira C, Crespo Â, Ranjbar S, de Lacerda LB, Lewandrowski M, Ingber J, Parry B, Ravid S, Clark S, Schrimpf MR, Ho F, Beakes C, Margolin J, Russell N, Kays K, Boucau J, Das Adhikari U, Vora SM, Leger V, Gehrke L, Henderson LA, Janssen E, Kwon D, Sander C, Abraham J, Goldberg MB, Wu H, Mehta G, Bell S, Goldfeld AE, Filbin MR, Lieberman J. Nature. 2022.",
-    link: "https://www.nature.com/articles/s41586-022-04702-4"
+      "Clark LE, Clark SA, Lin CY, Liu J, Coscia AC, Nabel KG, Yang P, Neel DV, Lee H, Brusic V, Stryapunina I, Plante KS, Ahmed AA, Catteruccia F, Young-Pearse TL, Chiu IM, Montero Llopis P, Weaver SC, Abraham J. Nature. 2022;602(7897):475-480.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/34929721/",
+    doi: "10.1038/s41586-021-04326-0",
+    pmid: "34929721",
+    foundational: true,
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/34929721/"
   },
   {
     year: 2022,
-    title: "IgM antibodies derived from memory B cells are potent cross-variant neutralizers of SARS-CoV-2",
-    foundational: true,
-    journal: "Journal of Experimental Medicine",
+    title: "Structural basis for continued antibody evasion by the SARS-CoV-2 receptor-binding domain",
+    authors:
+      "Nabel KG, Clark SA, Shankar S, Pan J, Clark LE, Yang P, Coscia A, McKay LGA, Varnum HH, Brusic V, Tolan NV, Zhou G, Desjardins M, Turbett SE, Kanjilal S, Sherman AC, Dighe A, LaRocque RC, Ryan ET, Tylek C, Cohen-Solal JF, Darcy AT, Clabers A, Fan Y, Griffiths A, Correia IR, Seagal J, Baden LR, Charles RC, Abraham J",
+    journal: "Science",
+    publishedAt: "2022-01-21",
     citation:
-      "Hale M, Netland J, Chen Y, Thouvenel CD, Smith KN, Rich LM, Vanderwall ER, Miranda MC, Eggenberger J, Hao L, Watson MJ, Mundorff CC, Rodda LB, King NP, Guttman M, Gale M, Abraham J, Debley JS, Pepper M, Rawlings DJ. Journal of Experimental Medicine. 2022.",
-    link: "https://rupress.org/jem/article/219/9/e20220849/213384/IgM-antibodies-derived-from-memory-B-cells-are"
-  },
-  {
-    year: 2022,
-    title:
-      "Antibody-based inhibition of pathogenic New World hemorrhagic fever mammarenaviruses by steric occlusion of the human transferrin receptor 1 apical domain",
+      "Nabel KG, Clark SA, Shankar S, Pan J, Clark LE, Yang P, Coscia A, McKay LGA, Varnum HH, Brusic V, Tolan NV, Zhou G, Desjardins M, Turbett SE, Kanjilal S, Sherman AC, Dighe A, LaRocque RC, Ryan ET, Tylek C, Cohen-Solal JF, Darcy AT, Clabers A, Fan Y, Griffiths A, Correia IR, Seagal J, Baden LR, Charles RC, Abraham J. Science. 2022;375(6578):eabl6251.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/34855508/",
+    doi: "10.1126/science.abl6251",
+    pmid: "34855508",
     foundational: true,
-    journal: "Journal of Virology",
-    citation:
-      "Ferrero S, Flores MD, Short C, Vazquez CA, Clark LE, Ziegenbein J, Zink S, Fuentes D, Payes C, Batto MV, Collazo M, García CC, Abraham J, Cordo SM, Rodriguez JA, Helguera G. Journal of Virology. 2022.",
-    link:
-      "https://journals.asm.org/doi/full/10.1128/jvi.01868-20?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org"
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/34855508/"
   },
   {
     year: 2021,
     title: "SARS-CoV-2 evolution in an immunocompromised host reveals shared neutralization escape mechanisms",
-    foundational: true,
+    authors:
+      "Clark SA, Clark LE, Pan J, Coscia A, McKay LGA, Shankar S, Johnson RI, Brusic V, Choudhary MC, Regan J, Li JZ, Griffiths A, Abraham J",
     journal: "Cell",
+    publishedAt: "2021-05-13",
     citation:
-      "Clark SA*, Clark LE*, Pan J*, Coscia A, McKay LGA, Shankar S, Johnson RI, Brusic V, Choudhary MC, Regan J, Li JZ, Griffiths A, Abraham J. Cell. 2021.",
-    link: "https://www.cell.com/cell/fulltext/S0092-8674(21)00355-X"
+      "Clark SA, Clark LE, Pan J, Coscia A, McKay LGA, Shankar S, Johnson RI, Brusic V, Choudhary MC, Regan J, Li JZ, Griffiths A, Abraham J. Cell. 2021;184(10):2605-2617.e18.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/33831372/",
+    doi: "10.1016/j.cell.2021.03.027",
+    pmid: "33831372",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/33831372/"
   },
   {
     year: 2021,
     title: "Transferrin receptor targeting by de novo sheet extension",
+    authors:
+      "Sahtoe DD, Coscia A, Mustafaoglu N, Miller LM, Olal D, Vulovic I, Yu TY, Goreshnik I, Lin YR, Clark L, Busch F, Steward L, Wysocki VH, Ingber DE, Abraham J, Baker D",
     journal: "Proceedings of the National Academy of Sciences",
+    publishedAt: "2021-04-27",
     citation:
-      "Sahtoe DD, Coscia A, Mustafaoglu N, Miller LM, Olal D, Vulovic I, Yu TY, Goreshnik I, Lin YR, Clark L, Busch F, Steward L, Wysocki VH, Ingber DE, Abraham J, Baker D. Proceedings of the National Academy of Sciences. 2021.",
-    link: "https://www.pnas.org/content/118/17/e2021569118.long"
-  },
-  {
-    year: 2021,
-    title: "Glycoprotein N-linked glycans play a critical role in arenavirus pathogenicity",
-    journal: "PLoS Pathogens",
-    citation:
-      "Koma T, Huang C, Coscia A, Hallam S, Manning JT, Maruyama J, Walker AG, Miller M, Smith JN, Patterson M, Abraham J, Paessler S. PLoS Pathogens. 2021.",
-    link:
-      "https://journals.plos.org/plospathogens/article/authors?id=10.1371/journal.ppat.1009356"
-  },
-  {
-    year: 2021,
-    title: "Rapid generation of potent antibodies by autonomous hypermutation in yeast",
-    journal: "Nature Chemical Biology",
-    citation:
-      "Wellner A, McMahon C, Gilman MSA, Clements JR, Clark S, Nguyen KM, Ho MH, Hu VJ, Shin JE, Feldman J, Hauser BM, Caradonna TM, Wingler LM, Schmidt AG, Marks DS, Abraham J, Kruse AC, Liu CC. Nature Chemical Biology. 2021.",
-    link: "https://www.nature.com/articles/s41589-021-00832-4"
+      "Sahtoe DD, Coscia A, Mustafaoglu N, Miller LM, Olal D, Vulovic I, Yu TY, Goreshnik I, Lin YR, Clark L, Busch F, Steward L, Wysocki VH, Ingber DE, Abraham J, Baker D. Proceedings of the National Academy of Sciences. 2021;118(17):e2021569118.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/33879614/",
+    doi: "10.1073/pnas.2021569118",
+    pmid: "33879614",
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/33879614/"
   },
   {
     year: 2020,
     title: "Passive antibody therapy in COVID-19",
+    authors: "Abraham J",
     journal: "Nature Reviews Immunology",
-    citation: "Abraham J. Nature Reviews Immunology. 2020.",
-    link: "https://www.nature.com/articles/s41577-020-0365-7#citeas"
+    publishedAt: "2020-07-01",
+    citation: "Abraham J. Nature Reviews Immunology. 2020;20(7):401-403.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/32533109/",
+    doi: "10.1038/s41577-020-0365-7",
+    pmid: "32533109",
+    articleType: "Commentary",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/32533109/"
   },
   {
     year: 2018,
-    title:
-      "Vaccine-elicited receptor-binding site antibodies neutralize two New World hemorrhagic fever arenaviruses",
-    foundational: true,
+    title: "Vaccine-elicited receptor-binding site antibodies neutralize two New World hemorrhagic fever arenaviruses",
+    authors:
+      "Clark LE, Mahmutovic S, Raymond DD, Dilanyan T, Koma T, Manning JT, Shankar S, Levis SC, Briggiler AM, Enria DA, Wucherpfennig KW, Paessler S, Abraham J",
     journal: "Nature Communications",
+    publishedAt: "2018-05-14",
     citation:
-      "Clark LE, Mahmutovic S, Raymond DD, Dilanyan T, Koma T, Manning JT, Shankar S, Levis SC, Briggiler AM, Enria DA, Wucherpfennig KW, Paessler S, Abraham J. Nature Communications. 2018.",
-    link: "https://www.nature.com/articles/s41467-018-04271-z"
-  },
-  {
-    year: 2018,
-    title: "Transferrin receptor 1 is a reticulocyte-specific receptor for Plasmodium vivax",
+      "Clark LE, Mahmutovic S, Raymond DD, Dilanyan T, Koma T, Manning JT, Shankar S, Levis SC, Briggiler AM, Enria DA, Wucherpfennig KW, Paessler S, Abraham J. Nature Communications. 2018;9:1884.",
+    link: "https://pubmed.ncbi.nlm.nih.gov/29760382/",
+    doi: "10.1038/s41467-018-04271-z",
+    pmid: "29760382",
     foundational: true,
-    journal: "Science",
-    citation:
-      "Gruszczyk J, Kanjee U, Chan LJ, Menant S, Malleret B, Lim NTY, Schmidt CQ, Mok YF, Lin KM, Pearson RD, Rangel G, Smith BJ, Call MJ, Weekes MP, Griffin MDW, Murphy JM, Abraham J, Sriprawat K, Menezes MJ, Ferreira MU, Russell B, Renia L, Duraisingh MT, Tham WH. Science. 2018.",
-    link: "https://science.sciencemag.org/content/359/6371/48.long"
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/29760382/"
   },
   {
     year: 2015,
@@ -351,44 +350,13 @@ export const publications: Publication[] = [
     journal: "Cell Host & Microbe",
     publishedAt: "2015-12-09",
     citation:
-      "Mahmutovic S, Clark L, Levis SC, Briggiler AM, Enria DA, Harrison SC, Abraham J. Cell Host & Microbe. 2015.",
+      "Mahmutovic S, Clark L, Levis SC, Briggiler AM, Enria DA, Harrison SC, Abraham J. Cell Host & Microbe. 2015;18(6):705-713.",
     link: "https://pubmed.ncbi.nlm.nih.gov/26651946/",
     doi: "10.1016/j.chom.2015.11.005",
     pmid: "26651946",
     foundational: true,
-    system: "Junín virus",
-    methodCluster: "X-ray crystallography, antibody mapping, serology",
-    significanceLine: "Shows how a neutralizing antibody mimics the host receptor at a conserved arenavirus site.",
-    openAccess: true,
-    summary:
-      "The structure explains how a neutralizing antibody blocks receptor engagement by a New World hemorrhagic fever mammarenavirus."
-  },
-  {
-    year: 2010,
-    title: "Structural basis for receptor recognition by New World hemorrhagic fever arenaviruses",
-    foundational: true,
-    journal: "Nature Structural & Molecular Biology",
-    citation:
-      "Abraham J, Corbett KD, Farzan M, Choe H, Harrison SC. Nature Structural & Molecular Biology. 2010.",
-    link: "https://www.nature.com/articles/nsmb.1772"
-  },
-  {
-    year: 2009,
-    title:
-      "Host-species transferrin receptor 1 orthologs are cellular receptors for nonpathogenic New World clade B arena viruses",
-    foundational: true,
-    journal: "PLoS Pathogens",
-    citation:
-      "Abraham J, Kwong JA, Albariño CG, Lu JG, Radoshitzky SR, Salazar-Bravo J, Farzan M, Spiropoulou CF, Choe H. PLoS Pathogens. 2009.",
-    link: "https://doi.org/10.1371/journal.ppat.1000358"
-  },
-  {
-    year: 2007,
-    title: "Transferrin receptor 1 is a cellular receptor for New World hemorrhagic fever arenaviruses",
-    foundational: true,
-    journal: "Nature",
-    citation:
-      "Radoshitzky SR, Abraham J, Spiropoulou CF, Kuhn JH, Nguyen D, Li W, Nagel J, Schmidt PJ, Nunberg JH, Andrews NC, Farzan M, Choe H. Nature. 2007.",
-    link: "https://www.nature.com/articles/nature05539"
+    articleType: "Research article",
+    correspondingAuthor: true,
+    correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/26651946/"
   }
 ] satisfies Publication[];

@@ -2,37 +2,44 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { publications } from "../../data/publications";
 import { groupPublicationsByYear } from "../../lib/content";
+import { siteData } from "../../data/site";
 
 const groupedPublications = groupPublicationsByYear(publications);
 ---
 
-<BaseLayout title="Publications" description="Peer-reviewed papers and preprints from the Abraham Lab.">
+<BaseLayout
+  title="Publications"
+  description="Publications for which Jonathan Abraham is a corresponding author."
+  socialImage={siteData.heroFigures[0].image}
+>
   <section class="page-intro page-intro--publications">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
+        <p class="overline">Scientific record</p>
         <h1>Publications.</h1>
-        <p>Peer-reviewed papers and preprints from the Abraham Lab.</p>
+        <p>Publications for which Jonathan Abraham is a corresponding author.</p>
       </div>
     </div>
   </section>
 
-  <section class="section archive-section" aria-label="Publication record">
-    <div class="shell archive-list">
+  <section class="publication-record" aria-label="Publication record">
+    <div class="shell publication-record__list">
       {groupedPublications.map((yearGroup) => (
-        <section class="archive-year reveal" aria-labelledby={`publications-${yearGroup.year}`}>
+        <section class="publication-year" aria-labelledby={`publications-${yearGroup.year}`}>
           <h2 id={`publications-${yearGroup.year}`}>{yearGroup.year}</h2>
           <ol>
             {yearGroup.entries.map((item) => (
-              <li>
-                <div>
-                  <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
-                  <p>{item.citation}</p>
+              <li class="publication-row reveal">
+                <div class="publication-row__body">
+                  <h3><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h3>
+                  <p class="publication-row__citation">{item.citation}</p>
                 </div>
-                {(item.journal || item.pmid) && (
-                  <p class="archive-year__meta">
-                    {[item.journal, item.pmid ? `PMID ${item.pmid}` : undefined].filter(Boolean).join(" · ")}
-                  </p>
-                )}
+                <div class="publication-row__meta">
+                  <span>{item.articleType}</span>
+                  {item.journal && <span>{item.journal}</span>}
+                  {item.doi && <a href={`https://doi.org/${item.doi}`} target="_blank" rel="noreferrer">DOI</a>}
+                  {item.pmid && <a href={`https://pubmed.ncbi.nlm.nih.gov/${item.pmid}/`} target="_blank" rel="noreferrer">PMID</a>}
+                </div>
               </li>
             ))}
           </ol>

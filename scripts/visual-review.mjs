@@ -9,6 +9,8 @@ const siteRoot = path.join(repoRoot, "_site");
 const outputRoot = path.join(repoRoot, "output", "visual-review");
 const screenshotRoot = path.join(outputRoot, "screenshots");
 const port = Number(process.env.VISUAL_REVIEW_PORT || 4173);
+const rawBasePath = String(process.env.SITE_BASE_PATH || "").trim();
+const basePath = rawBasePath ? `/${rawBasePath.replace(/^\/+|\/+$/g, "")}` : "";
 
 process.env.PLAYWRIGHT_BROWSERS_PATH ||= path.join(repoRoot, ".cache", "ms-playwright");
 
@@ -90,32 +92,71 @@ async function fileExists(filePath) {
   }
 }
 
+class ForbiddenPathError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 403;
+  }
+}
+
+function isInsideSiteRoot(candidatePath) {
+  const relative = path.relative(siteRoot, candidatePath);
+  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
+}
+
+function safeStaticRequestPath(requestPath) {
+  let decoded;
+  try {
+    decoded = decodeURIComponent(requestPath);
+  } catch {
+    throw new ForbiddenPathError("Malformed request path");
+  }
+  const slashNormalized = decoded.replace(/\\/g, "/");
+  if (slashNormalized.split("/").some((part) => part === "..")) {
+    throw new ForbiddenPathError("Path traversal is not allowed");
+  }
+  const normalized = path.posix.normalize(slashNormalized);
+  if (normalized === ".." || normalized.startsWith("../")) {
+    throw new ForbiddenPathError("Path traversal is not allowed");
+  }
+  return normalized.replace(/^\/+/, "");
+}
+
+function staticCandidate(...segments) {
+  const candidate = path.resolve(siteRoot, ...segments);
+  if (!isInsideSiteRoot(candidate)) {
+    throw new ForbiddenPathError("Resolved path escaped the static root");
+  }
+  return candidate;
+}
+
 async function resolveStaticPath(requestPath) {
-  const decoded = decodeURIComponent(requestPath);
-  const normalized = path.posix.normalize(decoded);
-  const safePath = normalized.replace(/^(\.\.(\/|\\|$))+/, "").replace(/^\/+/, "");
-  const directPath = path.join(siteRoot, safePath);
+  const withoutBase = basePath && (requestPath === basePath || requestPath.startsWith(`${basePath}/`))
+    ? requestPath.slice(basePath.length) || "/"
+    : requestPath;
+  const safePath = safeStaticRequestPath(withoutBase);
+  const directPath = staticCandidate(safePath);
 
   if (await fileExists(directPath)) {
     const stats = await fs.stat(directPath);
     if (stats.isDirectory()) {
-      const indexPath = path.join(directPath, "index.html");
+      const indexPath = staticCandidate(safePath, "index.html");
       if (await fileExists(indexPath)) {
-        return indexPath;
+        return { filePath: indexPath, statusCode: 200 };
       }
     } else {
-      return directPath;
+      return { filePath: directPath, statusCode: 200 };
     }
   }
 
-  const directoryIndexPath = path.join(siteRoot, safePath, "index.html");
+  const directoryIndexPath = staticCandidate(safePath, "index.html");
   if (await fileExists(directoryIndexPath)) {
-    return directoryIndexPath;
+    return { filePath: directoryIndexPath, statusCode: 200 };
   }
 
-  const fallback404 = path.join(siteRoot, "404.html");
+  const fallback404 = staticCandidate("404.html");
   if (await fileExists(fallback404)) {
-    return fallback404;
+    return { filePath: fallback404, statusCode: 404 };
   }
 
   return null;
@@ -125,21 +166,23 @@ async function startStaticServer() {
   const server = http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url || "/", `http://127.0.0.1:${port}`);
-      const filePath = await resolveStaticPath(url.pathname);
+      const resolved = await resolveStaticPath(url.pathname);
 
-      if (!filePath) {
+      if (!resolved) {
         res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
         res.end("Not found");
         return;
       }
 
+      const { filePath, statusCode } = resolved;
       const extension = path.extname(filePath).toLowerCase();
       const contentType = mimeTypes[extension] || "application/octet-stream";
       const data = await fs.readFile(filePath);
-      res.writeHead(200, { "Content-Type": contentType });
+      res.writeHead(statusCode, { "Content-Type": contentType });
       res.end(data);
     } catch (error) {
-      res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
+      const statusCode = error?.statusCode || 500;
+      res.writeHead(statusCode, { "Content-Type": "text/plain; charset=utf-8" });
       res.end(`Server error: ${error instanceof Error ? error.message : String(error)}`);
     }
   });
@@ -228,6 +271,21 @@ async function run() {
     }
 
     const manifest = [];
+    const failures = [];
+    const origin = `http://127.0.0.1:${port}`;
+    const unknownResponse = await fetch(`${origin}${basePath}/visual-review-missing-route/`);
+    if (unknownResponse.status !== 404) {
+      failures.push(`Static server returned ${unknownResponse.status} for an unknown route.`);
+    }
+
+    const noJsContext = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
+    const noJsPage = await noJsContext.newPage();
+    const noJsResponse = await noJsPage.goto(`${origin}${basePath}/`, { waitUntil: "domcontentloaded" });
+    const visibleNoJsLinks = await noJsPage.locator(".site-nav a:visible").count();
+    if (!noJsResponse?.ok() || visibleNoJsLinks < 4) {
+      failures.push("Mobile navigation is not usable when JavaScript is disabled.");
+    }
+    await noJsContext.close();
 
     for (const viewport of selectedViewports) {
       const context = await browser.newContext({
@@ -238,19 +296,107 @@ async function run() {
       for (const route of selectedRoutes) {
         for (const theme of selectedThemes) {
           const page = await context.newPage();
+          const pageFailures = [];
+          page.on("pageerror", (error) => pageFailures.push(`page error: ${error.message}`));
+          page.on("console", (message) => {
+            if (message.type() !== "error") return;
+            const sourceUrl = message.location().url || "";
+            if (!sourceUrl || sourceUrl.startsWith(origin)) {
+              pageFailures.push(`console error: ${message.text()}`);
+            }
+          });
+          page.on("requestfailed", (request) => {
+            if (request.url().startsWith(origin)) {
+              pageFailures.push(`request failed: ${request.url()} (${request.failure()?.errorText || "unknown"})`);
+            }
+          });
           await page.emulateMedia({ colorScheme: theme });
-          const url = `http://127.0.0.1:${port}${route.path}`;
-          await page.goto(url, { waitUntil: "networkidle" });
+          const url = `${origin}${basePath}${route.path}`;
+          // Third-party embeds can keep background requests open indefinitely.
+          // Audit the local document first, then check each embed explicitly below.
+          const response = await page.goto(url, { waitUntil: "domcontentloaded" });
+          if (!response?.ok()) {
+            pageFailures.push(`route returned ${response?.status() ?? "no response"}: ${url}`);
+          }
           await page.evaluate(async (activeTheme) => {
             if (document.fonts?.ready) {
               await document.fonts.ready;
             }
             document.documentElement.dataset.theme = activeTheme;
             document.documentElement.style.colorScheme = activeTheme;
-            document.querySelectorAll(".reveal").forEach((node) => node.classList.add("is-visible"));
             document.querySelector(".site-nav")?.classList.remove("is-open");
             document.querySelector(".nav-toggle")?.setAttribute("aria-expanded", "false");
+            const images = [...document.images];
+            await Promise.all(images.map(async (img) => {
+              if (!img.complete) {
+                await new Promise((resolve) => {
+                  img.addEventListener("load", resolve, { once: true });
+                  img.addEventListener("error", resolve, { once: true });
+                });
+              }
+              try { await img.decode(); } catch {}
+            }));
           }, theme);
+
+          const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
+          for (let y = 0; y < pageHeight; y += Math.max(Math.floor(viewport.height * 0.72), 300)) {
+            await page.evaluate((scrollY) => window.scrollTo(0, scrollY), y);
+            await page.waitForTimeout(100);
+          }
+          await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+          await page.waitForTimeout(200);
+          const revealCount = await page.locator(".reveal").count();
+          for (let index = 0; index < revealCount; index += 1) {
+            const reveal = page.locator(".reveal").nth(index);
+            if (!(await reveal.evaluate((node) => node.classList.contains("is-visible")))) {
+              await reveal.scrollIntoViewIfNeeded();
+              await page.waitForTimeout(120);
+            }
+          }
+          if (route.slug === "contact") {
+            await page.locator(".map-widget").scrollIntoViewIfNeeded();
+            try {
+              await page.waitForSelector(".map-widget__media.is-loaded", { timeout: 8000 });
+            } catch {
+              pageFailures.push("Google map iframe did not finish loading.");
+            }
+          }
+          await page.evaluate(() => {
+            if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+            window.scrollTo(0, 0);
+          });
+          await page.waitForFunction(() => window.scrollY === 0);
+          await page.waitForTimeout(150);
+
+          const behaviorCheck = await page.evaluate(() => ({
+            hiddenReveals: [...document.querySelectorAll(".reveal")].filter((node) => !node.classList.contains("is-visible")).length,
+            documentOverflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth,
+            brokenImages: [...document.images]
+              .filter((img) => img.src.startsWith(window.location.origin) && (!img.complete || img.naturalWidth === 0))
+              .map((img) => img.getAttribute("src"))
+          }));
+          if (behaviorCheck.hiddenReveals) {
+            pageFailures.push(`${behaviorCheck.hiddenReveals} reveal elements did not activate while scrolling.`);
+          }
+          if (behaviorCheck.documentOverflow > 1) {
+            pageFailures.push(`horizontal overflow of ${behaviorCheck.documentOverflow}px.`);
+          }
+          if (behaviorCheck.brokenImages.length) {
+            pageFailures.push(`broken local images: ${behaviorCheck.brokenImages.join(", ")}`);
+          }
+
+          if (viewport.width <= 430 && route.slug === "home" && theme === "light") {
+            await page.locator(".nav-toggle").click();
+            if (await page.locator(".site-nav.is-open").count() !== 1) {
+              pageFailures.push("mobile navigation did not open.");
+            }
+            await page.keyboard.press("Escape");
+            if (await page.locator(".site-nav.is-open").count() !== 0) {
+              pageFailures.push("mobile navigation did not close with Escape.");
+            }
+          }
+
+          await page.evaluate(() => document.querySelectorAll(".reveal").forEach((node) => node.classList.add("is-visible")));
           await page.addStyleTag({
             content: `
               *, *::before, *::after {
@@ -277,8 +423,11 @@ async function run() {
             route,
             viewport,
             theme,
-            relativePath: `screenshots/${fileName}`
+            relativePath: `screenshots/${fileName}`,
+            failures: pageFailures
           });
+
+          failures.push(...pageFailures.map((message) => `${route.slug} ${viewport.name}px ${theme}: ${message}`));
 
           await page.close();
         }
@@ -294,6 +443,9 @@ async function run() {
       "utf8"
     );
     await writeIndex(manifest);
+    if (failures.length) {
+      throw new Error(`Visual review failed:\n- ${failures.join("\n- ")}`);
+    }
   } finally {
     await new Promise((resolve, reject) => {
       server.close((error) => (error ? reject(error) : resolve()));
@@ -301,7 +453,29 @@ async function run() {
   }
 }
 
-run().catch((error) => {
+async function runSelfTest() {
+  const rejected = ["/..%5c..%5cpackage-lock.json", "/..%2f..%2fpackage-lock.json", "/%2e%2e/%2e%2e/package-lock.json"];
+  for (const requestPath of rejected) {
+    let didReject = false;
+    try {
+      safeStaticRequestPath(requestPath);
+    } catch (error) {
+      didReject = error instanceof ForbiddenPathError;
+    }
+    if (!didReject) {
+      throw new Error(`Expected traversal path to be rejected: ${requestPath}`);
+    }
+  }
+  const direct = staticCandidate("index.html");
+  if (!isInsideSiteRoot(direct)) {
+    throw new Error("Expected normal static path to remain inside _site");
+  }
+  console.log("visual-review path containment self-test passed");
+}
+
+const entrypoint = process.env.VISUAL_REVIEW_SELF_TEST === "1" ? runSelfTest : run;
+
+entrypoint().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });

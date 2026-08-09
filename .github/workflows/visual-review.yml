@@ -15,19 +15,28 @@ jobs:
     env:
       ASTRO_TELEMETRY_DISABLED: "1"
       PLAYWRIGHT_BROWSERS_PATH: .cache/ms-playwright
+      SITE_URL: ${{ format('https://{0}.github.io', github.repository_owner) }}
+      SITE_BASE_PATH: ${{ format('/{0}', github.event.repository.name) }}
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        # Pinned to immutable action commit; update intentionally after review.
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        # Pinned to immutable action commit; update intentionally after review.
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 24
           cache: npm
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
@@ -36,7 +45,9 @@ jobs:
         run: npm run visual:review
 
       - name: Upload visual review artifacts
-        uses: actions/upload-artifact@v4
+        if: always()
+        # Pinned to immutable action commit; update intentionally after review.
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: visual-review
           path: output/visual-review

@@ -5,41 +5,27 @@ export const siteData = {
   fullName: "Jonathan Abraham Lab",
   shortInstitution: "Harvard Medical School",
   description:
-    "The Abraham Lab studies how medically important viruses enter cells, evade antibodies, and replicate.",
+    "The Abraham Lab studies the mechanisms of viral infection at Harvard Medical School.",
   url: process.env.SITE_URL || "https://abrahamlab.med.harvard.edu",
   theme: {
     defaultMode: "system"
   },
   heroTitle: "Mechanisms of viral infection.",
   heroDeck:
-    "The Abraham Lab studies how medically important viruses enter cells, evade antibodies, and replicate. Recent work resolves HSV-1 replication machinery, New World arenavirus spike organization, and receptor recognition by encephalitic alphaviruses.",
+    "We study how medically important viruses enter cells, avoid antibodies, and replicate. We use structural biology and virology to define these steps and how antiviral drugs block them.",
   heroFigures: [
     {
-      label: "Nature Microbiology | 2025",
+      label: "Nature Microbiology · 2025",
       title: "Molecular organization of the New World arenavirus spike glycoprotein complex",
-      image: "/assets/images/publications/arenavirus-gpc.jpeg",
-      alt: "Cryo-EM figure showing the prefusion architecture of the New World arenavirus glycoprotein complex.",
-      note: "Open-access structural study",
+      image: "/assets/images/publications/arenavirus-gpc-figure-2.png",
+      alt: "Cryo-EM structures and biochemical measurements of the Machupo virus glycoprotein complex.",
+      note: "Open-access figure",
       href: "https://www.nature.com/articles/s41564-025-02085-6",
-      imagePosition: "center 42%"
-    },
-    {
-      label: "Cell | 2025",
-      title: "Molecular basis for shifted receptor recognition by an encephalitic arbovirus",
-      image: "/assets/images/publications/weev-structures.jpeg",
-      alt: "Composite structural figure from the 2025 Cell paper on shifted receptor recognition by an encephalitic arbovirus.",
-      note: "Entry biology",
-      href: "https://www.cell.com/cell/fulltext/S0092-8674(25)00347-2",
-      imagePosition: "center 40%"
-    },
-    {
-      label: "Cell | 2026",
-      title: "HSV-1 helicase-primase and replication fork assembly",
-      image: "/assets/images/publications/hsv-helicase-primase.jpg",
-      alt: "Structural figure showing the HSV-1 helicase-primase complex and replication fork assembly.",
-      note: "Replication machinery",
-      href: "https://www.cell.com/cell/fulltext/S0092-8674(25)01376-5",
-      imagePosition: "center 34%"
+      imagePosition: "center",
+      figureCredit: "Mann et al., Nature Microbiology (2025)",
+      figureNumber: "Figure 2",
+      license: "CC BY 4.0",
+      visualSource: "https://www.nature.com/articles/s41564-025-02085-6/figures/2"
     }
   ],
   institutionLabel: "Affiliation",
@@ -83,7 +69,7 @@ export const siteData = {
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Veritas+Science+Center%2C+77+Avenue+Louis+Pasteur%2C+Boston%2C+MA+02115",
     mapEmbedUrl:
-      "https://maps.google.com/maps?q=42.33825%2C-71.10362&t=m&z=16&ie=UTF8&iwloc=&output=embed",
+      "https://maps.google.com/maps?q=42.33825%2C-71.10362&t=m&z=15&ie=UTF8&iwloc=&output=embed",
     mapBuilding: "Veritas Science Center (VSC)"
   },
   social: {

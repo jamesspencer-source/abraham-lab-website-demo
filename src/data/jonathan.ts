@@ -5,14 +5,12 @@ export const jonathanProfile = {
   title: "Professor of Microbiology, Harvard Medical School",
   secondaryTitle: "Investigator, Howard Hughes Medical Institute",
   overview:
-    "Jonathan Abraham studies the molecular basis of viral infection in medically important viruses.",
+    "Jonathan Abraham studies the molecular mechanisms of viral infection in medically important viruses.",
   biography: [
-    "Jonathan Abraham is Professor of Microbiology at Harvard Medical School and an Investigator of the Howard Hughes Medical Institute.",
-    "His laboratory uses structural biology and virology to study receptor engagement, antibody recognition, and replication complexes.",
-    "He received a bachelor's degree in biochemical sciences from Harvard College and a PhD in biophysics from Harvard University. He received an MD from Harvard Medical School through the Harvard-MIT MD-PhD Program.",
-    "He completed residency training in internal medicine at Brigham and Women's Hospital.",
-    "He completed fellowship training in infectious diseases through the Brigham and Women's Hospital and Massachusetts General Hospital combined program.",
-    "He started the laboratory in the Department of Microbiology at Harvard Medical School in 2017. He also serves as Associate Physician in Infectious Diseases at Brigham and Women's Hospital."
+    "Jonathan Abraham is Professor of Microbiology at Harvard Medical School and an Investigator of the Howard Hughes Medical Institute. He started the laboratory in 2017.",
+    "His group uses structural biology and virology to study viral entry and antibody recognition. It also studies replication complexes and antiviral mechanisms.",
+    "He earned a bachelor's degree in biochemical sciences from Harvard College and a PhD in biophysics from Harvard University. He earned an MD from Harvard Medical School through the Harvard-MIT MD-PhD Program.",
+    "He trained in internal medicine at Brigham and Women's Hospital and in infectious diseases through the combined Brigham and Women's Hospital and Massachusetts General Hospital program. He is an Associate Physician in Infectious Diseases at Brigham and Women's Hospital."
   ],
   appointments: [
     {
@@ -42,5 +40,19 @@ export const jonathanProfile = {
     "Mechanisms of HSV-1 helicase-primase inhibition and replication fork complex assembly",
     "Molecular organization of the New World arenavirus spike glycoprotein complex",
     "Molecular basis for shifted receptor recognition by an encephalitic arbovirus"
+  ],
+  profileLinks: [
+    {
+      label: "HHMI investigator profile",
+      href: "https://www.hhmi.org/scientists/jonathan-abraham"
+    },
+    {
+      label: "HMS Microbiology faculty",
+      href: "https://micro.hms.harvard.edu/faculty"
+    },
+    {
+      label: "Inside the Labs of HMS",
+      href: "https://www.youtube.com/shorts/GFM3KLZCDps"
+    }
   ]
 } satisfies JonathanProfile;

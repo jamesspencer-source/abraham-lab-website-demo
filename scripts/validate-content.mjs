@@ -19,7 +19,6 @@ const dataFiles = {
   site: path.join(repoRoot, "src", "data", "site.ts"),
   publications: path.join(repoRoot, "src", "data", "publications.ts"),
   jonathan: path.join(repoRoot, "src", "data", "jonathan.ts"),
-  research: path.join(repoRoot, "src", "data", "research.ts"),
   news: path.join(repoRoot, "src", "data", "news.ts"),
   people: path.join(repoRoot, "src", "data", "people.ts")
 };
@@ -28,7 +27,6 @@ const scannedTextFiles = [
   path.join(repoRoot, "src", "data", "site.ts"),
   path.join(repoRoot, "src", "data", "publications.ts"),
   path.join(repoRoot, "src", "data", "jonathan.ts"),
-  path.join(repoRoot, "src", "data", "research.ts"),
   path.join(repoRoot, "src", "data", "news.ts"),
   path.join(repoRoot, "src", "data", "people.ts"),
   path.join(repoRoot, "src", "pages", "index.astro"),
@@ -62,6 +60,27 @@ const expectedProgramTagsByPerson = new Map([
   ["Corazón Núñez", ["Virology"]],
   ["Alex Liu", ["Virology"]],
   ["Kevin Gong", ["Virology"]]
+]);
+
+const expectedCorrespondingDois = new Set([
+  "10.64898/2026.07.28.741352",
+  "10.64898/2026.07.28.741058",
+  "10.1016/j.cell.2025.11.041",
+  "10.1038/s41564-025-02085-6",
+  "10.1016/j.cell.2025.03.029",
+  "10.1016/j.cell.2024.12.021",
+  "10.1016/j.cell.2024.07.048",
+  "10.1038/s41467-024-50887-9",
+  "10.1038/s41586-024-07740-2",
+  "10.1056/NEJMe2205563",
+  "10.1016/j.cell.2022.02.002",
+  "10.1038/s41586-021-04326-0",
+  "10.1126/science.abl6251",
+  "10.1016/j.cell.2021.03.027",
+  "10.1073/pnas.2021569118",
+  "10.1038/s41577-020-0365-7",
+  "10.1038/s41467-018-04271-z",
+  "10.1016/j.chom.2015.11.005"
 ]);
 
 function transpileTsModule(source, filePath) {
@@ -216,7 +235,6 @@ async function main() {
   const siteData = await loadTsExport(dataFiles.site, "siteData");
   const publications = await loadTsExport(dataFiles.publications, "publications");
   const jonathanProfile = await loadTsExport(dataFiles.jonathan, "jonathanProfile");
-  const researchPrograms = await loadTsExport(dataFiles.research, "researchPrograms");
   const newsItems = await loadTsExport(dataFiles.news, "newsItems");
   const peopleData = await loadTsExport(dataFiles.people, "peopleData");
 
@@ -298,6 +316,29 @@ async function main() {
       fail(`Publication "${title}" has a DOI/PMID but no outbound link.`);
     }
 
+    if (publication.correspondingAuthor !== true || !normalize(publication.correspondenceSource)) {
+      fail(`Publication "${title}" needs verified corresponding-author source data.`);
+    }
+
+    if (!new Set(["Research article", "Preprint", "Commentary"]).has(publication.articleType)) {
+      fail(`Publication "${title}" has an unsupported articleType.`);
+    }
+
+    if (publication.visualReuseStatus === "link-only" || publication.image && !["open-access", "lab-approved"].includes(publication.visualReuseStatus)) {
+      fail(`Publication "${title}" cannot reuse an image without open-access or lab approval.`);
+    }
+
+    if (publication.image) {
+      if (!(await localAssetExists(publication.image))) {
+        fail(`Publication "${title}" references a missing image: ${publication.image}`);
+      }
+      for (const field of ["imageAlt", "figureCredit", "figureNumber", "license", "visualSource"]) {
+        if (!normalize(publication[field])) {
+          fail(`Publication "${title}" image needs ${field}.`);
+        }
+      }
+    }
+
     if (publication.homepageProof && !publication.publishedAt) {
       fail(`Homepage proof publication "${title}" needs a publishedAt date.`);
     }
@@ -323,6 +364,23 @@ async function main() {
 
   if (leadFeaturePublications.length !== 1) {
     fail(`Expected exactly 1 leadFeature publication, found ${leadFeaturePublications.length}.`);
+  }
+
+  if (publications.length !== expectedCorrespondingDois.size) {
+    fail(`Expected ${expectedCorrespondingDois.size} corresponding-author records, found ${publications.length}.`);
+  }
+
+  const publicationDois = new Set(publications.map((publication) => publication.doi));
+  for (const doi of expectedCorrespondingDois) {
+    if (!publicationDois.has(doi)) {
+      fail(`Missing verified corresponding-author record for DOI ${doi}.`);
+    }
+  }
+
+  for (const doi of publicationDois) {
+    if (!expectedCorrespondingDois.has(doi)) {
+      fail(`Unverified or out-of-scope publication DOI in record: ${doi}.`);
+    }
   }
 
   const topThree = sortedPublications.slice(0, 3);
@@ -353,13 +411,6 @@ async function main() {
   }
 
   const publicationTitleSet = new Set(publications.map((publication) => normalize(publication.title)));
-  for (const researchProgram of researchPrograms) {
-    for (const paper of researchProgram.papers || []) {
-      if (!publicationTitleSet.has(normalize(paper.title))) {
-        fail(`Research paper "${paper.title}" does not match any publication title.`);
-      }
-    }
-  }
 
   for (const title of jonathanProfile.representativeWork || []) {
     if (!publicationTitleSet.has(normalize(title))) {
@@ -439,6 +490,31 @@ async function main() {
     }
   }
 
+  for (const directory of [
+    path.join(repoRoot, "public", "assets", "images", "people"),
+    path.join(repoRoot, "src", "assets", "images", "people")
+  ]) {
+    try {
+      const entries = await fs.readdir(directory);
+      if (entries.length) {
+        fail(`Lab-member image directory must be empty: ${path.relative(repoRoot, directory)}`);
+      }
+    } catch (error) {
+      if (error?.code !== "ENOENT") throw error;
+    }
+  }
+
+  for (const figure of siteData.heroFigures || []) {
+    if (!(await localAssetExists(figure.image))) {
+      fail(`Hero figure references a missing image: ${figure.image}`);
+    }
+    for (const field of ["alt", "figureCredit", "figureNumber", "license", "visualSource"]) {
+      if (!normalize(figure[field])) {
+        fail(`Hero figure "${figure.title}" needs ${field}.`);
+      }
+    }
+  }
+
   const sourceFiles = [...scannedTextFiles, ...Object.values(dataFiles)];
   for (const filePath of sourceFiles) {
     const text = await fs.readFile(filePath, "utf8");
@@ -466,11 +542,10 @@ async function main() {
 
   const siteStrings = collectStrings(siteData);
   const jonathanStrings = collectStrings(jonathanProfile);
-  const researchStrings = collectStrings(researchPrograms);
   const publicationStrings = collectStrings(publications);
   const newsStrings = collectStrings(newsItems);
   const peopleStrings = collectStrings(peopleData);
-  const allStrings = [...siteStrings, ...jonathanStrings, ...researchStrings, ...publicationStrings, ...newsStrings, ...peopleStrings]
+  const allStrings = [...siteStrings, ...jonathanStrings, ...publicationStrings, ...newsStrings, ...peopleStrings]
     .map(normalize)
     .filter(Boolean);
 
@@ -517,17 +592,6 @@ async function main() {
     addRhythmWarnings(`peopleData.currentMembers[${index}].roleSummary`, person.roleSummary, note);
   }
 
-  for (const [index, program] of researchPrograms.entries()) {
-    addRhythmWarnings(`researchPrograms[${index}].importance`, program.importance, note);
-    addRhythmWarnings(`researchPrograms[${index}].summary`, program.summary, note);
-    for (const [paragraphIndex, paragraph] of (program.paragraphs || []).entries()) {
-      addRhythmWarnings(`researchPrograms[${index}].paragraphs[${paragraphIndex}]`, paragraph, note);
-    }
-    for (const [paperIndex, paper] of (program.papers || []).entries()) {
-      addRhythmWarnings(`researchPrograms[${index}].papers[${paperIndex}].note`, paper.note, note);
-    }
-  }
-
   if (errors.length) {
     console.error("Content validation failed:");
     for (const message of errors) {
@@ -537,7 +601,7 @@ async function main() {
     return;
   }
 
-  console.log(`Content validation passed: ${publications.length} publications, ${homepageProofPublications.length} homepage proof entries.`);
+  console.log(`Content validation passed: ${publications.length} verified corresponding-author records, ${homepageProofPublications.length} homepage proof entries.`);
   if (warn.length) {
     for (const message of warn) {
       console.log(`Warning: ${message}`);

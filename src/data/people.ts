@@ -135,7 +135,8 @@ export const peopleData: PeopleData = {
     {
       name: "Louella \"Ella\" Seo",
       title: "Summer Research Student",
-      labStart: "2026-06"
+      labStart: "2026-06",
+      labEnd: "2026-08"
     }
   ],
   alumni: [
@@ -176,7 +177,7 @@ export const peopleData: PeopleData = {
       entries: [
         { name: "Adrian Coscia" },
         { name: "Taleen Dilanyan" },
-        { name: "Cecilia \"Cici\" Bradley", labEnd: "2026-07" }
+        { name: "Cecilia \"Cici\" Bradley", labStart: "2026-06", labEnd: "2026-07" }
       ]
     },
     {

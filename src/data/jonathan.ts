@@ -4,13 +4,15 @@ export const jonathanProfile = {
   name: "Jonathan Abraham, MD, PhD",
   title: "Professor of Microbiology, Harvard Medical School",
   secondaryTitle: "Investigator, Howard Hughes Medical Institute",
+  clinicalTitle: "Associate Physician, Division of Infectious Diseases, Brigham and Women's Hospital",
+  pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/?term=Abraham+Jonathan%5BFull+Author+Name%5D&sort=date",
   overview:
     "Jonathan Abraham studies the molecular mechanisms of viral infection in medically important viruses.",
   biography: [
     "Jonathan Abraham is Professor of Microbiology at Harvard Medical School and an Investigator of the Howard Hughes Medical Institute. He started the laboratory in 2017.",
     "His group uses structural biology and virology to study viral entry and antibody recognition. It also studies replication complexes and antiviral mechanisms.",
     "He earned a bachelor's degree in biochemical sciences from Harvard College and a PhD in biophysics from Harvard University. He earned an MD from Harvard Medical School through the Harvard-MIT MD-PhD Program.",
-    "He trained in internal medicine at Brigham and Women's Hospital and in infectious diseases through the combined Brigham and Women's Hospital and Massachusetts General Hospital program. He is an Associate Physician in Infectious Diseases at Brigham and Women's Hospital."
+    "He trained in internal medicine at Brigham and Women's Hospital and in infectious diseases through the combined Brigham and Women's Hospital and Massachusetts General Hospital program. He is an Associate Physician in the Division of Infectious Diseases at Brigham and Women's Hospital."
   ],
   appointments: [
     {
@@ -23,7 +25,7 @@ export const jonathanProfile = {
     },
     {
       label: "Clinical appointment",
-      title: "Associate Physician in Infectious Diseases, Brigham and Women's Hospital"
+      title: "Associate Physician, Division of Infectious Diseases, Brigham and Women's Hospital"
     }
   ],
   distinctions: [

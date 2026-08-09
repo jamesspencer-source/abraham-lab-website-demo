@@ -11,7 +11,8 @@ const personData = {
   jobTitle: "Professor of Microbiology",
   affiliation: [
     { "@type": "Organization", name: "Harvard Medical School" },
-    { "@type": "Organization", name: "Howard Hughes Medical Institute" }
+    { "@type": "Organization", name: "Howard Hughes Medical Institute" },
+    { "@type": "Organization", name: "Brigham and Women's Hospital" }
   ],
   url: new URL(withBase("/jonathan-abraham/"), siteData.url).toString(),
   sameAs: jonathanProfile.profileLinks.slice(0, 2).map((item) => item.href)
@@ -20,7 +21,7 @@ const personData = {
 
 <BaseLayout
   title="Jonathan Abraham"
-  description="Jonathan Abraham is Professor of Microbiology at Harvard Medical School and an HHMI Investigator."
+  description="Jonathan Abraham is Professor of Microbiology at Harvard Medical School, an HHMI Investigator, and an Associate Physician at Brigham and Women's Hospital."
   structuredData={personData}
 >
   <section class="profile-dossier">
@@ -30,6 +31,7 @@ const personData = {
         <h1>{jonathanProfile.name}</h1>
         <p>{jonathanProfile.title}</p>
         <p>{jonathanProfile.secondaryTitle}</p>
+        <p>{jonathanProfile.clinicalTitle}</p>
       </header>
       <div class="profile-dossier__summary reveal">
         <p class="profile-dossier__overview">{jonathanProfile.overview}</p>
@@ -58,7 +60,7 @@ const personData = {
       <article class="profile-story__body reveal">
         <h2>Biography</h2>
         {jonathanProfile.biography.map((paragraph) => <p>{paragraph}</p>)}
-        <a class="button button--primary" href={withBase("/publications/")}>View publications</a>
+        <a class="button button--primary" href={jonathanProfile.pubmedUrl} target="_blank" rel="noreferrer">View publications</a>
       </article>
 
       <aside class="profile-story__rail">

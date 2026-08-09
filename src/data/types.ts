@@ -156,6 +156,8 @@ export type JonathanProfile = {
   name: string;
   title: string;
   secondaryTitle: string;
+  clinicalTitle: string;
+  pubmedUrl: string;
   overview: string;
   biography: string[];
   appointments: Array<{

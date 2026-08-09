@@ -281,6 +281,16 @@ async function main() {
     {
       condition: jonathanProfile.secondaryTitle === "Investigator, Howard Hughes Medical Institute",
       message: 'jonathanProfile.secondaryTitle must be "Investigator, Howard Hughes Medical Institute".'
+    },
+    {
+      condition:
+        jonathanProfile.clinicalTitle ===
+        "Associate Physician, Division of Infectious Diseases, Brigham and Women's Hospital",
+      message: "jonathanProfile.clinicalTitle must contain Jonathan Abraham's verified clinical appointment."
+    },
+    {
+      condition: /^https:\/\/pubmed\.ncbi\.nlm\.nih\.gov\/\?term=/.test(jonathanProfile.pubmedUrl || ""),
+      message: "jonathanProfile.pubmedUrl must be an official PubMed author-search URL."
     }
   ];
 

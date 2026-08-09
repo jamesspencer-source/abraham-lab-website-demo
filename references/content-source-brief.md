@@ -39,6 +39,8 @@ Recommended website wording:
   - https://www.hhmi.org/scientists/jonathan-abraham
 - Brigham and Women's Hospital Infectious Disease faculty:
   - https://www.brighamandwomens.org/medicine/infectious-disease/faculty
+- PubMed full-author-name search:
+  - https://pubmed.ncbi.nlm.nih.gov/?term=Abraham+Jonathan%5BFull+Author+Name%5D&sort=date
 
 Public titles used on the site:
 

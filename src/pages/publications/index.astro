@@ -34,8 +34,8 @@ const groupedPublications = groupPublicationsByYear(publications);
                   <p class="publication-row__citation">{item.citation}</p>
                 </div>
                 <div class="publication-row__meta">
+                  {item.journal && <strong>{item.journal}</strong>}
                   <span>{item.articleType}</span>
-                  {item.journal && <span>{item.journal}</span>}
                   {item.doi && <a href={`https://doi.org/${item.doi}`} target="_blank" rel="noreferrer">DOI</a>}
                   {item.pmid && <a href={`https://pubmed.ncbi.nlm.nih.gov/${item.pmid}/`} target="_blank" rel="noreferrer">PMID</a>}
                 </div>

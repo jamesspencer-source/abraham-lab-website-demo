@@ -31,8 +31,8 @@ const directoryIndex = [
   <section class="page-intro page-intro--team">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
-        <p class="overline">Team</p>
-        <h1>Abraham Lab</h1>
+        <p class="overline">Abraham Lab</p>
+        <h1>Team</h1>
         <p>Faculty, fellows, students, and staff at Harvard Medical School.</p>
       </div>
     </div>
@@ -48,7 +48,7 @@ const directoryIndex = [
     {groupedPeople.map((group) => (
       <section class="team-group" id={anchorFor(group.label)}>
         <header class="team-group__header reveal"><h2>{group.label}</h2></header>
-        <div class="team-list" role="list">
+        <div class:list={["team-list", group.entries.length === 1 && "team-list--single"]} role="list">
           {group.entries.map((person) => (
             <article class="team-row reveal" role="listitem">
               <div class="team-row__identity">
@@ -71,7 +71,7 @@ const directoryIndex = [
 
     <section class="team-group team-group--seasonal" id="summer-researchers">
       <header class="team-group__header reveal"><h2>Summer researchers</h2></header>
-      <div class="team-list" role="list">
+      <div class="team-list team-list--single" role="list">
         {peopleData.seasonalMembers.map((person) => (
           <article class="team-row reveal" role="listitem">
             <div class="team-row__identity"><h3>{person.name}</h3></div>

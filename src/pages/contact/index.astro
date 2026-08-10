@@ -8,8 +8,8 @@ import { siteData } from "../../data/site";
   <section class="page-intro page-intro--utility">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
-        <p class="overline">Contact</p>
-        <h1>Abraham Lab.</h1>
+        <p class="overline">Abraham Lab</p>
+        <h1>Contact</h1>
         <p>For scientific, speaking, and administrative inquiries.</p>
       </div>
     </div>
@@ -36,10 +36,5 @@ import { siteData } from "../../data/site";
       <MapWidget eyebrow="Campus map" />
     </div>
 
-    <div class="shell contact-page__affiliations reveal">
-      {siteData.affiliations.map((affiliation) => (
-        <a class="text-link" href={affiliation.href} target="_blank" rel="noreferrer">{affiliation.shortName ?? affiliation.name} <span aria-hidden="true">↗</span></a>
-      ))}
-    </div>
   </section>
 </BaseLayout>

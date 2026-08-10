@@ -15,6 +15,13 @@ const heroFigure = siteData.heroFigures[0];
 
 <BaseLayout pageClass="page-home" socialImage={heroFigure.image}>
   <section class="dossier-hero home-hero">
+    <img
+      class="dossier-hero__media"
+      src={withBase(heroFigure.image)}
+      alt={heroFigure.alt}
+      loading="eager"
+      fetchpriority="high"
+    />
     <div class="shell dossier-hero__grid">
       <div class="dossier-hero__copy reveal">
         <p class="overline overline--inverse">Harvard Medical School · HHMI</p>
@@ -25,16 +32,10 @@ const heroFigure = siteData.heroFigures[0];
           <a class="button button--outline-light" href={withBase("/team/")}>View the team</a>
         </div>
       </div>
-
-      <figure class="dossier-hero__figure reveal">
-        <a href={heroFigure.href} target="_blank" rel="noreferrer">
-          <img src={withBase(heroFigure.image)} alt={heroFigure.alt} loading="eager" fetchpriority="high" />
-        </a>
-        <figcaption>
-          <span>{heroFigure.figureCredit}. {heroFigure.figureNumber}. {heroFigure.license}.</span>
-          <a href={heroFigure.visualSource} target="_blank" rel="noreferrer">View source <span aria-hidden="true">↗</span></a>
-        </figcaption>
-      </figure>
+      <p class="dossier-hero__source reveal">
+        <span>{heroFigure.figureCredit} · {heroFigure.figureNumber} · {heroFigure.license}</span>
+        <a href={heroFigure.visualSource} target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a>
+      </p>
     </div>
   </section>
 
@@ -80,8 +81,7 @@ const heroFigure = siteData.heroFigures[0];
   <section class="section current-work">
     <div class="shell current-work__grid">
       <header class="section-heading reveal">
-        <p class="overline">Current work</p>
-        <h2>Papers and HMS coverage.</h2>
+        <h2>Recent papers and HMS coverage</h2>
       </header>
       <div class="dossier-ledger">
         {otherRecentPapers.map((paper) => (
@@ -107,12 +107,12 @@ const heroFigure = siteData.heroFigures[0];
   <section class="section team-signal">
     <div class="shell team-signal__grid">
       <div class="team-signal__body reveal">
-        <p class="overline">Jonathan Abraham</p>
-        <h2>Professor of Microbiology and HHMI Investigator.</h2>
-        <p>Jonathan leads a team of virologists, structural biologists, fellows, students, and research staff at Harvard Medical School.</p>
+        <p class="overline">Principal investigator</p>
+        <h2>Jonathan Abraham, MD, PhD</h2>
+        <p>Professor of Microbiology, Harvard Medical School<br />Investigator, Howard Hughes Medical Institute</p>
         <div class="button-row">
           <a class="button button--primary" href={withBase("/jonathan-abraham/")}>View profile</a>
-          <a class="button button--secondary" href={withBase("/team/")}>View the team</a>
+          <a class="button button--secondary" href={withBase("/team/")}>Team directory</a>
         </div>
       </div>
 

@@ -21,9 +21,9 @@ const canonicalTarget = canonicalPath ? withBase(canonicalPath) : Astro.url.path
 const canonical = new URL(canonicalTarget, siteData.url).toString();
 const socialImage = new URL(withBase(socialImagePath ?? siteData.heroFigures[0].image), siteData.url).toString();
 const themeDefaultMode = siteData.theme.defaultMode;
-const themeColorLight = "#f3f5f4";
-const themeColorDark = "#29302f";
-const themeColorHero = "#151b1b";
+const themeColorLight = "#f5f7f6";
+const themeColorDark = "#1c2221";
+const themeColorHero = "#101716";
 const isHomePage = pageClass === "page-home";
 const organizationData = {
   "@context": "https://schema.org",
@@ -84,7 +84,7 @@ const jsonLd = JSON.stringify(structuredData ? [organizationData, structuredData
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
   </head>

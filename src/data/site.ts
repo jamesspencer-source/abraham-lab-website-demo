@@ -58,6 +58,11 @@ export const siteData = {
       note: "HHMI Investigator"
     }
   ],
+  trainingPrograms: {
+    Virology: "https://virologyphd.hms.harvard.edu/",
+    "MD-PhD / Biophysics": "https://biophysics.fas.harvard.edu/",
+    "MD-PhD / Biological and Biomedical Sciences": "https://bbsphd.hms.harvard.edu/"
+  },
   contact: {
     lab: "Abraham Lab",
     department: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",

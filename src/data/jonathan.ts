@@ -53,6 +53,14 @@ export const jonathanProfile = {
       href: "https://micro.hms.harvard.edu/faculty"
     },
     {
+      label: "Brigham clinical profile",
+      href: "https://physiciandirectory.brighamandwomens.org/details/13685/jonathan-abraham-infectious_disease-boston"
+    },
+    {
+      label: "ORCID record",
+      href: "https://orcid.org/0000-0002-7937-3920"
+    },
+    {
       label: "Inside the Labs of HMS",
       href: "https://www.youtube.com/shorts/GFM3KLZCDps"
     }

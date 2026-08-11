@@ -83,6 +83,25 @@ const expectedCorrespondingDois = new Set([
   "10.1016/j.chom.2015.11.005"
 ]);
 
+const expectedPmcidsByDoi = new Map([
+  ["10.1016/j.cell.2025.11.041", "PMC13082216"],
+  ["10.1038/s41564-025-02085-6", "PMC12408356"],
+  ["10.1016/j.cell.2025.03.029", "PMC12406711"],
+  ["10.1016/j.cell.2024.12.021", "PMC11813165"],
+  ["10.1016/j.cell.2024.07.048", "PMC11787825"],
+  ["10.1038/s41467-024-50887-9", "PMC11297306"],
+  ["10.1038/s41586-024-07740-2", "PMC11324528"],
+  ["10.1056/NEJMe2205563", "PMC9202318"],
+  ["10.1016/j.cell.2022.02.002", "PMC8978092"],
+  ["10.1038/s41586-021-04326-0", "PMC8808280"],
+  ["10.1126/science.abl6251", "PMC9127715"],
+  ["10.1016/j.cell.2021.03.027", "PMC7962548"],
+  ["10.1073/pnas.2021569118", "PMC8092486"],
+  ["10.1038/s41577-020-0365-7", "PMC7290146"],
+  ["10.1038/s41467-018-04271-z", "PMC5951886"],
+  ["10.1016/j.chom.2015.11.005", "PMC4685251"]
+]);
+
 function transpileTsModule(source, filePath) {
   const result = ts.transpileModule(source, {
     compilerOptions: {
@@ -291,6 +310,32 @@ async function main() {
     {
       condition: /^https:\/\/pubmed\.ncbi\.nlm\.nih\.gov\/\?term=/.test(jonathanProfile.pubmedUrl || ""),
       message: "jonathanProfile.pubmedUrl must be an official PubMed author-search URL."
+    },
+    {
+      condition: siteData.trainingPrograms?.Virology === "https://virologyphd.hms.harvard.edu/",
+      message: "Virology must link to the official Harvard program."
+    },
+    {
+      condition: siteData.trainingPrograms?.["MD-PhD / Biophysics"] === "https://biophysics.fas.harvard.edu/",
+      message: "Biophysics must link to the official Harvard program."
+    },
+    {
+      condition:
+        siteData.trainingPrograms?.["MD-PhD / Biological and Biomedical Sciences"] ===
+        "https://bbsphd.hms.harvard.edu/",
+      message: "Biological and Biomedical Sciences must link to the official Harvard program."
+    },
+    {
+      condition: jonathanProfile.profileLinks?.some(
+        (item) => item.href === "https://orcid.org/0000-0002-7937-3920"
+      ),
+      message: "Jonathan's verified ORCID record must be present."
+    },
+    {
+      condition: jonathanProfile.profileLinks?.some(
+        (item) => item.href.includes("physiciandirectory.brighamandwomens.org/details/13685/")
+      ),
+      message: "Jonathan's official Brigham clinical profile must be present."
     }
   ];
 
@@ -301,6 +346,8 @@ async function main() {
   }
 
   const publicationTitles = new Map();
+  const pdbIds = new Set();
+  const emdbIds = new Set();
   for (const publication of publications) {
     const title = normalize(publication.title);
     if (!title) {
@@ -322,6 +369,10 @@ async function main() {
       fail(`Invalid PMID format for "${title}": ${publication.pmid}`);
     }
 
+    if (publication.pmcid && !/^PMC\d+$/.test(String(publication.pmcid))) {
+      fail(`Invalid PMCID format for "${title}": ${publication.pmcid}`);
+    }
+
     if ((publication.doi || publication.pmid) && !publication.link) {
       fail(`Publication "${title}" has a DOI/PMID but no outbound link.`);
     }
@@ -332,6 +383,45 @@ async function main() {
 
     if (!new Set(["Research article", "Preprint", "Commentary"]).has(publication.articleType)) {
       fail(`Publication "${title}" has an unsupported articleType.`);
+    }
+
+    if (publication.articleType === "Preprint" && publication.openAccess !== true) {
+      fail(`Preprint "${title}" must be marked open access.`);
+    }
+
+    for (const id of publication.structures?.pdb || []) {
+      if (!/^[0-9][A-Z0-9]{3}$/.test(id)) {
+        fail(`Publication "${title}" has invalid PDB accession "${id}".`);
+      }
+      if (pdbIds.has(id)) {
+        fail(`PDB accession "${id}" appears on more than one publication.`);
+      }
+      pdbIds.add(id);
+    }
+
+    for (const id of publication.structures?.emdb || []) {
+      if (!/^EMD-\d+$/.test(id)) {
+        fail(`Publication "${title}" has invalid EMDB accession "${id}".`);
+      }
+      if (emdbIds.has(id)) {
+        fail(`EMDB accession "${id}" appears on more than one publication.`);
+      }
+      emdbIds.add(id);
+    }
+
+    for (const resource of publication.resourceLinks || []) {
+      if (!normalize(resource.label) || !/^https:\/\//.test(resource.href || "")) {
+        fail(`Publication "${title}" has an invalid resource link.`);
+      }
+      if (!["data", "code", "protocol", "supplement"].includes(resource.kind)) {
+        fail(`Publication "${title}" has unsupported resource kind "${resource.kind}".`);
+      }
+    }
+
+    for (const coverageLink of publication.coverageLinks || []) {
+      if (!/^https:\/\//.test(coverageLink)) {
+        fail(`Publication "${title}" has an invalid coverage link.`);
+      }
     }
 
     if (publication.visualReuseStatus === "link-only" || publication.image && !["open-access", "lab-approved"].includes(publication.visualReuseStatus)) {
@@ -390,6 +480,13 @@ async function main() {
   for (const doi of publicationDois) {
     if (!expectedCorrespondingDois.has(doi)) {
       fail(`Unverified or out-of-scope publication DOI in record: ${doi}.`);
+    }
+  }
+
+  for (const [doi, pmcid] of expectedPmcidsByDoi) {
+    const publication = publications.find((item) => item.doi === doi);
+    if (publication?.pmcid !== pmcid) {
+      fail(`Publication DOI ${doi} must use verified PMCID ${pmcid}.`);
     }
   }
 

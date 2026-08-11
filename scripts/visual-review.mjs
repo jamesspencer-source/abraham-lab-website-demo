@@ -287,6 +287,24 @@ async function run() {
     }
     await noJsContext.close();
 
+    const printContext = await browser.newContext({ viewport: { width: 1024, height: 1366 } });
+    const printPage = await printContext.newPage();
+    await printPage.emulateMedia({ media: "print", colorScheme: "light" });
+    const printResponse = await printPage.goto(`${origin}${basePath}/publications/`, { waitUntil: "domcontentloaded" });
+    const printCheck = await printPage.evaluate(() => ({
+      headerDisplay: getComputedStyle(document.querySelector(".site-header")).display,
+      footerDisplay: getComputedStyle(document.querySelector(".site-footer")).display,
+      indexDisplay: getComputedStyle(document.querySelector(".publication-index")).display,
+      buttonDisplay: getComputedStyle(document.querySelector(".publication-print")).display,
+      documentOverflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth
+    }));
+    if (!printResponse?.ok()) failures.push("Publications print view did not load.");
+    if ([printCheck.headerDisplay, printCheck.footerDisplay, printCheck.indexDisplay, printCheck.buttonDisplay].some((value) => value !== "none")) {
+      failures.push("Publications print view includes screen-only navigation or controls.");
+    }
+    if (printCheck.documentOverflow > 1) failures.push(`Publications print view has ${printCheck.documentOverflow}px of horizontal overflow.`);
+    await printContext.close();
+
     for (const viewport of selectedViewports) {
       const context = await browser.newContext({
         viewport: { width: viewport.width, height: viewport.height },

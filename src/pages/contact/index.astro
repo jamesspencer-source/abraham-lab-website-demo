@@ -32,6 +32,23 @@ import { siteData } from "../../data/site";
           <p class="overline">Location</p>
           <address>{siteData.contact.addressLines.map((line) => <span>{line}</span>)}</address>
         </section>
+        <section class="contact-block reveal">
+          <p class="overline">Graduate training</p>
+          <h2>Harvard programs</h2>
+          <div class="contact-block__body">
+            <p>Graduate students join through Harvard training programs.</p>
+            <ul class="contact-programs">
+              {Object.entries(siteData.trainingPrograms).map(([label, href]) => (
+                <li><a href={href} target="_blank" rel="noreferrer">{label} <span aria-hidden="true">↗</span></a></li>
+              ))}
+            </ul>
+          </div>
+        </section>
+        <section class="contact-block reveal">
+          <p class="overline">Postdoctoral work</p>
+          <h2>Inquiries</h2>
+          <p class="contact-block__body">Contact <a href={`mailto:${siteData.contact.email}`}>Jonathan Abraham</a>.</p>
+        </section>
       </div>
       <MapWidget eyebrow="Campus map" />
     </div>

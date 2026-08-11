@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { peopleData } from "../../data/people";
+import { siteData } from "../../data/site";
 import { groupPeople, withBase } from "../../lib/content";
 
 const groupedPeople = groupPeople(peopleData.currentMembers);
@@ -59,7 +60,9 @@ const directoryIndex = [
               </div>
               <p class="team-row__role">{person.title}</p>
               <div class="team-row__details">
-                {person.programTags?.map((tag) => <span>{tag}</span>)}
+                {person.programTags?.map((tag) => (
+                  <a href={siteData.trainingPrograms[tag]} target="_blank" rel="noreferrer">{tag} <span aria-hidden="true">↗</span></a>
+                ))}
                 {person.fellowships?.map((fellowship) => <span>{fellowship}</span>)}
                 {formatLabDates(person) && <time>{formatLabDates(person)}</time>}
               </div>

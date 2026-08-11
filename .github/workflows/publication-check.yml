@@ -1,0 +1,46 @@
+name: Publication check
+
+on:
+  schedule:
+    - cron: "17 14 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        # Pinned to immutable action commit; update intentionally after review.
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        # Pinned to immutable action commit; update intentionally after review.
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate site content
+        run: npm run validate:content
+
+      - name: Check publication sources
+        run: npm run check:publications
+
+      - name: Upload publication report
+        if: always()
+        # Pinned to immutable action commit; update intentionally after review.
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: publication-check
+          path: output/publication-check

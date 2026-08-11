@@ -106,6 +106,37 @@ if (sitemap.includes("/research/") || sitemap.includes("/people/")) {
   failures.push("Sitemap includes a legacy route.");
 }
 
+const publicationsPage = await fs.readFile(path.join(siteRoot, "publications", "index.html"), "utf8");
+for (const marker of ["Jump to year", "PDB", "EMDB", "Open access", "Print or save PDF"]) {
+  if (!publicationsPage.includes(marker)) failures.push(`Publications page is missing "${marker}".`);
+}
+
+const teamPage = await fs.readFile(path.join(siteRoot, "team", "index.html"), "utf8");
+for (const programUrl of [
+  "https://virologyphd.hms.harvard.edu/",
+  "https://bbsphd.hms.harvard.edu/"
+]) {
+  if (!teamPage.includes(programUrl)) failures.push(`Team page is missing program link: ${programUrl}`);
+}
+
+const contactPage = await fs.readFile(path.join(siteRoot, "contact", "index.html"), "utf8");
+if (!/loading="lazy"/.test(contactPage)) failures.push("Contact map must load lazily.");
+if (!contactPage.includes("Graduate students join through Harvard training programs.")) {
+  failures.push("Contact page is missing graduate training guidance.");
+}
+for (const programUrl of [
+  "https://virologyphd.hms.harvard.edu/",
+  "https://bbsphd.hms.harvard.edu/",
+  "https://biophysics.fas.harvard.edu/"
+]) {
+  if (!contactPage.includes(programUrl)) failures.push(`Contact page is missing program link: ${programUrl}`);
+}
+
+const homePage = await fs.readFile(path.join(siteRoot, "index.html"), "utf8");
+if (!homePage.includes("https://accessibility.huit.harvard.edu/digital-accessibility-policy")) {
+  failures.push("Footer is missing Harvard's digital accessibility link.");
+}
+
 if (failures.length) {
   console.error("Built-site validation failed:");
   for (const failure of failures) console.error(`- ${failure}`);

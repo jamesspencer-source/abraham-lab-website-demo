@@ -20,7 +20,7 @@ const { eyebrow = "Campus map" } = Astro.props;
       class="map-widget__iframe"
       title="Google map of Veritas Science Center at Harvard Medical School"
       src={siteData.contact.mapEmbedUrl}
-      loading="eager"
+      loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"
       allowfullscreen
       onload="this.parentElement.classList.add('is-loaded')"

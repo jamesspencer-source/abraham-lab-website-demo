@@ -64,12 +64,17 @@ export const publications: Publication[] = [
     link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC13082216/",
     doi: "10.1016/j.cell.2025.11.041",
     pmid: "41468884",
+    pmcid: "PMC13082216",
     featured: true,
     homepageProof: true,
     system: "HSV-1",
     methodCluster: "Cryo-EM, biochemistry, single-molecule analysis",
     significanceLine: "Shows how helicase-primase inhibitors arrest herpesvirus replication.",
-    openAccess: true,
+    openAccess: false,
+    structures: {
+      pdb: ["9YC9", "9YCP", "9YCT", "9YCV"],
+      emdb: ["EMD-72764", "EMD-72781", "EMD-72786", "EMD-72789"]
+    },
     coverageLinks: ["https://hms.harvard.edu/news/researchers-now-understand-how-new-class-antivirals-works"],
     summary:
       "Structural and single-molecule analyses show how helicase-primase inhibitors block herpesvirus DNA replication and how the replication fork complex assembles.",
@@ -88,11 +93,16 @@ export const publications: Publication[] = [
     link: "https://www.nature.com/articles/s41564-025-02085-6",
     doi: "10.1038/s41564-025-02085-6",
     pmid: "40781447",
+    pmcid: "PMC12408356",
     featured: true,
     system: "New World arenaviruses",
     methodCluster: "Cryo-EM, glycoprotein architecture",
     significanceLine: "Defines the organization of the New World arenavirus spike glycoprotein complex.",
     openAccess: true,
+    structures: {
+      pdb: ["9MT2", "9MT6"],
+      emdb: ["EMD-48598", "EMD-48601"]
+    },
     summary:
       "Cryo-EM structures define the organization of New World arenavirus glycoprotein complexes and their receptor-facing architecture.",
     image: "/assets/images/publications/arenavirus-gpc-figure-2.png",
@@ -119,11 +129,16 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/40187345/",
     doi: "10.1016/j.cell.2025.03.029",
     pmid: "40187345",
+    pmcid: "PMC12406711",
     featured: true,
     system: "Western equine encephalitis virus",
     methodCluster: "Structural biology, receptor binding, functional virology",
     significanceLine: "Explains shifted receptor recognition in an encephalitic arbovirus.",
-    openAccess: false,
+    openAccess: true,
+    structures: {
+      pdb: ["9DQV", "9DQX", "9DQY", "9DQZ"],
+      emdb: ["EMD-47116", "EMD-47117", "EMD-47118", "EMD-47119"]
+    },
     summary:
       "Structural and functional studies show how receptor recognition shifted in an encephalitic arbovirus and connect that shift to viral tropism.",
     articleType: "Research article",
@@ -141,10 +156,15 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/39837328/",
     doi: "10.1016/j.cell.2024.12.021",
     pmid: "39837328",
+    pmcid: "PMC11813165",
     system: "Nipah virus",
     methodCluster: "Cryo-EM, enzymology, polymerase function",
     significanceLine: "Defines the structure and function of the Nipah virus polymerase complex.",
-    openAccess: false,
+    openAccess: true,
+    structures: {
+      pdb: ["9BDQ"],
+      emdb: ["EMD-44465"]
+    },
     summary: "Cryo-EM and functional work define the Nipah virus polymerase complex and features tied to RNA replication.",
     articleType: "Research article",
     correspondingAuthor: true,
@@ -162,11 +182,16 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/39197451/",
     doi: "10.1016/j.cell.2024.07.048",
     pmid: "39197451",
+    pmcid: "PMC11787825",
     foundational: true,
     system: "Viral DNA polymerases",
     methodCluster: "Cryo-EM, resistance mapping, polymerase mechanism",
     significanceLine: "Maps structural routes to antiviral drug resistance.",
     openAccess: false,
+    structures: {
+      pdb: ["8EXX", "8V1Q", "8V1R", "8V1S", "8V1T"],
+      emdb: ["EMD-28663", "EMD-42887", "EMD-42888", "EMD-42889", "EMD-42890"]
+    },
     summary: "Structures of viral DNA polymerases define routes to resistance against antiviral drugs.",
     articleType: "Research article",
     correspondingAuthor: true,
@@ -184,11 +209,16 @@ export const publications: Publication[] = [
     link: "https://www.nature.com/articles/s41467-024-50887-9",
     doi: "10.1038/s41467-024-50887-9",
     pmid: "39095394",
+    pmcid: "PMC11297306",
     foundational: true,
     system: "Eastern equine encephalitis virus",
     methodCluster: "Cryo-EM, receptor recognition, host engagement",
     significanceLine: "Defines how eastern equine encephalitis virus binds VLDLR.",
     openAccess: true,
+    structures: {
+      pdb: ["8UA4", "8UA8", "8UA9"],
+      emdb: ["EMD-42050", "EMD-42054", "EMD-42055"]
+    },
     summary: "Structural analysis shows how eastern equine encephalitis virus binds VLDLR.",
     articleType: "Research article",
     correspondingAuthor: true,
@@ -206,6 +236,7 @@ export const publications: Publication[] = [
     link: "https://www.nature.com/articles/s41586-024-07740-2",
     doi: "10.1038/s41586-024-07740-2",
     pmid: "39048821",
+    pmcid: "PMC11324528",
     foundational: true,
     system: "Western equine encephalitis virus",
     methodCluster: "CRISPR screening, receptor biology, functional virology",
@@ -226,6 +257,8 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/35675183/",
     doi: "10.1056/NEJMe2205563",
     pmid: "35675183",
+    pmcid: "PMC9202318",
+    openAccess: true,
     articleType: "Commentary",
     correspondingAuthor: true,
     correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/35675183/"
@@ -242,6 +275,11 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/35259335/",
     doi: "10.1016/j.cell.2022.02.002",
     pmid: "35259335",
+    pmcid: "PMC8978092",
+    structures: {
+      pdb: ["7T4D", "7T4E"],
+      emdb: ["EMD-25673"]
+    },
     articleType: "Research article",
     correspondingAuthor: true,
     correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/35259335/"
@@ -258,6 +296,7 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/34929721/",
     doi: "10.1038/s41586-021-04326-0",
     pmid: "34929721",
+    pmcid: "PMC8808280",
     foundational: true,
     articleType: "Research article",
     correspondingAuthor: true,
@@ -275,6 +314,12 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/34855508/",
     doi: "10.1126/science.abl6251",
     pmid: "34855508",
+    pmcid: "PMC9127715",
+    openAccess: true,
+    structures: {
+      pdb: ["7SN0", "7SN1", "7SN2", "7SN3"],
+      emdb: ["EMD-25209", "EMD-25210"]
+    },
     foundational: true,
     articleType: "Research article",
     correspondingAuthor: true,
@@ -292,6 +337,8 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/33831372/",
     doi: "10.1016/j.cell.2021.03.027",
     pmid: "33831372",
+    pmcid: "PMC7962548",
+    openAccess: true,
     articleType: "Research article",
     correspondingAuthor: true,
     correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/33831372/"
@@ -308,6 +355,11 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/33879614/",
     doi: "10.1073/pnas.2021569118",
     pmid: "33879614",
+    pmcid: "PMC8092486",
+    openAccess: true,
+    structures: {
+      pdb: ["6WRV", "6WRW", "6WRX"]
+    },
     articleType: "Research article",
     correspondingAuthor: true,
     correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/33879614/"
@@ -322,6 +374,8 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/32533109/",
     doi: "10.1038/s41577-020-0365-7",
     pmid: "32533109",
+    pmcid: "PMC7290146",
+    openAccess: true,
     articleType: "Commentary",
     correspondingAuthor: true,
     correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/32533109/"
@@ -338,7 +392,12 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/29760382/",
     doi: "10.1038/s41467-018-04271-z",
     pmid: "29760382",
+    pmcid: "PMC5951886",
+    openAccess: true,
     foundational: true,
+    structures: {
+      pdb: ["5W1G", "5W1K", "5W1M"]
+    },
     articleType: "Research article",
     correspondingAuthor: true,
     correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/29760382/"
@@ -354,7 +413,11 @@ export const publications: Publication[] = [
     link: "https://pubmed.ncbi.nlm.nih.gov/26651946/",
     doi: "10.1016/j.chom.2015.11.005",
     pmid: "26651946",
+    pmcid: "PMC4685251",
     foundational: true,
+    structures: {
+      pdb: ["5EN2"]
+    },
     articleType: "Research article",
     correspondingAuthor: true,
     correspondenceSource: "https://pubmed.ncbi.nlm.nih.gov/26651946/"

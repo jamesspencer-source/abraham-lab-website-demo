@@ -5,11 +5,14 @@ import { groupPublicationsByYear } from "../../lib/content";
 import { siteData } from "../../data/site";
 
 const groupedPublications = groupPublicationsByYear(publications);
+const pdbUrl = (id: string) => `https://www.rcsb.org/structure/${id}`;
+const emdbUrl = (id: string) => `https://www.ebi.ac.uk/emdb/${id}`;
 ---
 
 <BaseLayout
   title="Publications"
   description="Papers from the Abraham Lab."
+  pageClass="page-publications"
   socialImage={siteData.heroFigures[0].image}
 >
   <section class="page-intro page-intro--publications">
@@ -18,8 +21,20 @@ const groupedPublications = groupPublicationsByYear(publications);
         <p class="overline">Selected publications</p>
         <h1>Publications</h1>
       </div>
+      <button class="publication-print reveal" type="button" onclick="window.print()">Print or save PDF</button>
     </div>
   </section>
+
+  <nav class="publication-index" aria-label="Publication years">
+    <div class="shell publication-index__inner">
+      <span>Jump to year</span>
+      <ol>
+        {groupedPublications.map((yearGroup) => (
+          <li><a href={`#publications-${yearGroup.year}`}>{yearGroup.year}</a></li>
+        ))}
+      </ol>
+    </div>
+  </nav>
 
   <section class="publication-record" aria-label="Publication record">
     <div class="shell publication-record__list">
@@ -32,12 +47,58 @@ const groupedPublications = groupPublicationsByYear(publications);
                 <div class="publication-row__body">
                   <h3><a href={item.link} target="_blank" rel="noreferrer">{item.title}</a></h3>
                   <p class="publication-row__citation">{item.citation}</p>
+                  {(item.structures || item.resourceLinks || item.coverageLinks) && (
+                    <div class="publication-row__outputs" aria-label={`Research outputs for ${item.title}`}>
+                      {item.structures?.pdb?.length && (
+                        <div class="publication-output">
+                          <span>PDB</span>
+                          <ul>
+                            {item.structures.pdb.map((id) => (
+                              <li><a href={pdbUrl(id)} target="_blank" rel="noreferrer">{id}</a></li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {item.structures?.emdb?.length && (
+                        <div class="publication-output">
+                          <span>EMDB</span>
+                          <ul>
+                            {item.structures.emdb.map((id) => (
+                              <li><a href={emdbUrl(id)} target="_blank" rel="noreferrer">{id}</a></li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {item.resourceLinks?.length && (
+                        <div class="publication-output">
+                          <span>Resources</span>
+                          <ul>
+                            {item.resourceLinks.map((resource) => (
+                              <li><a href={resource.href} target="_blank" rel="noreferrer">{resource.label}</a></li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {item.coverageLinks?.length && (
+                        <div class="publication-output">
+                          <span>Coverage</span>
+                          <ul>
+                            {item.coverageLinks.map((href) => (
+                              <li><a href={href} target="_blank" rel="noreferrer">Harvard Medical School</a></li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div class="publication-row__meta">
                   {item.journal && <strong>{item.journal}</strong>}
-                  <span>{item.articleType}</span>
+                  <span class:list={["publication-row__type", item.articleType === "Preprint" && "publication-row__type--preprint"]}>{item.articleType}</span>
+                  {item.openAccess && <a class="publication-row__access" href={item.pmcid ? `https://pmc.ncbi.nlm.nih.gov/articles/${item.pmcid}/` : item.link} target="_blank" rel="noreferrer">Open access</a>}
                   {item.doi && <a href={`https://doi.org/${item.doi}`} target="_blank" rel="noreferrer">DOI</a>}
                   {item.pmid && <a href={`https://pubmed.ncbi.nlm.nih.gov/${item.pmid}/`} target="_blank" rel="noreferrer">PMID</a>}
+                  {item.pmcid && <a href={`https://pmc.ncbi.nlm.nih.gov/articles/${item.pmcid}/`} target="_blank" rel="noreferrer">PMC</a>}
                 </div>
               </li>
             ))}

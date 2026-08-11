@@ -15,7 +15,7 @@ const personData = {
     { "@type": "Organization", name: "Brigham and Women's Hospital" }
   ],
   url: new URL(withBase("/jonathan-abraham/"), siteData.url).toString(),
-  sameAs: jonathanProfile.profileLinks.slice(0, 2).map((item) => item.href)
+  sameAs: [...jonathanProfile.profileLinks.map((item) => item.href), jonathanProfile.pubmedUrl]
 };
 ---
 

@@ -4,5 +4,6 @@ dist/
 .DS_Store
 .npm-cache/
 output/visual-review/
+output/publication-check/
 .cache/
 .astro/

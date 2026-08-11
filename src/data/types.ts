@@ -59,6 +59,10 @@ export type SiteData = {
   tagline: string;
   nav: NavItem[];
   affiliations: Affiliation[];
+  trainingPrograms: Record<
+    "Virology" | "MD-PhD / Biophysics" | "MD-PhD / Biological and Biomedical Sciences",
+    string
+  >;
   contact: ContactData;
   social: {
     x: string;
@@ -76,6 +80,7 @@ export type Publication = {
   publishedAt?: string;
   doi?: string;
   pmid?: string;
+  pmcid?: string;
   featured?: boolean;
   leadFeature?: boolean;
   homepageProof?: boolean;
@@ -85,6 +90,15 @@ export type Publication = {
   significanceLine?: string;
   openAccess?: boolean;
   coverageLinks?: string[];
+  structures?: {
+    pdb?: string[];
+    emdb?: string[];
+  };
+  resourceLinks?: Array<{
+    label: string;
+    href: string;
+    kind: "data" | "code" | "protocol" | "supplement";
+  }>;
   summary?: string;
   image?: string;
   imagePosition?: string;

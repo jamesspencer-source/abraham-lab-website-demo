@@ -734,11 +734,49 @@ main {
 }
 
 .team-signal__film {
-  display: grid;
-  gap: 0.8rem;
-  padding: 1.5rem 0;
-  border-block: 1px solid var(--line-strong);
+  min-width: 0;
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
   text-decoration: none;
+  transition: border-color var(--transition), background-color var(--transition);
+}
+
+.team-signal__film-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-block-end: 1px solid var(--line);
+  background: var(--hero);
+}
+
+.team-signal__film-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 320ms ease;
+}
+
+.team-signal__film-badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0.55rem 0.75rem;
+  color: var(--hero-ink);
+  background: rgba(15, 21, 20, 0.9);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.team-signal__film-copy {
+  display: grid;
+  gap: 0.7rem;
+  padding: 1.35rem;
 }
 
 .team-signal__film strong {
@@ -746,9 +784,25 @@ main {
   line-height: 1.3;
 }
 
-.team-signal__film > span:last-child {
+.team-signal__film-credit {
+  color: var(--ink-quiet);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.team-signal__film-action {
   color: var(--accent-hover);
   font-weight: 700;
+}
+
+.team-signal__film:hover {
+  border-color: var(--accent);
+  background: var(--surface-soft);
+}
+
+.team-signal__film:hover .team-signal__film-media img {
+  transform: scale(1.015);
 }
 
 /* Interior page intros */
@@ -1596,6 +1650,10 @@ main {
     transform: none;
     transition: none;
   }
+
+  .team-signal__film-media img {
+    transition: none;
+  }
 }
 
 @media (max-width: 1180px) {
@@ -1744,6 +1802,11 @@ main {
   .current-work__grid,
   .team-signal__grid {
     gap: 3rem;
+  }
+
+  .team-signal__film {
+    width: 100%;
+    max-width: 42rem;
   }
 
   .profile-dossier__grid,

@@ -8,8 +8,10 @@ import { homepageProofOnly, leadPublication, withBase } from "../lib/content";
 const proofPapers = homepageProofOnly(publications);
 const recentPaper = leadPublication(publications) ?? proofPapers[0];
 const otherRecentPapers = proofPapers.filter((item) => item.title !== recentPaper?.title).slice(0, 2);
-const hmsCoverage = newsItems.find((item) => item.category === "Institutional coverage");
 const labFilm = newsItems.find((item) => item.link.includes("GFM3KLZCDps"));
+const hmsCoverage = newsItems.find(
+  (item) => item.category === "Institutional coverage" && item.link !== labFilm?.link
+);
 const heroFigure = siteData.heroFigures[0];
 ---
 
@@ -118,9 +120,25 @@ const heroFigure = siteData.heroFigures[0];
 
       {labFilm && (
         <a class="team-signal__film reveal" href={labFilm.link} target="_blank" rel="noreferrer">
-          <span class="overline">Inside the Labs of HMS</span>
-          <strong>{labFilm.title}</strong>
-          <span>{labFilm.linkLabel ?? "Watch film"} <span aria-hidden="true">↗</span></span>
+          {labFilm.image && (
+            <span class="team-signal__film-media">
+              <img
+                src={withBase(labFilm.image)}
+                alt={labFilm.imageAlt ?? ""}
+                width="1440"
+                height="810"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="team-signal__film-badge">HMS film</span>
+            </span>
+          )}
+          <span class="team-signal__film-copy">
+            <span class="overline">{labFilm.source}</span>
+            <strong>{labFilm.title}</strong>
+            <span class="team-signal__film-credit">Film stills · {labFilm.imageCredit ?? labFilm.source}</span>
+            <span class="team-signal__film-action">{labFilm.linkLabel ?? "Watch film"} <span aria-hidden="true">↗</span></span>
+          </span>
         </a>
       )}
     </div>

@@ -125,6 +125,7 @@ export type NewsItem = {
   milestoneTier?: "major" | "secondary";
   image?: string;
   imageAlt?: string;
+  imageCredit?: string;
 };
 
 export type Person = {

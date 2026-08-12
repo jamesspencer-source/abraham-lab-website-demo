@@ -595,6 +595,18 @@ async function main() {
     if (normalize(item.image).startsWith("/assets/images/people/")) {
       fail(`News item "${item.title}" uses a lab-member photo.`);
     }
+
+    if (item.image) {
+      if (!(await localAssetExists(item.image))) {
+        fail(`News item "${item.title}" references a missing image: ${item.image}`);
+      }
+      if (!normalize(item.imageAlt)) {
+        fail(`News item "${item.title}" image needs imageAlt.`);
+      }
+      if (!normalize(item.imageCredit)) {
+        fail(`News item "${item.title}" image needs imageCredit.`);
+      }
+    }
   }
 
   for (const directory of [

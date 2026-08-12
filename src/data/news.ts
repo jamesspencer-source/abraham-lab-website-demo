@@ -9,6 +9,9 @@ const newsItemsList: NewsItem[] = [
     summary: "An HMS film follows the Abraham Lab as its members study how viruses infect cells.",
     link: "https://www.youtube.com/shorts/GFM3KLZCDps",
     linkLabel: "Watch the HMS film",
+    image: "/assets/images/editorial/inside-labs-hms-film-still.webp",
+    imageAlt: "Three stills from the HMS film show gloved hands using laboratory equipment, a molecular model on a monitor, and a sample tube.",
+    imageCredit: "Harvard Medical School",
     homepageEligible: true,
     milestoneTier: "major"
   },

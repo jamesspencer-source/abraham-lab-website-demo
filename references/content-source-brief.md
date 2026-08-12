@@ -102,6 +102,12 @@ Visual-use note:
 - HMS Microbiology archived news:
   - https://micro.hms.harvard.edu/news-events/archived-news
 
+Film visual added August 12, 2026:
+
+- The homepage preview uses three science-only stills taken from the official HMS film linked above: laboratory equipment, a molecular model on a monitor, and a sample tube.
+- The preview does not use YouTube's default thumbnail and does not show lab members.
+- Visible credit: `Film stills · Harvard Medical School`
+
 ## Known unresolved details
 
 - Public email and phone listings are inconsistent across institutional pages.

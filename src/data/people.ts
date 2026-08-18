@@ -131,14 +131,7 @@ export const peopleData: PeopleData = {
       order: 18
     }
   ],
-  seasonalMembers: [
-    {
-      name: "Louella \"Ella\" Seo",
-      title: "Summer Research Student",
-      labStart: "2026-06",
-      labEnd: "2026-08"
-    }
-  ],
+  seasonalMembers: [],
   alumni: [
     {
       label: "Postdoctoral and Research Fellows",
@@ -185,6 +178,7 @@ export const peopleData: PeopleData = {
       entries: [
         { name: "Arya Akbarshahi" },
         { name: "Linzy Malcolm" },
+        { name: "Louella \"Ella\" Seo", labStart: "2026-06", labEnd: "2026-08" },
         { name: "Zaila Avant-garde", labStart: "2026-06", labEnd: "2026-08" }
       ]
     }

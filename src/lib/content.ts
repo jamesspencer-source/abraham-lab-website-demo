@@ -4,6 +4,7 @@ const PEOPLE_GROUP_ORDER = [
   "Leadership",
   "Postdoctoral Fellows & Instructors",
   "Graduate Students",
+  "Research Staff",
   "Operations & Strategy"
 ] as const;
 

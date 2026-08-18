@@ -137,7 +137,7 @@ export type Person = {
   fellowships?: string[];
   labStart?: string;
   labEnd?: string;
-  group: "Leadership" | "Postdoctoral Fellows & Instructors" | "Graduate Students" | "Operations & Strategy";
+  group: "Leadership" | "Postdoctoral Fellows & Instructors" | "Graduate Students" | "Research Staff" | "Operations & Strategy";
   order: number;
 };
 

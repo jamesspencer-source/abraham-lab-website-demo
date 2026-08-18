@@ -124,11 +124,18 @@ export const peopleData: PeopleData = {
       order: 17
     },
     {
+      name: "Jayda Gilliard",
+      title: "Research Technician",
+      labStart: "2026-08",
+      group: "Research Staff",
+      order: 18
+    },
+    {
       name: "James Spencer",
       title: "Lab Manager",
       labStart: "2025-08",
       group: "Operations & Strategy",
-      order: 18
+      order: 19
     }
   ],
   seasonalMembers: [],

@@ -26,6 +26,8 @@ export type Affiliation = {
   shortName?: string;
   href: string;
   logo: string;
+  logoWidth: number;
+  logoHeight: number;
   alt: string;
   note?: string;
 };

@@ -37,6 +37,12 @@ jobs:
       - name: Check publication sources
         run: npm run check:publications
 
+      - name: Build site for link review
+        run: npm run build
+
+      - name: Check external links
+        run: npm run check:links
+
       - name: Upload publication report
         if: always()
         # Pinned to immutable action commit; update intentionally after review.
@@ -44,3 +50,11 @@ jobs:
         with:
           name: publication-check
           path: output/publication-check
+
+      - name: Upload link report
+        if: always()
+        # Pinned to immutable action commit; update intentionally after review.
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: external-link-check
+          path: output/link-check

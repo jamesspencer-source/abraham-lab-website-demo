@@ -344,16 +344,6 @@ async function run() {
             document.documentElement.style.colorScheme = activeTheme;
             document.querySelector(".site-nav")?.classList.remove("is-open");
             document.querySelector(".nav-toggle")?.setAttribute("aria-expanded", "false");
-            const images = [...document.images];
-            await Promise.all(images.map(async (img) => {
-              if (!img.complete) {
-                await new Promise((resolve) => {
-                  img.addEventListener("load", resolve, { once: true });
-                  img.addEventListener("error", resolve, { once: true });
-                });
-              }
-              try { await img.decode(); } catch {}
-            }));
           }, theme);
 
           const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -363,6 +353,14 @@ async function run() {
           }
           await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
           await page.waitForTimeout(200);
+          try {
+            await page.waitForFunction(
+              () => [...document.images].every((img) => img.complete),
+              { timeout: 5000 }
+            );
+          } catch {
+            // The behavior check below reports any local image that still failed to load.
+          }
           const revealCount = await page.locator(".reveal").count();
           for (let index = 0; index < revealCount; index += 1) {
             const reveal = page.locator(".reveal").nth(index);

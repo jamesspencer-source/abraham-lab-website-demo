@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { publications } from "../../data/publications";
 import { groupPublicationsByYear } from "../../lib/content";
 import { siteData } from "../../data/site";
+import { jonathanProfile } from "../../data/jonathan";
 
 const groupedPublications = groupPublicationsByYear(publications);
 const pdbUrl = (id: string) => `https://www.rcsb.org/structure/${id}`;
@@ -21,7 +22,12 @@ const emdbUrl = (id: string) => `https://www.ebi.ac.uk/emdb/${id}`;
         <p class="overline">Selected publications</p>
         <h1>Publications</h1>
       </div>
-      <button class="publication-print reveal" type="button" onclick="window.print()">Print or save PDF</button>
+      <div class="page-intro__actions reveal">
+        <a class="publication-pubmed-link" href={jonathanProfile.pubmedUrl} target="_blank" rel="noreferrer">
+          Full record on PubMed <span aria-hidden="true">↗</span>
+        </a>
+        <button class="publication-print" type="button" onclick="window.print()">Print or save PDF</button>
+      </div>
     </div>
   </section>
 

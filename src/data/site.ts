@@ -46,6 +46,8 @@ export const siteData = {
       shortName: "HMS Microbiology",
       href: "https://micro.hms.harvard.edu/",
       logo: "/assets/images/brands/hms-microbiology-logo.svg",
+      logoWidth: 405,
+      logoHeight: 53,
       alt: "Harvard Medical School Department of Microbiology",
       note: "Blavatnik Institute, Harvard Medical School"
     },
@@ -54,6 +56,8 @@ export const siteData = {
       shortName: "Howard Hughes Medical Institute",
       href: "https://www.hhmi.org/",
       logo: "/assets/images/brands/hhmi-horizontal-signature-color.png",
+      logoWidth: 1918,
+      logoHeight: 445,
       alt: "Howard Hughes Medical Institute",
       note: "HHMI Investigator"
     }

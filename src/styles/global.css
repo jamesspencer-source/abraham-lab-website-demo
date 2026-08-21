@@ -1,6 +1,6 @@
 :root {
-  --font-display: "Inter Tight", "Inter", Arial, sans-serif;
-  --font-sans: "Inter", Arial, sans-serif;
+  --font-display: "Inter Tight Variable", "Inter Tight", "Inter", Arial, sans-serif;
+  --font-sans: "Inter Variable", "Inter", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   --radius: 0.25rem;
   --header-height: 4.6rem;
@@ -847,6 +847,24 @@ main {
 
 .page-intro__link {
   align-self: end;
+}
+
+.page-intro__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.25rem;
+}
+
+.publication-pubmed-link {
+  color: var(--ink-muted);
+  font: 600 0.78rem/1.35 var(--font-mono);
+  text-decoration-color: var(--line-strong);
+}
+
+.publication-pubmed-link:hover {
+  color: var(--accent-hover);
+  text-decoration-color: currentColor;
 }
 
 /* Publication record */
@@ -1929,6 +1947,11 @@ main {
     align-items: start;
   }
 
+  .page-intro__actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
   .appointment-band__item {
     padding-block: 1.4rem;
   }
@@ -2209,6 +2232,7 @@ main {
   .page-publications .site-header,
   .page-publications .site-footer,
   .page-publications .publication-index,
+  .page-publications .page-intro__actions,
   .page-publications .publication-print {
     display: none !important;
   }

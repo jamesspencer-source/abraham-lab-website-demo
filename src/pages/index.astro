@@ -6,13 +6,13 @@ import { newsItems } from "../data/news";
 import { homepageProofOnly, leadPublication, withBase } from "../lib/content";
 
 const proofPapers = homepageProofOnly(publications);
-const recentPaper = leadPublication(publications) ?? proofPapers[0];
-const otherRecentPapers = proofPapers.filter((item) => item.title !== recentPaper?.title).slice(0, 2);
 const labFilm = newsItems.find((item) => item.link.includes("GFM3KLZCDps"));
 const hmsCoverage = newsItems.find(
   (item) => item.category === "Institutional coverage" && item.link !== labFilm?.link
 );
 const heroFigure = siteData.heroFigures[0];
+const recentPaper = publications.find((item) => item.link === heroFigure.href) ?? leadPublication(publications) ?? proofPapers[0];
+const otherRecentPapers = proofPapers.filter((item) => item.title !== recentPaper?.title).slice(0, 3);
 ---
 
 <BaseLayout pageClass="page-home" socialImage={heroFigure.image}>
@@ -47,7 +47,12 @@ const heroFigure = siteData.heroFigures[0];
       <div class="endorsement-band__marks">
         {siteData.affiliations.map((affiliation) => (
           <a href={affiliation.href} target="_blank" rel="noreferrer" aria-label={affiliation.name}>
-            <img src={withBase(affiliation.logo)} alt={affiliation.alt} />
+            <img
+              src={withBase(affiliation.logo)}
+              alt={affiliation.alt}
+              width={affiliation.logoWidth}
+              height={affiliation.logoHeight}
+            />
           </a>
         ))}
       </div>

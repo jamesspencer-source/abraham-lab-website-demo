@@ -83,7 +83,8 @@ for (const htmlFile of htmlFiles) {
   for (const forbidden of [
     { pattern: /Associate Professor of Microbiology, Harvard Medical School/i, label: "old Jonathan title" },
     { pattern: /\/assets\/images\/people\//i, label: "person image reference" },
-    { pattern: /\bNRB\b/, label: "old building name" }
+    { pattern: /\bNRB\b/, label: "old building name" },
+    { pattern: /fonts\.(?:googleapis|gstatic)\.com/i, label: "external Google font request" }
   ]) {
     if (forbidden.pattern.test(html)) failures.push(`${relative} contains ${forbidden.label}.`);
   }
@@ -101,13 +102,17 @@ if (allFiles.some((filePath) => filePath.includes(`${path.sep}assets${path.sep}i
   failures.push("Built site contains personnel image files.");
 }
 
+if (!allFiles.some((filePath) => filePath.endsWith(".woff2"))) {
+  failures.push("Built site is missing self-hosted font files.");
+}
+
 const sitemap = await fs.readFile(path.join(siteRoot, "sitemap.xml"), "utf8");
 if (sitemap.includes("/research/") || sitemap.includes("/people/")) {
   failures.push("Sitemap includes a legacy route.");
 }
 
 const publicationsPage = await fs.readFile(path.join(siteRoot, "publications", "index.html"), "utf8");
-for (const marker of ["Jump to year", "PDB", "EMDB", "Open access", "Print or save PDF"]) {
+for (const marker of ["Full record on PubMed", "Jump to year", "PDB", "EMDB", "Open access", "Print or save PDF"]) {
   if (!publicationsPage.includes(marker)) failures.push(`Publications page is missing "${marker}".`);
 }
 
@@ -135,6 +140,9 @@ for (const programUrl of [
 const homePage = await fs.readFile(path.join(siteRoot, "index.html"), "utf8");
 if (!homePage.includes("https://accessibility.huit.harvard.edu/digital-accessibility-policy")) {
   failures.push("Footer is missing Harvard's digital accessibility link.");
+}
+for (const dimensionMarker of ['width="405" height="53"', 'width="1918" height="445"']) {
+  if (!homePage.includes(dimensionMarker)) failures.push(`Homepage affiliation logo is missing fixed dimensions: ${dimensionMarker}`);
 }
 
 if (failures.length) {

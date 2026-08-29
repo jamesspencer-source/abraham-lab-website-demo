@@ -1918,6 +1918,35 @@ main {
   }
 }
 
+@media (max-width: 900px) {
+  .team-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.35rem 1.5rem;
+    align-items: start;
+  }
+
+  .team-row__identity {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .team-row__role {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .team-row__details {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 0.35rem;
+  }
+
+  .team-row__dates {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
 @media (max-width: 800px) {
   :root {
     --section-space: 5.25rem;
@@ -1999,33 +2028,6 @@ main {
     width: 100%;
     margin: 0 0 0.4rem;
     text-align: left;
-  }
-
-  .team-row {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.35rem 1.5rem;
-    align-items: start;
-  }
-
-  .team-row__identity {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .team-row__role {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .team-row__details {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    margin-top: 0.35rem;
-  }
-
-  .team-row__dates {
-    grid-column: 2;
-    grid-row: 1 / span 2;
   }
 
   .appointment-band__item {

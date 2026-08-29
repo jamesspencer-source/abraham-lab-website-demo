@@ -7,7 +7,14 @@ import { siteData } from "../../data/site";
 const renderedNews = newsItems.filter((item) => item.category === "Institutional coverage");
 ---
 
-<BaseLayout title="HMS coverage" description="Harvard Medical School films and stories about the Abraham Lab and its work.">
+<BaseLayout
+  title="HMS coverage"
+  description="Harvard Medical School films and stories about the Abraham Lab and its work."
+  socialImage={siteData.shareImages.film.image}
+  socialImageAlt={siteData.shareImages.film.alt}
+  socialImageWidth={siteData.shareImages.film.width}
+  socialImageHeight={siteData.shareImages.film.height}
+>
   <section class="page-intro page-intro--quiet">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">

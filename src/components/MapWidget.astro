@@ -27,7 +27,10 @@ const { eyebrow = "Campus map" } = Astro.props;
     ></iframe>
   </div>
   <div class="map-widget__body">
-    <p class="overline">{eyebrow}</p>
+    <div>
+      <p class="overline">{eyebrow}</p>
+      <strong>{siteData.contact.mapBuilding}</strong>
+    </div>
     <a class="text-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
   </div>
 </aside>

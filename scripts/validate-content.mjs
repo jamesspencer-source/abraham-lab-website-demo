@@ -63,6 +63,7 @@ const expectedProgramTagsByPerson = new Map([
 ]);
 
 const expectedCorrespondingDois = new Set([
+  "10.64898/2026.08.22.744730",
   "10.64898/2026.07.28.741352",
   "10.64898/2026.07.28.741058",
   "10.1016/j.cell.2025.11.041",
@@ -314,6 +315,17 @@ async function main() {
     {
       condition: siteData.trainingPrograms?.Virology === "https://virologyphd.hms.harvard.edu/",
       message: "Virology must link to the official Harvard program."
+    },
+    {
+      condition: /^\d{4}-\d{2}-\d{2}$/.test(siteData.publicationRecord?.checkedAt || ""),
+      message: "siteData.publicationRecord.checkedAt must use YYYY-MM-DD format."
+    },
+    {
+      condition:
+        Array.isArray(siteData.publicationRecord?.sources) &&
+        siteData.publicationRecord.sources.includes("PubMed") &&
+        siteData.publicationRecord.sources.includes("bioRxiv"),
+      message: "siteData.publicationRecord.sources must include PubMed and bioRxiv."
     },
     {
       condition: siteData.trainingPrograms?.["MD-PhD / Biophysics"] === "https://biophysics.fas.harvard.edu/",
@@ -631,6 +643,33 @@ async function main() {
       if (!normalize(figure[field])) {
         fail(`Hero figure "${figure.title}" needs ${field}.`);
       }
+    }
+    for (const variant of figure.imageVariants || []) {
+      if (!Number.isInteger(variant.width) || variant.width < 320) {
+        fail(`Hero figure "${figure.title}" has an invalid responsive-image width.`);
+      }
+      if (!(await localAssetExists(variant.path))) {
+        fail(`Hero figure "${figure.title}" references a missing responsive image: ${variant.path}`);
+      }
+    }
+  }
+
+  for (const [label, image] of Object.entries(siteData.shareImages || {})) {
+    if (!(await localAssetExists(image.image))) {
+      fail(`Share image "${label}" references a missing image: ${image.image}`);
+    }
+    if (!normalize(image.alt) || image.width !== 1200 || image.height !== 630) {
+      fail(`Share image "${label}" needs alt text and 1200x630 dimensions.`);
+    }
+  }
+
+  const publicationCheckedAt = new Date(`${siteData.publicationRecord?.checkedAt || ""}T00:00:00Z`);
+  if (!Number.isNaN(publicationCheckedAt.getTime())) {
+    const ageInDays = Math.floor((Date.now() - publicationCheckedAt.getTime()) / 86400000);
+    if (ageInDays < 0) {
+      fail("siteData.publicationRecord.checkedAt cannot be in the future.");
+    } else if (ageInDays > 45) {
+      note(`Publication record is ${ageInDays} days old. Run npm run check:publications before release.`);
     }
   }
 

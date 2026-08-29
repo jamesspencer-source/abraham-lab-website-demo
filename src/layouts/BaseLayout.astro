@@ -16,23 +16,45 @@ interface Props {
   pageClass?: string;
   canonicalPath?: string;
   socialImage?: string;
+  socialImageAlt?: string;
+  socialImageWidth?: number;
+  socialImageHeight?: number;
+  ogType?: "website" | "profile";
+  modifiedAt?: string;
+  noIndex?: boolean;
   structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
-const { title, description, pageClass, canonicalPath, socialImage: socialImagePath, structuredData } = Astro.props;
+const {
+  title,
+  description,
+  pageClass,
+  canonicalPath,
+  socialImage: socialImagePath,
+  socialImageAlt = siteData.shareImages.science.alt,
+  socialImageWidth = siteData.shareImages.science.width,
+  socialImageHeight = siteData.shareImages.science.height,
+  ogType = "website",
+  modifiedAt,
+  noIndex = false,
+  structuredData
+} = Astro.props;
 const pageTitle = title ? `${title} | ${siteData.fullName}` : siteData.fullName;
 const metaDescription = description ?? siteData.description;
 const canonicalTarget = canonicalPath ? withBase(canonicalPath) : Astro.url.pathname;
 const canonical = new URL(canonicalTarget, siteData.url).toString();
-const socialImage = new URL(withBase(socialImagePath ?? siteData.heroFigures[0].image), siteData.url).toString();
+const socialImage = new URL(withBase(socialImagePath ?? siteData.shareImages.science.image), siteData.url).toString();
+const socialImageType = socialImage.endsWith(".webp") ? "image/webp" : socialImage.endsWith(".png") ? "image/png" : "image/jpeg";
 const themeDefaultMode = siteData.theme.defaultMode;
 const themeColorLight = "#f5f7f6";
 const themeColorDark = "#1c2221";
 const themeColorHero = "#101716";
 const isHomePage = pageClass === "page-home";
+const organizationId = `${new URL(withBase("/"), siteData.url).toString()}#organization`;
+const websiteId = `${new URL(withBase("/"), siteData.url).toString()}#website`;
 const organizationData = {
-  "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": organizationId,
   name: siteData.fullName,
   url: new URL(withBase("/"), siteData.url).toString(),
   description: siteData.description,
@@ -47,7 +69,52 @@ const organizationData = {
     siteData.social.x
   ]
 };
-const jsonLd = JSON.stringify(structuredData ? [organizationData, structuredData] : organizationData).replace(/</g, "\\u003c");
+const websiteData = {
+  "@type": "WebSite",
+  "@id": websiteId,
+  name: siteData.name,
+  alternateName: siteData.fullName,
+  url: new URL(withBase("/"), siteData.url).toString(),
+  publisher: { "@id": organizationId }
+};
+const webPageData = {
+  "@type": "WebPage",
+  "@id": canonical,
+  url: canonical,
+  name: pageTitle,
+  description: metaDescription,
+  isPartOf: { "@id": websiteId },
+  about: { "@id": organizationId },
+  primaryImageOfPage: {
+    "@type": "ImageObject",
+    url: socialImage,
+    width: socialImageWidth,
+    height: socialImageHeight,
+    caption: socialImageAlt
+  },
+  ...(modifiedAt ? { dateModified: modifiedAt } : {})
+};
+const breadcrumbData = title && !noIndex ? {
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: new URL(withBase("/"), siteData.url).toString()
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: title,
+      item: canonical
+    }
+  ]
+} : null;
+const extraStructuredData = (structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : [])
+  .map((entry) => Object.fromEntries(Object.entries(entry).filter(([key]) => key !== "@context")));
+const graph = [organizationData, websiteData, webPageData, ...(breadcrumbData ? [breadcrumbData] : []), ...extraStructuredData];
+const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c");
 ---
 
 <!doctype html>
@@ -73,16 +140,26 @@ const jsonLd = JSON.stringify(structuredData ? [organizationData, structuredData
     </script>
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
+    <meta name="author" content={siteData.fullName} />
+    <meta name="robots" content={noIndex ? "noindex,follow" : "index,follow,max-image-preview:large"} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={metaDescription} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={siteData.fullName} />
     <meta property="og:image" content={socialImage} />
+    <meta property="og:image:secure_url" content={socialImage} />
+    <meta property="og:image:type" content={socialImageType} />
+    <meta property="og:image:width" content={String(socialImageWidth)} />
+    <meta property="og:image:height" content={String(socialImageHeight)} />
+    <meta property="og:image:alt" content={socialImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@abrahamlabhms" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
     <script is:inline type="application/ld+json" set:html={jsonLd}></script>
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={withBase("/assets/images/brands/favicon.svg")} type="image/svg+xml" />

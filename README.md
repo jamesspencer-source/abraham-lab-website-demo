@@ -37,6 +37,22 @@ npm run validate:content
 
 This checks publication title/DOI/PMID consistency, homepage proof ordering, and the canonical institutional wording used across the site data modules.
 
+## Publication record
+
+```bash
+npm run check:publications
+```
+
+The checker compares the local record with PubMed and bioRxiv and writes a read-only report to `output/publication-check/`. Update `siteData.publicationRecord.checkedAt` only after both sources complete successfully and any candidate records have been reviewed.
+
+## Image optimization
+
+The full-resolution, open-access homepage figure is retained under `references/source-assets/`. Rebuild its responsive WebP files after replacing that source:
+
+```bash
+npm run images:optimize
+```
+
 ## Visual review
 
 ```bash

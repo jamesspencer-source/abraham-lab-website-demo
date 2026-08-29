@@ -30,7 +30,14 @@ const directoryIndex = [
 ];
 ---
 
-<BaseLayout title="Team" description="Current members and alumni of the Abraham Lab.">
+<BaseLayout
+  title="Team"
+  description="Current members and alumni of the Abraham Lab at Harvard Medical School."
+  socialImage={siteData.shareImages.science.image}
+  socialImageAlt={siteData.shareImages.science.alt}
+  socialImageWidth={siteData.shareImages.science.width}
+  socialImageHeight={siteData.shareImages.science.height}
+>
   <section class="page-intro page-intro--team">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
@@ -51,7 +58,7 @@ const directoryIndex = [
     {groupedPeople.map((group) => (
       <section class="team-group" id={anchorFor(group.label)}>
         <header class="team-group__header reveal"><h2>{group.label}</h2></header>
-        <div class:list={["team-list", group.entries.length === 1 && "team-list--single"]} role="list">
+        <div class="team-list" role="list">
           {group.entries.map((person) => (
             <article class="team-row reveal" role="listitem">
               <div class="team-row__identity">
@@ -66,8 +73,8 @@ const directoryIndex = [
                   <a href={siteData.trainingPrograms[tag]} target="_blank" rel="noreferrer">{tag} <span aria-hidden="true">↗</span></a>
                 ))}
                 {person.fellowships?.map((fellowship) => <span>{fellowship}</span>)}
-                {formatLabDates(person) && <time>{formatLabDates(person)}</time>}
               </div>
+              <div class="team-row__dates">{formatLabDates(person) && <time>{formatLabDates(person)}</time>}</div>
             </article>
           ))}
         </div>
@@ -77,15 +84,15 @@ const directoryIndex = [
     {peopleData.seasonalMembers.length > 0 && (
       <section class="team-group team-group--seasonal" id="summer-researchers">
         <header class="team-group__header reveal"><h2>Summer researchers</h2></header>
-        <div class="team-list team-list--single" role="list">
+        <div class="team-list" role="list">
           {peopleData.seasonalMembers.map((person) => (
             <article class="team-row reveal" role="listitem">
               <div class="team-row__identity"><h3>{person.name}</h3></div>
               <p class="team-row__role">{person.title}</p>
               <div class="team-row__details">
                 {person.program && <span>{person.program}</span>}
-                {formatLabDates(person) && <time>{formatLabDates(person)}</time>}
               </div>
+              <div class="team-row__dates">{formatLabDates(person) && <time>{formatLabDates(person)}</time>}</div>
             </article>
           ))}
         </div>

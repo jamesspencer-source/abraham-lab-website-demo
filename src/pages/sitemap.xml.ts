@@ -4,13 +4,13 @@ import { siteData } from "../data/site";
 const origin = process.env.SITE_URL || siteData.url;
 const rawBase = (process.env.SITE_BASE_PATH || "").trim();
 const basePath = rawBase ? `/${rawBase.replace(/^\/+|\/+$/g, "")}/` : "/";
-const pages = [
-  "/",
-  "/publications/",
-  "/jonathan-abraham/",
-  "/team/",
-  "/news/",
-  "/contact/"
+const pages: Array<{ path: string; lastmod?: string }> = [
+  { path: "/", lastmod: siteData.publicationRecord.checkedAt },
+  { path: "/publications/", lastmod: siteData.publicationRecord.checkedAt },
+  { path: "/jonathan-abraham/" },
+  { path: "/team/" },
+  { path: "/news/" },
+  { path: "/contact/" }
 ];
 
 const toAbsolute = (path: string) =>
@@ -22,7 +22,8 @@ export const GET: APIRoute = () => {
 ${pages
   .map(
     (page) => `  <url>
-    <loc>${toAbsolute(page)}</loc>
+    <loc>${toAbsolute(page.path)}</loc>${page.lastmod ? `
+    <lastmod>${page.lastmod}</lastmod>` : ""}
   </url>`
   )
   .join("\n")}

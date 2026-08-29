@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { publications } from "../../data/publications";
-import { groupPublicationsByYear } from "../../lib/content";
+import { formatDateLabel, groupPublicationsByYear } from "../../lib/content";
 import { siteData } from "../../data/site";
 import { jonathanProfile } from "../../data/jonathan";
 
@@ -12,9 +12,13 @@ const emdbUrl = (id: string) => `https://www.ebi.ac.uk/emdb/${id}`;
 
 <BaseLayout
   title="Publications"
-  description="Papers from the Abraham Lab."
+  description="Publication record for the Abraham Lab, including papers, preprints, structures, and public research resources."
   pageClass="page-publications"
-  socialImage={siteData.heroFigures[0].image}
+  socialImage={siteData.shareImages.science.image}
+  socialImageAlt={siteData.shareImages.science.alt}
+  socialImageWidth={siteData.shareImages.science.width}
+  socialImageHeight={siteData.shareImages.science.height}
+  modifiedAt={siteData.publicationRecord.checkedAt}
 >
   <section class="page-intro page-intro--publications">
     <div class="shell page-intro__grid">
@@ -23,6 +27,11 @@ const emdbUrl = (id: string) => `https://www.ebi.ac.uk/emdb/${id}`;
         <h1>Publications</h1>
       </div>
       <div class="page-intro__actions reveal">
+        <p class="publication-status publication-status--intro">
+          <span>Publication record checked</span>
+          <time datetime={siteData.publicationRecord.checkedAt}>{formatDateLabel(siteData.publicationRecord.checkedAt)}</time>
+          <small>{siteData.publicationRecord.sources.join(" + ")}</small>
+        </p>
         <a class="publication-pubmed-link" href={jonathanProfile.pubmedUrl} target="_blank" rel="noreferrer">
           Full record on PubMed <span aria-hidden="true">↗</span>
         </a>

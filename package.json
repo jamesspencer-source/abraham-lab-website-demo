@@ -12,13 +12,15 @@
     "validate:content": "node scripts/validate-content.mjs",
     "check:publications": "node scripts/check-publication-updates.mjs",
     "check:links": "node scripts/check-external-links.mjs",
+    "images:optimize": "node scripts/optimize-images.mjs",
     "visual:setup": "PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium",
     "visual:review": "npm run build && npm run validate:content && node scripts/visual-review.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@types/node": "^25.9.4",
-    "playwright": "^1.61.1"
+    "playwright": "^1.61.1",
+    "sharp": "^0.35.3"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

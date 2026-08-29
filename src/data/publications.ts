@@ -3,6 +3,31 @@ import type { Publication } from "./types";
 export const publications: Publication[] = [
   {
     year: 2026,
+    title: "Orthoflaviviruses use diverse binding modes to engage LDLR family receptors",
+    authors: "Ji C, Tjang LV, Das B, Huang QJ, Li R, Bradley CA, Oros J, Hu S, Li W, Fan X, Liu Z, Abraham J",
+    journal: "bioRxiv",
+    publishedAt: "2026-08-24",
+    citation:
+      "Ji C, Tjang LV, Das B, Huang QJ, Li R, Bradley CA, Oros J, Hu S, Li W, Fan X, Liu Z, Abraham J. bioRxiv. 2026.",
+    link: "https://www.biorxiv.org/content/10.64898/2026.08.22.744730v1",
+    doi: "10.64898/2026.08.22.744730",
+    featured: true,
+    leadFeature: true,
+    homepageProof: true,
+    system: "Yellow fever virus and tick-borne encephalitis virus",
+    methodCluster: "Cryo-EM, receptor binding, functional virology",
+    significanceLine:
+      "Shows that yellow fever and tick-borne encephalitis viruses use distinct surfaces to engage LDLR family receptors.",
+    openAccess: true,
+    summary:
+      "Cryo-EM structures show how yellow fever virus binds LRP4 and LRP8 and how tick-borne encephalitis virus binds LRP8. Both viruses depend on two sequential receptor LA repeats.",
+    visualReuseStatus: "open-access",
+    articleType: "Preprint",
+    correspondingAuthor: true,
+    correspondenceSource: "https://api.biorxiv.org/details/biorxiv/10.64898/2026.08.22.744730/na/json"
+  },
+  {
+    year: 2026,
     title: "Molecular basis for chikungunya virus recognition of a mosquito-specific receptor",
     authors:
       "Fan X, Li W, Plung JS, Plante JA, Hajovsky EM, Tapryal N, Diaz J, Hazell NC, Ji C, Liu Z, Hammond CE, Weaver SC, Plante KS, Abraham J",
@@ -13,7 +38,6 @@ export const publications: Publication[] = [
     link: "https://www.biorxiv.org/content/10.64898/2026.07.28.741352v1",
     doi: "10.64898/2026.07.28.741352",
     featured: true,
-    leadFeature: true,
     homepageProof: true,
     system: "Chikungunya virus",
     methodCluster: "Cryo-EM, receptor binding, functional virology",
@@ -66,11 +90,10 @@ export const publications: Publication[] = [
     pmid: "41468884",
     pmcid: "PMC13082216",
     featured: true,
-    homepageProof: true,
     system: "HSV-1",
     methodCluster: "Cryo-EM, biochemistry, single-molecule analysis",
     significanceLine: "Shows how helicase-primase inhibitors arrest herpesvirus replication.",
-    openAccess: false,
+    openAccess: true,
     structures: {
       pdb: ["9YC9", "9YCP", "9YCT", "9YCV"],
       emdb: ["EMD-72764", "EMD-72781", "EMD-72786", "EMD-72789"]
@@ -105,7 +128,7 @@ export const publications: Publication[] = [
     },
     summary:
       "Cryo-EM structures define the organization of New World arenavirus glycoprotein complexes and their receptor-facing architecture.",
-    image: "/assets/images/publications/arenavirus-gpc-figure-2.png",
+    image: "/assets/images/publications/arenavirus-gpc-figure-2-1800.webp",
     imagePosition: "center",
     imageAlt: "Cryo-EM structures and biochemical measurements of the Machupo virus glycoprotein complex.",
     visualReuseStatus: "open-access",

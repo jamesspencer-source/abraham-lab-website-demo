@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { withBase } from "../lib/content";
 ---
 
-<BaseLayout title="Page Not Found" description="The requested page could not be found.">
+<BaseLayout title="Page Not Found" description="The requested page could not be found." noIndex={true}>
   <section class="legacy-page">
     <div class="narrow-shell legacy-page__inner reveal">
       <p class="overline">404</p>

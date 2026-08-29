@@ -4,7 +4,14 @@ import MapWidget from "../../components/MapWidget.astro";
 import { siteData } from "../../data/site";
 ---
 
-<BaseLayout title="Contact" description="Contact information and location for the Abraham Lab.">
+<BaseLayout
+  title="Contact"
+  description="Contact and location information for the Abraham Lab at Harvard Medical School."
+  socialImage={siteData.shareImages.science.image}
+  socialImageAlt={siteData.shareImages.science.alt}
+  socialImageWidth={siteData.shareImages.science.width}
+  socialImageHeight={siteData.shareImages.science.height}
+>
   <section class="page-intro page-intro--utility">
     <div class="shell page-intro__grid">
       <div class="page-intro__copy reveal">
@@ -20,22 +27,31 @@ import { siteData } from "../../data/site";
       <div class="contact-page__details">
         <section class="contact-block reveal">
           <p class="overline">Scientific correspondence</p>
-          <h2>Jonathan Abraham</h2>
-          <a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a>
+          <div class="contact-block__content">
+            <h2>Jonathan Abraham</h2>
+            <p>Research, speaking, and postdoctoral inquiries</p>
+            <a href={`mailto:${siteData.contact.email}`}>{siteData.contact.email}</a>
+          </div>
         </section>
         <section class="contact-block reveal">
           <p class="overline">Administration</p>
-          <h2>James Spencer</h2>
-          <a href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a>
+          <div class="contact-block__content">
+            <h2>James Spencer</h2>
+            <p>Lab operations and administration</p>
+            <a href={`mailto:${siteData.contact.managerEmail}`}>{siteData.contact.managerEmail}</a>
+          </div>
         </section>
         <section class="contact-block reveal">
           <p class="overline">Location</p>
-          <address>{siteData.contact.addressLines.map((line) => <span>{line}</span>)}</address>
+          <div class="contact-block__content">
+            <address>{siteData.contact.addressLines.map((line) => <span>{line}</span>)}</address>
+            <a href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Directions in Google Maps <span aria-hidden="true">↗</span></a>
+          </div>
         </section>
         <section class="contact-block reveal">
           <p class="overline">Graduate training</p>
-          <h2>Harvard programs</h2>
-          <div class="contact-block__body">
+          <div class="contact-block__content">
+            <h2>Harvard programs</h2>
             <p>Graduate students join through Harvard training programs.</p>
             <ul class="contact-programs">
               {Object.entries(siteData.trainingPrograms).map(([label, href]) => (
@@ -43,11 +59,6 @@ import { siteData } from "../../data/site";
               ))}
             </ul>
           </div>
-        </section>
-        <section class="contact-block reveal">
-          <p class="overline">Postdoctoral work</p>
-          <h2>Inquiries</h2>
-          <p class="contact-block__body">Contact <a href={`mailto:${siteData.contact.email}`}>Jonathan Abraham</a>.</p>
         </section>
       </div>
       <MapWidget eyebrow="Campus map" />

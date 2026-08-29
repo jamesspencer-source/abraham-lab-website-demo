@@ -12,12 +12,19 @@ export const siteData = {
   },
   heroTitle: "Mechanisms of viral infection.",
   heroDeck:
-    "We study how medically important viruses enter cells, avoid antibodies, and replicate. We use structural biology and virology to define these steps and how antiviral drugs block them.",
+    "We study how medically important viruses enter cells, evade neutralizing antibodies, and replicate. We use structural biology and virology to define these steps and how antiviral drugs block them.",
   heroFigures: [
     {
       label: "Nature Microbiology · 2025",
       title: "Molecular organization of the New World arenavirus spike glycoprotein complex",
-      image: "/assets/images/publications/arenavirus-gpc-figure-2.png",
+      image: "/assets/images/publications/arenavirus-gpc-figure-2-1800.webp",
+      imageVariants: [
+        { path: "/assets/images/publications/arenavirus-gpc-figure-2-720.webp", width: 720 },
+        { path: "/assets/images/publications/arenavirus-gpc-figure-2-1200.webp", width: 1200 },
+        { path: "/assets/images/publications/arenavirus-gpc-figure-2-1800.webp", width: 1800 }
+      ],
+      imageWidth: 1800,
+      imageHeight: 960,
       alt: "Cryo-EM structures and biochemical measurements of the Machupo virus glycoprotein complex.",
       note: "Open-access figure",
       href: "https://www.nature.com/articles/s41564-025-02085-6",
@@ -28,6 +35,24 @@ export const siteData = {
       visualSource: "https://www.nature.com/articles/s41564-025-02085-6/figures/2"
     }
   ],
+  publicationRecord: {
+    checkedAt: "2026-08-28",
+    sources: ["PubMed", "bioRxiv"]
+  },
+  shareImages: {
+    science: {
+      image: "/assets/images/social/abraham-lab-science.jpg",
+      alt: "Cryo-EM structures and biochemical measurements from an Abraham Lab arenavirus study.",
+      width: 1200,
+      height: 630
+    },
+    film: {
+      image: "/assets/images/social/inside-labs-hms.jpg",
+      alt: "Still from the Harvard Medical School film Inside the Labs of HMS.",
+      width: 1200,
+      height: 630
+    }
+  },
   institutionLabel: "Affiliation",
   institutionTitle: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",
   institutionSummary:
@@ -78,7 +103,7 @@ export const siteData = {
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Veritas+Science+Center%2C+77+Avenue+Louis+Pasteur%2C+Boston%2C+MA+02115",
     mapEmbedUrl:
-      "https://maps.google.com/maps?q=42.33825%2C-71.10362&t=m&z=15&ie=UTF8&iwloc=&output=embed",
+      "https://maps.google.com/maps?q=42.33825%2C-71.10362&t=m&z=14&ie=UTF8&iwloc=&output=embed",
     mapBuilding: "Veritas Science Center (VSC)"
   },
   social: {

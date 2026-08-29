@@ -89,6 +89,10 @@ for (const htmlFile of htmlFiles) {
     if (forbidden.pattern.test(html)) failures.push(`${relative} contains ${forbidden.label}.`);
   }
 
+  if (!html.includes('property="og:image:alt"')) failures.push(`${relative} is missing Open Graph image alt text.`);
+  if (!html.includes('property="og:image:width" content="1200"')) failures.push(`${relative} is missing the 1200px share-image width.`);
+  if (!html.includes('property="og:image:height" content="630"')) failures.push(`${relative} is missing the 630px share-image height.`);
+
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const target = match[1];
     if (/^(?:https?:|mailto:|tel:|data:|#)/i.test(target)) continue;
@@ -110,6 +114,9 @@ const sitemap = await fs.readFile(path.join(siteRoot, "sitemap.xml"), "utf8");
 if (sitemap.includes("/research/") || sitemap.includes("/people/")) {
   failures.push("Sitemap includes a legacy route.");
 }
+if (!/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(sitemap)) {
+  failures.push("Sitemap is missing the publication record check date.");
+}
 
 const publicationsPage = await fs.readFile(path.join(siteRoot, "publications", "index.html"), "utf8");
 for (const marker of ["Full record on PubMed", "Jump to year", "PDB", "EMDB", "Open access", "Print or save PDF"]) {
@@ -126,6 +133,8 @@ for (const programUrl of [
 
 const contactPage = await fs.readFile(path.join(siteRoot, "contact", "index.html"), "utf8");
 if (!/loading="lazy"/.test(contactPage)) failures.push("Contact map must load lazily.");
+if (!contactPage.includes("z=14")) failures.push("Contact map must use the campus-scale zoom level.");
+if (contactPage.includes("Postdoctoral work")) failures.push("Contact page still contains the duplicate postdoctoral inquiry block.");
 if (!contactPage.includes("Graduate students join through Harvard training programs.")) {
   failures.push("Contact page is missing graduate training guidance.");
 }
@@ -143,6 +152,14 @@ if (!homePage.includes("https://accessibility.huit.harvard.edu/digital-accessibi
 }
 for (const dimensionMarker of ['width="405" height="53"', 'width="1918" height="445"']) {
   if (!homePage.includes(dimensionMarker)) failures.push(`Homepage affiliation logo is missing fixed dimensions: ${dimensionMarker}`);
+}
+for (const marker of [
+  "Publication record checked",
+  "arenavirus-gpc-figure-2-720.webp 720w",
+  "arenavirus-gpc-figure-2-1200.webp 1200w",
+  "arenavirus-gpc-figure-2-1800.webp 1800w"
+]) {
+  if (!homePage.includes(marker)) failures.push(`Homepage is missing "${marker}".`);
 }
 
 if (failures.length) {

@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteData } from "../data/site";
 import { publications } from "../data/publications";
 import { newsItems } from "../data/news";
-import { homepageProofOnly, leadPublication, withBase } from "../lib/content";
+import { formatDateLabel, homepageProofOnly, leadPublication, withBase } from "../lib/content";
 
 const proofPapers = homepageProofOnly(publications);
 const labFilm = newsItems.find((item) => item.link.includes("GFM3KLZCDps"));
@@ -11,18 +11,33 @@ const hmsCoverage = newsItems.find(
   (item) => item.category === "Institutional coverage" && item.link !== labFilm?.link
 );
 const heroFigure = siteData.heroFigures[0];
+const heroSrcSet = heroFigure.imageVariants
+  ?.map((variant) => `${withBase(variant.path)} ${variant.width}w`)
+  .join(", ");
 const recentPaper = publications.find((item) => item.link === heroFigure.href) ?? leadPublication(publications) ?? proofPapers[0];
 const otherRecentPapers = proofPapers.filter((item) => item.title !== recentPaper?.title).slice(0, 3);
 ---
 
-<BaseLayout pageClass="page-home" socialImage={heroFigure.image}>
+<BaseLayout
+  pageClass="page-home"
+  socialImage={siteData.shareImages.science.image}
+  socialImageAlt={siteData.shareImages.science.alt}
+  socialImageWidth={siteData.shareImages.science.width}
+  socialImageHeight={siteData.shareImages.science.height}
+  modifiedAt={siteData.publicationRecord.checkedAt}
+>
   <section class="dossier-hero home-hero">
     <img
       class="dossier-hero__media"
       src={withBase(heroFigure.image)}
+      srcset={heroSrcSet}
+      sizes="(max-width: 600px) 100vw, 72vw"
       alt={heroFigure.alt}
+      width={heroFigure.imageWidth}
+      height={heroFigure.imageHeight}
       loading="eager"
       fetchpriority="high"
+      decoding="async"
     />
     <div class="shell dossier-hero__grid">
       <div class="dossier-hero__copy reveal">
@@ -89,6 +104,11 @@ const otherRecentPapers = proofPapers.filter((item) => item.title !== recentPape
     <div class="shell current-work__grid">
       <header class="section-heading reveal">
         <h2>Recent papers and HMS coverage</h2>
+        <p class="publication-status">
+          <span>Publication record checked</span>
+          <time datetime={siteData.publicationRecord.checkedAt}>{formatDateLabel(siteData.publicationRecord.checkedAt)}</time>
+          <small>{siteData.publicationRecord.sources.join(" + ")}</small>
+        </p>
       </header>
       <div class="dossier-ledger">
         {otherRecentPapers.map((paper) => (

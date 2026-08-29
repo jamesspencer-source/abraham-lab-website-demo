@@ -11,6 +11,12 @@ export type HeroFigure = {
   label: string;
   title: string;
   image: string;
+  imageVariants?: Array<{
+    path: string;
+    width: number;
+  }>;
+  imageWidth?: number;
+  imageHeight?: number;
   alt: string;
   note?: string;
   href?: string;
@@ -55,6 +61,24 @@ export type SiteData = {
   heroTitle: string;
   heroDeck: string;
   heroFigures: HeroFigure[];
+  publicationRecord: {
+    checkedAt: string;
+    sources: string[];
+  };
+  shareImages: {
+    science: {
+      image: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+    film: {
+      image: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+  };
   institutionLabel: string;
   institutionTitle: string;
   institutionSummary: string;

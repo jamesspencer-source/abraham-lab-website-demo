@@ -1,6 +1,6 @@
 # Abraham Lab Website Content Source Brief
 
-Verified and reviewed on April 13, 2026.
+Institutional and profile sources reviewed on April 13, 2026. Publication sources checked on August 28, 2026.
 
 ## Institutional wording
 
@@ -63,6 +63,13 @@ Notes:
 
 ## Recent publications used as featured proof
 
+- bioRxiv 2026 orthoflavivirus receptor preprint:
+  - https://www.biorxiv.org/content/10.64898/2026.08.22.744730v1
+  - bioRxiv API confirms Jonathan Abraham as corresponding author at Harvard Medical School.
+- bioRxiv 2026 chikungunya receptor preprint:
+  - https://www.biorxiv.org/content/10.64898/2026.07.28.741352v1
+- bioRxiv 2026 Lachesin receptor preprint:
+  - https://www.biorxiv.org/content/10.64898/2026.07.28.741058v1
 - Cell 2026 HSV helicase-primase paper:
   - https://pubmed.ncbi.nlm.nih.gov/41468884/
 - Nature Microbiology 2025 arenavirus GPC paper:
@@ -78,17 +85,13 @@ Notes:
 
 Recommended homepage proof set:
 
-- Mechanisms of HSV-1 helicase-primase inhibition and replication fork complex assembly
-- Molecular organization of the New World arenavirus spike glycoprotein complex
-- Molecular basis for shifted receptor recognition by an encephalitic arbovirus
-
-Lead paper recommendation:
-
-- The 2026 Cell HSV-1 helicase-primase paper is the lead homepage publication because it is the newest verified paper and the strongest recent mechanistic structure story.
+- Orthoflaviviruses use diverse binding modes to engage LDLR family receptors
+- Molecular basis for chikungunya virus recognition of a mosquito-specific receptor
+- Lachesin is a mosquito receptor for multiple arthritogenic alphaviruses
 
 Visual-use note:
 
-- The 2025 Nature Microbiology arenavirus paper is the safest immediate homepage/publication visual source because the article is open access.
+- The 2025 Nature Microbiology arenavirus paper is the homepage figure source because the article is open access and the figure can be credited directly.
 - The 2026 Cell HSV helicase-primase paper and the 2025 Cell arbovirus receptor paper are stronger proof points than default image sources unless author-approved figure exports are available.
 
 ## Public news items used

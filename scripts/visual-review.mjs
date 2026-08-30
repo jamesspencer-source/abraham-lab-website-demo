@@ -17,8 +17,6 @@ process.env.PLAYWRIGHT_BROWSERS_PATH ||= path.join(repoRoot, ".cache", "ms-playw
 const routes = [
   { slug: "home", path: "/" },
   { slug: "research", path: "/research/" },
-  { slug: "contact-us", path: "/contact-us/" },
-  { slug: "meet-the-pi", path: "/meet-the-pi/" },
   { slug: "publications", path: "/publications/" },
   { slug: "jonathan-abraham", path: "/jonathan-abraham/" },
   { slug: "team", path: "/team/" },

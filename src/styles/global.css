@@ -1686,7 +1686,7 @@ main {
   margin-top: 2.5rem;
   padding-top: 1.2rem;
   border-block-start: 1px solid var(--line);
-  color: var(--ink-quiet);
+  color: var(--ink-muted);
   font-size: 0.78rem;
 }
 

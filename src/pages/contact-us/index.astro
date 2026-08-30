@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBase } from "../../lib/content";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact and location information for the Abraham Lab."
+  canonicalPath="/contact/"
+  noIndex={true}
+  redirectTo="/contact/"
+>
+  <section class="legacy-page">
+    <div class="narrow-shell legacy-page__inner">
+      <p class="overline">Contact</p>
+      <h1>The contact page has moved.</h1>
+      <p>Continue to the Abraham Lab contact page.</p>
+      <a class="button button--primary" href={withBase("/contact/")}>View contact information</a>
+    </div>
+  </section>
+</BaseLayout>

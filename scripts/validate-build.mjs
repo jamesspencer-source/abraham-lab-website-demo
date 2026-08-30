@@ -65,7 +65,9 @@ const requiredPages = [
   "team/index.html",
   "news/index.html",
   "contact/index.html",
+  "contact-us/index.html",
   "people/index.html",
+  "meet-the-pi/index.html",
   "research/index.html",
   "404.html"
 ];
@@ -111,7 +113,12 @@ if (!allFiles.some((filePath) => filePath.endsWith(".woff2"))) {
 }
 
 const sitemap = await fs.readFile(path.join(siteRoot, "sitemap.xml"), "utf8");
-if (sitemap.includes("/research/") || sitemap.includes("/people/")) {
+if (
+  sitemap.includes("/research/") ||
+  sitemap.includes("/people/") ||
+  sitemap.includes("/contact-us/") ||
+  sitemap.includes("/meet-the-pi/")
+) {
   failures.push("Sitemap includes a legacy route.");
 }
 if (!/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(sitemap)) {
@@ -144,6 +151,24 @@ for (const programUrl of [
   "https://biophysics.fas.harvard.edu/"
 ]) {
   if (!contactPage.includes(programUrl)) failures.push(`Contact page is missing program link: ${programUrl}`);
+}
+
+for (const [legacyPath, targetPath] of [
+  ["people/index.html", "/team/"],
+  ["contact-us/index.html", "/contact/"],
+  ["meet-the-pi/index.html", "/jonathan-abraham/"]
+]) {
+  const legacyPage = await fs.readFile(path.join(siteRoot, legacyPath), "utf8");
+  const targetWithBase = `${basePath}${targetPath}`;
+  if (!legacyPage.includes('name="robots" content="noindex,follow"')) {
+    failures.push(`${legacyPath} must be marked noindex.`);
+  }
+  if (!legacyPage.includes('http-equiv="refresh"') || !legacyPage.includes(`url=${targetWithBase}`)) {
+    failures.push(`${legacyPath} must refresh to ${targetWithBase}.`);
+  }
+  if (!legacyPage.includes(`href="${targetWithBase}"`)) {
+    failures.push(`${legacyPath} is missing a visible link to ${targetWithBase}.`);
+  }
 }
 
 const homePage = await fs.readFile(path.join(siteRoot, "index.html"), "utf8");

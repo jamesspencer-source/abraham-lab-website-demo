@@ -120,3 +120,18 @@ Film visual added August 12, 2026:
   - VRG Therapeutics
   - Arcellx
   - Penn Dermatology / University of Pennsylvania
+
+## Brand and accessibility review
+
+Reviewed August 29, 2026.
+
+- The HMS Department of Microbiology lockup in the repository is an SVG with a 405 by 53 view box. It is resolution-independent and visually matches the department lockup now in use. HMS says production logos should be requested from `design@hms.harvard.edu`; images on the public identity page are low-resolution examples only.
+- The HHMI horizontal signature in the repository is a 1918 by 445 pixel transparent PNG. It matches the official horizontal signature and is displayed above HHMI's 1.5-inch minimum for signatures that spell out the institute name.
+- Do not redraw, recolor, stretch, crop, or combine either institutional mark with another logo. Replace these files only with current masters supplied by HMS or HHMI.
+- Harvard's Digital Accessibility Policy names WCAG 2.1 Level AA as the applicable standard for websites and web applications.
+
+Sources:
+
+- https://identityguide.hms.harvard.edu/brand-design/logo
+- https://www.hhmi.org/about/for-host-institutions
+- https://accessibility.huit.harvard.edu/digital-accessibility-policy

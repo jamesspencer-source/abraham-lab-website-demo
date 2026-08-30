@@ -71,3 +71,16 @@ VISUAL_REVIEW_ROUTES=home,publications VISUAL_REVIEW_VIEWPORTS=390,768 VISUAL_RE
 `VISUAL_REVIEW_ROUTES`, `VISUAL_REVIEW_VIEWPORTS`, and `VISUAL_REVIEW_THEMES` all accept comma-separated lists.
 
 On some local macOS environments, headless Chromium can fail with a MachPort permission error even when the Astro build succeeds. When that happens, use the GitHub Actions visual review workflow as the canonical artifact source.
+
+## Accessibility and browser review
+
+```bash
+npm run quality:setup
+npm run quality:review
+```
+
+The quality review checks the automated WCAG 2.1 Level AA rule set, keyboard navigation, text-spacing resilience, 320px reflow, light and dark modes, legacy route handoffs, and layout behavior in Chromium, Firefox, and WebKit. It covers phone, tablet, laptop, wide desktop, narrow-window, and short-wide-window shapes.
+
+Reports are written to `output/quality-review/`. The GitHub Actions visual-review workflow runs the same review and uploads the report with the screenshots.
+
+Automated testing does not establish full WCAG conformance. Complete the manual checks in `references/accessibility-release-checklist.md` before the custom-domain launch.

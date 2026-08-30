@@ -1,0 +1,50 @@
+# Accessibility and Responsive Release Checklist
+
+Harvard's Digital Accessibility Policy names WCAG 2.1 Level AA as the standard for websites and web applications. The repository's quality review automates the checks that can be tested reliably in a browser and keeps this manual checklist for the rest.
+
+## Automated on every quality-review run
+
+- WCAG 2.1 A and AA rules available through axe-core
+- light and dark color contrast
+- page language, one main heading, main landmark, and skip-link target
+- keyboard access to the skip link and mobile navigation
+- 44 by 44 CSS-pixel mobile menu control
+- no horizontal overflow at 320, 390, 600, 820, 900, 1024, 1440, and 1600 CSS-pixel widths
+- phone, tablet portrait, tablet landscape, short-wide window, laptop, and wide desktop layouts
+- Chromium, Firefox, and WebKit browser engines
+- text-spacing stress using the values in WCAG Success Criterion 1.4.12
+- broken local images, duplicate IDs, clipped text, and local runtime errors
+- system light and dark modes
+- reduced-motion behavior
+- legacy route handoffs for `/people/`, `/contact-us/`, and `/meet-the-pi/`
+
+Run locally after installing the repo-controlled browsers:
+
+```sh
+npm run quality:setup
+npm run quality:review
+```
+
+GitHub Actions runs the same checks and uploads `output/quality-review` as an artifact.
+
+## Manual before production launch
+
+- Use the whole site with only a keyboard. Confirm that focus order follows the reading order and that every focused control is visible.
+- Use VoiceOver with Safari on macOS or iOS. Confirm that the header, navigation, main content, section headings, links, publication lists, and footer are announced in a useful order.
+- At 200% and 400% browser zoom, review Home, Publications, Team, Jonathan Abraham, News, and Contact. Confirm that content remains readable without horizontal scrolling at an equivalent 320 CSS-pixel width.
+- Increase text size and spacing in the browser or an accessibility extension. Confirm that no names, affiliations, email addresses, buttons, or publication metadata are clipped.
+- Confirm that the HMS film has accurate captions and that any future video or audio content includes captions or a transcript.
+- Confirm that paper-derived figures have meaningful alt text and that captions identify the paper and figure source.
+- Check both light and dark system settings on an actual phone and tablet.
+- Check one recent version each of Safari, Chrome, Firefox, and Edge on physical devices when available.
+- Ask a user who relies on assistive technology to review the main paths before the custom-domain launch when feasible.
+
+## Scope note
+
+Automated tools can find many WCAG failures, but they cannot prove full conformance. A release can be described as having passed the automated WCAG 2.1 AA review only after the automated report has no violations. Full WCAG 2.1 AA conformance also requires the manual checks above and a review of future content as it is added.
+
+## Sources
+
+- Harvard Digital Accessibility Policy: https://accessibility.huit.harvard.edu/digital-accessibility-policy
+- WCAG 2.1: https://www.w3.org/TR/WCAG21/
+- axe-core rules: https://github.com/dequelabs/axe-core

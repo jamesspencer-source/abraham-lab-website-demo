@@ -1,7 +1,7 @@
-import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promises as fs } from "node:fs";
+import { createStaticSiteTools, ForbiddenPathError, normalizeBasePath } from "./lib/static-site-server.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
@@ -9,14 +9,16 @@ const siteRoot = path.join(repoRoot, "_site");
 const outputRoot = path.join(repoRoot, "output", "visual-review");
 const screenshotRoot = path.join(outputRoot, "screenshots");
 const port = Number(process.env.VISUAL_REVIEW_PORT || 4173);
-const rawBasePath = String(process.env.SITE_BASE_PATH || "").trim();
-const basePath = rawBasePath ? `/${rawBasePath.replace(/^\/+|\/+$/g, "")}` : "";
+const basePath = normalizeBasePath(process.env.SITE_BASE_PATH);
+const staticSite = createStaticSiteTools({ siteRoot, basePath });
 
 process.env.PLAYWRIGHT_BROWSERS_PATH ||= path.join(repoRoot, ".cache", "ms-playwright");
 
 const routes = [
   { slug: "home", path: "/" },
   { slug: "research", path: "/research/" },
+  { slug: "contact-us", path: "/contact-us/" },
+  { slug: "meet-the-pi", path: "/meet-the-pi/" },
   { slug: "publications", path: "/publications/" },
   { slug: "jonathan-abraham", path: "/jonathan-abraham/" },
   { slug: "team", path: "/team/" },
@@ -66,133 +68,8 @@ const selectedRoutes = parseSelection(process.env.VISUAL_REVIEW_ROUTES, routes, 
 const selectedViewports = parseSelection(process.env.VISUAL_REVIEW_VIEWPORTS, viewports, (viewport, entry) => viewport.name === entry);
 const selectedThemes = parseSelection(process.env.VISUAL_REVIEW_THEMES, themes, (theme, entry) => theme === entry);
 
-const mimeTypes = {
-  ".css": "text/css; charset=utf-8",
-  ".html": "text/html; charset=utf-8",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".js": "application/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".png": "image/png",
-  ".svg": "image/svg+xml",
-  ".txt": "text/plain; charset=utf-8",
-  ".xml": "application/xml; charset=utf-8"
-};
-
 async function ensureDir(dir) {
   await fs.mkdir(dir, { recursive: true });
-}
-
-async function fileExists(filePath) {
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-class ForbiddenPathError extends Error {
-  constructor(message) {
-    super(message);
-    this.statusCode = 403;
-  }
-}
-
-function isInsideSiteRoot(candidatePath) {
-  const relative = path.relative(siteRoot, candidatePath);
-  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
-}
-
-function safeStaticRequestPath(requestPath) {
-  let decoded;
-  try {
-    decoded = decodeURIComponent(requestPath);
-  } catch {
-    throw new ForbiddenPathError("Malformed request path");
-  }
-  const slashNormalized = decoded.replace(/\\/g, "/");
-  if (slashNormalized.split("/").some((part) => part === "..")) {
-    throw new ForbiddenPathError("Path traversal is not allowed");
-  }
-  const normalized = path.posix.normalize(slashNormalized);
-  if (normalized === ".." || normalized.startsWith("../")) {
-    throw new ForbiddenPathError("Path traversal is not allowed");
-  }
-  return normalized.replace(/^\/+/, "");
-}
-
-function staticCandidate(...segments) {
-  const candidate = path.resolve(siteRoot, ...segments);
-  if (!isInsideSiteRoot(candidate)) {
-    throw new ForbiddenPathError("Resolved path escaped the static root");
-  }
-  return candidate;
-}
-
-async function resolveStaticPath(requestPath) {
-  const withoutBase = basePath && (requestPath === basePath || requestPath.startsWith(`${basePath}/`))
-    ? requestPath.slice(basePath.length) || "/"
-    : requestPath;
-  const safePath = safeStaticRequestPath(withoutBase);
-  const directPath = staticCandidate(safePath);
-
-  if (await fileExists(directPath)) {
-    const stats = await fs.stat(directPath);
-    if (stats.isDirectory()) {
-      const indexPath = staticCandidate(safePath, "index.html");
-      if (await fileExists(indexPath)) {
-        return { filePath: indexPath, statusCode: 200 };
-      }
-    } else {
-      return { filePath: directPath, statusCode: 200 };
-    }
-  }
-
-  const directoryIndexPath = staticCandidate(safePath, "index.html");
-  if (await fileExists(directoryIndexPath)) {
-    return { filePath: directoryIndexPath, statusCode: 200 };
-  }
-
-  const fallback404 = staticCandidate("404.html");
-  if (await fileExists(fallback404)) {
-    return { filePath: fallback404, statusCode: 404 };
-  }
-
-  return null;
-}
-
-async function startStaticServer() {
-  const server = http.createServer(async (req, res) => {
-    try {
-      const url = new URL(req.url || "/", `http://127.0.0.1:${port}`);
-      const resolved = await resolveStaticPath(url.pathname);
-
-      if (!resolved) {
-        res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
-        res.end("Not found");
-        return;
-      }
-
-      const { filePath, statusCode } = resolved;
-      const extension = path.extname(filePath).toLowerCase();
-      const contentType = mimeTypes[extension] || "application/octet-stream";
-      const data = await fs.readFile(filePath);
-      res.writeHead(statusCode, { "Content-Type": contentType });
-      res.end(data);
-    } catch (error) {
-      const statusCode = error?.statusCode || 500;
-      res.writeHead(statusCode, { "Content-Type": "text/plain; charset=utf-8" });
-      res.end(`Server error: ${error instanceof Error ? error.message : String(error)}`);
-    }
-  });
-
-  await new Promise((resolve, reject) => {
-    server.once("error", reject);
-    server.listen(port, "127.0.0.1", resolve);
-  });
-
-  return server;
 }
 
 function screenshotName(route, viewport, theme) {
@@ -262,7 +139,7 @@ async function writeIndex(manifest) {
 async function run() {
   await fs.rm(outputRoot, { recursive: true, force: true });
   await ensureDir(screenshotRoot);
-  const server = await startStaticServer();
+  const server = await staticSite.start(port);
 
   try {
     const { chromium } = await import("playwright");
@@ -279,7 +156,7 @@ async function run() {
 
     const manifest = [];
     const failures = [];
-    const origin = `http://127.0.0.1:${port}`;
+    const origin = server.origin;
     const unknownResponse = await fetch(`${origin}${basePath}/visual-review-missing-route/`);
     if (unknownResponse.status !== 404) {
       failures.push(`Static server returned ${unknownResponse.status} for an unknown route.`);
@@ -494,9 +371,7 @@ async function run() {
       throw new Error(`Visual review failed:\n- ${failures.join("\n- ")}`);
     }
   } finally {
-    await new Promise((resolve, reject) => {
-      server.close((error) => (error ? reject(error) : resolve()));
-    });
+    await server.close();
   }
 }
 
@@ -505,7 +380,7 @@ async function runSelfTest() {
   for (const requestPath of rejected) {
     let didReject = false;
     try {
-      safeStaticRequestPath(requestPath);
+      staticSite.safeStaticRequestPath(requestPath);
     } catch (error) {
       didReject = error instanceof ForbiddenPathError;
     }
@@ -513,8 +388,8 @@ async function runSelfTest() {
       throw new Error(`Expected traversal path to be rejected: ${requestPath}`);
     }
   }
-  const direct = staticCandidate("index.html");
-  if (!isInsideSiteRoot(direct)) {
+  const direct = staticSite.staticCandidate("index.html");
+  if (!staticSite.isInsideSiteRoot(direct)) {
     throw new Error("Expected normal static path to remain inside _site");
   }
   console.log("visual-review path containment self-test passed");

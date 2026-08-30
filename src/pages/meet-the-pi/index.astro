@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBase } from "../../lib/content";
+---
+
+<BaseLayout
+  title="Jonathan Abraham"
+  description="Profile of Jonathan Abraham, MD, PhD."
+  canonicalPath="/jonathan-abraham/"
+  noIndex={true}
+  redirectTo="/jonathan-abraham/"
+>
+  <section class="legacy-page">
+    <div class="narrow-shell legacy-page__inner">
+      <p class="overline">Jonathan Abraham</p>
+      <h1>The profile page has moved.</h1>
+      <p>Continue to Jonathan Abraham's profile.</p>
+      <a class="button button--primary" href={withBase("/jonathan-abraham/")}>View profile</a>
+    </div>
+  </section>
+</BaseLayout>

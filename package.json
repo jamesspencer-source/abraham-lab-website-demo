@@ -14,10 +14,13 @@
     "check:links": "node scripts/check-external-links.mjs",
     "images:optimize": "node scripts/optimize-images.mjs",
     "visual:setup": "PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium",
-    "visual:review": "npm run build && npm run validate:content && node scripts/visual-review.mjs"
+    "visual:review": "npm run build && npm run validate:content && node scripts/visual-review.mjs",
+    "quality:setup": "PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright npx playwright install chromium firefox webkit",
+    "quality:review": "npm run build && npm run validate:content && node scripts/quality-review.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
     "@types/node": "^25.9.4",
     "playwright": "^1.61.1",
     "sharp": "^0.35.3"

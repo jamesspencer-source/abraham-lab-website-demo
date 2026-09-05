@@ -257,6 +257,7 @@ async function main() {
   const jonathanProfile = await loadTsExport(dataFiles.jonathan, "jonathanProfile");
   const newsItems = await loadTsExport(dataFiles.news, "newsItems");
   const peopleData = await loadTsExport(dataFiles.people, "peopleData");
+  const currentTeamGroups = new Set(await loadTsExport(path.join(repoRoot, "src", "data", "types.ts"), "CURRENT_TEAM_GROUPS"));
 
   const fail = (message) => errors.push(message);
   const note = (message) => warn.push(message);
@@ -355,6 +356,25 @@ async function main() {
     if (!entry.condition) {
       fail(entry.message);
     }
+  }
+
+  const expectedGraduatePrograms = [
+    { label: "Virology", href: "https://virologyphd.hms.harvard.edu/" },
+    { label: "Biophysics", href: "https://biophysics.fas.harvard.edu/" },
+    { label: "Biological and Biomedical Sciences", href: "https://bbsphd.hms.harvard.edu/" }
+  ];
+  if (JSON.stringify(siteData.graduatePrograms) !== JSON.stringify(expectedGraduatePrograms)) {
+    fail("Contact graduate programs must use general program names and official URLs, not individual MD-PhD labels.");
+  }
+
+  const homepageDoi = siteData.publicationRecord?.homepageDoi;
+  if (homepageDoi !== undefined) {
+    const chosen = publications.find((item) => item.doi === homepageDoi);
+    if (!chosen || !chosen.publishedAt || !chosen.journal) {
+      fail("Homepage publication override must name a verified record with a date and journal or preprint server.");
+    }
+  } else if (!publications.some((item) => item.articleType === "Research article" && item.publishedAt)) {
+    fail("Homepage needs a dated research article, or an explicit publication override.");
   }
 
   const publicationTitles = new Map();
@@ -539,6 +559,10 @@ async function main() {
 
   for (const person of peopleData.currentMembers || []) {
     validateLabDates(person, `Current member "${person.name}"`, fail);
+
+    if (!currentTeamGroups.has(person.group)) {
+      fail(`Current member "${person.name}" has unsupported group "${person.group}"; the directory must not omit them.`);
+    }
 
     if (person.labEnd) {
       fail(`Current member "${person.name}" cannot have a labEnd date.`);

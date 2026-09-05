@@ -1,12 +1,5 @@
 import type { Person, Publication } from "../data/types";
-
-const PEOPLE_GROUP_ORDER = [
-  "Leadership",
-  "Postdoctoral Fellows & Instructors",
-  "Graduate Students",
-  "Research Staff",
-  "Operations & Strategy"
-] as const;
+import { CURRENT_TEAM_GROUPS } from "../data/types.ts";
 
 export function withBase(path = "/") {
   if (/^(https?:|mailto:|tel:)/.test(path)) {
@@ -24,10 +17,21 @@ export function featuredOnly(items: Publication[]) {
     .sort(comparePublicationDates);
 }
 
-export function leadPublication(items: Publication[]) {
+export function homepagePublication(items: Publication[], overrideDoi?: string) {
+  if (overrideDoi) {
+    const selected = items.find((item) => item.doi === overrideDoi);
+    if (!selected) throw new Error(`Homepage publication DOI is not in the verified record: ${overrideDoi}`);
+    return selected;
+  }
+
+  // Imagery and curation flags must not silently pin an older article.
   return [...items]
-    .filter((item) => Boolean(item.leadFeature))
+    .filter((item) => item.articleType === "Research article" && item.correspondingAuthor && item.publishedAt)
     .sort(comparePublicationDates)[0];
+}
+
+export function recentPublicationLabel(item: Publication) {
+  return item.articleType === "Preprint" ? "Recent preprint" : "Recent paper";
 }
 
 export function homepageProofOnly(items: Publication[]) {
@@ -59,13 +63,16 @@ export function groupPeople(items: Person[]) {
   const grouped = new Map<Person["group"], Person[]>();
 
   for (const item of [...items].sort((a, b) => a.order - b.order)) {
+    if (!CURRENT_TEAM_GROUPS.includes(item.group)) {
+      throw new Error(`Unknown team group for ${item.name}: ${item.group}`);
+    }
     if (!grouped.has(item.group)) {
       grouped.set(item.group, []);
     }
     grouped.get(item.group)?.push(item);
   }
 
-  return PEOPLE_GROUP_ORDER.map((label) => ({
+  return CURRENT_TEAM_GROUPS.map((label) => ({
     label,
     entries: grouped.get(label) ?? []
   })).filter((group) => group.entries.length > 0);

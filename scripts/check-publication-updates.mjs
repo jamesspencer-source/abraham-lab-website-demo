@@ -32,8 +32,8 @@ async function loadPublications() {
   return transpileTsModule(source, filePath).publications;
 }
 
-async function fetchJson(url) {
-  const response = await fetch(url, {
+async function fetchJson(url, fetchImpl) {
+  const response = await fetchImpl(url, {
     headers: { Accept: "application/json", "User-Agent": userAgent },
     signal: AbortSignal.timeout(20000)
   });
@@ -57,22 +57,57 @@ function isoDate(date) {
   return date.toISOString().slice(0, 10);
 }
 
-async function findPubMedCandidates(localDois, localPmids, localTitles, fromDate, toDate) {
+function requireCompleteSearch(records, count, source) {
+  if (!Array.isArray(records) || count === undefined || count === null || count === "" || !Number.isInteger(Number(count)) || Number(count) < 0) {
+    throw new Error(`${source} returned an invalid search response`);
+  }
+  if (Number(count) !== records.length) {
+    throw new Error(`${source} returned ${records.length} of ${count} records; the search is incomplete`);
+  }
+  return records;
+}
+
+function requirePubMedRecord(summary, pmid) {
+  const record = summary?.result?.[pmid];
+  if (!record || record.error || typeof record.title !== "string" || !Array.isArray(record.articleids)) {
+    throw new Error(`PubMed did not return complete metadata for PMID ${pmid}`);
+  }
+  return record;
+}
+
+function requireBioRxivRecord(details, doi) {
+  const records = details?.collection;
+  if (!Array.isArray(records) || !records.length || details.messages?.some((item) => item.status !== "ok")) {
+    throw new Error(`bioRxiv did not return metadata for DOI ${doi}`);
+  }
+  const item = [...records].sort((left, right) => Number(right.version || 0) - Number(left.version || 0))[0];
+  if (normalizeDoi(item.doi) !== normalizeDoi(doi) || typeof item.title !== "string") {
+    throw new Error(`bioRxiv returned invalid metadata for DOI ${doi}`);
+  }
+  return item;
+}
+
+async function findPubMedCandidates(localDois, localPmids, localTitles, fromDate, toDate, getJson, sourceErrors) {
   const affiliation = '("Harvard Medical School"[Affiliation] OR "Howard Hughes Medical Institute"[Affiliation] OR "Brigham and Women\'s Hospital"[Affiliation])';
   const term = `Abraham Jonathan[Full Author Name] AND ${affiliation} AND ("${fromDate.replaceAll("-", "/")}"[Date - Publication] : "${toDate.replaceAll("-", "/")}"[Date - Publication])`;
   const searchUrl = new URL("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi");
   searchUrl.search = new URLSearchParams({ db: "pubmed", term, retmode: "json", retmax: "100", sort: "pub date" });
-  const search = await fetchJson(searchUrl);
-  const ids = search.esearchresult?.idlist || [];
+  const search = await getJson(searchUrl);
+  const ids = requireCompleteSearch(search.esearchresult?.idlist, search.esearchresult?.count, "PubMed");
   if (!ids.length) return [];
 
   const summaryUrl = new URL("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi");
   summaryUrl.search = new URLSearchParams({ db: "pubmed", id: ids.join(","), retmode: "json" });
-  const summary = await fetchJson(summaryUrl);
+  const summary = await getJson(summaryUrl);
 
   return ids.flatMap((pmid) => {
-    const record = summary.result?.[pmid];
-    if (!record) return [];
+    let record;
+    try {
+      record = requirePubMedRecord(summary, pmid);
+    } catch (error) {
+      sourceErrors.push(`PubMed candidate check failed: ${error.message}`);
+      return [];
+    }
     const doi = normalizeDoi(record.articleids?.find((item) => item.idtype === "doi")?.value);
     if (
       localPmids.has(String(pmid)) ||
@@ -90,12 +125,12 @@ async function findPubMedCandidates(localDois, localPmids, localTitles, fromDate
   });
 }
 
-async function findBioRxivCandidates(localDois, localTitles, fromDate, toDate) {
+async function findBioRxivCandidates(localDois, localTitles, fromDate, toDate, getJson, sourceErrors) {
   const query = `SRC:PPR AND AUTH:"Abraham J" AND FIRST_PDATE:[${fromDate} TO ${toDate}]`;
   const searchUrl = new URL("https://www.ebi.ac.uk/europepmc/webservices/rest/search");
   searchUrl.search = new URLSearchParams({ query, format: "json", pageSize: "100", resultType: "core" });
-  const search = await fetchJson(searchUrl);
-  const possible = (search.resultList?.result || []).filter((record) => {
+  const search = await getJson(searchUrl);
+  const possible = requireCompleteSearch(search.resultList?.result, search.hitCount, "Europe PMC preprint discovery").filter((record) => {
     const doi = normalizeDoi(record.doi);
     return doi.startsWith("10.64898/") || doi.startsWith("10.1101/");
   });
@@ -104,8 +139,17 @@ async function findBioRxivCandidates(localDois, localTitles, fromDate, toDate) {
   for (const record of possible) {
     const doi = normalizeDoi(record.doi);
     if (!doi || localDois.has(doi)) continue;
-    const details = await fetchJson(`https://api.biorxiv.org/details/biorxiv/${doi}/na/json`);
-    const item = details.collection?.[0];
+    let item;
+    try {
+      const details = await getJson(`https://api.biorxiv.org/details/biorxiv/${doi}/na/json`);
+      item = requireBioRxivRecord(details, doi);
+      if (typeof item.author_corresponding !== "string" || typeof item.author_corresponding_institution !== "string") {
+        throw new Error(`bioRxiv returned no corresponding-author metadata for DOI ${doi}`);
+      }
+    } catch (error) {
+      sourceErrors.push(`bioRxiv candidate check failed for ${doi}: ${error.message}`);
+      continue;
+    }
     const corresponding = String(item?.author_corresponding || "").toLowerCase();
     const institution = String(item?.author_corresponding_institution || "").toLowerCase();
     if (!corresponding.includes("jonathan abraham") || !institution.includes("harvard")) continue;
@@ -122,7 +166,7 @@ async function findBioRxivCandidates(localDois, localTitles, fromDate, toDate) {
   return candidates;
 }
 
-async function verifyPubMedMetadata(publications) {
+async function verifyPubMedMetadata(publications, getJson, sourceErrors) {
   const withPmids = publications.filter((item) => item.pmid);
   if (!withPmids.length) return [];
   const summaryUrl = new URL("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi");
@@ -131,13 +175,15 @@ async function verifyPubMedMetadata(publications) {
     id: withPmids.map((item) => item.pmid).join(","),
     retmode: "json"
   });
-  const summary = await fetchJson(summaryUrl);
+  const summary = await getJson(summaryUrl);
   const issues = [];
 
   for (const publication of withPmids) {
-    const record = summary.result?.[publication.pmid];
-    if (!record) {
-      issues.push(`PubMed no longer returned PMID ${publication.pmid}: ${publication.title}`);
+    let record;
+    try {
+      record = requirePubMedRecord(summary, publication.pmid);
+    } catch (error) {
+      sourceErrors.push(`PubMed metadata comparison failed: ${error.message}`);
       continue;
     }
     const remoteDoi = normalizeDoi(record.articleids?.find((item) => item.idtype === "doi")?.value);
@@ -152,23 +198,33 @@ async function verifyPubMedMetadata(publications) {
   return issues;
 }
 
-async function findPublishedPreprints(publications) {
+async function findPublishedPreprints(publications, getJson, sourceErrors) {
   const updates = [];
   for (const publication of publications.filter((item) => item.articleType === "Preprint" && item.doi)) {
-    const details = await fetchJson(`https://api.biorxiv.org/details/biorxiv/${publication.doi}/na/json`);
-    const publishedDoi = normalizeDoi(details.collection?.[0]?.published);
-    if (publishedDoi && publishedDoi !== "na") {
-      updates.push({ title: publication.title, preprintDoi: publication.doi, publishedDoi });
+    try {
+      const details = await getJson(`https://api.biorxiv.org/details/biorxiv/${publication.doi}/na/json`);
+      const item = requireBioRxivRecord(details, publication.doi);
+      if (typeof item.published !== "string" || !item.published.trim()) {
+        throw new Error(`bioRxiv returned no publication status for DOI ${publication.doi}`);
+      }
+      const publishedDoi = normalizeDoi(item.published);
+      if (publishedDoi !== "na") {
+        if (!/^10\.\d{4,9}\/\S+$/.test(publishedDoi)) throw new Error(`bioRxiv returned an invalid published DOI for ${publication.doi}`);
+        updates.push({ title: publication.title, preprintDoi: publication.doi, publishedDoi });
+      }
+    } catch (error) {
+      sourceErrors.push(`bioRxiv publication-status check failed for ${publication.doi}: ${error.message}`);
     }
   }
   return updates;
 }
 
-function renderMarkdown(report) {
+export function renderMarkdown(report) {
   const lines = [
     "# Abraham Lab publication check",
     "",
     `Generated: ${report.generatedAt}`,
+    `Status: ${report.status === "incomplete" ? "INCOMPLETE" : "Complete"}`,
     "",
     `Local records: ${report.localRecordCount}`,
     `Candidates for review: ${report.candidates.length}`,
@@ -178,6 +234,10 @@ function renderMarkdown(report) {
     "",
     "The report is read-only. Confirm corresponding-author status before changing the site."
   ];
+
+  if (report.status === "incomplete") {
+    lines.push("", "**This check is incomplete. Results below are partial; additional changes may remain undetected. Do not advance the publication review date.**");
+  }
 
   if (report.candidates.length) {
     lines.push("", "## Candidate records");
@@ -203,18 +263,18 @@ function renderMarkdown(report) {
   }
 
   if (report.sourceErrors.length) {
-    lines.push("", "## Source warnings", ...report.sourceErrors.map((item) => `- ${item}`));
+    lines.push("", "## Failed source checks", ...report.sourceErrors.map((item) => `- ${item}`));
   }
 
-  if (!report.candidates.length && !report.publishedPreprints.length && !report.localIssues.length && !report.remoteMetadataIssues.length) {
+  if (report.status === "complete" && !report.candidates.length && !report.publishedPreprints.length && !report.localIssues.length && !report.remoteMetadataIssues.length) {
     lines.push("", "No publication changes require review.");
   }
 
   return `${lines.join("\n")}\n`;
 }
 
-async function main() {
-  const publications = await loadPublications();
+export async function collectPublicationReport({ publications, fetchImpl = globalThis.fetch, now = new Date() }) {
+  const getJson = (url) => fetchJson(url, fetchImpl);
   const localDois = new Set(publications.map((item) => normalizeDoi(item.doi)).filter(Boolean));
   const localPmids = new Set(publications.map((item) => String(item.pmid || "")).filter(Boolean));
   const localTitles = new Set(publications.map((item) => normalizeTitle(item.title)).filter(Boolean));
@@ -228,7 +288,6 @@ async function main() {
     }
   }
 
-  const now = new Date();
   const from = new Date(Date.UTC(now.getUTCFullYear() - 2, now.getUTCMonth(), now.getUTCDate()));
   const to = new Date(Date.UTC(now.getUTCFullYear() + 1, now.getUTCMonth(), now.getUTCDate()));
   const fromDate = isoDate(from);
@@ -239,22 +298,22 @@ async function main() {
   let publishedPreprints = [];
   let remoteMetadataIssues = [];
   try {
-    pubmedCandidates = await findPubMedCandidates(localDois, localPmids, localTitles, fromDate, toDate);
+    pubmedCandidates = await findPubMedCandidates(localDois, localPmids, localTitles, fromDate, toDate, getJson, sourceErrors);
   } catch (error) {
     sourceErrors.push(`PubMed check failed: ${error.message}`);
   }
   try {
-    biorxivCandidates = await findBioRxivCandidates(localDois, localTitles, fromDate, toDate);
+    biorxivCandidates = await findBioRxivCandidates(localDois, localTitles, fromDate, toDate, getJson, sourceErrors);
   } catch (error) {
     sourceErrors.push(`bioRxiv discovery failed: ${error.message}`);
   }
   try {
-    publishedPreprints = await findPublishedPreprints(publications);
+    publishedPreprints = await findPublishedPreprints(publications, getJson, sourceErrors);
   } catch (error) {
     sourceErrors.push(`bioRxiv publication-status check failed: ${error.message}`);
   }
   try {
-    remoteMetadataIssues = await verifyPubMedMetadata(publications);
+    remoteMetadataIssues = await verifyPubMedMetadata(publications, getJson, sourceErrors);
   } catch (error) {
     sourceErrors.push(`PubMed metadata comparison failed: ${error.message}`);
   }
@@ -263,8 +322,9 @@ async function main() {
     .filter((item, index, items) => items.findIndex((other) => other.doi === item.doi && other.pmid === item.pmid) === index)
     .sort((left, right) => String(right.date).localeCompare(String(left.date)));
 
-  const report = {
-    generatedAt: new Date().toISOString(),
+  return {
+    status: sourceErrors.length ? "incomplete" : "complete",
+    generatedAt: now.toISOString(),
     queryWindow: { from: fromDate, to: toDate },
     localRecordCount: publications.length,
     candidates,
@@ -273,25 +333,41 @@ async function main() {
     remoteMetadataIssues,
     sourceErrors
   };
-  const markdown = renderMarkdown(report);
-  const outputDir = path.join(repoRoot, "output", "publication-check");
-  await fs.mkdir(outputDir, { recursive: true });
-  await Promise.all([
-    fs.writeFile(path.join(outputDir, "report.md"), markdown),
-    fs.writeFile(path.join(outputDir, "report.json"), `${JSON.stringify(report, null, 2)}\n`)
-  ]);
-
-  process.stdout.write(markdown);
-  if (process.env.GITHUB_STEP_SUMMARY) await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, markdown);
-  for (const item of [...candidates, ...publishedPreprints]) {
-    console.log(`::warning title=Publication review::${item.title}`);
-  }
-  for (const item of [...localIssues, ...remoteMetadataIssues, ...sourceErrors]) {
-    console.log(`::warning title=Publication check::${item}`);
-  }
 }
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.stack || error.message : String(error));
-  process.exitCode = 1;
-});
+export function reportExitCode(report) {
+  return report.sourceErrors.length || report.localIssues.length || report.remoteMetadataIssues.length ? 1 : 0;
+}
+
+export async function writePublicationReport(report, {
+  outputDir = path.join(repoRoot, "output", "publication-check"),
+  summaryPath = process.env.GITHUB_STEP_SUMMARY
+} = {}) {
+  const markdown = renderMarkdown(report);
+  await fs.mkdir(outputDir, { recursive: true });
+  await fs.writeFile(path.join(outputDir, "report.md"), markdown);
+  await fs.writeFile(path.join(outputDir, "report.json"), `${JSON.stringify(report, null, 2)}\n`);
+  if (summaryPath) await fs.appendFile(summaryPath, markdown);
+  return markdown;
+}
+
+async function main() {
+  const report = await collectPublicationReport({ publications: await loadPublications() });
+  const markdown = await writePublicationReport(report);
+  process.stdout.write(markdown);
+  const annotation = (value) => String(value).replaceAll("%", "%25").replaceAll("\r", "%0D").replaceAll("\n", "%0A");
+  for (const item of [...report.candidates, ...report.publishedPreprints]) {
+    console.log(`::warning title=Publication review::${annotation(item.title)}`);
+  }
+  for (const item of [...report.localIssues, ...report.remoteMetadataIssues, ...report.sourceErrors]) {
+    console.error(`::error title=Publication check::${annotation(item)}`);
+  }
+  process.exitCode = reportExitCode(report);
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.stack || error.message : String(error));
+    process.exitCode = 1;
+  });
+}

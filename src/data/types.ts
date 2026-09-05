@@ -64,6 +64,7 @@ export type SiteData = {
   publicationRecord: {
     checkedAt: string;
     sources: string[];
+    homepageDoi?: string;
   };
   shareImages: {
     science: {
@@ -89,6 +90,7 @@ export type SiteData = {
     "Virology" | "MD-PhD / Biophysics" | "MD-PhD / Biological and Biomedical Sciences",
     string
   >;
+  graduatePrograms: NavItem[];
   contact: ContactData;
   social: {
     x: string;
@@ -154,6 +156,14 @@ export type NewsItem = {
   imageCredit?: string;
 };
 
+export const CURRENT_TEAM_GROUPS = [
+  "Leadership",
+  "Postdoctoral Fellows & Instructors",
+  "Graduate Students",
+  "Research Staff",
+  "Operations & Strategy"
+] as const;
+
 export type Person = {
   name: string;
   title: string;
@@ -163,7 +173,7 @@ export type Person = {
   fellowships?: string[];
   labStart?: string;
   labEnd?: string;
-  group: "Leadership" | "Postdoctoral Fellows & Instructors" | "Graduate Students" | "Research Staff" | "Operations & Strategy";
+  group: (typeof CURRENT_TEAM_GROUPS)[number];
   order: number;
 };
 

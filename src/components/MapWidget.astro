@@ -8,29 +8,45 @@ interface Props {
 const { eyebrow = "Campus map" } = Astro.props;
 ---
 
-<aside class="map-widget reveal">
-  <div class="map-widget__media">
-    <div class="map-widget__fallback" aria-hidden="true">
-      <span class="map-widget__grid"></span>
-      <span class="map-widget__pin"></span>
-      <strong>{siteData.contact.mapBuilding}</strong>
-      <small>Harvard Longwood campus</small>
-    </div>
-    <iframe
-      class="map-widget__iframe"
-      title="Google map of Veritas Science Center at Harvard Medical School"
-      src={siteData.contact.mapEmbedUrl}
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      allowfullscreen
-      onload="this.parentElement.classList.add('is-loaded')"
-    ></iframe>
-  </div>
+<aside class="map-widget reveal" aria-label={eyebrow} data-map-widget>
   <div class="map-widget__body">
     <div>
       <p class="overline">{eyebrow}</p>
       <strong>{siteData.contact.mapBuilding}</strong>
     </div>
-    <a class="text-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
+    <div class="map-widget__actions">
+      <button class="map-widget__toggle" type="button" aria-expanded="false" aria-controls="campus-map" data-map-src={siteData.contact.mapEmbedUrl} hidden>Show map</button>
+      <a class="text-link" href={siteData.contact.mapUrl} target="_blank" rel="noreferrer">Open in Google Maps <span aria-hidden="true">↗</span></a>
+    </div>
   </div>
+  <div id="campus-map" class="map-widget__media" hidden></div>
 </aside>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-map-widget]").forEach((widget) => {
+    const toggle = widget.querySelector<HTMLButtonElement>(".map-widget__toggle");
+    const media = widget.querySelector<HTMLElement>(".map-widget__media");
+    const source = toggle?.dataset.mapSrc;
+    if (!toggle || !media || !source) return;
+
+    toggle.addEventListener("click", () => {
+      const showMap = media.hidden;
+      if (showMap) {
+        const frame = document.createElement("iframe");
+        frame.className = "map-widget__iframe";
+        frame.title = "Google map of Veritas Science Center at Harvard Medical School";
+        frame.src = source;
+        frame.referrerPolicy = "no-referrer-when-downgrade";
+        frame.allowFullscreen = true;
+        media.replaceChildren(frame);
+      } else {
+        media.replaceChildren();
+      }
+      media.hidden = !showMap;
+      toggle.setAttribute("aria-expanded", String(showMap));
+      toggle.textContent = showMap ? "Hide map" : "Show map";
+    });
+
+    toggle.hidden = false;
+  });
+</script>

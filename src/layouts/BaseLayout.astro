@@ -222,10 +222,12 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
         prefersDark.addListener(syncSystemTheme);
       }
 
-      if (navToggle && nav) {
-        const closeNav = () => {
+      if (navToggle instanceof HTMLButtonElement && nav instanceof HTMLElement) {
+        const mobileNav = window.matchMedia("(max-width: 1040px)");
+        const closeNav = (restoreFocus = false) => {
           nav.classList.remove("is-open");
           navToggle.setAttribute("aria-expanded", "false");
+          if (restoreFocus && mobileNav.matches) navToggle.focus({ preventScroll: true });
         };
 
         navToggle.addEventListener("click", () => {
@@ -234,12 +236,14 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
         });
 
         nav.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", closeNav);
+          link.addEventListener("click", () => closeNav());
         });
 
         document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") {
-            closeNav();
+          if (event.key === "Escape" && mobileNav.matches && nav.classList.contains("is-open")) {
+            const focusInMenu = nav.contains(document.activeElement) || document.activeElement === navToggle;
+            if (focusInMenu) event.preventDefault();
+            closeNav(focusInMenu);
           }
         });
 
@@ -247,15 +251,24 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
           const target = event.target;
           if (!(target instanceof Node)) return;
           if (!nav.contains(target) && !navToggle.contains(target)) {
-            closeNav();
+            closeNav(nav.contains(document.activeElement));
           }
         });
 
-        window.addEventListener("resize", () => {
-          if (window.innerWidth > 1160) {
-            closeNav();
+        const syncNavLayout = () => {
+          const focusInNav = nav.contains(document.activeElement);
+          const focusOnToggle = document.activeElement === navToggle;
+          closeNav(mobileNav.matches && focusInNav);
+          if (!mobileNav.matches && focusOnToggle) {
+            nav.querySelector("a")?.focus({ preventScroll: true });
           }
-        });
+        };
+
+        if ("addEventListener" in mobileNav) {
+          mobileNav.addEventListener("change", syncNavLayout);
+        } else if ("addListener" in mobileNav) {
+          mobileNav.addListener(syncNavLayout);
+        }
       }
 
       if (body.classList.contains("page-home")) {

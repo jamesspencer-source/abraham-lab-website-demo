@@ -54,7 +54,7 @@ import { siteData } from "../../data/site";
             <h2>Harvard programs</h2>
             <p>Graduate students join through Harvard training programs.</p>
             <ul class="contact-programs">
-              {Object.entries(siteData.trainingPrograms).map(([label, href]) => (
+              {siteData.graduatePrograms.map(({label, href}) => (
                 <li><a href={href} target="_blank" rel="noreferrer">{label} <span aria-hidden="true">↗</span></a></li>
               ))}
             </ul>

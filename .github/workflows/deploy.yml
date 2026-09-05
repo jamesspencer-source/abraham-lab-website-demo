@@ -4,25 +4,41 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish to Pages after all checks pass (main only)
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   contents: read
+
+defaults:
+  run:
+    shell: bash
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 concurrency:
-  group: pages
+  group: site-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
+  checks:
+    name: Required site checks
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: read
     env:
       ASTRO_TELEMETRY_DISABLED: "1"
+      PLAYWRIGHT_BROWSERS_PATH: .cache/ms-playwright
       SITE_URL: ${{ format('https://{0}.github.io', github.repository_owner) }}
       SITE_BASE_PATH: ${{ format('/{0}', github.event.repository.name) }}
 
@@ -31,7 +47,13 @@ jobs:
         # Pinned to immutable action commit; update intentionally after review.
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
+          ref: ${{ github.sha }}
           persist-credentials: false
+
+      - name: Prepare diagnostic reports
+        run: |
+          mkdir -p output/ci
+          printf 'Commit: %s\nEvent: %s\n' "$GITHUB_SHA" "$GITHUB_EVENT_NAME" > output/ci/revision.txt
 
       - name: Set up Node.js
         # Pinned to immutable action commit; update intentionally after review.
@@ -41,26 +63,55 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci 2>&1 | tee output/ci/install.log
 
       - name: Audit dependencies
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=high 2>&1 | tee output/ci/audit.log
 
-      - name: Build Astro site
-        run: npm run build
+      - name: Run offline regression tests
+        run: npm test 2>&1 | tee output/ci/regression-tests.log
 
-      - name: Configure Pages
-        # Pinned to immutable action commit; update intentionally after review.
-        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b
+      - name: Check Astro and TypeScript
+        run: npx --no-install astro check 2>&1 | tee output/ci/types.log
+
+      - name: Validate security and content, then build and validate output
+        id: build
+        run: npm run build 2>&1 | tee output/ci/build.log
+
+      - name: Install browser engines
+        id: browsers
+        run: npx --no-install playwright install --with-deps chromium firefox webkit 2>&1 | tee output/ci/browsers.log
+
+      - name: Capture visual-review screenshots
+        if: ${{ !cancelled() && steps.build.outcome == 'success' && steps.browsers.outcome == 'success' }}
+        run: node scripts/visual-review.mjs 2>&1 | tee output/ci/visual-review.log
+
+      - name: Run accessibility and browser review
+        # Run even if screenshot assertions failed, preserving both diagnostics.
+        if: ${{ !cancelled() && steps.build.outcome == 'success' && steps.browsers.outcome == 'success' }}
+        run: node scripts/quality-review.mjs 2>&1 | tee output/ci/quality-review.log
+
+      - name: Upload review artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: site-review-${{ github.sha }}
+          path: |
+            output/ci
+            output/visual-review
+            output/quality-review
+          retention-days: 14
 
       - name: Upload Pages artifact
+        if: ${{ success() && github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.publish)) }}
         # Pinned to immutable action commit; update intentionally after review.
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
         with:
           path: ./_site
 
   deploy:
-    needs: build
+    needs: checks
+    if: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.publish)) }}
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -70,6 +121,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b
+
       - name: Deploy to GitHub Pages
         id: deployment
         # Pinned to immutable action commit; update intentionally after review.

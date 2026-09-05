@@ -92,6 +92,11 @@ export const siteData = {
     "MD-PhD / Biophysics": "https://biophysics.fas.harvard.edu/",
     "MD-PhD / Biological and Biomedical Sciences": "https://bbsphd.hms.harvard.edu/"
   },
+  graduatePrograms: [
+    { label: "Virology", href: "https://virologyphd.hms.harvard.edu/" },
+    { label: "Biophysics", href: "https://biophysics.fas.harvard.edu/" },
+    { label: "Biological and Biomedical Sciences", href: "https://bbsphd.hms.harvard.edu/" }
+  ],
   contact: {
     lab: "Abraham Lab",
     department: "Department of Microbiology, Blavatnik Institute, Harvard Medical School",

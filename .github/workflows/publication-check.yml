@@ -14,6 +14,7 @@ env:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         # Pinned to immutable action commit; update intentionally after review.
@@ -29,7 +30,11 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        id: dependencies
         run: npm ci
+
+      - name: Test publication-monitor failure handling
+        run: node --test scripts/check-publication-updates.test.mjs
 
       - name: Validate site content
         run: npm run validate:content
@@ -38,9 +43,12 @@ jobs:
         run: npm run check:publications
 
       - name: Build site for link review
+        id: build
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: npm run build
 
       - name: Check external links
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: npm run check:links
 
       - name: Upload publication report

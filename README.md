@@ -15,7 +15,9 @@ npm run dev
 npm run build
 ```
 
-The GitHub Actions workflow in `.github/workflows/deploy.yml` builds the Astro site and publishes `_site` to GitHub Pages.
+The GitHub Actions workflow in `.github/workflows/deploy.yml` validates and builds the site, checks screenshots, and runs the accessibility/browser tests before publishing that same `_site` artifact. A failed check leaves the previous deployment serving.
+
+Pull requests run the same checks without publishing. A manual run is review-only by default; enable its `publish` input on `main` to publish after all checks pass. The former separate visual-review workflow is consolidated into this release workflow to avoid duplicate runs.
 
 ## GitHub Pages configuration
 
@@ -37,6 +39,12 @@ npm run validate:content
 
 This checks publication title/DOI/PMID consistency, homepage proof ordering, and the canonical institutional wording used across the site data modules.
 
+Run `npm test` for offline regression tests covering paper selection, roster grouping, and publication-monitor failure handling. CI uses Node 24.
+
+The homepage feature defaults to the most recent dated research article, independently of the hero figure and preprint curation flags. To intentionally feature another verified paper, set `siteData.publicationRecord.homepageDoi` to its DOI. A preprint override is labeled "Recent preprint". Unknown DOI overrides fail validation.
+
+`siteData.graduatePrograms` contains general Contact-page program names. `siteData.trainingPrograms` resolves individual program tags on Team; MD-PhD combinations belong to those individual records only. Allowed current roster groups are shared by the data type, renderer, and validator so a misspelled group cannot silently hide a person.
+
 ## Publication record
 
 ```bash
@@ -44,6 +52,8 @@ npm run check:publications
 ```
 
 The checker compares the local record with PubMed and bioRxiv and writes a read-only report to `output/publication-check/`. Update `siteData.publicationRecord.checkedAt` only after both sources complete successfully and any candidate records have been reviewed.
+
+Unavailable or incomplete sources produce a partial report and a failed check, not a successful "no changes" result. The checker never edits the public record or its review date.
 
 ## Image optimization
 
@@ -70,7 +80,7 @@ VISUAL_REVIEW_ROUTES=home,publications VISUAL_REVIEW_VIEWPORTS=390,768 VISUAL_RE
 
 `VISUAL_REVIEW_ROUTES`, `VISUAL_REVIEW_VIEWPORTS`, and `VISUAL_REVIEW_THEMES` all accept comma-separated lists.
 
-On some local macOS environments, headless Chromium can fail with a MachPort permission error even when the Astro build succeeds. When that happens, use the GitHub Actions visual review workflow as the canonical artifact source.
+On some local macOS environments, headless Chromium can fail with a MachPort permission error even when the Astro build succeeds. Use a review-only manual run of `Deploy site` for the CI test artifacts. Browser permission blocks are separate: resolve the permission before reviewing that site in another surface.
 
 ## Accessibility and browser review
 
@@ -81,6 +91,10 @@ npm run quality:review
 
 The quality review checks the automated WCAG 2.1 Level AA rule set, keyboard navigation, text-spacing resilience, 320px reflow, light and dark modes, legacy route handoffs, and layout behavior in Chromium, Firefox, and WebKit. It covers phone, tablet, laptop, wide desktop, narrow-window, and short-wide-window shapes.
 
-Reports are written to `output/quality-review/`. The GitHub Actions visual-review workflow runs the same review and uploads the report with the screenshots.
+Reports are written to `output/quality-review/`. The release workflow runs these checks against the build it will publish and uploads screenshots, reports, and logs under `site-review-<commit>`, including when a check fails.
+
+## Contact map
+
+The page provides an outbound Google Maps link without JavaScript or third-party requests. `Show map` creates a compact iframe only when activated; `Hide map` removes it. The directions link remains available when Google is blocked or unavailable. An iframe load event is not treated as proof that Google rendered a valid map.
 
 Automated testing does not establish full WCAG conformance. Complete the manual checks in `references/accessibility-release-checklist.md` before the custom-domain launch.

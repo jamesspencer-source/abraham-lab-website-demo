@@ -126,7 +126,7 @@ if (!/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(sitemap)) {
 }
 
 const publicationsPage = await fs.readFile(path.join(siteRoot, "publications", "index.html"), "utf8");
-for (const marker of ["Full record on PubMed", "Jump to year", "PDB", "EMDB", "Open access", "Print or save PDF"]) {
+for (const marker of ["Selected publications", "Jonathan Abraham on PubMed", "Jump to year", "PDB", "EMDB", "Open access", "Print or save PDF"]) {
   if (!publicationsPage.includes(marker)) failures.push(`Publications page is missing "${marker}".`);
 }
 
@@ -139,7 +139,13 @@ for (const programUrl of [
 }
 
 const contactPage = await fs.readFile(path.join(siteRoot, "contact", "index.html"), "utf8");
-if (!/loading="lazy"/.test(contactPage)) failures.push("Contact map must load lazily.");
+if (contactPage.includes("MD-PhD /")) failures.push("Contact uses individual training tags as general program labels.");
+if (/<iframe\b/.test(contactPage)) failures.push("Contact map must not load a third-party frame before interaction.");
+if (!contactPage.includes("data-map-src=") || !contactPage.includes("Show map")) {
+  failures.push("Contact map is missing its on-demand control.");
+}
+if (!contactPage.includes("Open in Google Maps")) failures.push("Contact needs directions even when the map cannot load.");
+if (/map-widget__(?:grid|pin|fallback)/.test(contactPage)) failures.push("Contact still contains the decorative map fallback.");
 if (!contactPage.includes("z=14")) failures.push("Contact map must use the campus-scale zoom level.");
 if (contactPage.includes("Postdoctoral work")) failures.push("Contact page still contains the duplicate postdoctoral inquiry block.");
 if (!contactPage.includes("Graduate students join through Harvard training programs.")) {
@@ -172,6 +178,7 @@ for (const [legacyPath, targetPath] of [
 }
 
 const homePage = await fs.readFile(path.join(siteRoot, "index.html"), "utf8");
+if (homePage.includes("Complete publication record")) failures.push("Homepage overstates the selected publication list as complete.");
 if (!homePage.includes("https://accessibility.huit.harvard.edu/digital-accessibility-policy")) {
   failures.push("Footer is missing Harvard's digital accessibility link.");
 }

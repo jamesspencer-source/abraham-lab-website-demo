@@ -179,19 +179,156 @@ async function checkKeyboard(browser, browserName, origin, failures) {
   }
 
   const toggle = page.locator(".nav-toggle");
+  const nav = page.locator(".site-nav");
+  const links = nav.locator("a");
+  const isFocused = (locator) => locator.evaluate((node) => node === document.activeElement);
   const toggleBox = await toggle.boundingBox();
   if (!toggleBox || toggleBox.width < 44 || toggleBox.height < 44) {
     failures.push(`${browserName}: mobile menu control is smaller than 44 by 44 CSS pixels.`);
   }
-  await toggle.click();
-  if (await page.locator(".site-nav.is-open").count() !== 1) {
-    failures.push(`${browserName}: mobile navigation did not open.`);
+  await page.keyboard.press("Tab");
+  if (!await isFocused(page.locator(".brand"))) {
+    failures.push(`${browserName}: the brand link should follow the skip link in keyboard order.`);
+  }
+  await page.keyboard.press("Tab");
+  if (!await isFocused(toggle)) {
+    failures.push(`${browserName}: the mobile menu toggle is not before the navigation links in keyboard order.`);
+  }
+  await page.keyboard.press("Enter");
+  if (await toggle.getAttribute("aria-expanded") !== "true" || !await nav.isVisible()) {
+    failures.push(`${browserName}: mobile navigation did not open with Enter.`);
+  }
+  for (let index = 0; index < await links.count(); index += 1) {
+    await page.keyboard.press("Tab");
+    if (!await isFocused(links.nth(index))) {
+      failures.push(`${browserName}: Tab did not reach navigation link ${index + 1} in order.`);
+    }
   }
   await page.keyboard.press("Escape");
-  if (await page.locator(".site-nav.is-open").count() !== 0) {
-    failures.push(`${browserName}: mobile navigation did not close with Escape.`);
+  if (await nav.isVisible() || await toggle.getAttribute("aria-expanded") !== "false" || !await isFocused(toggle)) {
+    failures.push(`${browserName}: Escape did not close the menu and return focus to its toggle.`);
+  }
+  await page.keyboard.press("Tab");
+  if (await nav.evaluate((node) => node.contains(document.activeElement))) {
+    failures.push(`${browserName}: collapsed navigation links remain in the keyboard tab order.`);
+  }
+
+  await toggle.focus();
+  await page.keyboard.press("Space");
+  for (let index = 0; index <= await links.count(); index += 1) {
+    await page.keyboard.press("Tab");
+  }
+  const outsideMenu = await page.evaluate(() => !document.querySelector(".site-nav")?.contains(document.activeElement) && !document.activeElement?.matches(".nav-toggle"));
+  const previousFocus = await page.evaluateHandle(() => document.activeElement);
+  await page.keyboard.press("Escape");
+  const focusUnchanged = await page.evaluate((previous) => previous === document.activeElement, previousFocus);
+  await previousFocus.dispose();
+  if (!outsideMenu || !focusUnchanged || await nav.isVisible()) {
+    failures.push(`${browserName}: Escape outside the open menu steals focus or leaves the menu open.`);
+  }
+
+  await page.setViewportSize({ width: 1040, height: 844 });
+  await toggle.focus();
+  await page.keyboard.press("Enter");
+  await page.keyboard.press("Tab");
+  await page.setViewportSize({ width: 1041, height: 844 });
+  await page.waitForFunction(() => document.querySelector(".nav-toggle")?.getAttribute("aria-expanded") === "false", null, { timeout: 2000 })
+    .catch(() => failures.push(`${browserName}: navigation state did not reset at the desktop breakpoint.`));
+  if (await toggle.isVisible() || !await nav.isVisible() || !await isFocused(links.first())) {
+    failures.push(`${browserName}: navigation does not transition cleanly to desktop at 1041px.`);
+  }
+  await page.setViewportSize({ width: 1040, height: 844 });
+  await page.waitForFunction(() => document.activeElement?.matches(".nav-toggle"), null, { timeout: 2000 })
+    .catch(() => failures.push(`${browserName}: focus did not return to the mobile menu toggle after resizing.`));
+  if (!await toggle.isVisible() || await nav.isVisible() || !await isFocused(toggle)) {
+    failures.push(`${browserName}: resizing to 1040px leaves focus in hidden navigation.`);
+  }
+  await page.setViewportSize({ width: 1200, height: 844 });
+  await page.waitForFunction(() => document.activeElement?.matches(".site-nav a"), null, { timeout: 2000 })
+    .catch(() => failures.push(`${browserName}: focus did not move off the hidden menu toggle after resizing.`));
+  if (!await isFocused(links.first())) {
+    failures.push(`${browserName}: resizing to desktop leaves focus on the hidden menu toggle.`);
   }
   await context.close();
+}
+
+async function checkMapFallback(browser, browserName, origin, failures) {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  await page.goto(routeUrl(origin, "/contact/"), { waitUntil: "domcontentloaded" });
+  await preparePage(page, "light");
+  const widget = page.locator("[data-map-widget]");
+  const toggle = widget.locator(".map-widget__toggle");
+  const directions = widget.locator('a[href*="google.com/maps"]');
+  const source = await toggle.getAttribute("data-map-src");
+  if (!source) throw new Error(`${browserName}: map source is missing.`);
+  let blockedRequests = 0;
+  await context.route((url) => url.href === source, async (route) => {
+    blockedRequests += 1;
+    await route.abort("failed");
+  });
+
+  if (await widget.locator("iframe").count() || !await directions.isVisible()) {
+    failures.push(`${browserName}: map loads before consent or its directions fallback is not visible.`);
+  }
+  await toggle.focus();
+  const failedRequest = page.waitForEvent("requestfailed", { predicate: (request) => request.url() === source, timeout: 5000 }).catch(() => null);
+  await page.keyboard.press("Enter");
+  if (!await failedRequest) failures.push(`${browserName}: the map failure scenario did not receive the expected blocked request.`);
+  const frame = widget.locator("iframe");
+  const frameState = await frame.evaluate((node) => ({
+    opacity: getComputedStyle(node).opacity,
+    hidden: node.hidden || Boolean(node.closest("[hidden]")),
+    title: node.title,
+    loadHandler: node.getAttribute("onload")
+  }));
+  if (blockedRequests !== 1 || !await frame.isVisible() || frameState.opacity !== "1" || frameState.hidden || !frameState.title || frameState.loadHandler) {
+    failures.push(`${browserName}: blocked map leaves an invisible frame or reports a successful load.`);
+  }
+  if (!await directions.isVisible() || await toggle.getAttribute("aria-expanded") !== "true") {
+    failures.push(`${browserName}: map controls or external directions become unavailable after a blocked load.`);
+  }
+  await toggle.focus();
+  await page.keyboard.press("Enter");
+  if (await widget.locator("iframe").count() || await toggle.getAttribute("aria-expanded") !== "false") {
+    failures.push(`${browserName}: hiding the map leaves its iframe active.`);
+  }
+  await page.keyboard.press("Tab");
+  if (!await directions.evaluate((node) => node === document.activeElement)) {
+    failures.push(`${browserName}: external directions are not reachable after the map control by keyboard.`);
+  }
+  await context.close();
+
+  const noJsContext = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
+  const noJsPage = await noJsContext.newPage();
+  await noJsPage.goto(routeUrl(origin, "/contact/"), { waitUntil: "domcontentloaded" });
+  const noJsWidget = noJsPage.locator("[data-map-widget]");
+  if (await noJsWidget.locator("iframe").count() || await noJsWidget.locator(".map-widget__toggle").isVisible() || !await noJsWidget.locator('a[href*="google.com/maps"]').isVisible()) {
+    failures.push(`${browserName}: the no-JavaScript map fallback is not usable without inactive controls.`);
+  }
+  if (await noJsPage.locator(".nav-toggle").isVisible() || !await noJsPage.locator(".site-nav").isVisible()) {
+    failures.push(`${browserName}: navigation is not visible when JavaScript is disabled.`);
+  }
+  const noJsLinks = noJsPage.locator(".site-nav a");
+  await noJsPage.keyboard.press("Tab");
+  await noJsPage.keyboard.press("Tab");
+  for (let index = 0; index < await noJsLinks.count(); index += 1) {
+    await noJsPage.keyboard.press("Tab");
+    if (!await noJsLinks.nth(index).evaluate((node) => node === document.activeElement)) {
+      failures.push(`${browserName}: no-JavaScript navigation link ${index + 1} is not reachable in keyboard order.`);
+    }
+  }
+  const noJsDirections = noJsWidget.locator('a[href*="google.com/maps"]');
+  let directionsReached = false;
+  for (let index = 0; index < 40; index += 1) {
+    await noJsPage.keyboard.press("Tab");
+    if (await noJsDirections.evaluate((node) => node === document.activeElement)) {
+      directionsReached = true;
+      break;
+    }
+  }
+  if (!directionsReached) failures.push(`${browserName}: no-JavaScript directions are not reachable by Tab.`);
+  await noJsContext.close();
 }
 
 async function checkTextSpacing(browser, origin, failures) {
@@ -379,6 +516,7 @@ async function run() {
 
       try {
         await checkKeyboard(browser, browserName, server.origin, failures);
+        await checkMapFallback(browser, browserName, server.origin, failures);
         await runCompatibility(browser, browserName, server.origin, failures, records);
         if (browserName === "chromium") {
           await checkTextSpacing(browser, server.origin, failures);
@@ -417,7 +555,24 @@ async function runSelfTest() {
     }
     if (!rejected) throw new Error(`Expected traversal path to be rejected: ${requestPath}`);
   }
-  console.log("quality-review configuration self-test passed");
+  const header = await fs.readFile(path.join(repoRoot, "src", "components", "Header.astro"), "utf8");
+  const togglePosition = header.indexOf('<button class="nav-toggle"');
+  const navPosition = header.indexOf('<nav id="site-nav"');
+  if (togglePosition < 0 || navPosition < 0 || togglePosition > navPosition) {
+    throw new Error("The navigation toggle must precede the links in DOM order.");
+  }
+  const layout = await fs.readFile(path.join(repoRoot, "src", "layouts", "BaseLayout.astro"), "utf8");
+  if (!layout.includes('matchMedia("(max-width: 1040px)")')) {
+    throw new Error("Navigation script must use the 1040px CSS breakpoint.");
+  }
+  const map = await fs.readFile(path.join(repoRoot, "src", "components", "MapWidget.astro"), "utf8");
+  if (/<iframe\b|\bonload\s*=|map-widget__(?:fallback|grid|pin)/i.test(map)) {
+    throw new Error("The map must not ship an eager iframe, decorative map fallback, or load-success handler.");
+  }
+  if (!map.includes('class="map-widget__media" hidden') || !map.includes('data-map-src={siteData.contact.mapEmbedUrl} hidden') || !map.includes('href={siteData.contact.mapUrl}')) {
+    throw new Error("The map must provide external directions with inactive controls hidden until enhancement.");
+  }
+  console.log("quality-review configuration and navigation/map source self-tests passed");
 }
 
 const entrypoint = process.env.QUALITY_REVIEW_SELF_TEST === "1" ? runSelfTest : run;

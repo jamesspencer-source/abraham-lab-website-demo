@@ -176,8 +176,7 @@ export const peopleData: PeopleData = {
       label: "Research Technicians",
       entries: [
         { name: "Adrian Coscia" },
-        { name: "Taleen Dilanyan" },
-        { name: "Cecilia \"Cici\" Bradley", labStart: "2026-06", labEnd: "2026-07" }
+        { name: "Taleen Dilanyan" }
       ]
     },
     {
@@ -185,6 +184,7 @@ export const peopleData: PeopleData = {
       entries: [
         { name: "Arya Akbarshahi" },
         { name: "Linzy Malcolm" },
+        { name: "Cecilia \"Cici\" Bradley", labStart: "2026-06", labEnd: "2026-07" },
         { name: "Louella \"Ella\" Seo", labStart: "2026-06", labEnd: "2026-08" },
         { name: "Zaila Avant-garde", labStart: "2026-06", labEnd: "2026-08" }
       ]

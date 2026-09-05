@@ -4,6 +4,7 @@
   "private": true,
   "description": "Static Astro site for the Abraham Lab at Harvard Medical School.",
   "scripts": {
+    "test": "node --test scripts/*.test.mjs",
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev --host 127.0.0.1",
     "security:check": "node scripts/validate-security.mjs",
     "build": "node scripts/validate-security.mjs && node scripts/validate-content.mjs && ASTRO_TELEMETRY_DISABLED=1 astro build",

@@ -224,6 +224,21 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
 
       if (navToggle instanceof HTMLButtonElement && nav instanceof HTMLElement) {
         const mobileNav = window.matchMedia("(max-width: 1040px)");
+        let lastNavFocus = null;
+        document.addEventListener("focusin", (event) => {
+          const target = event.target;
+          lastNavFocus = target instanceof HTMLElement && (nav.contains(target) || target === navToggle) ? target : null;
+        });
+        document.addEventListener("focusout", (event) => {
+          if (event.target === lastNavFocus && lastNavFocus?.getClientRects().length) {
+            lastNavFocus = null;
+          }
+        });
+        document.addEventListener("pointerdown", (event) => {
+          if (event.target instanceof Node && !nav.contains(event.target) && !navToggle.contains(event.target)) {
+            lastNavFocus = null;
+          }
+        });
         const closeNav = (restoreFocus = false) => {
           nav.classList.remove("is-open");
           navToggle.setAttribute("aria-expanded", "false");
@@ -256,8 +271,10 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
         });
 
         const syncNavLayout = () => {
-          const focusInNav = nav.contains(document.activeElement);
-          const focusOnToggle = document.activeElement === navToggle;
+          // Chromium may blur a CSS-hidden control before the media-query event.
+          const active = document.activeElement === document.body ? lastNavFocus : document.activeElement;
+          const focusInNav = nav.contains(active);
+          const focusOnToggle = active === navToggle;
           closeNav(mobileNav.matches && focusInNav);
           if (!mobileNav.matches && focusOnToggle) {
             nav.querySelector("a")?.focus({ preventScroll: true });

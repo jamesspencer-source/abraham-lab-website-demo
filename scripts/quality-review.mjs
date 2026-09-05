@@ -249,6 +249,12 @@ async function checkKeyboard(browser, browserName, origin, failures) {
   if (!await isFocused(links.first())) {
     failures.push(`${browserName}: resizing to desktop leaves focus on the hidden menu toggle.`);
   }
+  await links.first().evaluate((node) => node.blur());
+  await page.setViewportSize({ width: 1040, height: 844 });
+  await page.waitForTimeout(100);
+  if (await isFocused(toggle)) {
+    failures.push(`${browserName}: resizing steals focus after the visitor leaves navigation.`);
+  }
   await context.close();
 }
 

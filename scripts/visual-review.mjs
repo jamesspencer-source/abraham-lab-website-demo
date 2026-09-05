@@ -254,29 +254,25 @@ async function run() {
           if (route.slug === "contact") {
             await page.locator(".map-widget").scrollIntoViewIfNeeded();
             const mapCheck = await page.evaluate(() => {
-              const frame = document.querySelector(".map-widget__iframe");
-              const fallback = document.querySelector(".map-widget__fallback");
+              const toggle = document.querySelector(".map-widget__toggle");
+              const media = document.querySelector(".map-widget__media");
               const outbound = document.querySelector('.map-widget__body a[href*="google.com/maps"]');
               return {
-                frameSource: frame?.getAttribute("src") || "",
-                hasFallback: Boolean(fallback),
+                frameSource: toggle?.getAttribute("data-map-src") || "",
+                hasEagerFrame: Boolean(media?.querySelector("iframe")),
+                hasUsableToggle: Boolean(toggle && !toggle.hidden && toggle.getAttribute("aria-expanded") === "false"),
+                mediaHidden: Boolean(media?.hidden),
                 outboundHref: outbound?.getAttribute("href") || ""
               };
             });
             if (!mapCheck.frameSource.startsWith("https://maps.google.com/maps?") || !mapCheck.frameSource.includes("output=embed")) {
               pageFailures.push("Google map embed source is missing or invalid.");
             }
-            if (!mapCheck.hasFallback) {
-              pageFailures.push("Google map fallback is missing.");
+            if (mapCheck.hasEagerFrame || !mapCheck.hasUsableToggle || !mapCheck.mediaHidden) {
+              pageFailures.push("Google map must remain unloaded until its visible control is activated.");
             }
             if (!mapCheck.outboundHref.startsWith("https://www.google.com/maps/")) {
               pageFailures.push("Google Maps directions link is missing or invalid.");
-            }
-            try {
-              await page.waitForSelector(".map-widget__media.is-loaded", { timeout: 2000 });
-            } catch {
-              // GitHub-hosted runners may block Google Maps. The designed fallback
-              // remains visible, so external availability is not a release gate.
             }
           }
           await page.evaluate(() => {

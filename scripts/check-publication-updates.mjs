@@ -75,6 +75,23 @@ function requirePubMedRecord(summary, pmid) {
   return record;
 }
 
+function requireEuropePmcPreprint(record) {
+  if (!record || record.source !== "PPR" || typeof record.doi !== "string" || !/^10\.\d{4,9}\/\S+$/.test(normalizeDoi(record.doi))) {
+    throw new Error("Europe PMC returned invalid preprint source or DOI metadata");
+  }
+  // Core metadata names the server; bioRxiv and medRxiv share DOI prefixes.
+  const publisher = record.bookOrReportDetails?.publisher;
+  if (typeof publisher !== "string" || !publisher.trim()) {
+    throw new Error("Europe PMC returned missing or malformed preprint provider metadata");
+  }
+  const provider = publisher.trim().toLowerCase();
+  const knownNonBioRxivProviders = ["medrxiv", "research square", "psyarxiv", "authorea preprints", "f1000res", "preprints.org"];
+  if (provider !== "biorxiv" && !knownNonBioRxivProviders.includes(provider)) {
+    throw new Error(`Europe PMC returned an unknown preprint provider: ${publisher}`);
+  }
+  return { doi: normalizeDoi(record.doi), provider };
+}
+
 function requireBioRxivRecord(details, doi) {
   const records = details?.collection;
   if (!Array.isArray(records) || !records.length || details.messages?.some((item) => item.status !== "ok")) {
@@ -130,15 +147,21 @@ async function findBioRxivCandidates(localDois, localTitles, fromDate, toDate, g
   const searchUrl = new URL("https://www.ebi.ac.uk/europepmc/webservices/rest/search");
   searchUrl.search = new URLSearchParams({ query, format: "json", pageSize: "100", resultType: "core" });
   const search = await getJson(searchUrl);
-  const possible = requireCompleteSearch(search.resultList?.result, search.hitCount, "Europe PMC preprint discovery").filter((record) => {
-    const doi = normalizeDoi(record.doi);
-    return doi.startsWith("10.64898/") || doi.startsWith("10.1101/");
-  });
+  const possible = requireCompleteSearch(search.resultList?.result, search.hitCount, "Europe PMC preprint discovery");
 
   const candidates = [];
   for (const record of possible) {
-    const doi = normalizeDoi(record.doi);
-    if (!doi || localDois.has(doi)) continue;
+    let doi;
+    let provider;
+    try {
+      ({ doi, provider } = requireEuropePmcPreprint(record));
+    } catch (error) {
+      const id = typeof record?.id === "string" ? record.id : "unknown ID";
+      const label = typeof record?.doi === "string" && record.doi ? record.doi : id;
+      sourceErrors.push(`Europe PMC preprint metadata check failed for ${label}: ${error.message}`);
+      continue;
+    }
+    if (provider !== "biorxiv" || localDois.has(doi)) continue;
     let item;
     try {
       const details = await getJson(`https://api.biorxiv.org/details/biorxiv/${doi}/na/json`);

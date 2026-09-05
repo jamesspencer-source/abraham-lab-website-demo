@@ -15,6 +15,10 @@ const journal = { title: "Existing journal fixture", doi: "10.1000/journal", pmi
 const preprint = { title: "Existing preprint fixture", doi: "10.1101/2026.01.01.123456", articleType: "Preprint" };
 const candidateDoi = "10.1101/2026.02.01.123456";
 
+function discoveryRecord(doi, extra = {}) {
+  return { source: "PPR", doi, bookOrReportDetails: { publisher: "bioRxiv" }, ...extra };
+}
+
 function bioRxivRecord(doi, extra = {}) {
   return {
     doi,
@@ -132,7 +136,7 @@ test("missing requested PubMed records fail discovery and metadata checks", asyn
 test("a partial report retains candidates from a source that completed", async () => {
   const { report } = await check({
     pubmedSearch: () => { throw new Error("Offline fixture"); },
-    discovery: { hitCount: 1, resultList: { result: [{ doi: candidateDoi }] } }
+    discovery: { hitCount: 1, resultList: { result: [discoveryRecord(candidateDoi)] } }
   });
   assert.equal(report.status, "incomplete");
   assert.equal(report.candidates[0].doi, candidateDoi);
@@ -155,7 +159,7 @@ test("a missing PubMed candidate does not discard other returned records", async
 test("one failed preprint candidate does not discard another verified candidate", async () => {
   const failingDoi = "10.1101/2026.03.01.123456";
   const { report } = await check({
-    discovery: { hitCount: 2, resultList: { result: [{ doi: failingDoi }, { doi: candidateDoi }] } },
+    discovery: { hitCount: 2, resultList: { result: [discoveryRecord(failingDoi), discoveryRecord(candidateDoi)] } },
     details: (url) => {
       if (url.pathname.includes(failingDoi)) throw new Error("Offline fixture");
       const doi = url.pathname.includes(candidateDoi) ? candidateDoi : preprint.doi;
@@ -201,11 +205,110 @@ test("missing or malformed publication status is not treated as unpublished", as
 });
 
 test("candidates require human review but do not make a completed source check fail", async () => {
-  const { report } = await check({ discovery: { hitCount: 1, resultList: { result: [{ doi: candidateDoi }] } } });
+  const { report } = await check({ discovery: { hitCount: 1, resultList: { result: [discoveryRecord(candidateDoi)] } } });
   assert.equal(report.status, "complete");
   assert.equal(reportExitCode(report), 0);
   assert.equal(report.candidates.length, 1);
   assert.doesNotMatch(renderMarkdown(report), /No publication changes require review/);
+});
+
+test("Europe PMC medRxiv metadata excludes both shared DOI prefixes before bioRxiv requests", async () => {
+  const records = [
+    "10.64898/2026.07.27.26350454",
+    "10.64898/2026.04.26.26351792",
+    "10.64898/2026.01.12.26343538",
+    "10.1101/2025.05.23.25328255"
+  ].map((doi) => discoveryRecord(doi, { bookOrReportDetails: { publisher: "medRxiv" } }));
+  const { report, calls } = await check({ discovery: { hitCount: records.length, resultList: { result: records } } }, []);
+  assert.equal(report.status, "complete");
+  assert.equal(reportExitCode(report), 0);
+  assert.deepEqual(report.sourceErrors, []);
+  assert.deepEqual(report.candidates, []);
+  assert.equal(calls.filter((url) => url.hostname === "api.biorxiv.org").length, 0);
+});
+
+test("other explicitly recognized Europe PMC providers are excluded", async () => {
+  const records = ["Research Square", "PsyArXiv", "Authorea Preprints", "F1000Res", "Preprints.org", " MEDRXIV "]
+    .map((publisher, index) => discoveryRecord(`10.1000/provider-${index}`, { bookOrReportDetails: { publisher } }));
+  const { report, calls } = await check({ discovery: { hitCount: records.length, resultList: { result: records } } }, []);
+  assert.equal(report.status, "complete");
+  assert.deepEqual(report.sourceErrors, []);
+  assert.deepEqual(report.candidates, []);
+  assert.equal(calls.filter((url) => url.hostname === "api.biorxiv.org").length, 0);
+});
+
+test("identified bioRxiv records with either DOI prefix are verified through bioRxiv", async () => {
+  const dois = [candidateDoi, "10.64898/2026.08.22.744730"];
+  const records = dois.map((doi) => discoveryRecord(doi, { bookOrReportDetails: { publisher: " BIORXIV " } }));
+  const { report, calls } = await check({ discovery: { hitCount: records.length, resultList: { result: records } } }, []);
+  assert.equal(report.status, "complete");
+  assert.equal(reportExitCode(report), 0);
+  assert.deepEqual(report.sourceErrors, []);
+  assert.deepEqual(report.candidates.map((item) => item.doi), dois);
+  assert.ok(report.candidates.every((item) => item.source === "bioRxiv" && item.title === "Candidate fixture"));
+  assert.deepEqual(calls.filter((url) => url.hostname === "api.biorxiv.org").map((url) => url.pathname),
+    dois.map((doi) => `/details/biorxiv/${doi}/na/json`));
+  assert.equal(calls.find((url) => url.hostname === "www.ebi.ac.uk").searchParams.get("resultType"), "core");
+});
+
+test("provider identification does not replace bioRxiv record and corresponding-author verification", async () => {
+  for (const details of [
+    { messages: [{ status: "no posts found" }], collection: [] },
+    { collection: [bioRxivRecord("10.1000/wrong")] },
+    { collection: [bioRxivRecord(candidateDoi, { author_corresponding: undefined })] },
+    { collection: [bioRxivRecord(candidateDoi, { author_corresponding_institution: undefined })] }
+  ]) {
+    const { report } = await check({
+      discovery: { hitCount: 1, resultList: { result: [discoveryRecord(candidateDoi)] } }, details
+    }, []);
+    assert.equal(report.status, "incomplete");
+    assert.equal(reportExitCode(report), 1);
+    assert.equal(report.candidates.length, 0);
+    assert.match(report.sourceErrors[0], /bioRxiv candidate check failed/);
+  }
+});
+
+test("malformed or unknown preprint metadata fails honestly without discarding verified candidates", async () => {
+  const invalidRecords = [
+    null,
+    {},
+    discoveryRecord(candidateDoi, { source: undefined }),
+    discoveryRecord(candidateDoi, { source: "MED" }),
+    discoveryRecord(undefined),
+    discoveryRecord(""),
+    discoveryRecord(123),
+    discoveryRecord("not-a-doi"),
+    discoveryRecord(candidateDoi, { bookOrReportDetails: undefined }),
+    ...[undefined, "", " ", 123, [], "unknown", "Unrecognized server", "bioRxiv / medRxiv"]
+      .map((publisher) => discoveryRecord(candidateDoi, { bookOrReportDetails: { publisher } })),
+    discoveryRecord("10.1000/no-prefix-fallback", { bookOrReportDetails: undefined }),
+    discoveryRecord(undefined, { bookOrReportDetails: { publisher: "medRxiv" } })
+  ];
+  for (const record of invalidRecords) {
+    const { report, calls } = await check({
+      discovery: { hitCount: 2, resultList: { result: [record, discoveryRecord(candidateDoi)] } }
+    }, []);
+    assert.equal(report.status, "incomplete", JSON.stringify(record));
+    assert.equal(reportExitCode(report), 1);
+    assert.equal(report.sourceErrors.length, 1);
+    assert.match(report.sourceErrors[0], /Europe PMC preprint metadata check failed/);
+    assert.deepEqual(report.candidates.map((item) => item.doi), [candidateDoi]);
+    assert.equal(calls.filter((url) => url.hostname === "api.biorxiv.org").length, 1);
+    const markdown = renderMarkdown(report);
+    assert.match(markdown, /Status: INCOMPLETE/);
+    assert.match(markdown, /Do not advance the publication review date/);
+    assert.doesNotMatch(markdown, /No publication changes require review/);
+  }
+});
+
+test("known local bioRxiv DOIs are not fetched again by discovery", async () => {
+  const { report, calls } = await check({ discovery: {
+    hitCount: 1, resultList: { result: [discoveryRecord(preprint.doi)] }
+  } });
+  assert.equal(report.status, "complete");
+  assert.equal(report.candidates.length, 0);
+  // The existing publication-status check still makes its one required request.
+  assert.equal(calls.filter((url) => url.hostname === "api.biorxiv.org").length, 1);
 });
 
 test("metadata problems remain distinct from unavailable sources and fail validation", async () => {
